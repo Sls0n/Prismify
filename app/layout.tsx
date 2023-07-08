@@ -11,6 +11,10 @@ const Font = localFont({
 export const metadata: Metadata = {
   title: 'Prismify — Revitalize & enhance boring images/screenshots.',
   description: 'Revitalize & enhance boring images/screenshots.',
+  icons: {
+    icon: './favicons/favicon.ico',
+    apple: './favicons/apple-touch-icon.png',
+  },
 }
 
 export default function RootLayout({
