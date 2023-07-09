@@ -1,4 +1,3 @@
-import Navbar from '@/components/Navbar'
 import Background from '@/components/ui/Background'
 import Providers from '@/context/Providers'
 import '@/styles/globals.css'
@@ -23,8 +22,10 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  authModal,
 }: {
   children: React.ReactNode
+  authModal: React.ReactNode
 }) {
   return (
     <html
@@ -34,8 +35,9 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-primary pt-12 text-primary dark:bg-dark dark:text-dark">
         <Providers>
-          <Navbar />
-          <div className="container mx-auto h-full max-w-7xl pt-12">
+          {authModal}
+
+          <div className="container mx-auto h-full max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">
             <Background />
             {children}
           </div>
