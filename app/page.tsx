@@ -1,3 +1,3 @@
 export default function Home() {
-  return <main>Initial commit</main>
+  return <main className=""></main>
 }
