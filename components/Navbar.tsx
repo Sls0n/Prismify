@@ -5,13 +5,14 @@ import ThemeButtonIcon from './ui/ThemeButtonIcon'
 
 export default function Navbar() {
   return (
-    <header className="fixed inset-x-0 top-0 z-[10] mx-auto flex h-fit max-w-7xl items-center justify-between px-4 py-4 sm:px-6">
+    <header className="fixed inset-x-0 top-0 z-[10] mx-auto flex h-fit max-w-7xl items-center justify-between px-4 pt-4 sm:px-6 lg:px-8">
       <div className="flex items-center gap-8">
         {/* Can add hamburger or something here */}
-
-        <h1 className="text-[1.4rem] font-semibold tracking-wide text-primary dark:font-normal dark:text-dark">
-          PRISMIFY
-        </h1>
+        <Link href="/" className="inline-flex space-x-6">
+          <span className="text-[1.4rem] font-semibold text-primary dark:font-normal dark:text-dark">
+            Prismify
+          </span>
+        </Link>
       </div>
       <nav className="flex items-center gap-10 ">
         <ThemeButtonIcon />

@@ -1,4 +1,5 @@
 import Navbar from '@/components/Navbar'
+import Background from '@/components/ui/Background'
 import Providers from '@/context/Providers'
 import '@/styles/globals.css'
 import { cn } from '@/utils/buttonUtils'
@@ -31,10 +32,11 @@ export default function RootLayout({
       className={cn('antialiased ', Font.className)}
       lang="en"
     >
-      <body className="min-h-screen pt-12 text-primary dark:text-dark">
+      <body className="min-h-screen bg-primary pt-12 text-primary dark:bg-dark dark:text-dark">
         <Providers>
           <Navbar />
           <div className="container mx-auto h-full max-w-7xl pt-12">
+            <Background />
             {children}
           </div>
         </Providers>
