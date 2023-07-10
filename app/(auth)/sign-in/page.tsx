@@ -1,5 +1,11 @@
 import SignIn from '@/components/SignIn'
 
 export default function page() {
-  return <SignIn />
+  return (
+    <>
+      <div className="mt-4">
+        <SignIn />
+      </div>
+    </>
+  )
 }

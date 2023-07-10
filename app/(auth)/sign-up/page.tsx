@@ -1,5 +1,9 @@
 import SignUp from '@/components/SignUp'
 
 export default function page() {
-  return <SignUp />
+  return (
+    <div className="mt-4">
+      <SignUp />
+    </div>
+  )
 }

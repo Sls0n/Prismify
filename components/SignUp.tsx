@@ -20,10 +20,10 @@ export default function SignUp() {
   }
 
   return (
-    <div className="flex items-center justify-center bg-gray-50">
+    <div className="flex items-center justify-center">
       <div className="w-full max-w-md space-y-10 p-6">
         <div>
-          <h1 className="text-center text-4xl font-bold text-gray-800">
+          <h1 className="text-center text-4xl font-bold text-gray-800 dark:text-dark">
             Sign up on{' '}
             <button
               onClick={() => router.push('/')}
@@ -37,7 +37,7 @@ export default function SignUp() {
           <div>
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-dark/70"
             >
               Username
             </label>
@@ -55,7 +55,7 @@ export default function SignUp() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-dark/70"
             >
               Email address
             </label>
@@ -73,7 +73,7 @@ export default function SignUp() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-dark/70"
             >
               Password
             </label>
@@ -91,7 +91,7 @@ export default function SignUp() {
           <div>
             <p className="mb-8 mt-4 flex gap-3 text-start text-sm text-primary">
               <Checkbox />
-              <span>
+              <span className="dark:text-dark/80">
                 I agree to the{' '}
                 <Link
                   href="/terms"
@@ -111,7 +111,7 @@ export default function SignUp() {
 
             <Button
               className={cn(
-                'flex w-full items-center justify-center rounded-md bg-gray-200 px-4 py-3 text-sm font-medium'
+                'flex w-full items-center justify-center rounded-md px-4 py-3 text-sm font-medium'
               )}
               size={'lg'}
               onClick={() => {}}
@@ -120,14 +120,14 @@ export default function SignUp() {
             </Button>
           </div>
 
-          <p className="mt-4 text-center text-sm text-primary">
+          <p className="mt-2 text-center text-sm text-primary dark:text-dark/80">
             Already have an account?{' '}
-            <Link
+            <a
               href="/sign-in"
               className="font-medium text-purple hover:text-purple/90 hover:underline"
             >
               Sign in
-            </Link>
+            </a>
           </p>
         </form>
       </div>

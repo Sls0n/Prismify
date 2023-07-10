@@ -9,7 +9,7 @@ export default function Navbar() {
       <div className="flex items-center gap-8">
         {/* Can add hamburger or something here */}
         <Link href="/" className="inline-flex space-x-6">
-          <span className="text-[1.4rem] font-semibold text-primary dark:font-normal dark:text-dark">
+          <span className="text-[1.4rem] font-semibold -tracking-wide text-primary dark:font-normal dark:text-dark">
             Prismify
           </span>
         </Link>

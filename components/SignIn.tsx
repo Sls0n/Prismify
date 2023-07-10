@@ -3,7 +3,6 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 
 import Input from './form/Input'
 import { Button } from './ui/Button'
@@ -20,10 +19,10 @@ export default function SignIn() {
   }
 
   return (
-    <div className="flex items-center justify-center bg-gray-50">
+    <div className="flex items-center justify-center">
       <div className="w-full max-w-md space-y-10 p-6">
         <div>
-          <h1 className="text-center text-4xl font-bold text-gray-800">
+          <h1 className="text-center text-4xl font-bold text-gray-800 dark:text-dark">
             Sign in to{' '}
             <button
               onClick={() => router.push('/')}
@@ -37,7 +36,7 @@ export default function SignIn() {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-dark/70"
             >
               Email address
             </label>
@@ -55,7 +54,7 @@ export default function SignIn() {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700"
+              className="block text-sm font-medium text-gray-700 dark:text-dark/70"
             >
               Password
             </label>
@@ -85,10 +84,10 @@ export default function SignIn() {
           {/* Continue with separator */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300" />
+              <div className="w-full border-t border-gray-300 dark:border-gray-800" />
             </div>
             <div className="relative flex justify-center text-sm">
-              <span className="bg-primary px-2 text-primary">
+              <span className="bg-primary px-2 text-primary dark:bg-dark dark:text-dark/80">
                 Or continue with
               </span>
             </div>
@@ -97,7 +96,7 @@ export default function SignIn() {
           {/* Provider buttons */}
           <div className="mt-6 grid grid-cols-3 gap-3">
             <div>
-              <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0">
+              <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-[#2C2E3B] dark:ring-gray-700">
                 <span className="sr-only">Sign in with Facebook</span>
                 <img
                   className="h-5 w-5"
@@ -108,7 +107,7 @@ export default function SignIn() {
             </div>
 
             <div>
-              <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0">
+              <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-[#2C2E3B] dark:ring-gray-700 ">
                 <span className="sr-only">Sign in with Google</span>
                 <img
                   className="h-5 w-5"
@@ -119,7 +118,7 @@ export default function SignIn() {
             </div>
 
             <div>
-              <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0">
+              <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-[#2C2E3B] dark:ring-gray-700 ">
                 <span className="sr-only">Sign in with GitHub</span>
                 <img
                   className="h-5 w-5"
@@ -129,14 +128,14 @@ export default function SignIn() {
               </button>
             </div>
           </div>
-          <p className="mt-4 text-center text-sm text-gray-600">
+          <p className="mt-3 text-center text-sm text-gray-600 dark:text-dark/80">
             Dont have an account?{' '}
-            <Link
+            <a
               href="/sign-up"
               className="font-medium text-purple hover:text-purple/90 hover:underline"
             >
               Sign up
-            </Link>
+            </a>
           </p>
         </form>
       </div>

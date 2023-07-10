@@ -4,6 +4,7 @@ import '@/styles/globals.css'
 import { cn } from '@/utils/buttonUtils'
 import type { Metadata } from 'next'
 import LocalFont from 'next/font/local'
+import Navbar from '@/components/Navbar'
 
 const Font = LocalFont({
   src: '../public/fonts/EudoxusSansGX.woff2',
@@ -31,11 +32,12 @@ export default function RootLayout({
   return (
     <html
       suppressHydrationWarning
-      className={cn('antialiased ', Font.className)}
+      className={cn('antialiased', Font.className)}
       lang="en"
     >
       <body className="min-h-screen bg-primary pt-12 text-primary dark:bg-dark dark:text-dark">
         <Providers>
+          <Navbar />
           {authModal}
 
           <div className="container mx-auto h-full max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">

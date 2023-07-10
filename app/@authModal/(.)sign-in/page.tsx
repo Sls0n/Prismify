@@ -1,18 +1,54 @@
-import SignIn from '@/components/SignIn'
-import CloseModal from '@/components/ui/CloseModal'
+'use client'
 
-export default function page() {
+import { useEffect, useRef } from 'react'
+import { useRouter } from 'next/navigation'
+import { motion, AnimatePresence } from 'framer-motion'
+
+import CloseModal from '@/components/ui/CloseModal'
+import SignIn from '@/components/SignIn'
+
+export default function SignInModalPage() {
+  const ref = useRef<HTMLDialogElement>(null)
+  const router = useRouter()
+
+  useEffect(() => {
+    const modalRef = ref.current
+
+    modalRef?.showModal()
+
+    const handleKeyDown = (event: KeyboardEvent) => {
+      if (event.key === 'Escape') {
+        router.back()
+        modalRef?.close()
+      }
+    }
+
+    document.addEventListener('keydown', handleKeyDown)
+
+    return () => {
+      document.removeEventListener('keydown', handleKeyDown)
+      modalRef?.close()
+    }
+  }, [router])
+
   return (
-    <div className="pointer-events-none fixed inset-0 z-20 bg-zinc-900/20">
-      <div className="container mx-auto flex h-full max-w-2xl items-center">
-        <div className="pointer-events-auto relative h-fit w-full rounded-lg bg-white px-2 py-20">
-          <div className="absolute right-4 top-4">
+    <AnimatePresence>
+      <motion.dialog
+        initial={{ opacity: 0, y: 50 }}
+        animate={{ opacity: 1, y: 0 }}
+        exit={{ opacity: 0, y: 50 }}
+        transition={{ duration: 0.2 }}
+        ref={ref}
+        className="container relative mx-auto flex h-5/6 max-h-screen max-w-2xl items-center rounded-lg bg-primary shadow-sm backdrop:backdrop-blur-sm dark:bg-dark"
+      >
+        <div className="h-fit w-full">
+          <div tabIndex={0} className="absolute right-8 top-8">
             <CloseModal />
           </div>
 
           <SignIn />
         </div>
-      </div>
-    </div>
+      </motion.dialog>
+    </AnimatePresence>
   )
 }

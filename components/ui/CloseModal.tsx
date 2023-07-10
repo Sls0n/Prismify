@@ -13,6 +13,7 @@ export default function CloseModal() {
       className="h-8 w-8 rounded-md p-2"
       onClick={() => router.back()}
     >
+      <span className="sr-only">Close modal</span>
       <X aria-label="close modal" className="h-4 w-4" />
     </Button>
   )
