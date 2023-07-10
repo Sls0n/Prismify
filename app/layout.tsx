@@ -3,12 +3,13 @@ import Providers from '@/context/Providers'
 import '@/styles/globals.css'
 import { cn } from '@/utils/buttonUtils'
 import type { Metadata } from 'next'
-import localFont from 'next/font/local'
+import LocalFont from 'next/font/local'
 
-const Font = localFont({
-  src: '../fonts/EudoxusSansGx.woff2',
+const Font = LocalFont({
+  src: '../public/fonts/EudoxusSansGX.woff2',
   display: 'swap',
   adjustFontFallback: 'Arial',
+  fallback: ['system-ui', 'sans-serif'],
 })
 
 export const metadata: Metadata = {
