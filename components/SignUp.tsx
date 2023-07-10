@@ -8,15 +8,26 @@ import Input from './form/Input'
 import { Button } from './ui/Button'
 import { cn } from '@/utils/buttonUtils'
 import Checkbox from '@/components/ui/Checkbox'
+import axios from 'axios'
 
 export default function SignUp() {
   const [data, setData] = useState({ email: '', password: '', username: '' })
+  const [loading, setLoading] = useState(false)
 
   const router = useRouter()
 
-  const loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
+  const signupUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(data)
+
+    try {
+      setLoading(true)
+      const res = await axios.post('/api/register', data)
+      console.log(res)
+    } catch (err) {
+      console.log(err)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -33,7 +44,7 @@ export default function SignUp() {
             </button>
           </h1>
         </div>
-        <form onSubmit={loginUser} className="space-y-8">
+        <form onSubmit={signupUser} className="space-y-8">
           <div>
             <label
               htmlFor="username"
@@ -110,6 +121,7 @@ export default function SignUp() {
             </p>
 
             <Button
+              isLoading={loading}
               className={cn(
                 'flex w-full items-center justify-center rounded-md px-4 py-3 text-sm font-medium'
               )}

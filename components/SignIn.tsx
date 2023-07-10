@@ -7,6 +7,7 @@ import { useRouter } from 'next/navigation'
 import Input from './form/Input'
 import { Button } from './ui/Button'
 import { cn } from '@/utils/buttonUtils'
+import { signIn } from 'next-auth/react'
 
 export default function SignIn() {
   const [data, setData] = useState({ email: '', password: '' })
@@ -15,7 +16,12 @@ export default function SignIn() {
 
   const loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault()
-    console.log(data)
+
+    signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    })
   }
 
   return (
@@ -107,7 +113,13 @@ export default function SignIn() {
             </div>
 
             <div>
-              <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-[#2C2E3B] dark:ring-gray-700 ">
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  signIn('google')
+                }}
+                className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-[#2C2E3B] dark:ring-gray-700 "
+              >
                 <span className="sr-only">Sign in with Google</span>
                 <img
                   className="h-5 w-5"
@@ -118,7 +130,13 @@ export default function SignIn() {
             </div>
 
             <div>
-              <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-[#2C2E3B] dark:ring-gray-700 ">
+              <button
+                onClick={(e) => {
+                  e.preventDefault()
+                  signIn('github')
+                }}
+                className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-[#2C2E3B] dark:ring-gray-700 "
+              >
                 <span className="sr-only">Sign in with GitHub</span>
                 <img
                   className="h-5 w-5"
