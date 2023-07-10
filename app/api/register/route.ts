@@ -29,7 +29,7 @@ export async function POST(request: Request) {
         name: username,
         email,
         hashedPassword,
-      },
+      } as { name: string; email: string; hashedPassword: string },
     })
 
     return NextResponse.json(user)

@@ -90,14 +90,28 @@ const Navbar = ({
           )}
           {authenticated && (
             <>
-              <Image
-                width={45}
-                height={45}
-                src={img || '/images/fallback-avatar.png'}
-                className="rounded-full border-[3px] border-[#e0e0ec] dark:border-[#1d1d1f]"
-                alt={`${username}'s avatar` || 'User avatar'}
-                aria-label="User avatar"
-              />
+              <div className="flex items-center gap-4">
+                <Image
+                  width={45}
+                  height={45}
+                  src={img || '/images/fallback-avatar.png'}
+                  className="rounded-xl border-[3px] border-[#e0e0ec] dark:border-[#1d1d1f]"
+                  alt={`${username}'s avatar` || 'User avatar'}
+                  aria-label="User avatar"
+                />
+                <div className="flex flex-col items-start justify-center gap-0.5">
+                  <Link
+                    href="/profile"
+                    className="text-[16px] font-medium capitalize text-primary dark:text-dark"
+                  >
+                    <span className="sr-only">Logged in as</span>
+
+                    {username}
+                  </Link>
+
+                  <span className="text-sm text-slate-400">View profile</span>
+                </div>
+              </div>
             </>
           )}
         </div>
