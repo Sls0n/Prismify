@@ -23,7 +23,7 @@ export default function SignUp() {
     <div className="flex items-center justify-center">
       <div className="w-full max-w-md space-y-10 p-6">
         <div>
-          <h1 className="text-center text-4xl font-bold text-gray-800 dark:text-dark">
+          <h1 className="text-center text-4xl font-semibold text-gray-800 dark:text-dark sm:font-bold">
             Sign up on{' '}
             <button
               onClick={() => router.push('/')}

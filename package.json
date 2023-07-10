@@ -9,7 +9,7 @@
     "lint": "next lint"
   },
   "dependencies": {
-    "@types/node": "20.4.1",
+    "@prisma/client": "^4.16.2",
     "@types/react": "18.2.14",
     "@types/react-dom": "18.2.6",
     "autoprefixer": "10.4.14",
@@ -30,7 +30,10 @@
     "typescript": "5.1.6"
   },
   "devDependencies": {
+    "@types/node": "20.4.1",
     "prettier": "2.8",
-    "prettier-plugin-tailwindcss": "^0.3.0"
+    "prettier-plugin-tailwindcss": "^0.3.0",
+    "prisma": "^4.16.2",
+    "ts-node": "^10.9.1"
   }
 }
