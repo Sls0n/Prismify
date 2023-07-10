@@ -4,7 +4,7 @@ import '@/styles/globals.css'
 import { cn } from '@/utils/buttonUtils'
 import type { Metadata } from 'next'
 import LocalFont from 'next/font/local'
-import Navbar from '@/components/Navbar'
+// import Navbar from '@/components/Navbar'
 
 const Font = LocalFont({
   src: '../public/fonts/EudoxusSansGX.woff2',
@@ -37,7 +37,7 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-primary pt-12 text-primary dark:bg-dark dark:text-dark">
         <Providers>
-          <Navbar />
+          {/* <Navbar /> */}
           {authModal}
 
           <div className="container mx-auto h-full max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">

@@ -1,6 +1,12 @@
 import SignIn from '@/components/SignIn'
+import { Metadata } from 'next'
 
-export default function page() {
+export const metadata: Metadata = {
+  title: 'Sign in — Prismify',
+  description: 'Sign in to Prismify with your account.',
+}
+
+export default function SignInPage() {
   return (
     <>
       <div className="mt-4">

@@ -39,7 +39,7 @@ export default function SignInModalPage() {
         exit={{ opacity: 0, y: 50 }}
         transition={{ duration: 0.2 }}
         ref={ref}
-        className="container relative mx-auto flex h-5/6 max-h-screen max-w-2xl items-center rounded-lg bg-primary shadow-sm backdrop:backdrop-blur-sm dark:bg-dark"
+        className="container relative mx-auto flex h-[85vh] max-h-screen max-w-2xl items-center rounded-lg bg-primary shadow-sm backdrop:backdrop-blur-sm dark:bg-dark"
       >
         <div className="h-fit w-full">
           <div tabIndex={0} className="absolute right-8 top-8">
