@@ -1,4 +1,5 @@
 import { cn } from '@/utils/buttonUtils'
+import Loader from '@/components/loader/Loader'
 import { VariantProps, cva } from 'class-variance-authority'
 import { ButtonHTMLAttributes } from 'react'
 import { forwardRef } from 'react'
@@ -59,7 +60,13 @@ const Button = forwardRef<HTMLButtonElement, ButtonProps>(
         disabled={isLoading}
         {...props}
       >
-        {isLoading ? 'Loading...' : children}
+        {isLoading ? (
+          <div className="flex items-center justify-center">
+            <Loader />
+          </div>
+        ) : (
+          children
+        )}
       </button>
     )
   }
