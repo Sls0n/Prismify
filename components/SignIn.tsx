@@ -3,25 +3,42 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
 
-import Input from './form/Input'
 import { Button } from './ui/Button'
 import { cn } from '@/utils/buttonUtils'
 import { signIn } from 'next-auth/react'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function SignIn() {
-  const [data, setData] = useState({ email: '', password: '' })
+  const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const router = useRouter()
 
-  const loginUser = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    defaultValues: {
+      email: '',
+      password: '',
+    },
+  })
 
-    signIn('credentials', {
-      email: data.email,
-      password: data.password,
-      redirect: false,
-    })
+  const loginUser = async (data: { email: string; password: string }) => {
+    try {
+      setLoading(true)
+      await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+      })
+    } catch (error) {
+      console.log(error)
+    } finally {
+      setLoading(false)
+    }
   }
 
   return (
@@ -38,7 +55,7 @@ export default function SignIn() {
             </button>
           </h1>
         </div>
-        <form onSubmit={loginUser} className="space-y-8">
+        <form onSubmit={handleSubmit(loginUser)} className="space-y-8">
           <div>
             <label
               htmlFor="email"
@@ -47,15 +64,24 @@ export default function SignIn() {
               Email address
             </label>
             <div className="mt-2">
-              <Input
-                value={data.email}
-                onChange={(e) => setData({ ...data, email: e.target.value })}
-                id="email"
-                name="email"
+              <input
                 type="email"
-                required
+                id="email"
+                className="md:text-md h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:ring-indigo-500 dark:border-gray-700 dark:bg-[transparent] dark:text-gray-100"
+                {...register('email', {
+                  required: { value: true, message: 'Email is required' },
+                  pattern: {
+                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
+                    message: 'Invalid email address',
+                  },
+                })}
               />
             </div>
+            {errors?.email && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div>
             <label
@@ -64,24 +90,54 @@ export default function SignIn() {
             >
               Password
             </label>
-            <div className="mt-2">
-              <Input
-                value={data.password}
-                onChange={(e) => setData({ ...data, password: e.target.value })}
+            <div className="relative mt-2">
+              <input
+                type={showPassword ? 'text' : 'password'}
                 id="password"
-                name="password"
-                type="password"
-                required
+                className="md:text-md h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:ring-indigo-500 dark:border-gray-700 dark:bg-[transparent] dark:text-gray-100"
+                {...register('password', {
+                  required: { value: true, message: 'Password is required' },
+                })}
               />
+              <button
+                aria-label="Show password"
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-2 flex items-center pr-3 text-sm text-gray-700 dark:text-dark/70"
+              >
+                {showPassword ? (
+                  <>
+                    <EyeOff
+                      size={19}
+                      className="text-gray-600 dark:text-dark/70"
+                    />
+                    <span className="sr-only">Hide password</span>
+                  </>
+                ) : (
+                  <>
+                    <Eye
+                      size={19}
+                      className="text-gray-600 dark:text-dark/70"
+                    />
+                    <span className="sr-only">Show password</span>
+                  </>
+                )}
+              </button>
             </div>
+            {errors?.password && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <div>
             <Button
+              type="submit"
+              isLoading={loading}
               className={cn(
                 'flex w-full items-center justify-center rounded-md bg-gray-200 px-4 py-3 text-sm font-medium'
               )}
               size={'lg'}
-              onClick={() => {}}
             >
               Sign in
             </Button>

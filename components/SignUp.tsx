@@ -6,7 +6,6 @@ import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 
-import Input from './form/Input'
 import { Button } from './ui/Button'
 import { cn } from '@/utils/buttonUtils'
 import Checkbox from '@/components/ui/Checkbox'
@@ -175,7 +174,6 @@ export default function SignUp() {
                 'flex w-full items-center justify-center rounded-md px-4 py-3 text-sm font-medium'
               )}
               size={'lg'}
-              onClick={() => {}}
             >
               Sign up
             </Button>
