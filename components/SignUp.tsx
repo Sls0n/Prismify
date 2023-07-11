@@ -2,6 +2,8 @@
 
 import { useState } from 'react'
 import { useRouter } from 'next/navigation'
+import { useForm } from 'react-hook-form'
+import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
 
 import Input from './form/Input'
@@ -9,20 +11,33 @@ import { Button } from './ui/Button'
 import { cn } from '@/utils/buttonUtils'
 import Checkbox from '@/components/ui/Checkbox'
 import axios from 'axios'
+import { RegisterInput } from '@/libs/validators/registerFormValidator'
+import { RegisterSchema } from '@/libs/validators/registerFormValidator'
+import { Eye, EyeOff } from 'lucide-react'
 
 export default function SignUp() {
-  const [data, setData] = useState({ email: '', password: '', username: '' })
   const [loading, setLoading] = useState(false)
+  const [showPassword, setShowPassword] = useState(false)
 
   const router = useRouter()
 
-  const signupUser = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault()
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm<RegisterInput>({
+    resolver: zodResolver(RegisterSchema),
+    defaultValues: {
+      username: '',
+      email: '',
+      password: '',
+    },
+  })
 
+  const signupUser = async (data: RegisterInput) => {
     try {
       setLoading(true)
-      const res = await axios.post('/api/register', data)
-      console.log(res)
+      await axios.post('/api/register', data)
     } catch (err) {
       console.log(err)
     } finally {
@@ -44,7 +59,7 @@ export default function SignUp() {
             </button>
           </h1>
         </div>
-        <form onSubmit={signupUser} className="space-y-8">
+        <form onSubmit={handleSubmit(signupUser)} className="space-y-8">
           <div>
             <label
               htmlFor="username"
@@ -53,15 +68,18 @@ export default function SignUp() {
               Username
             </label>
             <div className="mt-2">
-              <Input
-                value={data.username}
-                onChange={(e) => setData({ ...data, username: e.target.value })}
+              <input
+                type="text"
                 id="username"
-                name="username"
-                type="username"
-                required
+                className="md:text-md h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:ring-indigo-500 dark:border-gray-700 dark:bg-[transparent] dark:text-gray-100"
+                {...register('username')}
               />
             </div>
+            {errors?.username && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.username.message}
+              </p>
+            )}
           </div>
           <div>
             <label
@@ -71,15 +89,18 @@ export default function SignUp() {
               Email address
             </label>
             <div className="mt-2">
-              <Input
-                value={data.email}
-                onChange={(e) => setData({ ...data, email: e.target.value })}
-                id="email"
-                name="email"
+              <input
                 type="email"
-                required
+                id="email"
+                className="md:text-md h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:ring-indigo-500 dark:border-gray-700 dark:bg-[transparent] dark:text-gray-100"
+                {...register('email')}
               />
             </div>
+            {errors?.email && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.email.message}
+              </p>
+            )}
           </div>
           <div>
             <label
@@ -88,16 +109,43 @@ export default function SignUp() {
             >
               Password
             </label>
-            <div className="mt-2">
-              <Input
-                value={data.password}
-                onChange={(e) => setData({ ...data, password: e.target.value })}
+            <div className="relative mt-2">
+              <input
+                type={showPassword ? 'text' : 'password'}
                 id="password"
-                name="password"
-                type="password"
-                required
+                className="md:text-md h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:ring-indigo-500 dark:border-gray-700 dark:bg-[transparent] dark:text-gray-100"
+                {...register('password')}
               />
+              <button
+                aria-label="Show password"
+                type="button"
+                onClick={() => setShowPassword(!showPassword)}
+                className="absolute inset-y-0 right-2 flex items-center pr-3 text-sm text-gray-700 dark:text-dark/70"
+              >
+                {showPassword ? (
+                  <>
+                    <EyeOff
+                      size={19}
+                      className="text-gray-600 dark:text-dark/70"
+                    />
+                    <span className="sr-only">Hide password</span>
+                  </>
+                ) : (
+                  <>
+                    <Eye
+                      size={19}
+                      className="text-gray-600 dark:text-dark/70"
+                    />
+                    <span className="sr-only">Show password</span>
+                  </>
+                )}
+              </button>
             </div>
+            {errors?.password && (
+              <p className="mt-1 text-sm text-red-500">
+                {errors.password.message}
+              </p>
+            )}
           </div>
           <div>
             <p className="mb-8 mt-4 flex gap-3 text-start text-sm text-primary">
@@ -121,6 +169,7 @@ export default function SignUp() {
             </p>
 
             <Button
+              type="submit"
               isLoading={loading}
               className={cn(
                 'flex w-full items-center justify-center rounded-md px-4 py-3 text-sm font-medium'
