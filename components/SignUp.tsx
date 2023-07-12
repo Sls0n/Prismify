@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
@@ -9,11 +9,12 @@ import Link from 'next/link'
 import { Button } from './ui/Button'
 import { cn } from '@/utils/buttonUtils'
 import Checkbox from '@/components/ui/Checkbox'
-import axios from 'axios'
+import axios, { AxiosError } from 'axios'
 import { RegisterInput } from '@/libs/validators/registerFormValidator'
 import { RegisterSchema } from '@/libs/validators/registerFormValidator'
 import { Eye, EyeOff } from 'lucide-react'
 import { signIn } from 'next-auth/react'
+import { toast } from '@/hooks/use-toast'
 
 type SignUpProps = {
   authenticated?: boolean
@@ -43,14 +44,43 @@ export default function SignUp({ authenticated }: SignUpProps) {
       setLoading(true)
       await axios.post('/api/register', data)
 
+      toast({
+        title: 'Account successfully created',
+      })
+
       await signIn('credentials', {
         email: data.email,
         password: data.password,
       })
-    } catch (err) {
-      console.log(err)
 
-      // check axios response
+      router.push('/')
+      
+    } catch (err: any) {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 409) {
+          toast({
+            title: 'User already exists',
+            description: 'Please try with a different email.',
+            variant: 'destructive',
+          })
+        }
+
+        if (err.response?.status === 401) {
+          toast({
+            title: 'Invalid credentials',
+            description: 'Please try with a different email or password.',
+            variant: 'destructive',
+          })
+        }
+
+        if (err.response?.status === 500) {
+          toast({
+            title: 'Something went wrong',
+            description: 'Please try again later.',
+            variant: 'destructive',
+          })
+        }
+      }
     } finally {
       setLoading(false)
     }

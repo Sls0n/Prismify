@@ -9,7 +9,7 @@ export async function POST(request: Request) {
     const { username, email, password } = body
 
     if (!username || !email || !password) {
-      return new NextResponse('Missing credentials', { status: 400 })
+      return new NextResponse('Missing credentials', { status: 401 })
     }
 
     const exist = await prismadb.user.findUnique({
@@ -19,7 +19,7 @@ export async function POST(request: Request) {
     })
 
     if (exist) {
-      return new NextResponse('User already exists', { status: 400 })
+      return new NextResponse('User already exists', { status: 409 })
     }
 
     const hashedPassword = await bcrypt.hash(password, 10)
