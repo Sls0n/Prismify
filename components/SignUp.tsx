@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
+import { redirect, useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
@@ -14,7 +14,11 @@ import { RegisterInput } from '@/libs/validators/registerFormValidator'
 import { RegisterSchema } from '@/libs/validators/registerFormValidator'
 import { Eye, EyeOff } from 'lucide-react'
 
-export default function SignUp() {
+type SignUpProps = {
+  authenticated?: boolean
+}
+
+export default function SignUp({ authenticated }: SignUpProps) {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
@@ -37,12 +41,17 @@ export default function SignUp() {
     try {
       setLoading(true)
       await axios.post('/api/register', data)
+      redirect('/sign-in')
     } catch (err) {
       console.log(err)
+
+      // check axios response
     } finally {
       setLoading(false)
     }
   }
+
+  if (authenticated) return null
 
   return (
     <div className="flex items-center justify-center">

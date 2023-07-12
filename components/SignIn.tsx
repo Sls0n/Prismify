@@ -10,7 +10,11 @@ import { cn } from '@/utils/buttonUtils'
 import { signIn } from 'next-auth/react'
 import { Eye, EyeOff } from 'lucide-react'
 
-export default function SignIn() {
+type SignInProps = {
+  authenticated?: boolean
+}
+
+export default function SignIn({ authenticated }: SignInProps) {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
 
@@ -40,6 +44,8 @@ export default function SignIn() {
       setLoading(false)
     }
   }
+
+  if (authenticated) return null
 
   return (
     <div className="flex items-center justify-center">
