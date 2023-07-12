@@ -13,6 +13,7 @@ import axios from 'axios'
 import { RegisterInput } from '@/libs/validators/registerFormValidator'
 import { RegisterSchema } from '@/libs/validators/registerFormValidator'
 import { Eye, EyeOff } from 'lucide-react'
+import { signIn } from 'next-auth/react'
 
 type SignUpProps = {
   authenticated?: boolean
@@ -42,7 +43,10 @@ export default function SignUp({ authenticated }: SignUpProps) {
       setLoading(true)
       await axios.post('/api/register', data)
 
-      router.push('/sign-in')
+      await signIn('credentials', {
+        email: data.email,
+        password: data.password,
+      })
     } catch (err) {
       console.log(err)
 
