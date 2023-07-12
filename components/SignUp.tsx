@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
@@ -41,7 +41,8 @@ export default function SignUp({ authenticated }: SignUpProps) {
     try {
       setLoading(true)
       await axios.post('/api/register', data)
-      redirect('/sign-in')
+
+      router.push('/sign-in')
     } catch (err) {
       console.log(err)
 
