@@ -16,7 +16,7 @@ module.exports = {
       backgroundColor: {
         primary: '#FBFBFA',
         dark: '#0e1013',
-        formDark: '#101118',
+        formDark: 'rgb(255 255 255 / 0.05)',
       },
       textColor: {
         primary: '#212329',

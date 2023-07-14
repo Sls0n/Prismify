@@ -37,12 +37,11 @@ export default function RootLayout({
     >
       <body className="min-h-screen bg-primary pt-12 text-primary dark:bg-dark dark:text-dark">
         <Toaster />
-
+        {authModal}
         <Providers>
           <div className="container mx-auto h-full max-w-7xl px-4 pt-12 sm:px-6 lg:px-8">
             <Background />
             {children}
-            {authModal}
           </div>
         </Providers>
       </body>

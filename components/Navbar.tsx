@@ -3,6 +3,7 @@ import { cn } from '@/utils/buttonUtils'
 import { buttonVariants } from '@/components/ui/Button'
 import ThemeButtonIcon from './ui/ThemeButtonIcon'
 import Image from 'next/image'
+import { ChevronDown, MoonStar } from 'lucide-react'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -29,6 +30,7 @@ const Navbar = ({
       </div>
       <nav className="flex items-center gap-10 ">
         <ThemeButtonIcon />
+
         <div className="flex items-center gap-2">
           {!authenticated && (
             <>
@@ -90,27 +92,27 @@ const Navbar = ({
           )}
           {authenticated && (
             <>
-              <div className="flex items-center gap-4">
+              <div className="flex items-center justify-center gap-x-2.5">
                 <Image
-                  width={45}
-                  height={45}
+                  width={30}
+                  height={30}
                   src={img || '/images/fallback-avatar.png'}
-                  className="rounded-xl border-[3px] border-[#e0e0ec] dark:border-[#1d1d1f]"
+                  className="rounded-full "
                   alt={`${username}'s avatar` || 'User avatar'}
                   aria-label="User avatar"
                 />
-                <div className="flex flex-col items-start justify-center gap-0.5">
-                  <Link
-                    href="/profile"
-                    className="text-[16px] font-medium capitalize text-primary dark:text-dark"
-                  >
-                    <span className="sr-only">Logged in as</span>
+                <Link
+                  href="/profile"
+                  className="flex items-center justify-center gap-1.5 truncate text-sm font-medium capitalize text-primary/70 dark:text-dark/80 md:text-base"
+                >
+                  <span className="sr-only">Logged in as</span>
+                  <span>{username?.split(' ')[0]}</span>
 
-                    {username}
-                  </Link>
-
-                  <span className="text-sm text-slate-400">View profile</span>
-                </div>
+                  <ChevronDown
+                    size={16}
+                    className="translate-y-[0.15rem] text-primary/70 dark:text-dark/80"
+                  />
+                </Link>
               </div>
             </>
           )}

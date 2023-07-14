@@ -40,6 +40,8 @@ export default function SignIn({ authenticated }: SignInProps) {
       })
     } catch (error) {
       console.log(error)
+
+      // todo: show error message
     } finally {
       setLoading(false)
     }
@@ -65,7 +67,7 @@ export default function SignIn({ authenticated }: SignInProps) {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700 dark:text-dark/70"
+              className="block text-sm font-semibold text-slate-700 dark:text-dark/70"
             >
               Email address
             </label>
@@ -73,7 +75,7 @@ export default function SignIn({ authenticated }: SignInProps) {
               <input
                 type="email"
                 id="email"
-                className="md:text-md h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:ring-indigo-500 dark:border-gray-700 dark:bg-[transparent] dark:text-gray-100"
+                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
                 {...register('email', {
                   required: { value: true, message: 'Email is required' },
                   pattern: {
@@ -92,7 +94,7 @@ export default function SignIn({ authenticated }: SignInProps) {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700 dark:text-dark/70"
+              className="block text-sm font-semibold text-slate-700 dark:text-dark/70"
             >
               Password
             </label>
@@ -100,7 +102,7 @@ export default function SignIn({ authenticated }: SignInProps) {
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
-                className="md:text-md h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:ring-indigo-500 dark:border-gray-700 dark:bg-[transparent] dark:text-gray-100"
+                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
                 {...register('password', {
                   required: { value: true, message: 'Password is required' },
                 })}
@@ -152,7 +154,7 @@ export default function SignIn({ authenticated }: SignInProps) {
           {/* Continue with separator */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300 dark:border-gray-800" />
+              <div className="w-full border-t border-gray-300 dark:border-[#22262b]" />
             </div>
             <div className="relative flex justify-center text-sm">
               <span className="bg-primary px-2 text-primary dark:bg-dark dark:text-dark/80">
@@ -164,7 +166,7 @@ export default function SignIn({ authenticated }: SignInProps) {
           {/* Provider buttons */}
           <div className="mt-6 grid grid-cols-3 gap-3">
             <div>
-              <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-[#2C2E3B] dark:ring-gray-700">
+              <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-formDark dark:ring-[#22262b]">
                 <span className="sr-only">Sign in with Facebook</span>
                 <img
                   className="h-5 w-5"
@@ -180,7 +182,7 @@ export default function SignIn({ authenticated }: SignInProps) {
                   e.preventDefault()
                   signIn('google')
                 }}
-                className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-[#2C2E3B] dark:ring-gray-700 "
+                className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-formDark dark:ring-[#22262b]"
               >
                 <span className="sr-only">Sign in with Google</span>
                 <img
@@ -197,7 +199,7 @@ export default function SignIn({ authenticated }: SignInProps) {
                   e.preventDefault()
                   signIn('github')
                 }}
-                className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-[#2C2E3B] dark:ring-gray-700 "
+                className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-formDark dark:ring-[#22262b]"
               >
                 <span className="sr-only">Sign in with GitHub</span>
                 <img

@@ -1,7 +1,7 @@
 'use client'
 
 import { useState } from 'react'
-import { redirect, useRouter } from 'next/navigation'
+import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
 import Link from 'next/link'
@@ -54,7 +54,6 @@ export default function SignUp({ authenticated }: SignUpProps) {
       })
 
       router.push('/')
-      
     } catch (err: any) {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {
@@ -106,7 +105,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
           <div>
             <label
               htmlFor="username"
-              className="block text-sm font-medium text-gray-700 dark:text-dark/70"
+              className="block text-sm font-semibold text-slate-700 dark:text-dark/70"
             >
               Username
             </label>
@@ -114,7 +113,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
               <input
                 type="text"
                 id="username"
-                className="md:text-md h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:ring-indigo-500 dark:border-gray-700 dark:bg-[transparent] dark:text-gray-100"
+                className="md:text-sm h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece]  focus:outline-none focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100"
                 {...register('username')}
               />
             </div>
@@ -127,7 +126,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
           <div>
             <label
               htmlFor="email"
-              className="block text-sm font-medium text-gray-700 dark:text-dark/70"
+              className="block text-sm font-semibold text-slate-700 dark:text-dark/70"
             >
               Email address
             </label>
@@ -135,7 +134,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
               <input
                 type="email"
                 id="email"
-                className="md:text-md h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:ring-indigo-500 dark:border-gray-700 dark:bg-[transparent] dark:text-gray-100"
+                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
                 {...register('email')}
               />
             </div>
@@ -148,7 +147,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
           <div>
             <label
               htmlFor="password"
-              className="block text-sm font-medium text-gray-700 dark:text-dark/70"
+              className="block text-sm font-semibold text-slate-700 dark:text-dark/70"
             >
               Password
             </label>
@@ -156,7 +155,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
-                className="md:text-md h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:ring-indigo-500 dark:border-gray-700 dark:bg-[transparent] dark:text-gray-100"
+                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
                 {...register('password')}
               />
               <button

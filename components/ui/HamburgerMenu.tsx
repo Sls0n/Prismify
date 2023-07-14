@@ -1,6 +1,6 @@
 'use client'
 
-import classes from './HamburgerMenu.module.css'
+import classes from './style/HamburgerMenu.module.css'
 
 export default function HamburgerMenu() {
   return (

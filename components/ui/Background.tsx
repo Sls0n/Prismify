@@ -1,17 +1,9 @@
 'use client'
 
-import { useState, useEffect } from 'react'
 import { useTheme } from 'next-themes'
 
 export default function Background() {
-  const [mounted, setMounted] = useState(false)
-  const { theme } = useTheme()
-
-  useEffect(() => {
-    setMounted(true)
-  }, [])
-
-    if (!mounted) return null
+  const { theme, setTheme } = useTheme()
 
   return (
     <>
@@ -27,7 +19,7 @@ export default function Background() {
           }}
         />
       </div> */}
-      {theme === 'dark' ? (
+      {localStorage.getItem('theme') === 'dark' ? (
         <svg
           className="absolute inset-0 -z-10 h-full w-full stroke-white/10 [mask-image:radial-gradient(100%_100%_at_bottom_right,white,transparent)]"
           aria-hidden="true"
