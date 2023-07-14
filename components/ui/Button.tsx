@@ -12,6 +12,7 @@ const buttonVariants = cva(
       variant: {
         default:
           'bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#8e8ece] text-white h-10 px-4 py-2 rounded-3xl font-medium',
+        none: 'text-white h-10 px-4 py-2 rounded-3xl font-medium',
         secondary:
           'text-primary dark:text-dark h-10 px-4 py-2 rounded-3xl  font-medium',
         outline:

@@ -1,9 +1,20 @@
+'use client'
+
 import Link from 'next/link'
 import { cn } from '@/utils/buttonUtils'
-import { buttonVariants } from '@/components/ui/Button'
+import { Button, buttonVariants } from '@/components/ui/Button'
 import ThemeButtonIcon from './ui/ThemeButtonIcon'
 import Image from 'next/image'
-import { ChevronDown, MoonStar } from 'lucide-react'
+import { ChevronDown, LogOut, Settings, User } from 'lucide-react'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuGroup,
+  DropdownMenuItem,
+  DropdownMenuSeparator,
+  DropdownMenuTrigger,
+} from '@/components/ui/DropdownMenu'
+import { signOut } from 'next-auth/react'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -92,28 +103,69 @@ const Navbar = ({
           )}
           {authenticated && (
             <>
-              <div className="flex items-center justify-center gap-x-2.5">
-                <Image
-                  width={30}
-                  height={30}
-                  src={img || '/images/fallback-avatar.png'}
-                  className="rounded-full "
-                  alt={`${username}'s avatar` || 'User avatar'}
-                  aria-label="User avatar"
-                />
-                <Link
-                  href="/profile"
-                  className="flex items-center justify-center gap-1.5 truncate text-sm font-medium capitalize text-primary/70 dark:text-dark/80 md:text-base"
-                >
-                  <span className="sr-only">Logged in as</span>
-                  <span>{username?.split(' ')[0]}</span>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button
+                    variant={'none'}
+                    className="flex cursor-pointer items-center justify-center gap-x-2.5"
+                  >
+                    <Image
+                      width={30}
+                      height={30}
+                      src={img || '/images/fallback-avatar.png'}
+                      className="rounded-full "
+                      alt={`${username}'s avatar` || 'User avatar'}
+                      aria-label="User avatar"
+                    />
+                    <div className="flex translate-y-[-1px] items-center justify-center gap-1.5  truncate font-medium capitalize text-primary/70 dark:text-dark/80 md:text-base">
+                      <span className="sr-only">Logged in as</span>
+                      <span className="text-[0.95rem]">
+                        {username?.split(' ')[0]}
+                      </span>
 
-                  <ChevronDown
-                    size={16}
-                    className="translate-y-[0.15rem] text-primary/70 dark:text-dark/80"
-                  />
-                </Link>
-              </div>
+                      <ChevronDown
+                        size={16}
+                        className="translate-y-[0.15rem] text-primary/70 dark:text-dark/80"
+                      />
+                    </div>
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent className="mt-2 w-40">
+                  <DropdownMenuGroup>
+                    <DropdownMenuItem>
+                      <div className=" flex min-w-[2rem] items-center justify-center">
+                        <User
+                          size={18}
+                          className="mr-3 h-4 w-4 text-primary/70 dark:text-dark/80"
+                        />
+                        <span className="font-medium">Profile</span>
+                      </div>
+                    </DropdownMenuItem>
+                    <DropdownMenuItem>
+                      <div className="flex min-w-[2rem] items-center justify-center">
+                        <Settings
+                          size={18}
+                          className="mr-3 h-4 w-4 text-primary/70 dark:text-dark/80"
+                        />
+                        <span className="font-medium">Settings</span>
+                      </div>
+                    </DropdownMenuItem>
+                  </DropdownMenuGroup>
+                  <DropdownMenuSeparator />
+                  <DropdownMenuItem>
+                    <button
+                      onClick={() => signOut()}
+                      className="flex min-w-[2rem] items-center justify-center"
+                    >
+                      <LogOut
+                        size={18}
+                        className="mr-3 h-4 w-4 text-primary/70 dark:text-dark/80"
+                      />
+                      <span className="font-medium">Sign out</span>
+                    </button>
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </>
           )}
         </div>
