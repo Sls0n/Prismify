@@ -12,7 +12,7 @@ const buttonVariants = cva(
       variant: {
         default:
           'bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#8e8ece] text-white h-10 px-4 py-2 rounded-3xl font-medium',
-        none: 'text-white h-10 px-4 py-2 rounded-3xl font-medium',
+        none: 'rounded-none',
         secondary:
           'text-primary dark:text-dark h-10 px-4 py-2 rounded-3xl  font-medium',
         outline:
@@ -26,6 +26,7 @@ const buttonVariants = cva(
         lg: 'h-11 py-3 px-4 text-md',
         default: 'h-10 py-2 px-4',
         sm: 'h-9 px-3 py-2',
+        'x-sm': 'h-8 px-3 py-2',
       },
       // Only used for the link since we can only used disabled prop on a button
       linkDisabled: {

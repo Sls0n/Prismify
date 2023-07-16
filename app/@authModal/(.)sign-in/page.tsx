@@ -40,7 +40,7 @@ export default function SignInModalPage() {
         transition={{ duration: 0.2 }}
         ref={ref}
         className="container relative mx-auto flex h-[85vh] max-h-screen max-w-2xl items-center rounded-lg bg-primary
-          shadow-sm
+          shadow-md
         backdrop:backdrop-blur-sm dark:bg-formDark"
       >
         <div className="h-fit w-full">

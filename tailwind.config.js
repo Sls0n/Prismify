@@ -16,13 +16,14 @@ module.exports = {
       backgroundColor: {
         primary: '#FBFBFA',
         dark: '#0e1013',
-        formDark: 'rgb(255 255 255 / 0.05)',
+        formDark: 'hsl(216, 9%, 11%)',
       },
       textColor: {
         primary: '#212329',
         dark: '#C2C3C9',
         purple: '#898AEB',
       },
+
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
@@ -67,7 +68,7 @@ module.exports = {
         sans: ['var(--font-sans)', ...fontFamily.sans],
       },
       boxShadow: {
-        custom:  '0 12px 32px rgba(0, 0, 0, .1), 0 2px 6px rgba(0, 0, 0, .08)'
+        custom: '0 12px 32px rgba(0, 0, 0, .1), 0 2px 6px rgba(0, 0, 0, .08)',
       },
       keyframes: {
         'accordion-down': {

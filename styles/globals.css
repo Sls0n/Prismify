@@ -7,7 +7,7 @@
     --background: 0 0% 100%;
     --foreground: 222.2 84% 4.9%;
 
-    --muted: 210 40% 96.1%;
+    --muted: 210 40% 94.4%;
     --muted-foreground: 215.4 16.3% 46.9%;
 
     --popover: 0 0% 100%;
@@ -75,4 +75,23 @@
   body {
     @apply bg-background text-foreground;
   }
+}
+
+@layer components {
+  .sidebar-option {
+    @apply inline-flex h-[9%] items-center justify-between gap-2 border-b border-border px-4 transition-colors hover:bg-accent;
+  }
+}
+
+#sidebar::-webkit-scrollbar {
+  width: 4px;
+  cursor: pointer;
+}
+#sidebar::-webkit-scrollbar-track {
+  background-color: rgba(229, 231, 235, var(--bg-opacity));
+  cursor: pointer;
+}
+#sidebar::-webkit-scrollbar-thumb {
+  cursor: pointer;
+  background-color: #a0aec0;
 }
