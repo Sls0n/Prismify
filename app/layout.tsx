@@ -24,10 +24,8 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
-  authModal,
 }: {
   children: React.ReactNode
-  authModal: React.ReactNode
 }) {
   return (
     <html
@@ -38,7 +36,6 @@ export default function RootLayout({
       <body className="min-h-screen overflow-x-hidden bg-primary px-4 pt-12 text-primary dark:bg-dark dark:text-dark sm:px-6 lg:px-8">
         <Toaster />
 
-        {authModal}
         <Providers>
           <div className="mx-auto h-full max-w-[85rem] pt-12">
             <Background />

@@ -14,7 +14,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu'
+import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog'
 import { signOut } from 'next-auth/react'
+import SignIn from './SignIn'
+import SignUp from './SignUp'
+import { toast } from '@/hooks/use-toast'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -30,7 +34,7 @@ export default function Navbar({
   img,
 }: NavbarProps) {
   return (
-    <header className="fixed inset-x-0 top-0 z-[10] h-fit border-b border-border px-4 py-4 pt-4 shadow-md backdrop-blur-md dark:bg-formDark/50 sm:px-6 lg:px-8">
+    <header className="fixed inset-x-0 top-0 z-[10] h-fit border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="mx-auto flex w-full max-w-[85rem] items-center justify-between">
         <div className="flex items-center gap-8">
           {/* Can add hamburger or something here */}
@@ -43,6 +47,7 @@ export default function Navbar({
               width={35}
               height={35}
               alt="logo"
+              priority
             />
             <span className="text-lg font-medium -tracking-wide text-primary dark:font-normal dark:text-dark sm:font-semibold">
               Prismify
@@ -57,26 +62,41 @@ export default function Navbar({
               <>
                 {mode === 'default' && (
                   <>
-                    <Link
-                      className={cn(
-                        buttonVariants({
-                          variant: 'ghost',
-                        })
-                      )}
-                      href="/sign-in"
-                    >
-                      Sign in
-                    </Link>
-                    <Link
-                      className={cn(
-                        buttonVariants({
-                          variant: 'default',
-                        })
-                      )}
-                      href="/sign-up"
-                    >
-                      Sign up
-                    </Link>
+                    <Dialog>
+                      <DialogTrigger
+                        className={cn(
+                          buttonVariants({
+                            variant: 'ghost',
+                          })
+                        )}
+                      >
+                        Sign in
+                      </DialogTrigger>
+
+                      <DialogContent className="container mx-auto flex h-[85vh] max-h-screen max-w-2xl items-center rounded-lg bg-primary dark:bg-dark">
+                        <div className="h-fit w-full">
+                          <SignIn />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
+
+                    <Dialog>
+                      <DialogTrigger
+                        className={cn(
+                          buttonVariants({
+                            variant: 'default',
+                          })
+                        )}
+                      >
+                        Sign up
+                      </DialogTrigger>
+
+                      <DialogContent className="container mx-auto flex h-[85vh] max-h-screen max-w-2xl items-center rounded-lg bg-primary dark:bg-dark">
+                        <div className="h-fit w-full">
+                          <SignUp />
+                        </div>
+                      </DialogContent>
+                    </Dialog>
                   </>
                 )}
 
@@ -166,7 +186,21 @@ export default function Navbar({
                     <DropdownMenuSeparator />
                     <DropdownMenuItem>
                       <button
-                        onClick={() => signOut()}
+                        onClick={() => {
+                          signOut()
+                            .then(() => {
+                              toast({
+                                title: 'Logging out..',
+                              })
+                            })
+                            .catch((err) => {
+                              toast({
+                                variant: 'destructive',
+                                title: "Couldn't sign out!",
+                                description: 'Try again later.',
+                              })
+                            })
+                        }}
                         className="flex min-w-[2rem] items-center justify-center"
                       >
                         <LogOut

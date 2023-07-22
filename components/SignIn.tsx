@@ -2,13 +2,14 @@
 'use client'
 
 import { useState } from 'react'
-import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 
 import { Button } from './ui/Button'
 import { cn } from '@/utils/buttonUtils'
 import { signIn } from 'next-auth/react'
 import { Eye, EyeOff } from 'lucide-react'
+import { toast } from '@/hooks/use-toast'
+import { useRouter } from 'next/navigation'
 
 type SignInProps = {
   authenticated?: boolean
@@ -31,20 +32,30 @@ export default function SignIn({ authenticated }: SignInProps) {
     },
   })
 
-  const loginUser = async (data: { email: string; password: string }) => {
-    try {
-      setLoading(true)
-      await signIn('credentials', {
-        email: data.email,
-        password: data.password,
-      })
-    } catch (error) {
-      console.log(error)
+  const loginUser = (data: { email: string; password: string }) => {
+    setLoading(true)
 
-      // todo: show error message
-    } finally {
+    signIn('credentials', {
+      email: data.email,
+      password: data.password,
+      redirect: false,
+    }).then((callback) => {
       setLoading(false)
-    }
+
+      if (callback?.ok) {
+        toast({
+          title: 'Successfully logged in',
+        })
+        router.refresh()
+      }
+
+      if (callback?.error) {
+        toast({
+          variant: 'destructive',
+          description: callback.error,
+        })
+      }
+    })
   }
 
   if (authenticated) return null
@@ -55,12 +66,9 @@ export default function SignIn({ authenticated }: SignInProps) {
         <div>
           <h1 className="text-center text-4xl font-semibold text-gray-800 dark:text-dark sm:font-bold">
             Sign in to{' '}
-            <button
-              onClick={() => router.push('/')}
-              className="bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-transparent "
-            >
+            <span className="bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-transparent ">
               Prismify
-            </button>
+            </span>
           </h1>
         </div>
         <form onSubmit={handleSubmit(loginUser)} className="space-y-8">

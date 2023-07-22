@@ -46,6 +46,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
 
       toast({
         title: 'Account successfully created',
+        description: 'Wait while we sign you in...',
       })
 
       await signIn('credentials', {
@@ -93,12 +94,9 @@ export default function SignUp({ authenticated }: SignUpProps) {
         <div>
           <h1 className="text-center text-4xl font-semibold text-gray-800 dark:text-dark sm:font-bold">
             Sign up on{' '}
-            <button
-              onClick={() => router.push('/')}
-              className="bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-transparent "
-            >
+            <span className="bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-transparent ">
               Prismify
-            </button>
+            </span>
           </h1>
         </div>
         <form onSubmit={handleSubmit(signupUser)} className="space-y-8">
@@ -113,7 +111,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
               <input
                 type="text"
                 id="username"
-                className="md:text-sm h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece]  focus:outline-none focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100"
+                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
                 {...register('username')}
               />
             </div>

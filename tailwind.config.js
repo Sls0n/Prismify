@@ -15,7 +15,7 @@ module.exports = {
     extend: {
       backgroundColor: {
         primary: '#FBFBFA',
-        dark: '#0e1013',
+        dark: '#181819',
         formDark: 'hsl(216, 9%, 11%)',
       },
       textColor: {
@@ -27,7 +27,7 @@ module.exports = {
       colors: {
         border: 'hsl(var(--border))',
         input: 'hsl(var(--input))',
-        ring: 'hsl(var(--ring))',
+        ring: '#8e8ece',
         background: 'hsl(var(--background))',
         foreground: 'hsl(var(--foreground))',
         primary: {

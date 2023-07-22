@@ -16,9 +16,9 @@ const buttonVariants = cva(
         secondary:
           'text-primary dark:text-dark h-10 px-4 py-2 rounded-3xl  font-medium',
         outline:
-          'text-primary border border-input dark:text-dark h-10 px-4 py-2 rounded-3xl  font-medium',
+          'text-primary border border-input dark:text-dark h-10 px-4 py-2 rounded-3xl font-medium',
         ghost:
-          'text-primary dark:text-dark hover:bg-[#f5f7fa] dark:hover:bg-[#151722] h-10 px-4 py-2 rounded-3xl font-medium',
+          'text-primary dark:text-dark hover:bg-[#f5f7fa] dark:hover:bg-formDark h-10 px-4 py-2 rounded-3xl font-medium',
         stylish:
           'rounded-full bg-indigo-500/10 px-3 py-1 text-sm font-semibold leading-6 text-purple ring-1 ring-inset ring-indigo-500/20',
       },
