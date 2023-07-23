@@ -1,4 +1,3 @@
-import Background from '@/components/ui/Background'
 import { Toaster } from '@/components/ui/Toaster'
 import Providers from '@/context/Providers'
 import { cn } from '@/utils/buttonUtils'
@@ -33,12 +32,11 @@ export default function RootLayout({
       className={cn('antialiased', Font.className)}
       lang="en"
     >
-      <body className="min-h-screen overflow-x-hidden bg-primary px-4 pt-12 text-primary dark:bg-dark dark:text-dark sm:px-6 lg:px-8">
+      <body className="h-screen overflow-x-hidden bg-primary pt-12 text-primary dark:bg-dark dark:text-dark ">
         <Toaster />
 
         <Providers>
-          <div className="mx-auto h-full max-w-[85rem] pt-12">
-            <Background />
+          <div className="mx-auto flex h-full max-w-[100rem] flex-col">
             {children}
           </div>
         </Providers>
