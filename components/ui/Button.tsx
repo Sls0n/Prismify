@@ -26,7 +26,7 @@ const buttonVariants = cva(
           'text-white bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#8e8ece] h-12 px-5 py-2.5 rounded-xl font-medium border border-input dark:text-white',
       },
       size: {
-        'x-lg': 'h-13 py-4 px-5',
+        'x-lg': 'h-13 py-[0.8rem] px-[1.1rem]',
         lg: 'h-11 py-3 px-4 text-md',
         default: 'h-10 py-2 px-4',
         sm: 'h-9 px-3 py-2',

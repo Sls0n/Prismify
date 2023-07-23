@@ -35,7 +35,7 @@ export default function Navbar({
 }: NavbarProps) {
   return (
     <header className="fixed inset-x-0 top-0 z-[10] h-18 flex items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
-      <div className="mx-auto flex w-full max-w-[100rem] items-center justify-between">
+      <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-8">
           {/* Can add hamburger or something here */}
           <Link href="/" className="inline-flex items-center space-x-3">
