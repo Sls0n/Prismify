@@ -18,7 +18,7 @@ export default async function SignUpPage() {
 
   return (
     <>
-      <div className="mt-4">
+      <div className="mt-16">
         <SignUp authenticated={!!session} />
       </div>
     </>

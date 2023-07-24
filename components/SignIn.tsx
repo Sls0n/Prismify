@@ -10,6 +10,7 @@ import { signIn } from 'next-auth/react'
 import { Eye, EyeOff } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
+import Link from 'next/link'
 
 type SignInProps = {
   authenticated?: boolean
@@ -220,12 +221,12 @@ export default function SignIn({ authenticated }: SignInProps) {
           </div>
           <p className="mt-3 text-center text-sm text-gray-600 dark:text-dark/80">
             Dont have an account?{' '}
-            <a
+            <Link
               href="/sign-up"
               className="font-medium text-purple hover:text-purple/90 hover:underline"
             >
               Sign up
-            </a>
+            </Link>
           </p>
         </form>
       </div>

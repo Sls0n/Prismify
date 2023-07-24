@@ -4,7 +4,6 @@ import { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
-import Link from 'next/link'
 
 import { Button } from './ui/Button'
 import { cn } from '@/utils/buttonUtils'
@@ -15,6 +14,7 @@ import { RegisterSchema } from '@/libs/validators/registerFormValidator'
 import { Eye, EyeOff } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import { toast } from '@/hooks/use-toast'
+import Link from 'next/link'
 
 type SignUpProps = {
   authenticated?: boolean
@@ -222,12 +222,12 @@ export default function SignUp({ authenticated }: SignUpProps) {
 
           <p className="mt-2 text-center text-sm text-primary dark:text-dark/80">
             Already have an account?{' '}
-            <a
+            <Link
               href="/sign-in"
               className="font-medium text-purple hover:text-purple/90 hover:underline"
             >
               Sign in
-            </a>
+            </Link>
           </p>
         </form>
       </div>

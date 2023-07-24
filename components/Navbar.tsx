@@ -17,7 +17,6 @@ import {
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog'
 import { signOut } from 'next-auth/react'
 import SignIn from './SignIn'
-import SignUp from './SignUp'
 import { toast } from '@/hooks/use-toast'
 
 type NavbarProps = {
@@ -34,7 +33,7 @@ export default function Navbar({
   img,
 }: NavbarProps) {
   return (
-    <header className="fixed inset-x-0 top-0 z-[10] h-18 flex items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
+    <header className="h-18 fixed inset-x-0 top-0 z-[10] flex items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-8">
           {/* Can add hamburger or something here */}
@@ -66,34 +65,16 @@ export default function Navbar({
                       <DialogTrigger
                         className={cn(
                           buttonVariants({
-                            variant: 'ghost',
+                            variant: 'default',
                           })
                         )}
                       >
-                        Sign in
+                        Sign In
                       </DialogTrigger>
 
                       <DialogContent className="container mx-auto flex h-[85vh] max-h-screen max-w-2xl items-center rounded-lg bg-primary dark:bg-dark">
                         <div className="h-fit w-full">
                           <SignIn />
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-
-                    <Dialog>
-                      <DialogTrigger
-                        className={cn(
-                          buttonVariants({
-                            variant: 'default',
-                          })
-                        )}
-                      >
-                        Sign up
-                      </DialogTrigger>
-
-                      <DialogContent className="container mx-auto flex h-[85vh] max-h-screen max-w-2xl items-center rounded-lg bg-primary dark:bg-dark">
-                        <div className="h-fit w-full">
-                          <SignUp />
                         </div>
                       </DialogContent>
                     </Dialog>
