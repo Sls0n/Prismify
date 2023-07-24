@@ -15,7 +15,7 @@ export default async function Home() {
         img={session?.user?.image || '/images/fallback-avatar.png'}
         username={session?.user?.name || 'User'}
       />
-      <main className="flex h-full flex-col-reverse pt-[1.57rem] sm:flex-row">
+      <main className="flex h-[96%] flex-col-reverse px-4 pt-12 sm:flex-row">
         <Sidebar />
         <Canvas />
       </main>
