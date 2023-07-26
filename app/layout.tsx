@@ -32,7 +32,7 @@ export default function RootLayout({
       className={cn('antialiased', Font.className)}
       lang="en"
     >
-      <body className="h-screen overflow-x-hidden bg-primary pt-12 text-primary dark:bg-dark dark:text-dark ">
+      <body className="h-full bg-primary pt-12 text-primary dark:bg-dark dark:text-dark ">
         <Toaster />
 
         <Providers>

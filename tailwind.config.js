@@ -16,8 +16,8 @@ module.exports = {
       backgroundColor: {
         primary: '#FBFBFA',
         dark: '#181819',
-        formDark: 'hsl(216, 9%, 11%)',
-        sidebar: '#151515'
+        formDark: 'hsl(216, 9%, 11%)', //	#1a1c1f
+        sidebar: '#151515',
       },
       textColor: {
         primary: '#212329',

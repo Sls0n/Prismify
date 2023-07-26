@@ -5,7 +5,7 @@ import { cn } from '@/utils/buttonUtils'
 import { Button, buttonVariants } from '@/components/ui/Button'
 import ThemeButtonIcon from './ui/ThemeButtonIcon'
 import Image from 'next/image'
-import { ChevronDown, LogOut, Settings, User } from 'lucide-react'
+import { ChevronDown, LogIn, LogOut, Settings, User } from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -16,8 +16,8 @@ import {
 } from '@/components/ui/DropdownMenu'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog'
 import { signOut } from 'next-auth/react'
-import SignIn from './SignIn'
 import { toast } from '@/hooks/use-toast'
+import SignIn from './SignIn'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -62,14 +62,17 @@ export default function Navbar({
                 {mode === 'default' && (
                   <>
                     <Dialog>
-                      <DialogTrigger
-                        className={cn(
-                          buttonVariants({
-                            variant: 'default',
-                          })
-                        )}
-                      >
-                        Sign In
+                      <DialogTrigger asChild>
+                        <Button
+                          className={cn(
+                            buttonVariants({
+                              variant: 'default',
+                            })
+                          )}
+                        >
+                          Sign In
+                          <LogIn size={20} className="ml-2 inline-block align-middle" />
+                        </Button>
                       </DialogTrigger>
 
                       <DialogContent className="container mx-auto flex h-[85vh] max-h-screen max-w-2xl items-center rounded-lg bg-primary dark:bg-dark">

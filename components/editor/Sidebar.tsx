@@ -42,8 +42,8 @@ export default function Sidebar() {
   const activeIndex = useActiveIndexStore((state) => state.activeIndex)
 
   return (
-    <aside className="flex w-[30rem] min-w-[30rem] rounded-xl border border-border">
-      <ul className="relative flex basis-[23%] flex-col items-center gap-6 border-r border-border px-3 py-8 dark:bg-sidebar rounded-xl">
+    <aside className="flex w-[30rem] rounded-xl border border-border">
+      <ul className="flex basis-[23%] flex-col items-center gap-6 rounded-xl border-r border-border px-3 py-8 dark:bg-sidebar">
         {sidebarButtons.map((button, index) => (
           <SidebarButton
             key={index}
@@ -64,7 +64,10 @@ export default function Sidebar() {
           <h3 className="mb-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
             {sidebarButtons[activeIndex].icon}
             {sidebarButtons[activeIndex].text}
-            <Button variant={'stylish'} className="ml-auto scale-75 rounded-md">
+            <Button
+              variant={'stylish'}
+              className="ml-auto scale-75 rounded-md bg-red-500/10 px-3 py-1 text-red-500 ring-1 ring-inset ring-red-500/20"
+            >
               <Trash size={20} />
             </Button>
           </h3>

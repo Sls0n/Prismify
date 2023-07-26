@@ -68,6 +68,16 @@
   }
 }
 
+html {
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+
+  height: 100%;
+
+  overflow-x: auto;
+}
+
 @layer base {
   * {
     @apply border-border;
@@ -84,21 +94,21 @@
 }
 
 ::-webkit-scrollbar {
-    width: 10px;
+  width: 10px;
 }
-  
+
 /* Track */
 ::-webkit-scrollbar-track {
-    background: #353535;
+  background: #353535;
 }
-  
+
 /* Handle */
 ::-webkit-scrollbar-thumb {
-    background: #888;
-    border-radius: 5px;
+  background: #888;
+  border-radius: 5px;
 }
-  
+
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-    background: #555;
+  background: #555;
 }
