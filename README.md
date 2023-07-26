@@ -13,3 +13,5 @@ Prismify is a web app that aims to revitalize & enhance boring images/screenshot
 - Prisma
 - MySQL
 - PlanetScale
+
+![image](https://github.com/Sls0n/Prismify/assets/102340248/977469ce-ab3a-471f-bd5f-46120ce22cfa)
