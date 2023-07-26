@@ -1,4 +1,4 @@
-Note: This is a work in progress. I will post comprehensive details soon.
+`📢 Note: This is a work in progress. I will post comprehensive details soon.`
 
 ## Prismify
 
