@@ -42,8 +42,8 @@ export default function Sidebar() {
   const activeIndex = useActiveIndexStore((state) => state.activeIndex)
 
   return (
-    <aside className="flex w-[30rem] rounded-xl border border-border">
-      <ul className="flex basis-[23%] flex-col items-center gap-6 rounded-xl border-r border-border px-3 py-8 dark:bg-sidebar">
+    <aside className="hidden w-[30rem] rounded-xl border border-border sm:flex">
+      <ul className="flex basis-[23%] flex-col items-center gap-6 rounded-xl  border-border px-3 py-8 dark:bg-sidebar">
         {sidebarButtons.map((button, index) => (
           <SidebarButton
             key={index}

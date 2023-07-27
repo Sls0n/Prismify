@@ -188,9 +188,9 @@ export default function SignUp({ authenticated }: SignUpProps) {
             )}
           </div>
           <div>
-            <p className="mb-8 mt-4 flex gap-3 text-start text-sm text-primary">
+            <div className="mb-8 mt-4 flex gap-3 text-start text-sm text-primary">
               <Checkbox />
-              <span className="dark:text-dark/80">
+              <p className="dark:text-dark/80 -translate-x-1">
                 I agree to the{' '}
                 <Link
                   href="/terms"
@@ -205,8 +205,8 @@ export default function SignUp({ authenticated }: SignUpProps) {
                 >
                   Privacy Policy
                 </Link>
-              </span>
-            </p>
+              </p>
+            </div>
 
             <Button
               type="submit"

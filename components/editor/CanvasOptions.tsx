@@ -15,7 +15,7 @@ import {
   Smartphone,
   GalleryVerticalEnd,
 } from 'lucide-react'
-import { resolutions } from '@/utils/config'
+import { resolutions, qualities } from '@/utils/config'
 import {
   Popover,
   PopoverContent,
@@ -23,22 +23,26 @@ import {
 } from '@/components/ui/Popover'
 import { Button } from '../ui/Button'
 import { useResizeCanvas } from '@/hooks/use-resize-canvas'
+import { useImageQualityStore } from '@/hooks/use-image-quality'
+import { cn } from '@/utils/buttonUtils'
 
 function ResolutionButton({
   resolution,
   name,
   icon,
+  className,
 }: {
   resolution: string
   name: string
   icon?: React.ReactNode
+  className?: string
 }) {
   const { setResolution } = useResizeCanvas()
 
   return (
     <>
       <Button
-        className="flex items-center gap-2 rounded-lg"
+        className={cn('flex items-center gap-2 rounded-lg', className)}
         variant="stylish"
         onClick={() => setResolution(resolution)}
         aria-label={name}
@@ -66,7 +70,8 @@ const icons = {
 }
 
 export default function CanvasOptions() {
-  const { domResolution } = useResizeCanvas()
+  const { resolution, domResolution } = useResizeCanvas()
+  const { quality, setQuality } = useImageQualityStore()
 
   return (
     <>
@@ -93,6 +98,9 @@ export default function CanvasOptions() {
                 icon={
                   res.icon ? icons[res.icon as keyof typeof icons] : undefined
                 }
+                className={`${
+                  res.resolution === resolution && 'ring-[#898aeb]/50'
+                }`}
               />
             )
           }
@@ -122,6 +130,9 @@ export default function CanvasOptions() {
                         ? icons[res.icon as keyof typeof icons]
                         : undefined
                     }
+                    className={`${
+                      res.resolution === resolution && 'ring-[#898aeb]/50'
+                    }`}
                   />
                 )
               }
@@ -130,6 +141,26 @@ export default function CanvasOptions() {
         </Popover>
       </div>
 
+      <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Image quality</h1>
+      <div className="flex flex-wrap gap-3">
+        {qualities.map((q) => {
+          return (
+            <Button
+              key={q.quality}
+              variant="stylish"
+              onClick={() => {
+                setQuality(q.value)
+              }}
+              className={`rounded-lg ${
+                q.value === quality && 'ring-[#898aeb]/50'
+              }`}
+              aria-label="quality"
+            >
+              {q.quality}
+            </Button>
+          )
+        })}
+      </div>
       {/* <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Patterns</h1> */}
       {/* <Popover>
         <PopoverTrigger className="relative flex h-14 items-center overflow-hidden rounded-lg border border-border bg-sidebar">

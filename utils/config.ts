@@ -1,15 +1,22 @@
 export const MIN_RESOLUTION = 100
 export const MAX_RESOLUTION = 4000
 
+export const qualities = [
+  { quality: '0.5x', value: 0.5 },
+  { quality: '1x', value: 1 },
+  { quality: '2x', value: 2 },
+  {quality: '4x', value: 4}
+]
+
 export const resolutions = [
   {
     name: '1:1 (Pfp)',
-    resolution: '1000x1000',
+    resolution: '1x1',
     icon: 'UserSquare2',
   },
   {
     name: '16:9 (Wide)',
-    resolution: '1920x1080',
+    resolution: '16x9',
     icon: 'GalleryThumbnails',
   },
   {

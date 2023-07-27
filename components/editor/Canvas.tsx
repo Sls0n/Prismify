@@ -1,14 +1,19 @@
 'use client'
 
-import React, { CSSProperties, useEffect, useRef } from 'react'
+import React, { CSSProperties, useEffect, useRef, useState } from 'react'
 import { useResizeCanvas } from '@/hooks/use-resize-canvas'
 import { saveAs } from 'file-saver'
 import { motion } from 'framer-motion'
 import domtoimage from 'dom-to-image'
+import { useImageQualityStore } from '@/hooks/use-image-quality'
+// import CustomizedRnd from '@/components/Rnd'
 
 export default function Canvas() {
+  const [scrollScale, setScrollScale] = useState(0.9)
+  const { quality } = useImageQualityStore()
   const { resolution, setDomResolution } = useResizeCanvas()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
+  const parentRef = useRef<HTMLDivElement | null>(null)
 
   const [width, height]: number[] = resolution.split('x').map(Number)
 
@@ -25,9 +30,10 @@ export default function Canvas() {
       const resizeObserver = new ResizeObserver((entries) => {
         for (let entry of entries) {
           const { width, height } = entry.contentRect
-          console.log(`Element size: ${width}x${height}`)
           setDomResolution(
-            `${Math.round(width * 1.561)}x${Math.round(height * 1.561)}`
+            `${Math.round(width * 1.561 * quality)}x${Math.round(
+              height * 1.561 * quality
+            )}`
           )
         }
       })
@@ -39,12 +45,28 @@ export default function Canvas() {
       }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resolution])
+  }, [resolution, quality])
+
+  const handleScroll = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (e.deltaY < 0) {
+      // Scrolling up
+      if (scrollScale === 1) return
+      setScrollScale((prevScale) => prevScale + 0.1) // Increment the scroll scale by 0.1
+    } else if (e.deltaY > 0) {
+      // Scrolling down
+      if (scrollScale <= 0.4) return
+      setScrollScale((prevScale) => prevScale - 0.1) // Decrement the scroll scale by 0.1
+    }
+  }
+
+  let parentScaleStyle = {
+    scale: `${scrollScale}`,
+  }
 
   const snapshotCreator = () => {
     return new Promise<Blob>((resolve, reject) => {
       try {
-        const scale = 1.561
+        const scale = 1.561 * quality
         const element = screenshotRef.current
         if (!element) {
           reject(new Error('Element not found.'))
@@ -74,14 +96,19 @@ export default function Canvas() {
 
   return (
     <>
-      <section className="flex max-h-full max-w-full flex-1 justify-center overflow-hidden rounded-xl">
+      <section
+        ref={parentRef}
+        style={parentScaleStyle}
+        onWheel={handleScroll}
+        className="flex max-h-full max-w-full flex-1 justify-center overflow-hidden rounded-xl"
+      >
         <motion.div
-          layout
           className="relative flex h-auto items-center justify-center rounded-xl bg-gradient-to-r from-rose-100 to-teal-100"
           ref={screenshotRef}
           style={style}
         >
           {/* eslint-disable-next-line @next/next/no-img-element */}
+
           <div className="w-25 h-25 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform  object-cover ">
             <motion.img
               className="h-full w-full rounded-xl object-cover shadow-2xl"
