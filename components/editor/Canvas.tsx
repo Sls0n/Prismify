@@ -20,12 +20,15 @@ import {
   ContextMenuTrigger,
 } from '@/components/ui/ContextMenu'
 import { Button } from '@/components/ui/Button'
+import ImageUpload from './ImageUpload'
+import { useImageUploaded } from '@/hooks/use-image-uploaded'
 // import CustomizedRnd from '@/components/Rnd'
 
 export default function Canvas() {
   const [scrollScale, setScrollScale] = useState(0.9)
   const { quality } = useImageQualityStore()
   const { resolution, setDomResolution } = useResizeCanvas()
+  const { isImageUploaded } = useImageUploaded()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
 
@@ -83,28 +86,29 @@ export default function Canvas() {
         ref={parentRef}
         style={parentScaleStyle}
         onWheel={handleScroll}
-        className="flex h-auto max-h-full max-w-full flex-1 justify-center overflow-hidden rounded-xl"
+        className="flex flex-1 justify-center overflow-auto rounded-xl"
       >
         <ContextMenu>
           <ContextMenuTrigger asChild>
             <motion.div
-              className="relative flex h-auto items-center justify-center rounded-xl bg-gradient-to-r from-rose-100 to-teal-100"
+              className="relative flex rounded-xl bg-gradient-to-r from-violet-300 to-violet-400"
               ref={screenshotRef}
               id="canvas-container"
               style={style}
             >
+              <ImageUpload />
               {/* eslint-disable-next-line @next/next/no-img-element */}
 
-              <div className="w-25 h-25 absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform  object-cover ">
-                <motion.img
+              {/* <div className="">
+                 <motion.img
                   className="hover:border-3 h-full w-full rounded-xl border-[3px] border-transparent object-cover shadow-2xl hover:border-purple-700/20"
                   src={
                     // random cat image
                     'https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg'
                   }
                   alt="placeholder"
-                />
-              </div>
+                /> 
+              </div>*/}
             </motion.div>
           </ContextMenuTrigger>
           <ContextMenuContent className="w-64">

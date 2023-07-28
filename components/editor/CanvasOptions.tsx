@@ -26,6 +26,7 @@ import { Button } from '../ui/Button'
 import { useResizeCanvas } from '@/hooks/use-resize-canvas'
 import { useImageQualityStore } from '@/hooks/use-image-quality'
 import { cn } from '@/utils/buttonUtils'
+import { useImageUploaded } from '@/hooks/use-image-uploaded'
 
 function ResolutionButton({
   resolution,
@@ -39,13 +40,17 @@ function ResolutionButton({
   className?: string
 }) {
   const { setResolution } = useResizeCanvas()
+  const { isImageUploaded } = useImageUploaded()
 
   return (
     <>
       <Button
         className={cn('flex items-center gap-2 rounded-lg', className)}
         variant="stylish"
-        onClick={() => setResolution(resolution)}
+        onClick={() => {
+          if (!isImageUploaded) return;
+          setResolution(resolution)
+        }}
         aria-label={name}
       >
         {icon && <span>{icon}</span>}
