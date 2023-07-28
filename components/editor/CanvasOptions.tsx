@@ -96,7 +96,7 @@ export default function CanvasOptions() {
       <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Aspect ratio</h1>
       <div className="flex flex-wrap gap-3">
         {resolutions.map((res, index) => {
-          if (index < 8) {
+          if (index < 7) {
             return (
               <ResolutionButton
                 key={index}
@@ -126,7 +126,7 @@ export default function CanvasOptions() {
           </PopoverTrigger>
           <PopoverContent className="flex w-[350px] flex-wrap gap-3">
             {resolutions.map((res, index) => {
-              if (index > 8) {
+              if (index >= 7) {
                 return (
                   <ResolutionButton
                     key={index}

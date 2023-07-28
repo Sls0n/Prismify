@@ -205,6 +205,21 @@ export default function Navbar({
 
             {authenticated && (
               <>
+                <Button
+                  onClick={() => {
+                    snapshotCreator().then((blob) => {
+                      saveAs(blob, 'prismify-render.png')
+                    })
+                  }}
+                  variant="stylish"
+                  className="mr-1 rounded-xl"
+                >
+                  Save image
+                  <Download
+                    size={20}
+                    className="ml-2 inline-block align-middle"
+                  />
+                </Button>
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
