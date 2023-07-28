@@ -5,7 +5,15 @@ import { cn } from '@/utils/buttonUtils'
 import { Button, buttonVariants } from '@/components/ui/Button'
 import ThemeButtonIcon from './ui/ThemeButtonIcon'
 import Image from 'next/image'
-import { ChevronDown, LogIn, LogOut, Settings, User } from 'lucide-react'
+import {
+  ChevronDown,
+  Download,
+  Github,
+  LogIn,
+  LogOut,
+  Settings,
+  User,
+} from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -18,6 +26,9 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog'
 import { signOut } from 'next-auth/react'
 import { toast } from '@/hooks/use-toast'
 import SignIn from './SignIn'
+import domtoimage from 'dom-to-image'
+import { saveAs } from 'file-saver'
+import { useImageQualityStore } from '@/hooks/use-image-quality'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -32,8 +43,40 @@ export default function Navbar({
   username,
   img,
 }: NavbarProps) {
+  const { quality } = useImageQualityStore()
+  const snapshotCreator = () => {
+    return new Promise<Blob>((resolve, reject) => {
+      try {
+        const scale = 1.561 * quality
+        const element = document.getElementById('canvas-container')
+        if (!element) {
+          reject(new Error('Element not found.'))
+          return
+        }
+        domtoimage
+          .toPng(element, {
+            height: element.offsetHeight * scale,
+            width: element.offsetWidth * scale,
+
+            style: {
+              transform: 'scale(' + scale + ')',
+              transformOrigin: 'top left',
+              width: element.offsetWidth + 'px',
+              height: element.offsetHeight + 'px',
+            },
+          })
+          .then((dataURL) => {
+            const blob = dataURL as unknown as Blob
+            resolve(blob)
+          })
+      } catch (e) {
+        reject(e)
+      }
+    })
+  }
+
   return (
-    <header className="h-16 fixed inset-x-0 top-0 z-[10] flex items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
+    <header className="fixed inset-x-0 top-0 z-[10] flex h-16 items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-8">
           {/* Can add hamburger or something here */}
@@ -55,25 +98,49 @@ export default function Navbar({
         </div>
         {/* add a vertical separator */}
         <nav className="flex items-center gap-10 ">
-          <ThemeButtonIcon />
-          
-          <div className='w-[2.5px] h-7 bg-border dark:bg-border-dark'></div>
+          <div className="flex">
+            <ThemeButtonIcon />
+            <a
+              href="https://www.github.com/Sls0n/prismify"
+              target="_blank"
+              rel="noopener noreferrer"
+              className={cn(buttonVariants({ variant: 'ghost' }), 'px-3 py-2')}
+            >
+              <Github className="h-[1.2rem] w-[1.2rem] text-dark/80 " />
+              <span className="sr-only">Go to Github repository</span>
+            </a>
+          </div>
+
+          <div className="dark:bg-border-dark h-8 w-[2px] bg-border"></div>
           <div className="flex items-center gap-2">
             {!authenticated && (
               <>
                 {mode === 'default' && (
                   <>
+                    <Button
+                      onClick={() => {
+                        snapshotCreator().then((blob) => {
+                          saveAs(blob, 'prismify-render.png')
+                        })
+                      }}
+                      variant="stylish"
+                      className="mr-1 rounded-xl"
+                    >
+                      Save image
+                      <Download
+                        size={20}
+                        className="ml-2 inline-block align-middle"
+                      />
+                    </Button>
+
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button
-                          className={cn(
-                            buttonVariants({
-                              variant: 'default',
-                            })
-                          )}
-                        >
+                        <Button className="rounded-xl" variant="default">
                           Sign In
-                          <LogIn size={20} className="ml-2 inline-block align-middle" />
+                          <LogIn
+                            size={20}
+                            className="ml-2 inline-block align-middle"
+                          />
                         </Button>
                       </DialogTrigger>
 
@@ -88,31 +155,41 @@ export default function Navbar({
 
                 {mode === 'signin' && (
                   <>
-                    <a
+                    <Link
                       className={cn(
                         buttonVariants({
                           variant: 'default',
-                        })
+                        }),
+                        'rounded-xl'
                       )}
                       href="/sign-up"
                     >
                       Sign up
-                    </a>
+                      <LogIn
+                        size={20}
+                        className="ml-2 inline-block align-middle"
+                      />
+                    </Link>
                   </>
                 )}
 
                 {mode === 'signup' && (
                   <>
-                    <a
+                    <Link
                       className={cn(
                         buttonVariants({
                           variant: 'default',
-                        })
+                        }),
+                        'rounded-xl'
                       )}
                       href="/sign-in"
                     >
                       Sign in
-                    </a>
+                      <LogIn
+                        size={20}
+                        className="ml-2 inline-block align-middle"
+                      />
+                    </Link>
                   </>
                 )}
               </>

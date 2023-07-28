@@ -5,7 +5,7 @@ export const qualities = [
   { quality: '0.5x', value: 0.5 },
   { quality: '1x', value: 1 },
   { quality: '2x', value: 2 },
-  {quality: '4x', value: 4}
+  { quality: '4x', value: 4 },
 ]
 
 export const resolutions = [
@@ -35,8 +35,9 @@ export const resolutions = [
     icon: 'Smartphone',
   },
   {
-    name: '21:9 (Cinematic)',
-    resolution: '21x9',
-    icon: 'GalleryVerticalEnd',
+    name: '3:1 (Banner)',
+    resolution: '3x1',
+    icon: 'RectangleHorizontal',
+    height: '400px',
   },
 ]

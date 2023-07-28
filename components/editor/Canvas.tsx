@@ -2,9 +2,7 @@
 
 import React, { CSSProperties, useEffect, useRef, useState } from 'react'
 import { useResizeCanvas } from '@/hooks/use-resize-canvas'
-import { saveAs } from 'file-saver'
 import { motion } from 'framer-motion'
-import domtoimage from 'dom-to-image'
 import { useImageQualityStore } from '@/hooks/use-image-quality'
 import {
   ContextMenu,
@@ -79,50 +77,20 @@ export default function Canvas() {
     scale: `${scrollScale}`,
   }
 
-  const snapshotCreator = () => {
-    return new Promise<Blob>((resolve, reject) => {
-      try {
-        const scale = 1.561 * quality
-        const element = screenshotRef.current
-        if (!element) {
-          reject(new Error('Element not found.'))
-          return
-        }
-        domtoimage
-          .toPng(element, {
-            height: element.offsetHeight * scale,
-            width: element.offsetWidth * scale,
-
-            style: {
-              transform: 'scale(' + scale + ')',
-              transformOrigin: 'top left',
-              width: element.offsetWidth + 'px',
-              height: element.offsetHeight + 'px',
-            },
-          })
-          .then((dataURL) => {
-            const blob = dataURL as unknown as Blob
-            resolve(blob)
-          })
-      } catch (e) {
-        reject(e)
-      }
-    })
-  }
-
   return (
     <>
       <section
         ref={parentRef}
         style={parentScaleStyle}
         onWheel={handleScroll}
-        className="flex max-h-full max-w-full flex-1 justify-center overflow-hidden rounded-xl"
+        className="flex h-auto max-h-full max-w-full flex-1 justify-center overflow-hidden rounded-xl"
       >
         <ContextMenu>
           <ContextMenuTrigger asChild>
             <motion.div
               className="relative flex h-auto items-center justify-center rounded-xl bg-gradient-to-r from-rose-100 to-teal-100"
               ref={screenshotRef}
+              id="canvas-container"
               style={style}
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
@@ -185,17 +153,6 @@ export default function Canvas() {
           </ContextMenuContent>
         </ContextMenu>
       </section>
-      <Button
-        variant="default"
-        className="absolute bottom-4 right-4 "
-        onClick={() => {
-          snapshotCreator().then((blob) => {
-            saveAs(blob, 'image.png')
-          })
-        }}
-      >
-        Save Image
-      </Button>
     </>
   )
 }

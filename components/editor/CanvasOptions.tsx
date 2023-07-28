@@ -14,6 +14,7 @@ import {
   MonitorPlay,
   Smartphone,
   GalleryVerticalEnd,
+  RectangleHorizontal,
 } from 'lucide-react'
 import { resolutions, qualities } from '@/utils/config'
 import {
@@ -67,6 +68,7 @@ const icons = {
   MonitorPlay: <MonitorPlay size={20} />,
   Smartphone: <Smartphone size={20} />,
   GalleryVerticalEnd: <GalleryVerticalEnd size={20} />,
+  RectangleHorizontal: <RectangleHorizontal size={20} />,
 }
 
 export default function CanvasOptions() {
@@ -161,6 +163,7 @@ export default function CanvasOptions() {
           )
         })}
       </div>
+
       {/* <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Patterns</h1> */}
       {/* <Popover>
         <PopoverTrigger className="relative flex h-14 items-center overflow-hidden rounded-lg border border-border bg-sidebar">
