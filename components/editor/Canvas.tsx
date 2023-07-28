@@ -19,16 +19,13 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from '@/components/ui/ContextMenu'
-import { Button } from '@/components/ui/Button'
 import ImageUpload from './ImageUpload'
-import { useImageUploaded } from '@/hooks/use-image-uploaded'
 // import CustomizedRnd from '@/components/Rnd'
 
 export default function Canvas() {
   const [scrollScale, setScrollScale] = useState(0.9)
   const { quality } = useImageQualityStore()
   const { resolution, setDomResolution } = useResizeCanvas()
-  const { isImageUploaded } = useImageUploaded()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
 
@@ -38,6 +35,19 @@ export default function Canvas() {
 
   let style: CSSProperties = {
     aspectRatio,
+  }
+
+  if (aspectRatio < 1) {
+    style = { ...style, width: 'auto', height: '100%' }
+  } else if (aspectRatio > 1) {
+    style = { ...style, width: '100%', height: 'auto' }
+  } else {
+    const containerSize = '82vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 82vmin (it just makes it a bit smaller)
+    style = {
+      ...style,
+      width: containerSize,
+      height: containerSize,
+    }
   }
 
   useEffect(() => {
@@ -86,29 +96,17 @@ export default function Canvas() {
         ref={parentRef}
         style={parentScaleStyle}
         onWheel={handleScroll}
-        className="flex flex-1 justify-center overflow-auto rounded-xl"
+        className="flex h-full flex-1 items-center justify-center overflow-hidden rounded-xl"
       >
         <ContextMenu>
           <ContextMenuTrigger asChild>
             <motion.div
-              className="relative flex rounded-xl bg-gradient-to-r from-violet-300 to-violet-400"
+              className="relative flex w-full items-center justify-center overflow-hidden rounded-xl bg-gradient-to-r from-violet-300 to-violet-400"
               ref={screenshotRef}
               id="canvas-container"
               style={style}
             >
               <ImageUpload />
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-
-              {/* <div className="">
-                 <motion.img
-                  className="hover:border-3 h-full w-full rounded-xl border-[3px] border-transparent object-cover shadow-2xl hover:border-purple-700/20"
-                  src={
-                    // random cat image
-                    'https://static01.nyt.com/images/2021/09/14/science/07CAT-STRIPES/07CAT-STRIPES-mediumSquareAt3X-v2.jpg'
-                  }
-                  alt="placeholder"
-                /> 
-              </div>*/}
             </motion.div>
           </ContextMenuTrigger>
           <ContextMenuContent className="w-64">

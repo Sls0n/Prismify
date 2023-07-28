@@ -11,32 +11,38 @@ export const qualities = [
 export const resolutions = [
   {
     name: '1:1 (Pfp)',
-    resolution: '1x1',
+    resolution: '1200x1200',
     icon: 'UserSquare2',
   },
   {
     name: '16:9 (Wide)',
-    resolution: '16x9',
+    resolution: '1920x1080',
     icon: 'GalleryThumbnails',
   },
   {
     name: '9:16 (Story/Reels)',
-    resolution: '9x16',
+    resolution: '1080x1920',
     icon: 'GalleryHorizontalEnd',
   },
   {
     name: '4:3 (Old TV)',
-    resolution: '4x3',
+    resolution: '1200x900',
     icon: 'MonitorPlay',
   },
   {
     name: '3:4 (Portrait)',
-    resolution: '3x4',
+    resolution: '900x1200',
     icon: 'Smartphone',
   },
   {
     name: '3:1 (Banner)',
     resolution: '3x1',
+    icon: 'RectangleHorizontal',
+    height: '400px',
+  },
+  {
+    name: '21:9 (Cinematic)',
+    resolution: '21x9',
     icon: 'RectangleHorizontal',
     height: '400px',
   },
