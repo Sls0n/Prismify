@@ -37,6 +37,12 @@ export default function ModeToggle() {
         >
           Dark
         </DropdownMenuItem>
+        <DropdownMenuItem
+          className="font-medium"
+          onClick={() => setTheme('system')}
+        >
+          System
+        </DropdownMenuItem>
       </DropdownMenuContent>
     </DropdownMenu>
   )

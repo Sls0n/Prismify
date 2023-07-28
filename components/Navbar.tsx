@@ -33,7 +33,7 @@ export default function Navbar({
   img,
 }: NavbarProps) {
   return (
-    <header className="h-18 fixed inset-x-0 top-0 z-[10] flex items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
+    <header className="h-16 fixed inset-x-0 top-0 z-[10] flex items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-8">
           {/* Can add hamburger or something here */}
@@ -53,9 +53,11 @@ export default function Navbar({
             </span>
           </Link>
         </div>
+        {/* add a vertical separator */}
         <nav className="flex items-center gap-10 ">
           <ThemeButtonIcon />
-
+          
+          <div className='w-[2.5px] h-7 bg-border dark:bg-border-dark'></div>
           <div className="flex items-center gap-2">
             {!authenticated && (
               <>

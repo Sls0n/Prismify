@@ -7,7 +7,7 @@ import {
   Image as Images,
   Layers,
   AppWindow,
-  Move3d,
+  BoxSelect,
   MoreHorizontal,
   Trash,
 } from 'lucide-react'
@@ -29,12 +29,12 @@ const sidebarButtons = [
     icon: <Layers size={20} />,
   },
   {
-    text: 'Annotations',
-    icon: <Brush size={20} />,
+    text: 'Border',
+    icon: <BoxSelect size={20} />,
   },
   {
-    text: '3-D',
-    icon: <Move3d size={20} />,
+    text: 'Annotations',
+    icon: <Brush size={20} />,
   },
 ]
 
@@ -42,7 +42,7 @@ export default function Sidebar() {
   const activeIndex = useActiveIndexStore((state) => state.activeIndex)
 
   return (
-    <aside className="hidden w-[30rem] rounded-xl border border-border sm:flex">
+    <aside className="w-[30rem] rounded-xl border border-border flex">
       <ul className="flex basis-[23%] flex-col items-center gap-6 rounded-xl  border-border px-3 py-8 dark:bg-sidebar">
         {sidebarButtons.map((button, index) => (
           <SidebarButton
