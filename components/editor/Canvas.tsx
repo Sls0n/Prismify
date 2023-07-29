@@ -23,7 +23,7 @@ import ImageUpload from './ImageUpload'
 // import CustomizedRnd from '@/components/Rnd'
 
 export default function Canvas() {
-  const [scrollScale, setScrollScale] = useState(0.9)
+  const [scrollScale, setScrollScale] = useState(1)
   const { quality } = useImageQualityStore()
   const { resolution, setDomResolution } = useResizeCanvas()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
@@ -42,11 +42,10 @@ export default function Canvas() {
   } else if (aspectRatio > 1) {
     style = { ...style, width: '100%', height: 'auto' }
   } else {
-    const containerSize = '82vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 82vmin (it just makes it a bit smaller)
+    const containerSize = '84vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 84vmin (it just makes it a bit smaller)
     style = {
       ...style,
       width: containerSize,
-      height: containerSize,
     }
   }
 
@@ -101,7 +100,7 @@ export default function Canvas() {
         <ContextMenu>
           <ContextMenuTrigger asChild>
             <motion.div
-              className="relative flex w-full items-center justify-center overflow-hidden rounded-xl bg-gradient-to-r from-violet-300 to-violet-400"
+              className="from-[#151515] to-[#131313] relative flex w-full items-center justify-center overflow-hidden rounded-xl bg-gradient-to-r"
               ref={screenshotRef}
               id="canvas-container"
               style={style}

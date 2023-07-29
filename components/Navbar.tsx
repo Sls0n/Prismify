@@ -55,6 +55,11 @@ export default function Navbar({
         const element = document.getElementById('canvas-container')
         if (!element) {
           reject(new Error('Element not found.'))
+          toast({
+            title: 'Error!',
+            description: 'Canvas container not found.',
+            variant: 'destructive',
+          })
           return
         }
         domtoimage
@@ -223,27 +228,27 @@ export default function Navbar({
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button
-                      variant={'none'}
-                      className="flex cursor-pointer items-center justify-center gap-x-2.5"
+                      variant="ghost"
+                      className="flex h-10 cursor-pointer items-center justify-center gap-x-2.5 rounded-xl bg-[#f5f7fa] px-4 py-2 font-medium text-primary dark:bg-formDark dark:text-dark"
                     >
                       <Image
                         width={30}
                         height={30}
                         src={img || '/images/fallback-avatar.png'}
-                        className="rounded-full "
+                        className="rounded-full"
                         alt={`${username}'s avatar` || 'User avatar'}
                         aria-label="User avatar"
                       />
 
                       <div className="flex translate-y-[-1px] items-center justify-center gap-1.5  truncate font-medium capitalize text-primary/70 dark:text-dark/80 md:text-base">
                         <span className="sr-only">Logged in as</span>
-                        <span className="text-[0.95rem]">
+                        <span className="text-sm">
                           {username?.split(' ')[0]}
                         </span>
 
                         <ChevronDown
                           size={16}
-                          className="translate-y-[0.15rem] text-primary/70 dark:text-dark/80"
+                          className="translate-y-[0.1rem] text-primary/70 dark:text-dark/80"
                         />
                       </div>
                     </Button>

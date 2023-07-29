@@ -91,6 +91,14 @@ html {
   .sidebar-option {
     @apply inline-flex h-[9%] items-center justify-between gap-2 border-b border-border px-4 transition-colors hover:bg-accent;
   }
+
+  .absolute-center {
+    @apply absolute left-1/2 top-1/2 w-1/2 -translate-x-1/2 -translate-y-1/2 transform;
+  }
+
+  .flex-center {
+    @apply flex items-center justify-center;
+  }
 }
 
 ::-webkit-scrollbar {
