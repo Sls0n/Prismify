@@ -105,7 +105,7 @@ export default function Canvas() {
             <motion.div
               className={`relative flex w-full items-center justify-center overflow-hidden rounded-xl ${
                 !isImageUploaded
-                  ? 'to-[#131313 bg-gradient-to-r from-[#151515]'
+                  ? 'to-[#131313] bg-gradient-to-r from-[#151515]'
                   : background
               }`}
               ref={screenshotRef}
