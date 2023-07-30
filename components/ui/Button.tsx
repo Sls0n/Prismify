@@ -5,7 +5,7 @@ import { ButtonHTMLAttributes } from 'react'
 import { forwardRef } from 'react'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50',
+  'inline-flex items-center justify-center rounded-xl text-sm font-medium ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 focus:z-10',
 
   {
     variants: {
@@ -13,13 +13,15 @@ const buttonVariants = cva(
         default:
           'bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#8e8ece] text-white h-10 px-5 py-3 rounded-xl font-medium',
         secondary:
-          'text-primary dark:text-dark h-10 px-4 py-2 rounded-3xl font-medium',
+          'text-primary dark:text-dark h-10 px-4 py-2 rounded-xl font-medium',
         outline:
           'text-primary border border-input dark:text-dark h-10 px-4 py-2 rounded-3xl font-medium',
         ghost:
           'text-primary dark:text-dark hover:bg-[#f5f7fa] dark:hover:bg-formDark h-10 px-4 py-2 rounded-xl font-medium',
         stylish:
-          'rounded-full bg-indigo-500/10 px-3 py-1 text-sm font-medium leading-6 text-purple ring-1 ring-inset ring-indigo-500/10', // ring-1 ring-inset ring-indigo-500/20
+          'rounded-xl bg-indigo-500/10 px-3 py-1 text-sm font-medium leading-6 text-purple ring-1 ring-indigo-500/10', // ring-1 ring-inset ring-indigo-500/20
+        destructive:
+          'rounded-xl px-3 py-1 text-sm font-medium leading-6 bg-red-500/10 text-red-500 ring-1 ring-red-500/10',
         icon: 'text-primary bg-formDark border border-input dark:text-dark h-12 px-5 py-2.5 rounded-xl',
         activeIcon:
           'text-white bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#8e8ece] h-12 px-5 py-2.5 rounded-xl font-medium border border-input dark:text-white',

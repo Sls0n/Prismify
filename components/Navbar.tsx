@@ -29,7 +29,7 @@ import SignIn from './SignIn'
 import domtoimage from 'dom-to-image'
 import { saveAs } from 'file-saver'
 import { useImageQualityStore } from '@/hooks/use-image-quality'
-import { useImageUploaded } from '@/hooks/use-image-uploaded'
+import { useImageOptions } from '@/hooks/use-image-options'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -45,7 +45,7 @@ export default function Navbar({
   img,
 }: NavbarProps) {
   const { quality } = useImageQualityStore()
-  const { isImageUploaded } = useImageUploaded()
+  const { isImageUploaded } = useImageOptions()
 
   const snapshotCreator = () => {
     return new Promise<Blob>((resolve, reject) => {

@@ -14,6 +14,7 @@ import {
 import { ScrollArea } from '@/components/ui/ScrollArea'
 import { useActiveIndexStore } from '@/hooks/use-active-index'
 import CanvasOptions from './CanvasOptions'
+import ImageOptions from './ImageOptions'
 
 const sidebarButtons = [
   {
@@ -65,13 +66,14 @@ export default function Sidebar() {
             {sidebarButtons[activeIndex].icon}
             {sidebarButtons[activeIndex].text}
             <Button
-              variant={'stylish'}
-              className="ml-auto scale-75 rounded-md bg-red-500/10 px-3 py-1 text-red-500 ring-1 ring-inset ring-red-500/20"
+              variant={'destructive'}
+              className="ml-auto scale-75 rounded-md px-3 py-1"
             >
               <Trash size={20} />
             </Button>
           </h3>
           {activeIndex === 0 && <CanvasOptions />}
+          {activeIndex === 1 && <ImageOptions />}
         </div>
       </ScrollArea>
     </aside>

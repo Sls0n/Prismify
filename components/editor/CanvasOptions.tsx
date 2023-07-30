@@ -26,7 +26,7 @@ import { Button } from '../ui/Button'
 import { useResizeCanvas } from '@/hooks/use-resize-canvas'
 import { useImageQualityStore } from '@/hooks/use-image-quality'
 import { cn } from '@/utils/buttonUtils'
-import { useImageUploaded } from '@/hooks/use-image-uploaded'
+import { useImageOptions } from '@/hooks/use-image-options'
 
 function ResolutionButton({
   resolution,
@@ -40,7 +40,7 @@ function ResolutionButton({
   className?: string
 }) {
   const { setResolution } = useResizeCanvas()
-  const { isImageUploaded } = useImageUploaded()
+  const { isImageUploaded } = useImageOptions()
 
   return (
     <>
@@ -48,7 +48,7 @@ function ResolutionButton({
         className={cn('flex items-center gap-2 rounded-lg', className)}
         variant="stylish"
         onClick={() => {
-          if (!isImageUploaded) return;
+          if (!isImageUploaded) return
           setResolution(resolution)
         }}
         aria-label={name}
@@ -115,7 +115,7 @@ export default function CanvasOptions() {
         <Popover>
           <PopoverTrigger asChild>
             <Button
-              className="flex items-center gap-2 rounded-lg"
+              className={`flex items-center gap-2 rounded-lg`}
               variant="stylish"
             >
               <span>
@@ -168,25 +168,6 @@ export default function CanvasOptions() {
           )
         })}
       </div>
-
-      {/* <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Patterns</h1> */}
-      {/* <Popover>
-        <PopoverTrigger className="relative flex h-14 items-center overflow-hidden rounded-lg border border-border bg-sidebar">
-          <div className="flex h-full basis-1/5 items-center bg-purple-400"></div>
-          <div className="flex h-full w-full flex-1 items-center justify-between px-4">
-            <p className="text-[0.85rem] text-primary/70 dark:text-dark/70">
-              {resolution}
-            </p>
-            <ChevronDown
-              size={18}
-              className="text-primary/70 dark:text-dark/80"
-            />
-          </div>
-        </PopoverTrigger>
-        <PopoverContent className="flex w-[350px] flex-wrap gap-4">
-          TODO : ADD PATTERNS
-        </PopoverContent>
-      </Popover> */}
     </>
   )
 }

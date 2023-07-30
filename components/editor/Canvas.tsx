@@ -20,12 +20,15 @@ import {
   ContextMenuTrigger,
 } from '@/components/ui/ContextMenu'
 import ImageUpload from './ImageUpload'
+import { Minus, Plus } from 'lucide-react'
+import { useImageOptions } from '@/hooks/use-image-options'
 // import CustomizedRnd from '@/components/Rnd'
 
 export default function Canvas() {
   const [scrollScale, setScrollScale] = useState(1)
   const { quality } = useImageQualityStore()
   const { resolution, setDomResolution } = useResizeCanvas()
+  const { isImageUploaded, background } = useImageOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
 
@@ -100,7 +103,11 @@ export default function Canvas() {
         <ContextMenu>
           <ContextMenuTrigger asChild>
             <motion.div
-              className="from-[#151515] to-[#131313] relative flex w-full items-center justify-center overflow-hidden rounded-xl bg-gradient-to-r"
+              className={`relative flex w-full items-center justify-center overflow-hidden rounded-xl ${
+                !isImageUploaded
+                  ? 'to-[#131313 bg-gradient-to-r from-[#151515]'
+                  : background
+              }`}
               ref={screenshotRef}
               id="canvas-container"
               style={style}
@@ -154,6 +161,33 @@ export default function Canvas() {
           </ContextMenuContent>
         </ContextMenu>
       </section>
+
+      <span className="absolute bottom-4 right-4 isolate inline-flex rounded-md shadow-sm">
+        <button
+          type="button"
+          className="relative inline-flex items-center rounded-l-md bg-sidebar px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed disabled:opacity-70"
+          disabled={scrollScale === 1}
+          onClick={() => {
+            if (scrollScale === 1) return
+            setScrollScale((prevScale) => prevScale + 0.1)
+          }}
+        >
+          <span className="sr-only">Scale up</span>
+          <Plus className="h-5 w-5" aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          className="relative -ml-px inline-flex items-center rounded-r-md bg-sidebar px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed disabled:opacity-70"
+          disabled={scrollScale <= 0.4}
+          onClick={() => {
+            if (scrollScale <= 0.4) return
+            setScrollScale((prevScale) => prevScale - 0.1)
+          }}
+        >
+          <span className="sr-only">Scale down</span>
+          <Minus className="h-5 w-5" aria-hidden="true" />
+        </button>
+      </span>
     </>
   )
 }
