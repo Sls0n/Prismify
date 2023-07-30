@@ -21,7 +21,8 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   isImageUploaded: false,
   setIsImageUploaded: (uploaded) => set({ isImageUploaded: uploaded }),
 
-  background: 'from-indigo-300 to-purple-400',
+  background:
+    'linear-gradient(0deg, rgb(202, 194, 255), rgb(242, 231, 248) 100%)',
   setBackground: (background) => set({ background }),
 
   imageSize: '1',

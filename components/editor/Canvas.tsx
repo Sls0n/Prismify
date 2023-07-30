@@ -38,6 +38,9 @@ export default function Canvas() {
 
   let style: CSSProperties = {
     aspectRatio,
+    backgroundImage: !isImageUploaded
+      ? 'linear-gradient(0deg, #131313, #151515 100%)'
+      : `${background}`,
   }
 
   if (aspectRatio < 1) {
@@ -103,11 +106,9 @@ export default function Canvas() {
         <ContextMenu>
           <ContextMenuTrigger asChild>
             <motion.div
-              className={`relative flex w-full items-center justify-center overflow-hidden rounded-xl ${
-                !isImageUploaded
-                  ? 'bg-gradient-to-r from-[#151515] to-[#131313]'
-                  : `bg-gradient-to-r ${background}`
-              }`}
+              className={
+                'relative flex w-full items-center justify-center overflow-hidden rounded-xl bg-gradient-to-r'
+              }
               ref={screenshotRef}
               id="canvas-container"
               style={style}
