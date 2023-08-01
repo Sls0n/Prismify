@@ -6,6 +6,12 @@ interface ResizeCanvasState {
 
   domResolution: string
   setDomResolution: (res: string) => void
+
+  canvasRoundness: number
+  setCanvasRoundness: (canvasRoundness: number) => void
+
+  scrollScale: number
+  setScrollScale: (scrollScale: number) => void
 }
 
 export const useResizeCanvas = create<ResizeCanvasState>()((set) => ({
@@ -14,4 +20,10 @@ export const useResizeCanvas = create<ResizeCanvasState>()((set) => ({
 
   domResolution: '....x....',
   setDomResolution: (res) => set({ domResolution: res }),
+
+  canvasRoundness: 0,
+  setCanvasRoundness: (canvasRoundness) => set({ canvasRoundness }),
+
+  scrollScale: 1,
+  setScrollScale: (scrollScale) => set({ scrollScale }),
 }))

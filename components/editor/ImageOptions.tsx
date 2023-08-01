@@ -1,11 +1,14 @@
 /* eslint-disable @next/next/no-img-element */
-import {  RotateCcw, Upload, X } from 'lucide-react'
+import { GalleryVerticalEnd, RotateCcw, Ruler, Upload, X } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { useImageOptions } from '@/hooks/use-image-options'
 import { ChangeEvent } from 'react'
 import { useRef } from 'react'
 import { Slider } from '@/components/ui/Slider'
 import { Separator } from '../ui/Separator'
+import { Switch } from '../ui/Switch'
+import { ChevronDown } from 'lucide-react'
+import { Popover, PopoverContent, PopoverTrigger } from '../ui/Popover'
 
 export default function ImageOptions() {
   const uploadRef = useRef<HTMLInputElement>(null)
@@ -17,6 +20,9 @@ export default function ImageOptions() {
     setIsImageUploaded,
     imageSize,
     setImageSize,
+    setImageRoundness,
+    imageRoundness,
+    background,
   } = useImageOptions()
 
   const handleImageDelete = () => {
@@ -89,8 +95,12 @@ export default function ImageOptions() {
         </div>
       </div>
 
-      <Separator className="mt-6 h-[0.1rem] w-full" />
+      <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
+        <Ruler size={20} />
+        <span>Appearance</span>
+      </h3>
 
+      {/* Size */}
       <div className="mb-3 mt-8 flex max-w-[70%] items-center px-1">
         <h1 className="text-[0.85rem]">Size</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
@@ -112,33 +122,53 @@ export default function ImageOptions() {
         />
       </div>
 
+      {/* Roundness */}
       <div className="mb-3 mt-9 flex max-w-[70%] items-center px-1">
-        <h1 className="text-[0.85rem]">Shadow</h1>
+        <h1 className="text-[0.85rem]">Roundness</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
-          5
+          {`${Math.round((imageRoundness / 4) * 100)} `}
         </p>
+
         <Button variant="secondary" size="sm" className="ml-auto translate-x-2">
           <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
         </Button>
       </div>
+
       <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
         <Slider
-          defaultValue={[100]}
-          max={150}
-          min={25}
-          step={5}
+          defaultValue={[1]}
+          max={4}
+          min={0}
+          step={0.01}
           onValueChange={(value) => {
-            console.log(value)
+            setImageRoundness(value[0])
           }}
         />
       </div>
 
-      {/* <Popover>
-        <PopoverTrigger className="relative flex h-14 items-center overflow-hidden rounded-lg border border-border bg-sidebar">
-          <div className="flex h-full basis-1/5 items-center bg-purple-400"></div>
+      <Separator className="mt-10 h-[0.1rem] w-full" />
+
+      <div className="mt-10 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
+        <GalleryVerticalEnd size={20} className="rotate-90" />
+        <label className="mr-2" htmlFor="toggle-shadow">
+          Shadow
+        </label>
+
+        <Switch defaultChecked className="scale-[.85]" id="toggle-shadow" />
+      </div>
+
+      {/* Shadow */}
+      <Popover>
+        <PopoverTrigger className="relative mt-8 flex h-14 max-w-[70%] items-center overflow-hidden rounded-lg border border-border bg-formDark">
+          <div
+            style={{ background: background }}
+            className="flex-center h-full basis-[25%]"
+          >
+            <div className="flex-center h-1/2 w-1/2 rounded-md bg-white shadow-xl"></div>
+          </div>
           <div className="flex h-full w-full flex-1 items-center justify-between px-4">
             <p className="text-[0.85rem] text-primary/70 dark:text-dark/70">
-              shadow-sm
+              Small
             </p>
             <ChevronDown
               size={18}
@@ -146,10 +176,29 @@ export default function ImageOptions() {
             />
           </div>
         </PopoverTrigger>
-        <PopoverContent className="flex w-[350px] flex-wrap gap-4">
-          Todo: Add frames
+        <PopoverContent
+          align="start"
+          className="flex w-[350px] flex-wrap gap-4"
+        >
+          Todo: Add shadow presets
         </PopoverContent>
-      </Popover> */}
+      </Popover>
+
+      <div className="mb-3 mt-8 flex max-w-[10%] items-center px-1">
+        <h1 className="text-[0.85rem]">Color</h1>
+      </div>
+
+      <div className="flex h-16 w-28 max-w-[70%] rounded-xl bg-formDark">
+        <div className="ml-4 flex h-full basis-[70%] items-center">
+          <div className="flex h-[55%] w-[65%] rounded-md bg-sidebar"></div>
+        </div>
+        <div className="mr-4 flex flex-1 items-center">
+          <ChevronDown
+            size={20}
+            className="text-primary/70 dark:text-dark/80"
+          />
+        </div>
+      </div>
     </>
   )
 }

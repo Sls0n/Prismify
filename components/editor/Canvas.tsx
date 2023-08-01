@@ -1,6 +1,6 @@
 'use client'
 
-import React, { CSSProperties, useEffect, useRef, useState } from 'react'
+import React, { CSSProperties, useEffect, useRef } from 'react'
 import { useResizeCanvas } from '@/hooks/use-resize-canvas'
 import { motion } from 'framer-motion'
 import { useImageQualityStore } from '@/hooks/use-image-quality'
@@ -25,9 +25,14 @@ import { useImageOptions } from '@/hooks/use-image-options'
 // import CustomizedRnd from '@/components/Rnd'
 
 export default function Canvas() {
-  const [scrollScale, setScrollScale] = useState(1)
   const { quality } = useImageQualityStore()
-  const { resolution, setDomResolution } = useResizeCanvas()
+  const {
+    resolution,
+    setDomResolution,
+    scrollScale,
+    setScrollScale,
+    canvasRoundness,
+  } = useResizeCanvas()
   const { isImageUploaded, background } = useImageOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
@@ -41,6 +46,7 @@ export default function Canvas() {
     backgroundImage: !isImageUploaded
       ? 'linear-gradient(0deg, #131313, #151515 100%)'
       : `${background}`,
+    borderRadius: `${canvasRoundness}rem`,
   }
 
   if (aspectRatio < 1) {
@@ -83,11 +89,11 @@ export default function Canvas() {
     if (e.deltaY < 0) {
       // Scrolling up
       if (scrollScale === 1) return
-      setScrollScale((prevScale) => prevScale + 0.1) // Increment the scroll scale by 0.1
+      setScrollScale(scrollScale + 0.1) // Increment the scroll scale by 0.1
     } else if (e.deltaY > 0) {
       // Scrolling down
       if (scrollScale <= 0.4) return
-      setScrollScale((prevScale) => prevScale - 0.1) // Decrement the scroll scale by 0.1
+      setScrollScale(scrollScale - 0.1) // Decrement the scroll scale by 0.1
     }
   }
 
@@ -166,11 +172,11 @@ export default function Canvas() {
       <span className="absolute bottom-4 right-4 isolate inline-flex rounded-md shadow-sm">
         <button
           type="button"
-          className="relative inline-flex items-center rounded-l-md bg-sidebar px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed disabled:opacity-70"
+          className="relative inline-flex items-center rounded-l-md bg-sidebar px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
           disabled={scrollScale === 1}
           onClick={() => {
             if (scrollScale === 1) return
-            setScrollScale((prevScale) => prevScale + 0.1)
+            setScrollScale(scrollScale + 0.1)
           }}
         >
           <span className="sr-only">Scale up</span>
@@ -178,11 +184,11 @@ export default function Canvas() {
         </button>
         <button
           type="button"
-          className="relative -ml-px inline-flex items-center rounded-r-md bg-sidebar px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed disabled:opacity-70"
+          className="relative -ml-px inline-flex items-center rounded-r-md bg-sidebar px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
           disabled={scrollScale <= 0.4}
           onClick={() => {
             if (scrollScale <= 0.4) return
-            setScrollScale((prevScale) => prevScale - 0.1)
+            setScrollScale(scrollScale - 0.1)
           }}
         >
           <span className="sr-only">Scale down</span>

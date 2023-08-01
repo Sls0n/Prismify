@@ -124,7 +124,7 @@ export default function Navbar({
             </a>
           </div>
 
-          <div className="dark:bg-border-dark h-8 w-[2px] bg-border"></div>
+          <div className="dark:bg-border-dark h-8 w-[2px] bg-border" />
           <div className="flex items-center gap-2">
             {!authenticated && (
               <>

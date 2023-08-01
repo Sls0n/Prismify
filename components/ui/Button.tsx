@@ -15,16 +15,16 @@ const buttonVariants = cva(
         secondary:
           'text-primary dark:text-dark h-10 px-4 py-2 rounded-xl font-medium',
         outline:
-          'text-primary border border-input dark:text-dark h-10 px-4 py-2 rounded-3xl font-medium',
+          'text-primary border border-border/80 dark:text-[#c2c3c9] h-10 px-4 py-2 rounded-xl bg-formDark font-normal',
         ghost:
           'text-primary dark:text-dark hover:bg-[#f5f7fa] dark:hover:bg-formDark h-10 px-4 py-2 rounded-xl font-medium',
         stylish:
-          'rounded-xl bg-indigo-500/10 px-3 py-1 text-sm font-medium leading-6 text-purple ring-1 ring-indigo-500/10', // ring-1 ring-inset ring-indigo-500/20
+          'rounded-xl bg-indigo-500/10 px-3 py-1 text-sm font-medium leading-6 text-purple border border-indigo-500/10', // ring-1 ring-inset ring-indigo-500/20
         destructive:
           'rounded-xl px-3 py-1 text-sm font-medium leading-6 bg-red-500/10 text-red-500 ring-1 ring-red-500/10',
         icon: 'text-primary bg-formDark border border-input dark:text-dark h-12 px-5 py-2.5 rounded-xl',
         activeIcon:
-          'text-white bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#8e8ece] h-12 px-5 py-2.5 rounded-xl font-medium border border-input dark:text-white',
+          'text-white bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#8e8ece] h-12 px-5 py-2.5 rounded-xl font-medium border border-input dark:text-[#2a2a2a]',
       },
       size: {
         'x-lg': 'h-13 py-[0.8rem] px-[1.1rem]',

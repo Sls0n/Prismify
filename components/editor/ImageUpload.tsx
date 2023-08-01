@@ -2,12 +2,19 @@
 'use client'
 
 import { Upload } from 'lucide-react'
-import React, { ChangeEvent } from 'react'
+import React, { CSSProperties, ChangeEvent } from 'react'
 import { useImageOptions } from '@/hooks/use-image-options'
 
 const ImageUpload = () => {
-  const { isImageUploaded, setIsImageUploaded, image, setImage, imageSize } =
-    useImageOptions()
+  const {
+    isImageUploaded,
+    setIsImageUploaded,
+    image,
+    setImage,
+    imageSize,
+    imageRoundness,
+    setImageRoundness,
+  } = useImageOptions()
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -17,6 +24,11 @@ const ImageUpload = () => {
       setImage(imageUrl)
       setIsImageUploaded(true)
     }
+  }
+
+  const imageStyle: CSSProperties = {
+    scale: `${imageSize}`,
+    borderRadius: `${imageRoundness}rem`,
   }
 
   return (
@@ -60,12 +72,10 @@ const ImageUpload = () => {
       {image && isImageUploaded && (
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform ">
           <img
-            className={`h-full w-full rounded-2xl shadow-xl`}
+            className={`h-full w-full shadow-xl`}
             src={image}
             alt="Uploaded image"
-            style={{
-              scale: `${imageSize}`,
-            }}
+            style={imageStyle}
           />
         </div>
       )}

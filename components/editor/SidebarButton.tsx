@@ -18,16 +18,24 @@ export default function SidebarButton({
   return (
     <li
       onClick={() => setActiveIndex(index)}
-      className={`relative flex flex-col items-center gap-2 `}
+      className={`relative flex flex-col items-center gap-2`}
     >
       <Button
-        className="rounded-xl h-12 px-4 py-3"
+        className={`h-12 rounded-xl px-4 py-3`}
         variant={activeIndex === index ? 'activeIcon' : 'icon'}
       >
         {icon}
       </Button>
       {text && (
-        <span className={`text-xs ${activeIndex === index && ''}`}>{text}</span>
+        <span
+          className={`truncate text-xs ${
+            activeIndex === index
+              ? 'font-medium text-[#9f9df0]'
+              : 'text-[#ababb1]'
+          }`}
+        >
+          {text}
+        </span>
       )}
     </li>
   )

@@ -15,8 +15,10 @@ import {
   Smartphone,
   GalleryVerticalEnd,
   RectangleHorizontal,
+  RotateCcw,
+  Minus,
 } from 'lucide-react'
-import { resolutions, qualities } from '@/utils/config'
+import { resolutions } from '@/utils/config'
 import {
   Popover,
   PopoverContent,
@@ -24,20 +26,23 @@ import {
 } from '@/components/ui/Popover'
 import { Button } from '../ui/Button'
 import { useResizeCanvas } from '@/hooks/use-resize-canvas'
-import { useImageQualityStore } from '@/hooks/use-image-quality'
 import { cn } from '@/utils/buttonUtils'
 import { useImageOptions } from '@/hooks/use-image-options'
+import { Slider } from '@/components/ui/Slider'
+import { Separator } from '@/components/ui/Separator'
 
-function ResolutionButton({
+export function ResolutionButton({
   resolution,
   name,
   icon,
   className,
+  variant,
 }: {
   resolution: string
   name: string
   icon?: React.ReactNode
   className?: string
+  variant: 'outline' | 'stylish'
 }) {
   const { setResolution } = useResizeCanvas()
   const { isImageUploaded } = useImageOptions()
@@ -46,7 +51,7 @@ function ResolutionButton({
     <>
       <Button
         className={cn('flex items-center gap-2 rounded-lg', className)}
-        variant="stylish"
+        variant={variant}
         onClick={() => {
           if (!isImageUploaded) return
           setResolution(resolution)
@@ -61,24 +66,28 @@ function ResolutionButton({
 }
 
 const icons = {
-  Youtube: <Youtube size={20} />,
-  Instagram: <Instagram size={20} />,
-  Facebook: <Facebook size={20} />,
-  Linkedin: <Linkedin size={20} />,
-  Twitter: <Twitter size={20} />,
-  Dribble: <Dribbble size={20} />,
-  UserSquare2: <UserSquare2 size={20} />,
-  GalleryThumbnails: <GalleryThumbnails size={20} />,
-  GalleryHorizontalEnd: <GalleryHorizontalEnd size={20} />,
-  MonitorPlay: <MonitorPlay size={20} />,
-  Smartphone: <Smartphone size={20} />,
-  GalleryVerticalEnd: <GalleryVerticalEnd size={20} />,
-  RectangleHorizontal: <RectangleHorizontal size={20} />,
+  Youtube: <Youtube size={18} />,
+  Instagram: <Instagram size={18} />,
+  Facebook: <Facebook size={18} />,
+  Linkedin: <Linkedin size={18} />,
+  Twitter: <Twitter size={18} />,
+  Dribble: <Dribbble size={18} />,
+  UserSquare2: <UserSquare2 size={18} />,
+  GalleryThumbnails: <GalleryThumbnails size={18} />,
+  GalleryHorizontalEnd: <GalleryHorizontalEnd size={18} />,
+  MonitorPlay: <MonitorPlay size={18} />,
+  Smartphone: <Smartphone size={18} />,
+  GalleryVerticalEnd: <GalleryVerticalEnd size={18} />,
+  RectangleHorizontal: <RectangleHorizontal size={18} />,
 }
 
 export default function CanvasOptions() {
-  const { resolution, domResolution } = useResizeCanvas()
-  const { quality, setQuality } = useImageQualityStore()
+  const {
+    resolution,
+    domResolution,
+    canvasRoundness,
+    setCanvasRoundness,
+  } = useResizeCanvas()
 
   return (
     <>
@@ -105,9 +114,10 @@ export default function CanvasOptions() {
                 icon={
                   res.icon ? icons[res.icon as keyof typeof icons] : undefined
                 }
-                className={`${
-                  res.resolution === resolution && 'ring-[#898aeb]/50'
+                variant={`${
+                  res.resolution === resolution ? 'stylish' : 'outline'
                 }`}
+                className="rounded-lg"
               />
             )
           }
@@ -116,7 +126,7 @@ export default function CanvasOptions() {
           <PopoverTrigger asChild>
             <Button
               className={`flex items-center gap-2 rounded-lg`}
-              variant="stylish"
+              variant="outline"
             >
               <span>
                 <Plus size={20} />
@@ -137,9 +147,10 @@ export default function CanvasOptions() {
                         ? icons[res.icon as keyof typeof icons]
                         : undefined
                     }
-                    className={`${
-                      res.resolution === resolution && 'ring-[#898aeb]/50'
+                    variant={`${
+                      res.resolution === resolution ? 'stylish' : 'outline'
                     }`}
+                    className="rounded-lg"
                   />
                 )
               }
@@ -148,25 +159,27 @@ export default function CanvasOptions() {
         </Popover>
       </div>
 
-      <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Image quality</h1>
-      <div className="flex flex-wrap gap-3">
-        {qualities.map((q) => {
-          return (
-            <Button
-              key={q.quality}
-              variant="stylish"
-              onClick={() => {
-                setQuality(q.value)
-              }}
-              className={`rounded-lg ${
-                q.value === quality && 'ring-[#898aeb]/50'
-              }`}
-              aria-label="quality"
-            >
-              {q.quality}
-            </Button>
-          )
-        })}
+      <Separator className="mt-8 h-[0.1rem] w-full" />
+
+      <div className="mb-3 mt-8 flex max-w-[70%] items-center px-1">
+        <h1 className="text-[0.85rem]">Roundness</h1>
+        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
+          {`${Math.round((canvasRoundness / 3) * 100)} `}
+        </p>
+        <Button variant="secondary" size="sm" className="ml-auto translate-x-2">
+          <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
+        </Button>
+      </div>
+      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
+        <Slider
+          defaultValue={[0]}
+          max={3}
+          min={0}
+          step={0.01}
+          onValueChange={(value: number[]) => {
+            setCanvasRoundness(value[0])
+          }}
+        />
       </div>
     </>
   )
