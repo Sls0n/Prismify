@@ -13,7 +13,7 @@ const ImageUpload = () => {
     setImage,
     imageSize,
     imageRoundness,
-    setImageRoundness,
+    imageShadow,
   } = useImageOptions()
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -29,6 +29,7 @@ const ImageUpload = () => {
   const imageStyle: CSSProperties = {
     scale: `${imageSize}`,
     borderRadius: `${imageRoundness}rem`,
+    boxShadow: `${imageShadow}`,
   }
 
   return (
@@ -72,7 +73,7 @@ const ImageUpload = () => {
       {image && isImageUploaded && (
         <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform ">
           <img
-            className={`h-full w-full shadow-xl`}
+            className={`h-full w-full`}
             src={image}
             alt="Uploaded image"
             style={imageStyle}

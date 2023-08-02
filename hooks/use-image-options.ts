@@ -15,6 +15,9 @@ interface ImageOptionsState {
 
   imageRoundness: number
   setImageRoundness: (imageRoundness: number) => void
+
+  imageShadow: string
+  setImageShadow: (imageShadow: string) => void
 }
 
 export const useImageOptions = create<ImageOptionsState>()((set) => ({
@@ -33,4 +36,7 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
 
   imageRoundness: 1, // in rem
   setImageRoundness: (imageRoundness) => set({ imageRoundness }),
+
+  imageShadow: 'drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))',
+  setImageShadow: (imageShadow) => set({ imageShadow }),
 }))

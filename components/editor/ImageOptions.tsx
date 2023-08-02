@@ -1,16 +1,20 @@
 /* eslint-disable @next/next/no-img-element */
+'use client'
+
 import { GalleryVerticalEnd, RotateCcw, Ruler, Upload, X } from 'lucide-react'
 import { Button } from '../ui/Button'
 import { useImageOptions } from '@/hooks/use-image-options'
 import { ChangeEvent } from 'react'
-import { useRef } from 'react'
+import { useRef, useState } from 'react'
 import { Slider } from '@/components/ui/Slider'
 import { Separator } from '../ui/Separator'
 import { Switch } from '../ui/Switch'
 import { ChevronDown } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/Popover'
+import { shadows } from '@/utils/config'
 
 export default function ImageOptions() {
+  const [shadowName, setShadowName] = useState('Small')
   const uploadRef = useRef<HTMLInputElement>(null)
 
   const {
@@ -23,6 +27,8 @@ export default function ImageOptions() {
     setImageRoundness,
     imageRoundness,
     background,
+    imageShadow,
+    setImageShadow,
   } = useImageOptions()
 
   const handleImageDelete = () => {
@@ -164,11 +170,14 @@ export default function ImageOptions() {
             style={{ background: background }}
             className="flex-center h-full basis-[25%]"
           >
-            <div className="flex-center h-1/2 w-1/2 rounded-md bg-white shadow-xl"></div>
+            <div
+              className="flex-center h-1/2 w-1/2 rounded-md bg-white"
+              style={{ boxShadow: `${imageShadow}` }}
+            ></div>
           </div>
           <div className="flex h-full w-full flex-1 items-center justify-between px-4">
             <p className="text-[0.85rem] text-primary/70 dark:text-dark/70">
-              Small
+              {shadowName}
             </p>
             <ChevronDown
               size={18}
@@ -178,9 +187,27 @@ export default function ImageOptions() {
         </PopoverTrigger>
         <PopoverContent
           align="start"
-          className="flex w-[350px] flex-wrap gap-4"
+          className="grid w-[350px] grid-cols-3 gap-4 rounded-lg bg-formDark p-4"
         >
-          Todo: Add shadow presets
+          {shadows.map((shadow) => (
+            <Button
+              variant="secondary"
+              key={shadow.name}
+              onClick={() => {
+                setImageShadow(shadow.shadow)
+                setShadowName(shadow.fullName)
+              }}
+              className="flex-center relative h-20 w-24 cursor-pointer rounded-md"
+              style={{ boxShadow: `${shadow.shadow}`, background: background }}
+            >
+              <div
+                className="flex-center h-[75%] w-[95%] rounded-md bg-white text-xs text-[#333]"
+                style={{ boxShadow: `${shadow.shadow}` }}
+              >
+                {shadow.name}
+              </div>
+            </Button>
+          ))}
         </PopoverContent>
       </Popover>
 
