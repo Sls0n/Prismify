@@ -8,14 +8,15 @@ import { ChangeEvent } from 'react'
 import { useRef, useState } from 'react'
 import { Slider } from '@/components/ui/Slider'
 import { Separator } from '../ui/Separator'
-import { Switch } from '../ui/Switch'
 import { ChevronDown } from 'lucide-react'
 import { Popover, PopoverContent, PopoverTrigger } from '../ui/Popover'
-import { shadows } from '@/utils/config'
+import { useCreateShadows } from '@/hooks/useShadowPresets'
+import ColorPicker from '../ColorPicker'
 
 export default function ImageOptions() {
-  const [shadowName, setShadowName] = useState('Small')
   const uploadRef = useRef<HTMLInputElement>(null)
+  const shadows = useCreateShadows()
+  console.log(shadows)
 
   const {
     isImageUploaded,
@@ -29,6 +30,10 @@ export default function ImageOptions() {
     background,
     imageShadow,
     setImageShadow,
+    shadowColor,
+    setShadowColor,
+    shadowName,
+    setShadowName
   } = useImageOptions()
 
   const handleImageDelete = () => {
@@ -159,8 +164,6 @@ export default function ImageOptions() {
         <label className="mr-2" htmlFor="toggle-shadow">
           Shadow
         </label>
-
-        <Switch defaultChecked className="scale-[.85]" id="toggle-shadow" />
       </div>
 
       {/* Shadow */}
@@ -172,7 +175,9 @@ export default function ImageOptions() {
           >
             <div
               className="flex-center h-1/2 w-1/2 rounded-md bg-white"
-              style={{ boxShadow: `${imageShadow}` }}
+              style={{
+                boxShadow: `${imageShadow}`,
+              }}
             ></div>
           </div>
           <div className="flex h-full w-full flex-1 items-center justify-between px-4">
@@ -211,21 +216,43 @@ export default function ImageOptions() {
         </PopoverContent>
       </Popover>
 
-      <div className="mb-3 mt-8 flex max-w-[10%] items-center px-1">
-        <h1 className="text-[0.85rem]">Color</h1>
+      <div className="mb-3 mt-8 flex items-center px-1">
+        <h1 className="text-[0.85rem]">Shadow color</h1>
       </div>
 
-      <div className="flex h-16 w-28 max-w-[70%] rounded-xl bg-formDark">
-        <div className="ml-4 flex h-full basis-[70%] items-center">
-          <div className="flex h-[55%] w-[65%] rounded-md bg-sidebar"></div>
-        </div>
-        <div className="mr-4 flex flex-1 items-center">
-          <ChevronDown
-            size={20}
-            className="text-primary/70 dark:text-dark/80"
+      <Popover>
+        <PopoverTrigger>
+          <div className="flex h-14 w-24 max-w-[70%] rounded-xl bg-formDark">
+            <div className="ml-4 flex h-full basis-[70%] items-center">
+              <div
+                className="flex h-[55%] w-[70%] rounded-md bg-sidebar"
+                style={{ background: shadowColor }}
+              ></div>
+            </div>
+            <div className="mr-4 flex flex-1 items-center">
+              <ChevronDown
+                size={20}
+                className="text-primary/70 dark:text-dark/80"
+              />
+            </div>
+          </div>
+        </PopoverTrigger>
+        <PopoverContent
+          align="start"
+          className="flex-center w-[350px] flex-wrap gap-3"
+        >
+          <ColorPicker
+            onChange={(color) => {
+              console.log(color)
+              setShadowColor(color)
+              setImageShadow(
+                shadows.find((shadow) => shadow.fullName === (shadowName ?? ''))
+                  ?.shadow ?? ''
+              )
+            }}
           />
-        </div>
-      </div>
+        </PopoverContent>
+      </Popover>
     </>
   )
 }

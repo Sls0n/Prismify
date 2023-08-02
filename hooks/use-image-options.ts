@@ -18,6 +18,12 @@ interface ImageOptionsState {
 
   imageShadow: string
   setImageShadow: (imageShadow: string) => void
+
+  shadowName: string
+  setShadowName: (shadowName: string) => void
+
+  shadowColor: string
+  setShadowColor: (shadowColor: string) => void
 }
 
 export const useImageOptions = create<ImageOptionsState>()((set) => ({
@@ -37,6 +43,12 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   imageRoundness: 1, // in rem
   setImageRoundness: (imageRoundness) => set({ imageRoundness }),
 
-  imageShadow: 'drop-shadow(0 25px 25px rgb(0 0 0 / 0.15))',
+  imageShadow: '0 4px 6px -1px #00000026, 0 2px 4px -2px #00000026',
   setImageShadow: (imageShadow) => set({ imageShadow }),
+
+  shadowName: 'Small',
+  setShadowName: (shadowName) => set({shadowName}),
+
+  shadowColor: '#000000',
+  setShadowColor: (shadowColor) => set({ shadowColor }),
 }))

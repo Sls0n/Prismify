@@ -82,12 +82,8 @@ const icons = {
 }
 
 export default function CanvasOptions() {
-  const {
-    resolution,
-    domResolution,
-    canvasRoundness,
-    setCanvasRoundness,
-  } = useResizeCanvas()
+  const { resolution, domResolution, canvasRoundness, setCanvasRoundness } =
+    useResizeCanvas()
 
   return (
     <>
@@ -176,6 +172,7 @@ export default function CanvasOptions() {
           max={3}
           min={0}
           step={0.01}
+          value={[canvasRoundness]}
           onValueChange={(value: number[]) => {
             setCanvasRoundness(value[0])
           }}
