@@ -10,15 +10,13 @@ import {
   PanelTop,
   AlignHorizontalDistributeCenter,
   Download,
-  Clipboard,
+  Palette,
 } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/ScrollArea'
 import { useActiveIndexStore } from '@/hooks/use-active-index'
-import CanvasOptions from './CanvasOptions'
-import ImageOptions from './ImageOptions'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/Popover'
-import { qualities } from '@/utils/config'
-import { useImageQualityStore } from '@/hooks/use-image-quality'
+import CanvasOptions from './CanvasOptions/CanvasOptions'
+import ImageOptions from './ImageOptions/ImageOptions'
+import BackgroundOptions from '@/components/editor/BackgroundOptions/BackgroundOptions'
 
 const sidebarButtons = [
   {
@@ -28,6 +26,10 @@ const sidebarButtons = [
   {
     text: 'Image',
     icon: <Images size={20} />,
+  },
+  {
+    text: 'Background',
+    icon: <Palette size={20} />,
   },
   {
     text: 'Frame',
@@ -45,11 +47,10 @@ const sidebarButtons = [
 
 export default function Sidebar() {
   const activeIndex = useActiveIndexStore((state) => state.activeIndex)
-  const { setQuality, quality } = useImageQualityStore()
 
   return (
     <aside className="flex w-[30rem] border-r border-border">
-      <ul className="flex max-w-[22%] basis-[22%] flex-col items-center gap-6 truncate border-r border-border/50 px-4 py-8 dark:bg-sidebar">
+      <ul className="relative flex max-w-[23%] basis-[20%] flex-col items-center gap-6 overflow-y-auto border-r border-border/50 px-4 py-8 dark:bg-sidebar lg:basis-[23%]">
         {sidebarButtons.map((button, index) => (
           <SidebarButton
             key={index}
@@ -62,10 +63,13 @@ export default function Sidebar() {
           <Button className="h-12 rounded-xl px-4 py-3" variant="activeIcon">
             <Download />
           </Button>
+          <span className={`max-w-[3.25rem] truncate text-xs text-[#cfcfcf]`}>
+            Download
+          </span>
         </li>
       </ul>
 
-      <div className="relative flex h-full w-full flex-col overflow-hidden ">
+      <div className="relative flex h-full w-full flex-col overflow-hidden">
         <ScrollArea type="hover">
           <div className="flex flex-col px-7">
             <div className="flex w-full flex-col py-10">
@@ -81,6 +85,7 @@ export default function Sidebar() {
               </h3>
               {activeIndex === 0 && <CanvasOptions />}
               {activeIndex === 1 && <ImageOptions />}
+              {activeIndex === 2 && <BackgroundOptions />}
             </div>
           </div>
         </ScrollArea>

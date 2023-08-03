@@ -16,7 +16,6 @@ import {
   GalleryVerticalEnd,
   RectangleHorizontal,
   RotateCcw,
-  Minus,
 } from 'lucide-react'
 import { resolutions } from '@/utils/config'
 import {
@@ -24,7 +23,7 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/Popover'
-import { Button } from '../ui/Button'
+import { Button } from '@/components/ui/Button'
 import { useResizeCanvas } from '@/hooks/use-resize-canvas'
 import { cn } from '@/utils/buttonUtils'
 import { useImageOptions } from '@/hooks/use-image-options'

@@ -34,7 +34,7 @@ export const useCreateShadows = () => {
     {
       name: 'glow',
       fullName: 'Glow',
-      shadow: `0 25px 50px -12px #ffffff4d`,
+      shadow: `0 25px 50px -12px #ffffff50`,
     },
   ]
 }

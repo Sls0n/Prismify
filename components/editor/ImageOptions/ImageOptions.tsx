@@ -1,22 +1,30 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { GalleryVerticalEnd, RotateCcw, Ruler, Upload, X } from 'lucide-react'
-import { Button } from '../ui/Button'
+import {
+  GalleryVerticalEnd,
+  RotateCcw,
+  Ruler,
+  Upload,
+  X,
+  ChevronDown,
+} from 'lucide-react'
+import { Button } from '@/components/ui/Button'
 import { useImageOptions } from '@/hooks/use-image-options'
-import { ChangeEvent } from 'react'
-import { useRef, useState } from 'react'
+import { ChangeEvent, useRef } from 'react'
 import { Slider } from '@/components/ui/Slider'
-import { Separator } from '../ui/Separator'
-import { ChevronDown } from 'lucide-react'
-import { Popover, PopoverContent, PopoverTrigger } from '../ui/Popover'
-import { useCreateShadows } from '@/hooks/useShadowPresets'
-import ColorPicker from '../ColorPicker'
+import { Separator } from '@/components/ui/Separator'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/Popover'
+import { useCreateShadows } from '@/hooks/use-shadow-presets'
+import ColorPicker from '@/components/ColorPicker'
 
 export default function ImageOptions() {
   const uploadRef = useRef<HTMLInputElement>(null)
   const shadows = useCreateShadows()
-  console.log(shadows)
 
   const {
     isImageUploaded,
@@ -33,7 +41,7 @@ export default function ImageOptions() {
     shadowColor,
     setShadowColor,
     shadowName,
-    setShadowName
+    setShadowName,
   } = useImageOptions()
 
   const handleImageDelete = () => {

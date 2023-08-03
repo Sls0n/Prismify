@@ -28,7 +28,7 @@ export default function SidebarButton({
       </Button>
       {text && (
         <span
-          className={`truncate text-xs ${
+          className={`truncate text-xs max-w-[3.25rem] ${
             activeIndex === index ? 'text-[#cfcfcf]' : 'text-[#ababb1]'
           }`}
         >
