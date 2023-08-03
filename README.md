@@ -1,4 +1,5 @@
-`📢 Note: This is a work in progress. I will post comprehensive details soon.`
+> **Warning**
+> This app is a work in progress.
 
 ## Prismify
 
