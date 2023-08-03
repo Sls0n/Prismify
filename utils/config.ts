@@ -57,3 +57,42 @@ export const resolutions = [
     icon: 'RectangleHorizontal',
   },
 ]
+
+export const shadows = [
+  {
+    name: 'none',
+    fullName: 'None',
+    shadow: `0 0 0 0 var(--shadow)`,
+    preview: `0 0 0 0 var(--shadow)`,
+  },
+  {
+    name: 'sm',
+    fullName: 'Small',
+    shadow: `0 4px 6px -1px var(--shadow), 0 2px 4px -2px var(--shadow)`,
+    preview: `0 4px 6px -1px var(--shadow), 0 2px 4px -2px var(--shadow)`,
+  },
+  {
+    name: 'md',
+    fullName: 'Medium',
+    shadow: `0 10px 15px -3px var(--shadow), 0 4px 6px -4px var(--shadow)`,
+    preview: `0 10px 15px -3px var(--shadow), 0 4px 6px -4px var(--shadow)`,
+  },
+  {
+    name: 'lg',
+    fullName: 'Large',
+    shadow: `0 20px 25px -5px var(--shadow), 0 8px 10px -6px var(--shadow)`,
+    preview: `0 20px 25px -5px var(--shadow), 0 8px 10px -6px var(--shadow)`,
+  },
+  {
+    name: 'x-lg',
+    fullName: 'Extra Large',
+    shadow: `0 25px 50px -12px var(--shadow)`,
+    preview: `0 25px 50px -12px var(--shadow)`,
+  },
+  {
+    name: 'glow',
+    fullName: 'Glow',
+    shadow: `0 25px 50px -12px #fff`,
+    preview: `0 25px 25px -12px #ffffff50`,
+  },
+]

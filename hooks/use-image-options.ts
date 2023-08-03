@@ -49,6 +49,6 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   shadowName: 'Small',
   setShadowName: (shadowName) => set({shadowName}),
 
-  shadowColor: '#000000',
+  shadowColor: '#00000026',
   setShadowColor: (shadowColor) => set({ shadowColor }),
 }))

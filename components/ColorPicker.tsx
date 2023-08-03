@@ -1,6 +1,6 @@
 'use client'
 
-import { HexColorInput, HexColorPicker } from 'react-colorful'
+import { HexColorInput, HexAlphaColorPicker } from 'react-colorful'
 import { CSSProperties, useState } from 'react'
 import { useImageOptions } from '@/hooks/use-image-options'
 
@@ -22,7 +22,7 @@ export default function ColorPicker({
 
   return (
     <>
-      <HexColorPicker
+      <HexAlphaColorPicker
         color={color}
         onChange={(color) => {
           setColor(color)

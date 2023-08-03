@@ -19,12 +19,11 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/Popover'
-import { useCreateShadows } from '@/hooks/use-shadow-presets'
+import { shadows } from '@/utils/config'
 import ColorPicker from '@/components/ColorPicker'
 
 export default function ImageOptions() {
   const uploadRef = useRef<HTMLInputElement>(null)
-  const shadows = useCreateShadows()
 
   const {
     isImageUploaded,
@@ -38,10 +37,9 @@ export default function ImageOptions() {
     background,
     imageShadow,
     setImageShadow,
-    shadowColor,
-    setShadowColor,
     shadowName,
     setShadowName,
+    setShadowColor,
   } = useImageOptions()
 
   const handleImageDelete = () => {
@@ -212,6 +210,7 @@ export default function ImageOptions() {
           align="start"
           className="grid w-[350px] grid-cols-3 gap-4 rounded-lg bg-formDark p-4"
         >
+          {/* Inside popup  */}
           {shadows.map((shadow) => (
             <Button
               variant="secondary"
@@ -221,11 +220,11 @@ export default function ImageOptions() {
                 setShadowName(shadow.fullName)
               }}
               className="flex-center relative h-20 w-24 cursor-pointer rounded-md"
-              style={{ boxShadow: `${shadow.shadow}`, background: background }}
+              style={{ background: background }}
             >
               <div
                 className="flex-center h-[75%] w-[95%] rounded-md bg-white text-xs text-[#333]"
-                style={{ boxShadow: `${shadow.shadow}` }}
+                style={{ boxShadow: `${shadow.preview}` }}
               >
                 {shadow.name}
               </div>
@@ -244,7 +243,7 @@ export default function ImageOptions() {
             <div className="ml-4 flex h-full basis-[70%] items-center">
               <div
                 className="flex h-[55%] w-[70%] rounded-md bg-sidebar"
-                style={{ background: shadowColor }}
+                style={{ background: 'var(--shadow)' }}
               ></div>
             </div>
             <div className="mr-4 flex flex-1 items-center">
@@ -267,6 +266,7 @@ export default function ImageOptions() {
                 shadows.find((shadow) => shadow.fullName === (shadowName ?? ''))
                   ?.shadow ?? ''
               )
+              document.documentElement.style.setProperty('--shadow', color)
             }}
           />
         </PopoverContent>
