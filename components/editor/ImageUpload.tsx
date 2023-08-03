@@ -61,7 +61,7 @@ const ImageUpload = () => {
                   <p className="hidden pl-1 sm:block">or drag and drop</p>
                 </div>
 
-                <p className="text-sm leading-5 text-gray-500">
+                <p className="text-sm leading-5 text-gray-400/80">
                   PNG, JPG, GIF up to 10MB
                 </p>
               </div>

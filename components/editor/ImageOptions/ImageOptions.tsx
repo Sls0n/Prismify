@@ -125,7 +125,12 @@ export default function ImageOptions() {
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {Math.round(Number(imageSize) * 100)}%
         </p>
-        <Button variant="secondary" size="sm" className="ml-auto translate-x-2">
+        <Button
+          aria-label="reset size"
+          variant="secondary"
+          size="sm"
+          className="ml-auto translate-x-2"
+        >
           <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
         </Button>
       </div>
@@ -148,7 +153,12 @@ export default function ImageOptions() {
           {`${Math.round((imageRoundness / 4) * 100)} `}
         </p>
 
-        <Button variant="secondary" size="sm" className="ml-auto translate-x-2">
+        <Button
+          aria-label="reset roundness"
+          variant="secondary"
+          size="sm"
+          className="ml-auto translate-x-2"
+        >
           <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
         </Button>
       </div>

@@ -23,12 +23,13 @@ export default function SidebarButton({
       <Button
         className={`h-12 rounded-xl px-4 py-3`}
         variant={activeIndex === index ? 'activeIcon' : 'icon'}
+        aria-label={`${text} options`}
       >
         {icon}
       </Button>
       {text && (
         <span
-          className={`truncate text-xs max-w-[3.25rem] ${
+          className={`max-w-[3.25rem] truncate text-xs ${
             activeIndex === index ? 'text-[#cfcfcf]' : 'text-[#ababb1]'
           }`}
         >

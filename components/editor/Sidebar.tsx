@@ -60,7 +60,7 @@ export default function Sidebar() {
           />
         ))}
         <li className="mt-auto flex flex-col items-center gap-2">
-          <Button className="h-12 rounded-xl px-4 py-3" variant="activeIcon">
+          <Button aria-label='Download options' className="h-12 rounded-xl px-4 py-3" variant="activeIcon">
             <Download />
           </Button>
           <span className={`max-w-[3.25rem] truncate text-xs text-[#cfcfcf]`}>
@@ -78,6 +78,7 @@ export default function Sidebar() {
                 {sidebarButtons[activeIndex].text}
                 <Button
                   variant={'destructive'}
+                  aria-label='delete current project'
                   className="ml-auto scale-75 rounded-md px-3 py-1"
                 >
                   <Trash size={20} />
