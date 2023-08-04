@@ -42,7 +42,7 @@ export default function ImageOptions() {
     setShadowColor,
   } = useImageOptions()
 
-  const { background } = useBackgroundOptions()
+  const { isMeshGradient } = useBackgroundOptions()
 
   const handleImageDelete = () => {
     setImage('')
@@ -188,7 +188,10 @@ export default function ImageOptions() {
       <Popover>
         <PopoverTrigger className="relative mt-8 flex h-14 max-w-[70%] items-center overflow-hidden rounded-lg border border-border bg-formDark">
           <div
-            style={{ background: background }}
+            style={{
+              backgroundImage: `var(--gradient-bg)`,
+              backgroundColor: isMeshGradient ? `var(--mesh-bg)` : '',
+            }}
             className="flex-center h-full basis-[25%]"
           >
             <div
@@ -221,8 +224,14 @@ export default function ImageOptions() {
                 setImageShadow(shadow.shadow)
                 setShadowName(shadow.fullName)
               }}
-              className="flex-center relative h-20 w-24 cursor-pointer rounded-md"
-              style={{ background: background }}
+              className={`flex-center relative h-20 w-24 cursor-pointer rounded-md ${
+                shadow.shadow === imageShadow &&
+                'outline-none ring-2 ring-ring ring-offset-2'
+              }`}
+              style={{
+                backgroundImage: `var(--gradient-bg)`,
+                backgroundColor: isMeshGradient ? `var(--mesh-bg)` : '',
+              }}
             >
               <div
                 className="flex-center h-[75%] w-[95%] rounded-md bg-white text-xs text-[#333]"

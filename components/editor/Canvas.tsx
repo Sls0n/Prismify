@@ -27,6 +27,7 @@ import { useBackgroundOptions } from '@/hooks/use-background-options'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()
+  const { isMeshGradient } = useBackgroundOptions()
   const {
     resolution,
     setDomResolution,
@@ -35,7 +36,6 @@ export default function Canvas() {
     canvasRoundness,
   } = useResizeCanvas()
   const { isImageUploaded } = useImageOptions()
-  const { background } = useBackgroundOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
 
@@ -47,7 +47,8 @@ export default function Canvas() {
     aspectRatio,
     backgroundImage: !isImageUploaded
       ? 'linear-gradient(0deg, #131313, #151515 100%)'
-      : `${background}`,
+      : `var(--gradient-bg)`,
+    backgroundColor: isMeshGradient ? `var(--mesh-bg)` : '',
     borderRadius: `${canvasRoundness}rem`,
   }
 
@@ -115,7 +116,7 @@ export default function Canvas() {
           <ContextMenuTrigger asChild>
             <motion.div
               className={
-                'relative flex w-full items-center justify-center overflow-hidden rounded-xl bg-gradient-to-r'
+                'relative flex w-full items-center justify-center overflow-hidden rounded-xl'
               }
               ref={screenshotRef}
               id="canvas-container"
