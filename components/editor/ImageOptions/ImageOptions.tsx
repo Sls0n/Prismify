@@ -21,6 +21,7 @@ import {
 } from '@/components/ui/Popover'
 import { shadows } from '@/utils/config'
 import ColorPicker from '@/components/ColorPicker'
+import { useBackgroundOptions } from '@/hooks/use-background-options'
 
 export default function ImageOptions() {
   const uploadRef = useRef<HTMLInputElement>(null)
@@ -34,13 +35,14 @@ export default function ImageOptions() {
     setImageSize,
     setImageRoundness,
     imageRoundness,
-    background,
     imageShadow,
     setImageShadow,
     shadowName,
     setShadowName,
     setShadowColor,
   } = useImageOptions()
+
+  const { background } = useBackgroundOptions()
 
   const handleImageDelete = () => {
     setImage('')
@@ -60,7 +62,7 @@ export default function ImageOptions() {
   return (
     <>
       <div className="mb-3 mt-4 flex h-[5rem] gap-6 px-1 text-sm">
-        <div className="relative flex h-full basis-2/5 flex-col rounded-xl  border-2 border-[#898aeb]/30 p-1 hover:border-[#898aeb]/60">
+        <div className="relative flex h-full basis-[35%] flex-col rounded-xl  border-2 border-[#898aeb]/20 p-1 hover:border-[#898aeb]/60">
           {!isImageUploaded && (
             <>
               <label

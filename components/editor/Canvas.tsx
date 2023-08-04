@@ -22,6 +22,7 @@ import {
 import ImageUpload from './ImageUpload'
 import { Minus, Plus } from 'lucide-react'
 import { useImageOptions } from '@/hooks/use-image-options'
+import { useBackgroundOptions } from '@/hooks/use-background-options'
 // import CustomizedRnd from '@/components/Rnd'
 
 export default function Canvas() {
@@ -33,7 +34,8 @@ export default function Canvas() {
     setScrollScale,
     canvasRoundness,
   } = useResizeCanvas()
-  const { isImageUploaded, background } = useImageOptions()
+  const { isImageUploaded } = useImageOptions()
+  const { background } = useBackgroundOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
 

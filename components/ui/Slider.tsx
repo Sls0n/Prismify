@@ -22,7 +22,7 @@ const Slider = React.forwardRef<
     </SliderPrimitive.Track>
     <SliderPrimitive.Thumb
       aria-label="slider thumb"
-      className="block h-5 w-5 rounded-md border border-border bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-[#898aeb]"
+      className="block h-5 w-5 rounded-md border border-border bg-background ring-offset-background transition-colors focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 active:outline-none active:ring-2 active:ring-ring active:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 dark:bg-[#898aeb]"
     />
   </SliderPrimitive.Root>
 ))

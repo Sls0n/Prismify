@@ -7,9 +7,6 @@ interface ImageOptionsState {
   isImageUploaded: boolean
   setIsImageUploaded: (uploaded: boolean) => void
 
-  background: string
-  setBackground: (background: string) => void
-
   imageSize: string
   setImageSize: (imageSize: string) => void
 
@@ -33,10 +30,6 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   isImageUploaded: false,
   setIsImageUploaded: (uploaded) => set({ isImageUploaded: uploaded }),
 
-  background:
-    'linear-gradient(0deg, rgb(202, 194, 255), rgb(242, 231, 248) 100%)',
-  setBackground: (background) => set({ background }),
-
   imageSize: '1',
   setImageSize: (imageSize) => set({ imageSize }),
 
@@ -47,7 +40,7 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   setImageShadow: (imageShadow) => set({ imageShadow }),
 
   shadowName: 'Small',
-  setShadowName: (shadowName) => set({shadowName}),
+  setShadowName: (shadowName) => set({ shadowName }),
 
   shadowColor: '#00000026',
   setShadowColor: (shadowColor) => set({ shadowColor }),

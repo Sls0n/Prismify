@@ -36,6 +36,12 @@
     --radius: 0.5rem;
 
     --shadow: #00000026;
+    --gradient-angle: 0deg;
+    --gradient-bg: linear-gradient(
+      var(--gradient-angle),
+      rgb(202, 194, 255),
+      rgb(242, 231, 248) 100%
+    );
   }
 
   .dark {
@@ -109,4 +115,9 @@ html {
 
 .react-draggable-dragging {
   cursor: grabbing;
+}
+
+.circular-slider > div {
+  transition: opacity 0s ease-in 0s !important;
+  font-weight: 600;
 }
