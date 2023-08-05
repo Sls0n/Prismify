@@ -1,11 +1,35 @@
-export const qualities = [
+export interface Quality {
+  quality: string
+  value: number
+}
+
+export interface Resolution {
+  name: string
+  resolution: string
+  icon: string
+}
+
+export interface Shadow {
+  name: string
+  fullName: string
+  shadow: string
+  preview: string
+}
+
+export interface Gradient {
+  type: 'Normal' | 'Mesh'
+  gradient: string
+  background?: string
+}
+
+export const qualities: Quality[] = [
   { quality: '0.5x', value: 0.5 },
   { quality: '1x', value: 1 },
   { quality: '2x', value: 2 },
   { quality: '4x', value: 4 },
 ]
 
-export const resolutions = [
+export const resolutions: Resolution[] = [
   {
     name: '1:1 (Pfp)',
     resolution: '1x1',
@@ -58,7 +82,7 @@ export const resolutions = [
   },
 ]
 
-export const shadows = [
+export const shadows: Shadow[] = [
   {
     name: 'none',
     fullName: 'None',
@@ -97,7 +121,7 @@ export const shadows = [
   },
 ]
 
-export const gradients = [
+export const gradients: Gradient[] = [
   {
     type: 'Normal',
     gradient:

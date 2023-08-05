@@ -1,6 +1,7 @@
+import { useCallback } from 'react'
 import CircularSliderComp from '@/components/ui/CircularSlider'
 import { GaugeCircle, Info, Paintbrush } from 'lucide-react'
-import { gradients } from '@/utils/config'
+import { gradients, Gradient } from '@/utils/config'
 import { Button } from '@/components/ui/Button'
 import { useBackgroundOptions } from '@/hooks/use-background-options'
 import {
@@ -13,11 +14,28 @@ import { Balancer } from 'react-wrap-balancer'
 export default function GradientOptions() {
   const {
     setBackground,
-    background,
+    background: backgroundInStore,
     setIsMeshGradient,
     isMeshGradient,
     setIsSolidColor,
   } = useBackgroundOptions()
+
+  const handleGradientClick = useCallback(
+    (gradient: Gradient, isMesh: boolean) => {
+      document.documentElement.style.setProperty(
+        '--gradient-bg',
+        gradient.gradient
+      )
+      document.documentElement.style.setProperty(
+        '--mesh-bg',
+        isMesh ? gradient.background! : gradient.gradient
+      )
+      setBackground(gradient.gradient)
+      setIsMeshGradient(isMesh)
+      setIsSolidColor(false)
+    },
+    [setBackground, setIsMeshGradient, setIsSolidColor]
+  )
 
   return (
     <>
@@ -37,8 +55,7 @@ export default function GradientOptions() {
                 <p className="text-sm text-neutral-400 ">
                   <Balancer>
                     {/*  eslint-disable-next-line react/no-unescaped-entities */}
-                    Angle doesn't work with the current gradient
-                    preset.
+                    Angle doesn't work with the current gradient preset.
                   </Balancer>
                 </p>
               </PopoverContent>
@@ -60,63 +77,32 @@ export default function GradientOptions() {
           <span>Gradients:</span>
         </h3>
 
-        <div className="mt-4 grid max-w-[18rem] grid-cols-6 auto-rows-auto gap-4">
-          {gradients.map((gradient) => {
-            if (gradient.type === 'Normal') {
-              return (
-                <Button
-                  key={gradient.gradient}
-                  variant="secondary"
-                  className={`h-9 w-9 rounded-sm ${
-                    gradient.gradient === background &&
-                    'outline-none ring-2 ring-ring ring-offset-2'
-                  }`}
-                  onClick={() => {
-                    document.documentElement.style.setProperty(
-                      '--gradient-bg',
-                      gradient.gradient
-                    )
-                    document.documentElement.style.setProperty(
-                      '--mesh-bg',
-                      gradient.gradient
-                    )
-                    setBackground(gradient.gradient)
-                    setIsMeshGradient(false)
-                    setIsSolidColor(false)
-                  }}
-                  style={{ background: gradient.gradient }}
-                />
-              )
-            } else if (gradient.type === 'Mesh') {
-              return (
-                <Button
-                  key={gradient.gradient}
-                  variant="secondary"
-                  className={`h-9 w-9 rounded-sm ${
-                    gradient.gradient === background &&
-                    'outline-none ring-2 ring-ring ring-offset-2'
-                  }`}
-                  onClick={() => {
-                    document.documentElement.style.setProperty(
-                      '--gradient-bg',
-                      gradient.gradient
-                    )
-                    document.documentElement.style.setProperty(
-                      '--mesh-bg',
-                      gradient.background!
-                    )
-                    setBackground(gradient.gradient)
-                    setIsMeshGradient(true)
-                    setIsSolidColor(false)
-                  }}
-                  style={{
-                    backgroundColor: gradient.background,
-                    backgroundImage: gradient.gradient,
-                  }}
-                />
-              )
-            }
-          })}
+        <div className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-6 gap-4">
+          {gradients.map(({ gradient, background, type }: Gradient) => (
+            <Button
+              key={gradient}
+              variant="secondary"
+              className={`h-9 w-9 rounded-sm ${
+                gradient === backgroundInStore &&
+                'outline-none ring-2 ring-ring ring-offset-2'
+              }`}
+              onClick={() =>
+                handleGradientClick(
+                  {
+                    gradient,
+                    background,
+                    type: 'Normal',
+                  },
+                  type === 'Mesh' // will be true if its of type Mesh
+                )
+              }
+              style={
+                type === 'Normal'
+                  ? { background: gradient }
+                  : { backgroundColor: background, backgroundImage: gradient }
+              }
+            />
+          ))}
         </div>
       </div>
     </>

@@ -1,8 +1,9 @@
+import { useCallback } from 'react'
 import { solidColors } from '@/utils/config'
-import { Paintbrush } from 'lucide-react'
 import { Button } from '@/components/ui/Button'
-import { useBackgroundOptions } from '@/hooks/use-background-options'
 import PopupColorPicker from '@/components/PopupColorPicker'
+import { useBackgroundOptions } from '@/hooks/use-background-options'
+import { Paintbrush } from 'lucide-react'
 
 export default function GradientOptions() {
   const {
@@ -14,19 +15,36 @@ export default function GradientOptions() {
     setSolidColor,
   } = useBackgroundOptions()
 
+  const updateRootStyles = useCallback((color: string) => {
+    document.documentElement.style.setProperty('--solid-bg', color)
+    document.documentElement.style.setProperty('--gradient-bg', color)
+    document.documentElement.style.setProperty('--mesh-bg', color)
+  }, [])
+
+  const handleColorChange = useCallback(
+    (color: string) => {
+      setIsSolidColor(true)
+      setSolidColor(color)
+      setBackground(color)
+      setIsMeshGradient(false)
+      updateRootStyles(color)
+    },
+    [
+      setIsSolidColor,
+      setSolidColor,
+      setBackground,
+      setIsMeshGradient,
+      updateRootStyles,
+    ]
+  )
+
   return (
     <>
       <div>
         <h3 className="mb-3 mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
           <span>Pick a color:</span>
         </h3>
-        <PopupColorPicker
-          onChange={(color) => {
-            setSolidColor(color)
-            document.documentElement.style.setProperty('--solid-bg', color)
-          }}
-          color={solidColor}
-        />
+        <PopupColorPicker onChange={handleColorChange} color={solidColor} />
       </div>
 
       <div>
@@ -36,34 +54,17 @@ export default function GradientOptions() {
         </h3>
 
         <div className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-6 gap-4">
-          {solidColors.map((solid) => {
+          {solidColors.map(({ background: solidBackground }) => {
             return (
               <Button
-                key={solid.background}
+                key={solidBackground}
                 variant="secondary"
                 className={`h-9 w-9 rounded-sm ${
-                  solid.background === background &&
+                  background === solidBackground &&
                   'outline-none ring-2 ring-ring ring-offset-2'
                 }`}
-                onClick={() => {
-                  setIsSolidColor(true)
-                  setSolidColor(solid.background)
-                  document.documentElement.style.setProperty(
-                    '--solid-bg',
-                    solid.background
-                  )
-                  document.documentElement.style.setProperty(
-                    '--gradient-bg',
-                    solid.background
-                  )
-                  document.documentElement.style.setProperty(
-                    '--mesh-bg',
-                    solid.background
-                  )
-                  setBackground(solid.background)
-                  setIsMeshGradient(false)
-                }}
-                style={{ background: solid.background }}
+                onClick={() => handleColorChange(solidBackground)}
+                style={{ background: solidBackground }}
               />
             )
           })}

@@ -19,7 +19,7 @@ const buttonVariants = cva(
         ghost:
           'text-primary dark:text-dark hover:bg-[#f5f7fa] dark:hover:bg-formDark h-10 px-4 py-2 rounded-xl font-medium',
         stylish:
-          'rounded-xl bg-indigo-500/10 px-3 py-1 text-sm font-medium leading-6 text-purple border border-indigo-500/10', // ring-1 ring-inset ring-indigo-500/20
+          'rounded-xl bg-indigo-500/10 px-3 py-1 text-sm font-normal leading-6 text-purple border border-indigo-500/10', // ring-1 ring-inset ring-indigo-500/20
         destructive:
           'rounded-xl px-3 py-1 text-sm font-medium leading-6 bg-red-500/10 text-red-500 ring-1 ring-red-500/10',
         icon: 'text-primary bg-formDark border border-input dark:text-dark h-12 px-5 py-2.5 rounded-xl',
