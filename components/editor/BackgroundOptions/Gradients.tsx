@@ -11,8 +11,13 @@ import {
 import { Balancer } from 'react-wrap-balancer'
 
 export default function GradientOptions() {
-  const { setBackground, background, setIsMeshGradient, isMeshGradient } =
-    useBackgroundOptions()
+  const {
+    setBackground,
+    background,
+    setIsMeshGradient,
+    isMeshGradient,
+    setIsSolidColor,
+  } = useBackgroundOptions()
 
   return (
     <>
@@ -55,7 +60,7 @@ export default function GradientOptions() {
           <span>Gradients:</span>
         </h3>
 
-        <div className="mt-4 grid max-w-[18rem] grid-cols-6 ">
+        <div className="mt-4 grid max-w-[18rem] grid-cols-6 auto-rows-auto gap-4">
           {gradients.map((gradient) => {
             if (gradient.type === 'Normal') {
               return (
@@ -77,6 +82,7 @@ export default function GradientOptions() {
                     )
                     setBackground(gradient.gradient)
                     setIsMeshGradient(false)
+                    setIsSolidColor(false)
                   }}
                   style={{ background: gradient.gradient }}
                 />
@@ -101,6 +107,7 @@ export default function GradientOptions() {
                     )
                     setBackground(gradient.gradient)
                     setIsMeshGradient(true)
+                    setIsSolidColor(false)
                   }}
                   style={{
                     backgroundColor: gradient.background,

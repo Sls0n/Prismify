@@ -27,7 +27,7 @@ import { useBackgroundOptions } from '@/hooks/use-background-options'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()
-  const { isMeshGradient } = useBackgroundOptions()
+  const { isMeshGradient, isSolidColor } = useBackgroundOptions()
   const {
     resolution,
     setDomResolution,
@@ -48,8 +48,22 @@ export default function Canvas() {
     backgroundImage: !isImageUploaded
       ? 'linear-gradient(0deg, #131313, #151515 100%)'
       : `var(--gradient-bg)`,
-    backgroundColor: isMeshGradient ? `var(--mesh-bg)` : '',
+
     borderRadius: `${canvasRoundness}rem`,
+  }
+
+  if (isMeshGradient) {
+    style = {
+      ...style,
+      backgroundColor: `var(--mesh-bg)`,
+    }
+  }
+
+  if (isSolidColor) {
+    style = {
+      ...style,
+      backgroundColor: `var(--solid-bg)`
+    }
   }
 
   if (aspectRatio < 1) {

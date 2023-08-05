@@ -49,7 +49,7 @@ export default function Sidebar() {
   const activeIndex = useActiveIndexStore((state) => state.activeIndex)
 
   return (
-    <aside className="flex w-[30rem] border-r border-border">
+    <aside className="flex w-[28rem] border-r border-border md:w-[30rem]">
       <ul className="relative flex max-w-[23%] basis-[20%] flex-col items-center gap-6 overflow-y-auto border-r border-border/50 px-4 py-8 dark:bg-sidebar lg:basis-[23%]">
         {sidebarButtons.map((button, index) => (
           <SidebarButton
@@ -60,7 +60,11 @@ export default function Sidebar() {
           />
         ))}
         <li className="mt-auto flex flex-col items-center gap-2">
-          <Button aria-label='Download options' className="h-12 rounded-xl px-4 py-3" variant="activeIcon">
+          <Button
+            aria-label="Download options"
+            className="h-12 rounded-xl px-4 py-3"
+            variant="activeIcon"
+          >
             <Download />
           </Button>
           <span className={`max-w-[3.25rem] truncate text-xs text-[#cfcfcf]`}>
@@ -78,7 +82,7 @@ export default function Sidebar() {
                 {sidebarButtons[activeIndex].text}
                 <Button
                   variant={'destructive'}
-                  aria-label='delete current project'
+                  aria-label="delete current project"
                   className="ml-auto scale-75 rounded-md px-3 py-1"
                 >
                   <Trash size={20} />

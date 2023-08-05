@@ -111,12 +111,18 @@ export const gradients = [
   {
     type: 'Normal',
     gradient:
-      'linear-gradient(0deg, rgb(246, 244, 231), rgb(248, 201, 195) 100%)',
+      'linear-gradient(var(--gradient-angle), rgb(246, 244, 231), rgb(248, 201, 195) 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), rgb(134, 227, 206), rgb(208, 230, 165) 100%)',
   },
   {
     type: 'Mesh',
     background: 'rgb(249, 168, 212)',
-    gradient: 'radial-gradient(at 95% 85%, rgb(217, 249, 157) 0, transparent 0%), radial-gradient(at 49% 91%, rgb(255, 228, 230) 0, transparent 86%), radial-gradient(at 44% 80%, rgb(126, 34, 206) 0, transparent 25%), radial-gradient(at 62% 12%, rgb(99, 102, 241) 0, transparent 44%), radial-gradient(at 100% 100%, rgb(99, 102, 241) 0, transparent 100%), radial-gradient(at 42% 66%, rgb(253, 164, 175) 0, transparent 66%)',
+    gradient:
+      'radial-gradient(at 95% 85%, rgb(217, 249, 157) 0, transparent 0%), radial-gradient(at 49% 91%, rgb(255, 228, 230) 0, transparent 86%), radial-gradient(at 44% 80%, rgb(126, 34, 206) 0, transparent 25%), radial-gradient(at 62% 12%, rgb(99, 102, 241) 0, transparent 44%), radial-gradient(at 100% 100%, rgb(99, 102, 241) 0, transparent 100%), radial-gradient(at 42% 66%, rgb(253, 164, 175) 0, transparent 66%)',
   },
   {
     type: 'Mesh',
@@ -129,5 +135,23 @@ export const gradients = [
     background: 'rgb(249, 168, 212)',
     gradient:
       'radial-gradient(at 95% 85%, rgb(217, 249, 157) 0, transparent 100%), radial-gradient(at 49% 91%, rgb(255, 228, 230) 0, transparent 86%), radial-gradient(at 44% 80%, rgb(191, 219, 254) 0, transparent 21%), radial-gradient(at 62% 12%, rgb(254, 202, 202) 0, transparent 75%), radial-gradient(at 66% 75%, rgb(39, 39, 42) 0, transparent 38%), radial-gradient(at 42% 66%, rgb(253, 164, 175) 0, transparent 66%)',
+  },
+]
+
+export const solidColors = [
+  {
+    background: '#cac2ff',
+  },
+  {
+    background: '#f9a8d4',
+  },
+  {
+    background: '#e8e2ba',
+  },
+  {
+    background: '#d9f99d',
+  },
+  {
+    background: '#90ee90',
   },
 ]

@@ -2,15 +2,16 @@
 
 import { HexColorInput, HexAlphaColorPicker } from 'react-colorful'
 import { CSSProperties, useState } from 'react'
-import { useImageOptions } from '@/hooks/use-image-options'
 
 export default function ColorPicker({
   onChange,
+  colorState,
 }: {
   onChange: (color: string) => void
+  colorState: string
 }) {
-  const { shadowColor } = useImageOptions()
-  const [color, setColor] = useState(shadowColor)
+  // used to pass state of the current color to PopupColorPicker
+  const [color, setColor] = useState(colorState)
 
   const style: CSSProperties = {
     display: 'block',
@@ -36,7 +37,7 @@ export default function ColorPicker({
           setColor(color)
           onChange(color)
         }}
-        className="rounded-md border border-gray-300 p-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
+        className="rounded-md border border-gray-300 p-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
       />
     </>
   )

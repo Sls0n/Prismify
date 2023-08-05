@@ -22,6 +22,7 @@ import {
 import { shadows } from '@/utils/config'
 import ColorPicker from '@/components/ColorPicker'
 import { useBackgroundOptions } from '@/hooks/use-background-options'
+import PopupColorPicker from '@/components/PopupColorPicker'
 
 export default function ImageOptions() {
   const uploadRef = useRef<HTMLInputElement>(null)
@@ -40,6 +41,7 @@ export default function ImageOptions() {
     shadowName,
     setShadowName,
     setShadowColor,
+    shadowColor,
   } = useImageOptions()
 
   const { isMeshGradient } = useBackgroundOptions()
@@ -190,7 +192,9 @@ export default function ImageOptions() {
           <div
             style={{
               backgroundImage: `var(--gradient-bg)`,
-              backgroundColor: isMeshGradient ? `var(--mesh-bg)` : '',
+              backgroundColor: isMeshGradient
+                ? `var(--mesh-bg)`
+                : 'var(--solid-bg)',
             }}
             className="flex-center h-full basis-[25%]"
           >
@@ -230,7 +234,9 @@ export default function ImageOptions() {
               }`}
               style={{
                 backgroundImage: `var(--gradient-bg)`,
-                backgroundColor: isMeshGradient ? `var(--mesh-bg)` : '',
+                backgroundColor: isMeshGradient
+                  ? `var(--mesh-bg)`
+                  : 'var(--solid-bg)',
               }}
             >
               <div
@@ -248,40 +254,17 @@ export default function ImageOptions() {
         <h1 className="text-[0.85rem]">Shadow color</h1>
       </div>
 
-      <Popover>
-        <PopoverTrigger>
-          <div className="flex h-14 w-24 max-w-[70%] rounded-xl bg-formDark">
-            <div className="ml-4 flex h-full basis-[70%] items-center">
-              <div
-                className="flex h-[55%] w-[70%] rounded-md bg-sidebar"
-                style={{ background: 'var(--shadow)' }}
-              ></div>
-            </div>
-            <div className="mr-4 flex flex-1 items-center">
-              <ChevronDown
-                size={20}
-                className="text-primary/70 dark:text-dark/80"
-              />
-            </div>
-          </div>
-        </PopoverTrigger>
-        <PopoverContent
-          align="start"
-          className="flex-center w-[350px] flex-wrap gap-3"
-        >
-          <ColorPicker
-            onChange={(color) => {
-              console.log(color)
-              setShadowColor(color)
-              setImageShadow(
-                shadows.find((shadow) => shadow.fullName === (shadowName ?? ''))
-                  ?.shadow ?? ''
-              )
-              document.documentElement.style.setProperty('--shadow', color)
-            }}
-          />
-        </PopoverContent>
-      </Popover>
+      <PopupColorPicker
+        color={shadowColor}
+        onChange={(color) => {
+          setShadowColor(color)
+          setImageShadow(
+            shadows.find((shadow) => shadow.fullName === (shadowName ?? ''))
+              ?.shadow ?? ''
+          )
+          document.documentElement.style.setProperty('--shadow', color)
+        }}
+      />
     </>
   )
 }

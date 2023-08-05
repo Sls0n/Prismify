@@ -6,6 +6,6 @@ interface ActiveIndexState {
 }
 
 export const useActiveIndexStore = create<ActiveIndexState>()((set) => ({
-  activeIndex: 0,
+  activeIndex: 1,
   setActiveIndex: (index) => set(() => ({ activeIndex: index })),
 }))
