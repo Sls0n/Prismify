@@ -1,19 +1,16 @@
 import { ChangeEvent, useRef } from 'react'
 import { X, Plus } from 'lucide-react'
 import { useImageOptions } from '@/hooks/use-image-options'
-// import MoreImage from './MoreImage'
 
-type ImagePreviewProps = {}
+type MoreImageProps = {}
 
-export default function ImagePreview({}: ImagePreviewProps) {
-  const { isImageUploaded, image, setImage, setIsImageUploaded } =
-    useImageOptions()
+export default function MoreImage({}: MoreImageProps) {
+  const { secondImage: image, setSecondImage: setImage } = useImageOptions()
 
   const uploadRef = useRef<HTMLInputElement>(null)
 
   const handleImageDelete = () => {
     setImage('')
-    setIsImageUploaded(false)
   }
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -22,7 +19,6 @@ export default function ImagePreview({}: ImagePreviewProps) {
     if (file) {
       const imageUrl = URL.createObjectURL(file)
       setImage(imageUrl)
-      setIsImageUploaded(true)
     }
   }
 
@@ -30,10 +26,10 @@ export default function ImagePreview({}: ImagePreviewProps) {
     <>
       <div className="mb-3 mt-4 flex h-[4rem] gap-6 px-1 text-sm">
         <div className="relative flex h-full basis-[25%] flex-col rounded-xl  border-2 border-[#898aeb]/20 p-1 hover:border-[#898aeb]/60">
-          {!isImageUploaded && (
+          {!image && (
             <>
               <label
-                htmlFor="upload"
+                htmlFor="more-upload"
                 className="flex-center group h-full w-full cursor-pointer rounded-xl"
                 tabIndex={0}
                 onKeyDown={(e) => {
@@ -48,9 +44,9 @@ export default function ImagePreview({}: ImagePreviewProps) {
                 />
               </label>
               <input
-                id="upload"
+                id="more-upload"
                 ref={uploadRef}
-                name="upload"
+                name="more-upload"
                 type="file"
                 onChange={handleImageChange}
                 accept="image/*"
@@ -59,7 +55,7 @@ export default function ImagePreview({}: ImagePreviewProps) {
               />
             </>
           )}
-          {isImageUploaded && image && (
+          {image && (
             <>
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
@@ -78,7 +74,6 @@ export default function ImagePreview({}: ImagePreviewProps) {
           )}
         </div>
       </div>
-      {/* {isImageUploaded && image && <MoreImage />} */}
     </>
   )
 }

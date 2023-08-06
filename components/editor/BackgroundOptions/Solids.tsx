@@ -13,6 +13,7 @@ export default function GradientOptions() {
     setIsSolidColor,
     solidColor,
     setSolidColor,
+    setImageBackground
   } = useBackgroundOptions()
 
   const updateRootStyles = useCallback((color: string) => {
@@ -27,6 +28,7 @@ export default function GradientOptions() {
       setSolidColor(color)
       setBackground(color)
       setIsMeshGradient(false)
+      setImageBackground(null)
       updateRootStyles(color)
     },
     [
@@ -35,6 +37,7 @@ export default function GradientOptions() {
       setBackground,
       setIsMeshGradient,
       updateRootStyles,
+      setImageBackground,
     ]
   )
 
@@ -59,7 +62,7 @@ export default function GradientOptions() {
               <Button
                 key={solidBackground}
                 variant="secondary"
-                className={`h-9 w-9 rounded-sm ${
+                className={`aspect-square rounded-sm ${
                   background === solidBackground &&
                   'outline-none ring-2 ring-ring ring-offset-2'
                 }`}

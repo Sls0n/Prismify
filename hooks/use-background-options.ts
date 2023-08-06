@@ -15,6 +15,9 @@ interface BackgroundOptionsState {
 
   gradientAngle: number
   setGradientAngle: (gradientAngle: number) => void
+
+  imageBackground: string | null
+  setImageBackground: (imageBackground: string | null) => void
 }
 
 export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
@@ -33,4 +36,7 @@ export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
 
   solidColor: '',
   setSolidColor: (solidColor) => set({ solidColor }),
+
+  imageBackground: null,
+  setImageBackground: (imageBackground) => set({ imageBackground }),
 }))

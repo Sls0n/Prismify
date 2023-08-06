@@ -18,6 +18,7 @@ export default function GradientOptions() {
     setIsMeshGradient,
     isMeshGradient,
     setIsSolidColor,
+    setImageBackground
   } = useBackgroundOptions()
 
   const handleGradientClick = useCallback(
@@ -33,8 +34,9 @@ export default function GradientOptions() {
       setBackground(gradient.gradient)
       setIsMeshGradient(isMesh)
       setIsSolidColor(false)
+      setImageBackground(null)
     },
-    [setBackground, setIsMeshGradient, setIsSolidColor]
+    [setBackground, setIsMeshGradient, setIsSolidColor, setImageBackground]
   )
 
   return (
@@ -82,7 +84,7 @@ export default function GradientOptions() {
             <Button
               key={gradient}
               variant="secondary"
-              className={`h-9 w-9 rounded-sm ${
+              className={`aspect-square rounded-sm ${
                 gradient === backgroundInStore &&
                 'outline-none ring-2 ring-ring ring-offset-2'
               }`}

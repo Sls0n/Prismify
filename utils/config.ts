@@ -164,6 +164,9 @@ export const gradients: Gradient[] = [
 
 export const solidColors = [
   {
+    background: 'transparent',
+  },
+  {
     background: '#cac2ff',
   },
   {

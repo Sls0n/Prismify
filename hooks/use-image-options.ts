@@ -4,6 +4,9 @@ interface ImageOptionsState {
   image: string | null
   setImage: (image: string) => void
 
+  secondImage: string | null
+  setSecondImage: (secondImage: string) => void
+
   isImageUploaded: boolean
   setIsImageUploaded: (uploaded: boolean) => void
 
@@ -42,6 +45,9 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   shadowName: 'Small',
   setShadowName: (shadowName) => set({ shadowName }),
 
-  shadowColor: '#00000026',
+  shadowColor: '#00000036',
   setShadowColor: (shadowColor) => set({ shadowColor }),
+
+  secondImage: null,
+  setSecondImage: (secondImage) => set({ secondImage }),
 }))

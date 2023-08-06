@@ -15,7 +15,6 @@ import {
   Smartphone,
   GalleryVerticalEnd,
   RectangleHorizontal,
-  RotateCcw,
 } from 'lucide-react'
 import { resolutions } from '@/utils/config'
 import {
@@ -25,10 +24,9 @@ import {
 } from '@/components/ui/Popover'
 import { Button } from '@/components/ui/Button'
 import { useResizeCanvas } from '@/hooks/use-resize-canvas'
-import { cn } from '@/utils/buttonUtils'
-import { useImageOptions } from '@/hooks/use-image-options'
-import { Slider } from '@/components/ui/Slider'
 import { Separator } from '@/components/ui/Separator'
+import { ResolutionButton } from './ResolutionButton'
+import RoundnessSettings from './RoundnessSettings'
 
 const icons = {
   Youtube: <Youtube size={18} />,
@@ -48,41 +46,8 @@ const icons = {
 
 const splitResolution = (resolution: string) => resolution.split('x')
 
-export function ResolutionButton({
-  resolution,
-  name,
-  icon,
-  className,
-  variant,
-}: {
-  resolution: string
-  name: string
-  icon?: React.ReactNode
-  className?: string
-  variant: 'outline' | 'stylish'
-}) {
-  const { setResolution } = useResizeCanvas()
-  const { isImageUploaded } = useImageOptions()
-
-  return (
-    <Button
-      className={cn('flex items-center gap-2 rounded-lg', className)}
-      variant={variant}
-      onClick={() => {
-        if (!isImageUploaded) return
-        setResolution(resolution)
-      }}
-      aria-label={name}
-    >
-      {icon && <span>{icon}</span>}
-      <span>{name}</span>
-    </Button>
-  )
-}
-
 export default function CanvasOptions() {
-  const { resolution, domResolution, canvasRoundness, setCanvasRoundness } =
-    useResizeCanvas()
+  const { resolution, domResolution } = useResizeCanvas()
 
   const [width, height] = splitResolution(domResolution)
 
@@ -140,32 +105,7 @@ export default function CanvasOptions() {
 
       <Separator className="mt-8 h-[0.1rem] w-full" />
 
-      <div className="mb-3 mt-8 flex max-w-[70%] items-center px-1">
-        <h1 className="text-[0.85rem]">Roundness</h1>
-        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
-          {`${Math.round((canvasRoundness / 3) * 100)} `}
-        </p>
-        <Button
-          aria-label="reset roundness"
-          variant="secondary"
-          size="sm"
-          className="ml-auto translate-x-2"
-        >
-          <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
-        </Button>
-      </div>
-      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
-        <Slider
-          defaultValue={[0]}
-          max={3}
-          min={0}
-          step={0.01}
-          value={[canvasRoundness]}
-          onValueChange={(value: number[]) => {
-            setCanvasRoundness(value[0])
-          }}
-        />
-      </div>
+      <RoundnessSettings />
     </>
   )
 }

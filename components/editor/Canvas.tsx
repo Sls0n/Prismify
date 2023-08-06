@@ -23,11 +23,12 @@ import ImageUpload from './ImageUpload'
 import { Minus, Plus } from 'lucide-react'
 import { useImageOptions } from '@/hooks/use-image-options'
 import { useBackgroundOptions } from '@/hooks/use-background-options'
-// import CustomizedRnd from '@/components/Rnd'
+import CustomizedRnd from '@/components/CustomizedRnd'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()
-  const { isMeshGradient, isSolidColor } = useBackgroundOptions()
+  const { isMeshGradient, isSolidColor, imageBackground } =
+    useBackgroundOptions()
   const {
     resolution,
     setDomResolution,
@@ -35,7 +36,8 @@ export default function Canvas() {
     setScrollScale,
     canvasRoundness,
   } = useResizeCanvas()
-  const { isImageUploaded } = useImageOptions()
+  const { isImageUploaded, secondImage, imageRoundness, imageShadow } =
+    useImageOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
 
@@ -62,7 +64,7 @@ export default function Canvas() {
   if (isSolidColor) {
     style = {
       ...style,
-      backgroundColor: `var(--solid-bg)`
+      backgroundColor: `var(--solid-bg)`,
     }
   }
 
@@ -118,6 +120,11 @@ export default function Canvas() {
     scale: `${scrollScale}`,
   }
 
+  const secondImageStyle: CSSProperties = {
+    borderRadius: `${imageRoundness}rem`,
+    boxShadow: `${imageShadow}`,
+  }
+
   return (
     <>
       <section
@@ -136,7 +143,29 @@ export default function Canvas() {
               id="canvas-container"
               style={style}
             >
+              {isImageUploaded && imageBackground && (
+                // eslint-disable-next-line @next/next/no-img-element
+                <img
+                  draggable={false}
+                  className={`h-full w-full object-cover`}
+                  src={imageBackground}
+                  alt="background image"
+                />
+              )}
+
               <ImageUpload />
+              {secondImage && (
+                <CustomizedRnd className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform ">
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    draggable={false}
+                    className={`h-full w-full`}
+                    src={secondImage}
+                    alt="second image"
+                    style={secondImageStyle}
+                  />
+                </CustomizedRnd>
+              )}
             </motion.div>
           </ContextMenuTrigger>
           <ContextMenuContent className="w-64">
