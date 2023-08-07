@@ -4,6 +4,7 @@
 import { Upload } from 'lucide-react'
 import React, { CSSProperties, ChangeEvent } from 'react'
 import { useImageOptions } from '@/hooks/use-image-options'
+import BrowserFrame from './BrowserFrame'
 
 const ImageUpload = () => {
   const {
@@ -71,13 +72,18 @@ const ImageUpload = () => {
       )}
 
       {image && isImageUploaded && (
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform ">
-          <img
-            className={`h-full w-full`}
-            src={image}
-            alt="Uploaded image"
+        <div className="absolute left-1/2 top-1/2  -translate-x-1/2 -translate-y-1/2 transform ">
+          <div
+            className="flex h-full w-full flex-col overflow-hidden"
             style={imageStyle}
-          />
+          >
+            <BrowserFrame />
+            <img
+              className={`h-full w-full flex-1`}
+              src={image}
+              alt="Uploaded image"
+            />
+          </div>
         </div>
       )}
     </>

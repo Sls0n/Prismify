@@ -10,7 +10,7 @@ export default function ImageOptions() {
 
   const fetchUnsplashPictures = async () => {
     const response = await fetch(
-      `https://api.unsplash.com/collections/4269961/photos?orientation=landscape&per_page=30&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
+      `https://api.unsplash.com/collections/FBYJMcVmmFI/photos?per_page=30&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
     )
     const data = await response.json()
     console.log(data)
