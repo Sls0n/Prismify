@@ -1,5 +1,6 @@
 'use client'
 
+import { Skeleton } from '@/components/ui/Skeleton'
 import { useBackgroundOptions } from '@/hooks/use-background-options'
 import { toast } from '@/hooks/use-toast'
 import { useQuery } from '@tanstack/react-query'
@@ -13,7 +14,6 @@ export default function ImageOptions() {
       `https://api.unsplash.com/collections/FBYJMcVmmFI/photos?per_page=30&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
     )
     const data = await response.json()
-    console.log(data)
     return data
   }
 
@@ -28,7 +28,25 @@ export default function ImageOptions() {
   })
 
   if (isLoading) {
-    return <span>Loading...</span>
+    const skeletonLoaders = Array.from({ length: 30 }).map((_, index) => (
+      <li
+        className={`aspect-square h-16 w-16 rounded-md`}
+        key={`skeleton-${index}`}
+      >
+        <Skeleton className="h-full w-full rounded-md" />
+      </li>
+    ))
+
+    return (
+      <>
+        <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
+          <span>Images:</span>
+        </h3>
+        <ul className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-4 gap-4">
+          {skeletonLoaders}
+        </ul>
+      </>
+    )
   }
 
   if (isError && error instanceof Error) {

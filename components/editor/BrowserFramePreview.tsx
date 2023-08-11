@@ -1,6 +1,6 @@
 import { useFrameOptions } from '@/hooks/use-frame-options'
 
-export default function BrowserFrame() {
+export default function BrowserFramePreview() {
   const { browserFrame, frameHeight } = useFrameOptions()
 
   if (browserFrame === 'None') return
