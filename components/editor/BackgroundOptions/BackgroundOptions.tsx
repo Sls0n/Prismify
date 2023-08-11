@@ -1,5 +1,5 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs'
-import { useBackgroundOptions } from '@/hooks/use-background-options'
+import { useBackgroundOptions } from '@/store/use-background-options'
 import GradientOptions from './Gradients'
 import SolidOptions from './Solids'
 import ImageOptions from './Images'

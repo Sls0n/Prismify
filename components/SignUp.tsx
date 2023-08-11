@@ -190,7 +190,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
           <div>
             <div className="mb-8 mt-4 flex gap-3 text-start text-sm text-primary">
               <Checkbox />
-              <p className="dark:text-dark/80 -translate-x-1">
+              <p className="-translate-x-1 dark:text-dark/80">
                 I agree to the{' '}
                 <Link
                   href="/terms"

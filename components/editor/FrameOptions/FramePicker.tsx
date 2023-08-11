@@ -11,7 +11,7 @@ import {
   SelectValue,
 } from '@/components/ui/Select'
 import { ChevronDown } from 'lucide-react'
-import { useFrameOptions } from '@/hooks/use-frame-options'
+import { useFrameOptions } from '@/store/use-frame-options'
 import { FrameInsidePopupPreview, FramePopupPreview } from './FramePresetPreview'
 
 export default function FramePicker() {

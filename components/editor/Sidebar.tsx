@@ -13,7 +13,7 @@ import {
   Palette,
 } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/ScrollArea'
-import { useActiveIndexStore } from '@/hooks/use-active-index'
+import { useActiveIndexStore } from '@/store/use-active-index'
 import CanvasOptions from './CanvasOptions/CanvasOptions'
 import ImageOptions from './ImageOptions/ImageOptions'
 import BackgroundOptions from '@/components/editor/BackgroundOptions/BackgroundOptions'

@@ -1,9 +1,9 @@
 'use client'
 
 import React, { CSSProperties, useEffect, useRef } from 'react'
-import { useResizeCanvas } from '@/hooks/use-resize-canvas'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { motion } from 'framer-motion'
-import { useImageQualityStore } from '@/hooks/use-image-quality'
+import { useImageQualityStore } from '@/store/use-image-quality'
 import {
   ContextMenu,
   ContextMenuCheckboxItem,
@@ -21,8 +21,8 @@ import {
 } from '@/components/ui/ContextMenu'
 import ImageUpload from './ImageUpload'
 import { Minus, Plus } from 'lucide-react'
-import { useImageOptions } from '@/hooks/use-image-options'
-import { useBackgroundOptions } from '@/hooks/use-background-options'
+import { useImageOptions } from '@/store/use-image-options'
+import { useBackgroundOptions } from '@/store/use-background-options'
 import CustomizedRnd from '@/components/CustomizedRnd'
 
 export default function Canvas() {

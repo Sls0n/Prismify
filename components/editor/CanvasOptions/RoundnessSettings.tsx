@@ -1,6 +1,6 @@
 import { Button } from '@/components/ui/Button'
 import { Slider } from '@/components/ui/Slider'
-import { useResizeCanvas } from '@/hooks/use-resize-canvas'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { RotateCcw } from 'lucide-react'
 
 export default function RoundnessSettings() {

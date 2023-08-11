@@ -28,8 +28,8 @@ import { toast } from '@/hooks/use-toast'
 import SignIn from './SignIn'
 import domtoimage from 'dom-to-image'
 import { saveAs } from 'file-saver'
-import { useImageQualityStore } from '@/hooks/use-image-quality'
-import { useImageOptions } from '@/hooks/use-image-options'
+import { useImageQualityStore } from '@/store/use-image-quality'
+import { useImageOptions } from '@/store/use-image-options'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'

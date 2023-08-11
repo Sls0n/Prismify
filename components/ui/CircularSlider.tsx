@@ -1,7 +1,7 @@
 import CircularSlider, {
   CircularSliderProps,
 } from '@fseehawer/react-circular-slider'
-import { useBackgroundOptions } from '@/hooks/use-background-options'
+import { useBackgroundOptions } from '@/store/use-background-options'
 
 const CircularSliderComp: React.FC<CircularSliderProps> = () => {
   const { gradientAngle, setGradientAngle } = useBackgroundOptions()

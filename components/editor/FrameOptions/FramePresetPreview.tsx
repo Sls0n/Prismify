@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/Button'
-import { useFrameOptions } from '@/hooks/use-frame-options'
+import { useFrameOptions } from '@/store/use-frame-options'
 
 export function FrameInsidePopupPreview() {
   const { setBrowserFrame } = useFrameOptions()
@@ -8,7 +8,7 @@ export function FrameInsidePopupPreview() {
     <>
       <Button
         variant="secondary"
-        className={`flex-center relative h-[6.5rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
+        className={`flex-center relative h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
         onClick={() => setBrowserFrame('None')}
       >
         <div className="flex-center h-full w-full flex-col rounded-sm bg-primary shadow-xl" />
@@ -17,7 +17,7 @@ export function FrameInsidePopupPreview() {
 
       <Button
         variant="secondary"
-        className={`flex-center h-[6.5rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
+        className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
         onClick={() => setBrowserFrame('MacOS Dark')}
       >
         <div className="relative flex h-full w-full flex-col  justify-center overflow-hidden rounded-sm shadow-xl">
@@ -35,7 +35,7 @@ export function FrameInsidePopupPreview() {
 
       <Button
         variant="secondary"
-        className={`flex-center h-[6.5rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
+        className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
         onClick={() => setBrowserFrame('MacOS Light')}
       >
         <div className="relative flex h-full w-full flex-col  justify-center overflow-hidden rounded-sm shadow-xl">

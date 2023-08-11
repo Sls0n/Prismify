@@ -1,4 +1,4 @@
-import { useFrameOptions } from '@/hooks/use-frame-options'
+import { useFrameOptions } from '@/store/use-frame-options'
 
 export default function BrowserFrame() {
   const { browserFrame, frameHeight } = useFrameOptions()

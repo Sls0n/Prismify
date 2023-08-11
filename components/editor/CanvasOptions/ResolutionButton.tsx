@@ -1,6 +1,6 @@
 import { cn } from '@/utils/buttonUtils'
-import { useImageOptions } from '@/hooks/use-image-options'
-import { useResizeCanvas } from '@/hooks/use-resize-canvas'
+import { useImageOptions } from '@/store/use-image-options'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { Button } from '@/components/ui/Button'
 
 export function ResolutionButton({

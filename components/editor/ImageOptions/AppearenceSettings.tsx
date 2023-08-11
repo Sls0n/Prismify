@@ -1,5 +1,5 @@
 import { Button } from '@/components/ui/Button'
-import { useImageOptions } from '@/hooks/use-image-options'
+import { useImageOptions } from '@/store/use-image-options'
 import { Slider } from '@/components/ui/Slider'
 import { RotateCcw } from 'lucide-react'
 

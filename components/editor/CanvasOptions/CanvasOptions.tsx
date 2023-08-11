@@ -23,7 +23,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/Popover'
 import { Button } from '@/components/ui/Button'
-import { useResizeCanvas } from '@/hooks/use-resize-canvas'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { Separator } from '@/components/ui/Separator'
 import { ResolutionButton } from './ResolutionButton'
 import RoundnessSettings from './RoundnessSettings'

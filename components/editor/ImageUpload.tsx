@@ -3,7 +3,7 @@
 
 import { Upload } from 'lucide-react'
 import React, { CSSProperties, ChangeEvent } from 'react'
-import { useImageOptions } from '@/hooks/use-image-options'
+import { useImageOptions } from '@/store/use-image-options'
 import BrowserFrame from './BrowserFrame'
 
 const ImageUpload = () => {

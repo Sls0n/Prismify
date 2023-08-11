@@ -1,7 +1,7 @@
 'use client'
 
 import { Skeleton } from '@/components/ui/Skeleton'
-import { useBackgroundOptions } from '@/hooks/use-background-options'
+import { useBackgroundOptions } from '@/store/use-background-options'
 import { toast } from '@/hooks/use-toast'
 import { useQuery } from '@tanstack/react-query'
 import { Key } from 'react'

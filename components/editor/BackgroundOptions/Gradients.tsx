@@ -3,7 +3,7 @@ import CircularSliderComp from '@/components/ui/CircularSlider'
 import { GaugeCircle, Info, Paintbrush } from 'lucide-react'
 import { gradients, Gradient } from '@/utils/config'
 import { Button } from '@/components/ui/Button'
-import { useBackgroundOptions } from '@/hooks/use-background-options'
+import { useBackgroundOptions } from '@/store/use-background-options'
 import {
   Popover,
   PopoverContent,
@@ -18,7 +18,7 @@ export default function GradientOptions() {
     setIsMeshGradient,
     isMeshGradient,
     setIsSolidColor,
-    setImageBackground
+    setImageBackground,
   } = useBackgroundOptions()
 
   const handleGradientClick = useCallback(

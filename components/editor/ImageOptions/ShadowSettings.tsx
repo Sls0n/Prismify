@@ -5,8 +5,8 @@ import {
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/Popover'
-import { useBackgroundOptions } from '@/hooks/use-background-options'
-import { useImageOptions } from '@/hooks/use-image-options'
+import { useBackgroundOptions } from '@/store/use-background-options'
+import { useImageOptions } from '@/store/use-image-options'
 import { shadows } from '@/utils/config'
 import { ChevronDown } from 'lucide-react'
 

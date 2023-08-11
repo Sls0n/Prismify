@@ -2,7 +2,7 @@ import { useCallback } from 'react'
 import { solidColors } from '@/utils/config'
 import { Button } from '@/components/ui/Button'
 import PopupColorPicker from '@/components/PopupColorPicker'
-import { useBackgroundOptions } from '@/hooks/use-background-options'
+import { useBackgroundOptions } from '@/store/use-background-options'
 import { Paintbrush } from 'lucide-react'
 
 export default function GradientOptions() {
@@ -13,7 +13,7 @@ export default function GradientOptions() {
     setIsSolidColor,
     solidColor,
     setSolidColor,
-    setImageBackground
+    setImageBackground,
   } = useBackgroundOptions()
 
   const updateRootStyles = useCallback((color: string) => {

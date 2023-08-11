@@ -1,7 +1,7 @@
 'use client'
 
 import { Button } from '@/components/ui/Button'
-import { useActiveIndexStore } from '@/hooks/use-active-index'
+import { useActiveIndexStore } from '@/store/use-active-index'
 
 export default function SidebarButton({
   icon,

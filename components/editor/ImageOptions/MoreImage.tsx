@@ -1,6 +1,6 @@
 import { ChangeEvent, useRef } from 'react'
 import { X, Plus } from 'lucide-react'
-import { useImageOptions } from '@/hooks/use-image-options'
+import { useImageOptions } from '@/store/use-image-options'
 
 type MoreImageProps = {}
 
