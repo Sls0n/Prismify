@@ -15,6 +15,8 @@ const ImageUpload = () => {
     imageSize,
     imageRoundness,
     imageShadow,
+    borderColor,
+    borderSize,
   } = useImageOptions()
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -31,6 +33,7 @@ const ImageUpload = () => {
     scale: `${imageSize}`,
     borderRadius: `${imageRoundness}rem`,
     boxShadow: `${imageShadow}`,
+    border: `var(--borderSize) solid var(--borderColor)`
   }
 
   return (

@@ -185,4 +185,7 @@ export const solidColors = [
   {
     background: '#90ee90',
   },
+  {
+    background: '#E3E9F1',
+  },
 ]

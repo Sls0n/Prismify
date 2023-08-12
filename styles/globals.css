@@ -35,7 +35,7 @@
 
     --radius: 0.5rem;
 
-    --shadow: #00000036;
+    --shadow: #00000050;
     --gradient-angle: 0deg;
     --gradient-bg: linear-gradient(
       var(--gradient-angle),
@@ -44,6 +44,8 @@
     );
     --mesh-bg: '';
     --solid-bg: '';
+    --borderSize: '0px';
+    --borderColor: '#ffffff40'; 
   }
 
   .dark {

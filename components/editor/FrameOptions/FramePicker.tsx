@@ -12,11 +12,13 @@ import {
 } from '@/components/ui/Select'
 import { ChevronDown } from 'lucide-react'
 import { useFrameOptions } from '@/store/use-frame-options'
-import { FrameInsidePopupPreview, FramePopupPreview } from './FramePresetPreview'
+import {
+  FrameInsidePopupPreview,
+  FramePopupPreview,
+} from './FramePresetPreview'
 
 export default function FramePicker() {
-  const { browserFrame, setFrameHeight, frameHeight, setBrowserFrame } =
-    useFrameOptions()
+  const { browserFrame, setFrameHeight, frameHeight } = useFrameOptions()
 
   return (
     <>

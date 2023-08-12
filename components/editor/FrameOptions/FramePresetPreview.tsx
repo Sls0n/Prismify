@@ -9,7 +9,9 @@ export function FrameInsidePopupPreview() {
       <Button
         variant="secondary"
         className={`flex-center relative h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
-        onClick={() => setBrowserFrame('None')}
+        onClick={() => {
+          setBrowserFrame('None')
+        }}
       >
         <div className="flex-center h-full w-full flex-col rounded-sm bg-primary shadow-xl" />
         <div className="text-xs font-medium text-dark">None</div>
@@ -18,7 +20,10 @@ export function FrameInsidePopupPreview() {
       <Button
         variant="secondary"
         className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
-        onClick={() => setBrowserFrame('MacOS Dark')}
+        onClick={() => {
+          setBrowserFrame('MacOS Dark')
+          document.documentElement.style.setProperty('--borderSize', `0px`)
+        }}
       >
         <div className="relative flex h-full w-full flex-col  justify-center overflow-hidden rounded-sm shadow-xl">
           <div className="flex w-full basis-[25%] bg-[#454545] shadow-sm">
@@ -36,7 +41,10 @@ export function FrameInsidePopupPreview() {
       <Button
         variant="secondary"
         className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
-        onClick={() => setBrowserFrame('MacOS Light')}
+        onClick={() => {
+          setBrowserFrame('MacOS Light')
+          document.documentElement.style.setProperty('--borderSize', `0px`)
+        }}
       >
         <div className="relative flex h-full w-full flex-col  justify-center overflow-hidden rounded-sm shadow-xl">
           <div className="flex w-full basis-[25%] bg-[#E9E8E9] shadow-sm">

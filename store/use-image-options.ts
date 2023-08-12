@@ -24,6 +24,12 @@ interface ImageOptionsState {
 
   shadowColor: string
   setShadowColor: (shadowColor: string) => void
+
+  borderSize: string | null
+  setBorderSize: (borderSize: string | null) => void
+
+  borderColor: string
+  setBorderColor: (borderColor: string) => void
 }
 
 export const useImageOptions = create<ImageOptionsState>()((set) => ({
@@ -45,9 +51,15 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   shadowName: 'Small',
   setShadowName: (shadowName) => set({ shadowName }),
 
-  shadowColor: '#00000036',
+  shadowColor: '#00000050',
   setShadowColor: (shadowColor) => set({ shadowColor }),
 
   secondImage: null,
   setSecondImage: (secondImage) => set({ secondImage }),
+
+  borderSize: '0',
+  setBorderSize: (borderSize) => set({ borderSize }),
+
+  borderColor: '#ffffff40',
+  setBorderColor: (borderColor) => set({ borderColor }),
 }))

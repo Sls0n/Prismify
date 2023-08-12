@@ -8,7 +8,6 @@ import Image from 'next/image'
 import {
   ChevronDown,
   Download,
-  Github,
   LogIn,
   LogOut,
   Settings,
@@ -113,7 +112,7 @@ export default function Navbar({
         <nav className="flex items-center gap-10 ">
           <div className="flex">
             <ThemeButtonIcon />
-            <a
+            {/* <a
               href="https://www.github.com/Sls0n/prismify"
               target="_blank"
               rel="noopener noreferrer"
@@ -121,7 +120,7 @@ export default function Navbar({
             >
               <Github className="h-[1.2rem] w-[1.2rem] text-dark/80 " />
               <span className="sr-only">Go to Github repository</span>
-            </a>
+            </a> */}
           </div>
 
           <div className="dark:bg-border-dark h-8 w-[2px] bg-border" />

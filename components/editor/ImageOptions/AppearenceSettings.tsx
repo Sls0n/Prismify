@@ -61,6 +61,7 @@ export default function AppearenceSettings() {
           onValueChange={(value) => {
             setImageRoundness(value[0])
           }}
+          value={[imageRoundness]}
         />
       </div>
     </>
