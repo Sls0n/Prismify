@@ -13,9 +13,6 @@ interface BackgroundOptionsState {
   solidColor: string
   setSolidColor: (solidColor: string) => void
 
-  gradientAngle: number
-  setGradientAngle: (gradientAngle: number) => void
-
   imageBackground: string | null
   setImageBackground: (imageBackground: string | null) => void
 }
@@ -27,9 +24,6 @@ export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
 
   isMeshGradient: false,
   setIsMeshGradient: (isMeshGradient) => set({ isMeshGradient }),
-
-  gradientAngle: 0,
-  setGradientAngle: (gradientAngle) => set({ gradientAngle }),
 
   isSolidColor: false,
   setIsSolidColor: (isSolidColor) => set({ isSolidColor }),

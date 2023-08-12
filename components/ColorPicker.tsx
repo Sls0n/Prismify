@@ -23,22 +23,26 @@ export default function ColorPicker({
 
   return (
     <>
-      <HexAlphaColorPicker
-        color={color}
-        onChange={(color) => {
-          setColor(color)
-          onChange(color)
-        }}
-      />
-      <HexColorInput
-        style={style}
-        color={color}
-        onChange={(color) => {
-          setColor(color)
-          onChange(color)
-        }}
-        className="rounded-md border border-gray-300 p-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
-      />
+      <div className="flex-center flex-col gap-2">
+        <HexAlphaColorPicker
+          color={color}
+          onChange={(color) => {
+            setColor(color)
+            onChange(color)
+          }}
+        />
+        <div className="relative flex-center w-full h-full rounded-md border border-gray-300 text-center text-sm uppercase text-gray-900  dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm">
+          <span className='absolute left-2 font-medium text-gray-400'>#</span>
+          <HexColorInput
+            color={color}
+            onChange={(color) => {
+              setColor(color)
+              onChange(color)
+            }}
+            className="focus:border-[#8e8ece] focus:outline-none focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm w-full h-full py-3 px-3 text-center rounded-md"
+          />
+        </div>
+      </div>
     </>
   )
 }

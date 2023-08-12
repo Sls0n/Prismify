@@ -1,28 +1,28 @@
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/Tabs'
 import { useBackgroundOptions } from '@/store/use-background-options'
-import GradientOptions from './Gradients'
-import SolidOptions from './Solids'
-import ImageOptions from './Images'
+import GradientOptions from './GradientOptions'
+import PatternOptions from './PatternOptions'
+import CustomOptions from './CustomOptions'
 
 export default function BackgroundOptions() {
   const { isSolidColor } = useBackgroundOptions()
 
   return (
     <>
-      <Tabs className="mt-4" defaultValue={isSolidColor ? 'solid' : 'gradient'}>
+      <Tabs className="mt-4" defaultValue={isSolidColor ? 'custom' : 'gradients'}>
         <TabsList className="mb-3">
-          <TabsTrigger value="gradient">Gradient</TabsTrigger>
-          <TabsTrigger value="solid">Solid</TabsTrigger>
-          <TabsTrigger value="image">Image</TabsTrigger>
+          <TabsTrigger value="gradients">Gradients</TabsTrigger>
+          <TabsTrigger value="patterns">Patterns</TabsTrigger>
+          <TabsTrigger value="custom">Custom</TabsTrigger>
         </TabsList>
-        <TabsContent value="gradient">
+        <TabsContent value="gradients">
           <GradientOptions />
         </TabsContent>
-        <TabsContent value="solid">
-          <SolidOptions />
+        <TabsContent value="patterns">
+          <PatternOptions />
         </TabsContent>
-        <TabsContent value="image">
-          <ImageOptions />
+        <TabsContent value="custom">
+          <CustomOptions />
         </TabsContent>
       </Tabs>
     </>

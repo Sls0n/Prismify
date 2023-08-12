@@ -49,11 +49,15 @@ const splitResolution = (resolution: string) => resolution.split('x')
 
 export default function CanvasOptions() {
   const { resolution, domResolution, setResolution } = useResizeCanvas()
-  const { image } = useImageOptions()
+  const { image, setImageSize } = useImageOptions()
 
   const [width, height] = splitResolution(domResolution)
 
-  const calculateCanvasSize = (imgWidth: number, imgHeight: number, padding: number) => {
+  const calculateCanvasSize = (
+    imgWidth: number,
+    imgHeight: number,
+    padding: number
+  ) => {
     const aspectRatio = imgWidth / imgHeight
     let canvasWidth, canvasHeight
 
@@ -89,7 +93,7 @@ export default function CanvasOptions() {
           onClick={() => {
             if (!image) return
 
-            const padding = 200 
+            const padding = 200
             const img = new Image()
             img.src = image
 
@@ -100,7 +104,9 @@ export default function CanvasOptions() {
                 naturalHeight,
                 padding
               )
-              setResolution(newResolution)
+              setResolution(newResolution.toString())
+              console.log(newResolution)
+              setImageSize('1.25')
             }
           }}
         >

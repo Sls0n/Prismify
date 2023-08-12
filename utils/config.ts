@@ -67,7 +67,7 @@ export const resolutions: Resolution[] = [
   },
   {
     name: '1.43:1 (IMAX)',
-    resolution: '1.43x1',
+    resolution: '1.45x1',
     icon: 'RectangleHorizontal',
   },
   {

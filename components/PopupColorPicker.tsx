@@ -29,7 +29,7 @@ export default function PopupColorPicker({
       </PopoverTrigger>
       <PopoverContent
         align="start"
-        className="flex-center w-[350px] flex-wrap gap-3"
+        className="flex-center w-fit flex-wrap gap-3"
       >
         <ColorPicker
           colorState={color}
