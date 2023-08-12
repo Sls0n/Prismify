@@ -1,7 +1,7 @@
 import { useFrameOptions } from '@/store/use-frame-options'
 
 export default function BrowserFrame() {
-  const { browserFrame, frameHeight } = useFrameOptions()
+  const { browserFrame, frameHeight, showSearchBar } = useFrameOptions()
 
   if (browserFrame === 'None') return
 
@@ -27,14 +27,14 @@ export default function BrowserFrame() {
           <div className="rounded-full bg-[#fbc341d2]" />
           <div className="rounded-full bg-[#3cc84ac5]" />
         </div>
-        <div className="flex h-[50%] w-full flex-1 items-center rounded-[0.25rem] bg-[#575657] px-2"></div>
+        {showSearchBar && <div className="flex h-[50%] w-full flex-1 items-center rounded-[0.25rem] bg-[#575657] px-2" />}
       </div>
     )
 
   if (browserFrame === 'MacOS Light')
     return (
       <div
-        className={`flex items-center gap-4 bg-gradient-to-r from-[#E3E2E3] to-[#DFDEDF] to-90%  px-6 ${
+        className={`flex items-center gap-4 bg-gradient-to-r from-[#E3E8E9] to-[#DFDEDF] to-90%  px-6 ${
           frameHeight === 'small'
             ? 'basis-[1.5rem]'
             : frameHeight === 'medium'
@@ -53,7 +53,7 @@ export default function BrowserFrame() {
           <div className="rounded-full bg-[#fbc341]" />
           <div className="rounded-full bg-[#3cc84a]" />
         </div>
-        <div className="flex h-[50%] w-full flex-1 items-center rounded-[0.25rem] bg-[#ececec] px-2"></div>
+        {showSearchBar && <div className="flex h-[50%] w-full flex-1 items-center rounded-[0.25rem] bg-[#ececec] px-2" />}
       </div>
     )
 }

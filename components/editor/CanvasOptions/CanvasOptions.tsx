@@ -27,6 +27,7 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { Separator } from '@/components/ui/Separator'
 import { ResolutionButton } from './ResolutionButton'
 import RoundnessSettings from './RoundnessSettings'
+import { useImageOptions } from '@/store/use-image-options'
 
 const icons = {
   Youtube: <Youtube size={18} />,
@@ -47,9 +48,25 @@ const icons = {
 const splitResolution = (resolution: string) => resolution.split('x')
 
 export default function CanvasOptions() {
-  const { resolution, domResolution } = useResizeCanvas()
+  const { resolution, domResolution, setResolution } = useResizeCanvas()
+  const { image } = useImageOptions()
 
   const [width, height] = splitResolution(domResolution)
+
+  const calculateCanvasSize = (imgWidth: number, imgHeight: number, padding: number) => {
+    const aspectRatio = imgWidth / imgHeight
+    let canvasWidth, canvasHeight
+
+    if (aspectRatio > 1) {
+      canvasWidth = imgWidth + 2 * padding
+      canvasHeight = canvasWidth / aspectRatio
+    } else {
+      canvasHeight = imgHeight + 2 * padding
+      canvasWidth = canvasHeight * aspectRatio
+    }
+
+    return `${Math.round(canvasWidth)}x${Math.round(canvasHeight)}`
+  }
 
   return (
     <>
@@ -66,6 +83,29 @@ export default function CanvasOptions() {
 
       <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Aspect ratio</h1>
       <div className="flex flex-wrap gap-3">
+        <Button
+          variant={`outline`}
+          className="rounded-lg"
+          onClick={() => {
+            if (!image) return
+
+            const padding = 200 
+            const img = new Image()
+            img.src = image
+
+            img.onload = () => {
+              const { naturalWidth, naturalHeight } = img
+              const newResolution = calculateCanvasSize(
+                naturalWidth,
+                naturalHeight,
+                padding
+              )
+              setResolution(newResolution)
+            }
+          }}
+        >
+          Fit image
+        </Button>
         {resolutions.slice(0, 7).map((res, index) => (
           <ResolutionButton
             key={index}

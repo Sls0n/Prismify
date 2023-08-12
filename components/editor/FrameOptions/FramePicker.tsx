@@ -20,7 +20,7 @@ export default function FramePicker() {
 
   return (
     <>
-      <div className="mb-3 mt-8 flex max-w-[70%] items-center px-1">
+      <div className="mb-3 mt-4 flex max-w-[70%] items-center px-1">
         <h1 className="text-[0.85rem]">Frame:</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {browserFrame}

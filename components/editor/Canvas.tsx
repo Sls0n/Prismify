@@ -131,13 +131,13 @@ export default function Canvas() {
         ref={parentRef}
         style={parentScaleStyle}
         onWheel={handleScroll}
-        className="flex h-full flex-1 items-center justify-center overflow-hidden rounded-xl"
+        className="flex h-full flex-1 items-center justify-center overflow-hidden"
       >
         <ContextMenu>
           <ContextMenuTrigger asChild>
             <motion.div
               className={
-                'relative flex w-full items-center justify-center overflow-hidden rounded-xl'
+                'relative flex w-full items-center justify-center overflow-hidden '
               }
               ref={screenshotRef}
               id="canvas-container"

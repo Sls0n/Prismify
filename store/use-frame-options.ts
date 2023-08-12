@@ -6,6 +6,9 @@ interface FrameOptionsState {
 
   frameHeight: 'small' | 'medium' | 'large' | string
   setFrameHeight: (height: string) => void
+
+  showSearchBar: boolean
+  setShowSearchBar: (searchBar: boolean) => void
 }
 
 export const useFrameOptions = create<FrameOptionsState>()((set) => ({
@@ -14,4 +17,7 @@ export const useFrameOptions = create<FrameOptionsState>()((set) => ({
 
   frameHeight: 'medium',
   setFrameHeight: (frameHeight) => set({ frameHeight }),
+
+  showSearchBar: true,
+  setShowSearchBar: (searchBar) => set({ showSearchBar: searchBar }),
 }))

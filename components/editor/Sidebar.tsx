@@ -18,6 +18,7 @@ import CanvasOptions from './CanvasOptions/CanvasOptions'
 import ImageOptions from './ImageOptions/ImageOptions'
 import BackgroundOptions from '@/components/editor/BackgroundOptions/BackgroundOptions'
 import FrameOptions from './FrameOptions/FrameOptions'
+import PositionOptions from './PositionOptions/PositionOptions'
 
 const sidebarButtons = [
   {
@@ -93,11 +94,10 @@ export default function Sidebar() {
               {activeIndex === 1 && <ImageOptions />}
               {activeIndex === 2 && <BackgroundOptions />}
               {activeIndex === 3 && <FrameOptions />}
+              {activeIndex === 5 && <PositionOptions />}
             </div>
           </div>
         </ScrollArea>
-
-        {/* Main saving settings */}
       </div>
     </aside>
   )

@@ -39,7 +39,7 @@ export function FrameInsidePopupPreview() {
         onClick={() => setBrowserFrame('MacOS Light')}
       >
         <div className="relative flex h-full w-full flex-col  justify-center overflow-hidden rounded-sm shadow-xl">
-          <div className="flex w-full basis-[25%] bg-[#E3E2E3] shadow-sm">
+          <div className="flex w-full basis-[25%] bg-[#E9E8E9] shadow-sm">
             <div className={`flex-center basis-[50%] gap-1 `}>
               <div className="h-1.5 w-1.5 rounded-full bg-[#f7645c]" />
               <div className="h-1.5 w-1.5 rounded-full bg-[#fbc341]" />
