@@ -106,7 +106,7 @@ export default function CanvasOptions() {
               )
               setResolution(newResolution.toString())
               console.log(newResolution)
-              setImageSize('1.4')
+              setImageSize('1.5')
             }
           }}
         >

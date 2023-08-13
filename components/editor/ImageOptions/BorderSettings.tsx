@@ -48,8 +48,8 @@ export default function BorderSettings() {
         <Slider
           defaultValue={[0]}
           max={20}
-          min={0.25}
-          step={0.01}
+          min={0}
+          step={0.5}
           onValueChange={(value: number[]) => {
             setBorderSize(value[0].toString())
             document.documentElement.style.setProperty(
