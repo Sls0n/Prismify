@@ -45,7 +45,7 @@
     --mesh-bg: '';
     --solid-bg: '';
     --borderSize: '0px';
-    --borderColor: '#ffffff40'; 
+    --borderColor: '#ffffff40';
   }
 
   .dark {
@@ -121,7 +121,10 @@ html {
   cursor: grabbing;
 }
 
-.circular-slider > div {
-  transition: opacity 0s ease-in 0s !important;
-  font-weight: 600;
+#canvas-container > div > div > img {
+  -khtml-user-select: none;
+  -o-user-select: none;
+  -moz-user-select: none;
+  -webkit-user-select: none;
+  user-select: none;
 }

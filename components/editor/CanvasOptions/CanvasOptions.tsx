@@ -41,6 +41,7 @@ const icons = {
   GalleryHorizontalEnd: <GalleryHorizontalEnd size={18} />,
   MonitorPlay: <MonitorPlay size={18} />,
   Smartphone: <Smartphone size={18} />,
+  SmartphoneLandscape: <Smartphone className='-rotate-90' size={18} />,
   GalleryVerticalEnd: <GalleryVerticalEnd size={18} />,
   RectangleHorizontal: <RectangleHorizontal size={18} />,
 }

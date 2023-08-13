@@ -51,7 +51,7 @@ export default function ShadowSettings() {
   return (
     <>
       <Popover>
-        <PopoverTrigger className="relative mt-8 flex h-14 max-w-[70%] items-center overflow-hidden rounded-lg border border-border bg-formDark">
+        <PopoverTrigger className="relative mt-2 flex h-14 w-[70%] items-center overflow-hidden rounded-lg border border-border bg-formDark">
           <div
             style={backgroundStyle}
             className="flex-center h-full basis-[25%]"

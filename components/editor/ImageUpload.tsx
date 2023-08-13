@@ -5,6 +5,7 @@ import { Upload } from 'lucide-react'
 import React, { CSSProperties, ChangeEvent } from 'react'
 import { useImageOptions } from '@/store/use-image-options'
 import BrowserFrame from './BrowserFrame'
+import { usePositionOptions } from '@/store/use-position-options'
 
 const ImageUpload = () => {
   const {
@@ -15,7 +16,10 @@ const ImageUpload = () => {
     imageSize,
     imageRoundness,
     imageShadow,
+    borderSize,
   } = useImageOptions()
+
+  const {translateX, translateY} = usePositionOptions()
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -28,11 +32,11 @@ const ImageUpload = () => {
   }
 
   const imageStyle: CSSProperties = {
-    transform: `scale(${imageSize}) translate(0%, 0%)`,
+    transform: `scale(${imageSize}) translate(${translateX}%, ${translateY}%)`,
     borderRadius: `${imageRoundness}rem`,
     boxShadow: `${imageShadow}`,
     border: `var(--borderSize) solid var(--borderColor)`,
-    background: `var(--borderColor)`,
+    background: borderSize === '0' ? '' : 'var(--borderColor)',
   }
 
   return (
@@ -74,7 +78,7 @@ const ImageUpload = () => {
       )}
 
       {image && isImageUploaded && (
-        <div className="absolute  left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
           <div
             className="flex h-full w-full flex-col overflow-hidden"
             style={imageStyle}

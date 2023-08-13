@@ -45,10 +45,10 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   imageRoundness: 0.8, // in rem
   setImageRoundness: (imageRoundness) => set({ imageRoundness }),
 
-  imageShadow: '0 4px 6px -1px var(--shadow), 0 2px 4px -2px var(--shadow)',
+  imageShadow: '0 25px 50px -12px var(--shadow)',
   setImageShadow: (imageShadow) => set({ imageShadow }),
 
-  shadowName: 'Small',
+  shadowName: 'Spread',
   setShadowName: (shadowName) => set({ shadowName }),
 
   shadowColor: '#00000050',

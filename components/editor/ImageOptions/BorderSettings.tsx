@@ -24,7 +24,7 @@ export default function BorderSettings() {
   return (
     <>
       <div
-        className={`mb-3 mt-8 flex max-w-[70%] items-center px-1 ${
+        className={`mb-3 mt-2 flex max-w-[70%] items-center px-1 ${
           browserFrame !== 'None' && 'cursor-not-allowed opacity-50'
         }`}
       >
@@ -106,7 +106,7 @@ export default function BorderSettings() {
       </div>
 
       <div
-        className={`mb-3 mt-8 flex flex-col gap-3 px-1 ${
+        className={`mt-8 flex flex-col gap-3 px-1 ${
           browserFrame !== 'None' && 'pointer-events-none opacity-50'
         }`}
       >

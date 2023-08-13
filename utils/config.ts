@@ -51,9 +51,14 @@ export const resolutions: Resolution[] = [
     icon: 'MonitorPlay',
   },
   {
-    name: '3:4 (Portrait)',
-    resolution: '3x4',
+    name: '4:5 (Portrait)',
+    resolution: '4x5',
     icon: 'Smartphone',
+  },
+  {
+    name: '5:4 (Landscape)',
+    resolution: '5x4',
+    icon: 'SmartphoneLandscape',
   },
   {
     name: '3:1 (Banner)',
@@ -66,8 +71,8 @@ export const resolutions: Resolution[] = [
     icon: 'RectangleHorizontal',
   },
   {
-    name: '1.43:1 (IMAX)',
-    resolution: '1.45x1',
+    name: '1.85:1 (Movie)',
+    resolution: '1.85x1',
     icon: 'RectangleHorizontal',
   },
   {
@@ -90,6 +95,12 @@ export const shadows: Shadow[] = [
     preview: `0 0 0 0 var(--shadow)`,
   },
   {
+    name: 'spread',
+    fullName: 'Spread',
+    shadow: `0 25px 50px -12px var(--shadow)`,
+    preview: `0 25px 50px -12px var(--shadow)`,
+  },
+  {
     name: 'sm',
     fullName: 'Small',
     shadow: `0 4px 6px -1px var(--shadow), 0 2px 4px -2px var(--shadow)`,
@@ -106,12 +117,6 @@ export const shadows: Shadow[] = [
     fullName: 'Large',
     shadow: `0 20px 25px -5px var(--shadow), 0 8px 10px -6px var(--shadow)`,
     preview: `0 20px 25px -5px var(--shadow), 0 8px 10px -6px var(--shadow)`,
-  },
-  {
-    name: 'x-lg',
-    fullName: 'Extra Large',
-    shadow: `0 25px 50px -12px var(--shadow)`,
-    preview: `0 25px 50px -12px var(--shadow)`,
   },
   {
     name: 'glow',

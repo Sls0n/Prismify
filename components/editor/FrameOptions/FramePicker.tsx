@@ -29,7 +29,7 @@ export default function FramePicker() {
         </p>
       </div>
       <Popover>
-        <PopoverTrigger className="relative  h-24 max-w-[50%] overflow-hidden rounded-lg border border-border bg-formDark">
+        <PopoverTrigger className="relative h-24 max-w-[50%] overflow-hidden rounded-lg border border-border bg-formDark">
           <div className="flex items-center justify-between">
             <div className="flex-center basis-[80%]">
               <FramePopupPreview />

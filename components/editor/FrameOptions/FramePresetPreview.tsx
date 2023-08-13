@@ -23,6 +23,7 @@ export function FrameInsidePopupPreview() {
         onClick={() => {
           setBrowserFrame('MacOS Dark')
           document.documentElement.style.setProperty('--borderSize', `0px`)
+          document.documentElement.style.setProperty('--borderColor', ``)
         }}
       >
         <div className="relative flex h-full w-full flex-col  justify-center overflow-hidden rounded-sm shadow-xl">
@@ -44,6 +45,7 @@ export function FrameInsidePopupPreview() {
         onClick={() => {
           setBrowserFrame('MacOS Light')
           document.documentElement.style.setProperty('--borderSize', `0px`)
+          document.documentElement.style.setProperty('--borderColor', ``)
         }}
       >
         <div className="relative flex h-full w-full flex-col  justify-center overflow-hidden rounded-sm shadow-xl">

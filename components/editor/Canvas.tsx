@@ -9,7 +9,6 @@ import { Minus, Plus } from 'lucide-react'
 import { useImageOptions } from '@/store/use-image-options'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import CustomizedRnd from '@/components/CustomizedRnd'
-import { resolveTripleslashReference } from 'typescript'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()

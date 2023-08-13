@@ -8,7 +8,7 @@ import {
   Trash,
   TextCursor,
   PanelTop,
-  AlignHorizontalDistributeCenter,
+  Locate,
   Download,
   Palette,
 } from 'lucide-react'
@@ -20,35 +20,35 @@ import BackgroundOptions from '@/components/editor/BackgroundOptions/BackgroundO
 import FrameOptions from './FrameOptions/FrameOptions'
 import PositionOptions from './PositionOptions/PositionOptions'
 
-const sidebarButtons = [
-  {
-    text: 'Canvas',
-    icon: <AppWindow size={20} />,
-  },
-  {
-    text: 'Image',
-    icon: <Images size={20} />,
-  },
-  {
-    text: 'Background',
-    icon: <Palette size={20} />,
-  },
-  {
-    text: 'Frame',
-    icon: <PanelTop size={20} />,
-  },
-  {
-    text: 'Text',
-    icon: <TextCursor size={20} />,
-  },
-  {
-    text: 'Position',
-    icon: <AlignHorizontalDistributeCenter size={20} />,
-  },
-]
-
 export default function Sidebar() {
   const activeIndex = useActiveIndexStore((state) => state.activeIndex)
+
+  const sidebarButtons = [
+    {
+      text: 'Canvas',
+      icon: <AppWindow size={20} strokeWidth={activeIndex === 0 ? 2.25 : 2}/>,
+    },
+    {
+      text: 'Image',
+      icon: <Images size={20} strokeWidth={activeIndex === 1 ? 2.25 : 2}/>,
+    },
+    {
+      text: 'Background',
+      icon: <Palette size={20} strokeWidth={activeIndex === 2 ? 2.25 : 2}/>,
+    },
+    {
+      text: 'Frame',
+      icon: <PanelTop size={20} strokeWidth={activeIndex === 3 ? 2.25 : 2}/>,
+    },
+    {
+      text: 'Text',
+      icon: <TextCursor size={20} strokeWidth={activeIndex === 4 ? 2.25 : 2}/>,
+    },
+    {
+      text: 'Position',
+      icon: <Locate size={20} strokeWidth={activeIndex === 5 ? 2.25 : 2}/>,
+    },
+  ]
 
   return (
     <aside className="flex w-[28rem] border-r border-border md:w-[30rem]">
@@ -61,25 +61,25 @@ export default function Sidebar() {
             index={index}
           />
         ))}
-        <li className="mt-auto flex flex-col items-center gap-2">
+        {/* <li className="mt-auto flex flex-col items-center gap-2">
           <Button
             aria-label="Download options"
             className="h-12 rounded-xl px-4 py-3"
-            variant="activeIcon"
+            variant="stylish"
           >
             <Download />
           </Button>
           <span className={`max-w-[3.25rem] truncate text-xs text-[#cfcfcf]`}>
             Download
           </span>
-        </li>
+        </li> */}
       </ul>
 
       <div className="relative flex h-full w-full flex-col overflow-hidden">
         <ScrollArea type="hover">
           <div className="flex flex-col px-7">
             <div className="flex w-full flex-col py-10">
-              <h3 className="mb-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
+              <h3 className="mb-8 flex items-center gap-2 text-xs font-semibold uppercase text-dark/70">
                 {sidebarButtons[activeIndex].icon}
                 {sidebarButtons[activeIndex].text}
                 <Button
