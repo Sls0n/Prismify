@@ -1,11 +1,16 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { Upload } from 'lucide-react'
+import { ImageIcon, Upload } from 'lucide-react'
 import React, { CSSProperties, ChangeEvent } from 'react'
 import { useImageOptions } from '@/store/use-image-options'
 import BrowserFrame from './BrowserFrame'
 import { usePositionOptions } from '@/store/use-position-options'
+import { Button } from '../ui/Button'
+import demoImage from '@/public/images/demo-tweet.png'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
+import { useBackgroundOptions } from '@/store/use-background-options'
+import { useActiveIndexStore } from '@/store/use-active-index'
 
 const ImageUpload = () => {
   const {
@@ -17,9 +22,16 @@ const ImageUpload = () => {
     imageRoundness,
     imageShadow,
     borderSize,
+    setImageSize,
+    setImageRoundness,
+    setBorderSize,
+    borderColor,
   } = useImageOptions()
+  const { setResolution } = useResizeCanvas()
+  const { setImageBackground } = useBackgroundOptions()
+  const { setActiveIndex } = useActiveIndexStore()
 
-  const {translateX, translateY} = usePositionOptions()
+  const { translateX, translateY } = usePositionOptions()
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -39,6 +51,21 @@ const ImageUpload = () => {
     background: borderSize === '0' ? '' : 'var(--borderColor)',
   }
 
+  const loadDemoImage = () => {
+    setImageBackground(
+      'https://images.unsplash.com/photo-1618367588411-d9a90fefa881?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0ODUwOTB8MHwxfGNvbGxlY3Rpb258MTF8NXdnSGNtbjM4bTR8fHx8fDJ8fDE2OTIwMTU4MDZ8&ixlib=rb-4.0.3&q=80&w=1080'
+    )
+    setImage(demoImage.src)
+    setIsImageUploaded(true)
+    setActiveIndex(2)
+    setImageSize('1.5')
+    setImageRoundness(1.13)
+    setBorderSize('9.5')
+    document.documentElement.style.setProperty('--borderSize', `9.5px`)
+    document.documentElement.style.setProperty('--borderColor', borderColor)
+    setResolution('1673x938')
+  }
+
   return (
     <>
       {!image && !isImageUploaded && (
@@ -55,7 +82,7 @@ const ImageUpload = () => {
                     htmlFor="file-upload"
                     className="focus-within:ring-purple relative cursor-pointer rounded-md font-semibold text-purple focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:text-indigo-500"
                   >
-                    <span>Upload a file</span>
+                    <span>Load a image</span>
                   </label>
                   <input
                     id="file-upload"
@@ -71,6 +98,19 @@ const ImageUpload = () => {
                 <p className="text-sm leading-5 text-gray-400/80">
                   PNG, JPG, GIF up to 10MB
                 </p>
+
+                <p className="mt-6 text-sm font-semibold leading-5 text-gray-500">
+                  OR
+                </p>
+
+                <Button
+                  onClick={loadDemoImage}
+                  className="mt-6 rounded-md"
+                  variant="stylish"
+                >
+                  Try with a demo image
+                  <ImageIcon className="ml-2" size={19} />
+                </Button>
               </div>
             </div>
           </div>
