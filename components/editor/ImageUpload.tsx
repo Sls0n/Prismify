@@ -99,13 +99,13 @@ const ImageUpload = () => {
                   PNG, JPG, GIF up to 10MB
                 </p>
 
-                <p className="mt-6 text-sm font-semibold leading-5 text-gray-500">
+                <p className="mt-4 text-sm font-semibold leading-5 text-gray-500">
                   OR
                 </p>
 
                 <Button
                   onClick={loadDemoImage}
-                  className="mt-6 rounded-md"
+                  className="mt-4 rounded-md"
                   variant="stylish"
                 >
                   Try with a demo image
