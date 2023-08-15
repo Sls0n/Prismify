@@ -15,6 +15,9 @@ interface BackgroundOptionsState {
 
   imageBackground: string | null
   setImageBackground: (imageBackground: string | null) => void
+
+  attribution: { name: string | null; link: string | null }
+  setAttribution: (attribution: { name: string | null; link: string | null }) => void
 }
 
 export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
@@ -33,4 +36,7 @@ export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
 
   imageBackground: null,
   setImageBackground: (imageBackground) => set({ imageBackground }),
+
+  attribution: { name: null, link: null },
+  setAttribution: (attribution) => set({ attribution }),
 }))

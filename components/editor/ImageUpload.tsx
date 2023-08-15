@@ -2,7 +2,7 @@
 'use client'
 
 import { ImageIcon, Upload } from 'lucide-react'
-import React, { CSSProperties, ChangeEvent, useRef } from 'react'
+import React, { CSSProperties, ChangeEvent, useCallback, useRef } from 'react'
 import { useImageOptions } from '@/store/use-image-options'
 import BrowserFrame from './BrowserFrame'
 import { usePositionOptions } from '@/store/use-position-options'
@@ -24,6 +24,7 @@ import {
   Snappable,
 } from 'react-moveable'
 import { useMoveable } from '@/store/use-moveable'
+import { useImageQualityStore } from '@/store/use-image-quality'
 
 const Moveable = makeMoveable<
   DraggableProps & ScalableProps & RotatableProps & SnappableProps
@@ -48,26 +49,30 @@ const ImageUpload = () => {
     borderColor,
   } = useImageOptions()
   const { setShowControls, showControls } = useMoveable()
-  const { setResolution, domResolution } = useResizeCanvas()
+  const { setResolution, domResolution, scaleFactor } = useResizeCanvas()
+  const { quality } = useImageQualityStore()
   const { setImageBackground } = useBackgroundOptions()
   const { setActiveIndex } = useActiveIndexStore()
 
   const { translateX, translateY, setTranslateX, setTranslateY } =
     usePositionOptions()
 
-  const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
-    const file = event.target.files?.[0]
+  const handleImageChange = useCallback(
+    (event: ChangeEvent<HTMLInputElement>) => {
+      const file = event.target.files?.[0]
 
-    if (file) {
-      const imageUrl = URL.createObjectURL(file)
-      setImage(imageUrl)
-      setIsImageUploaded(true)
-    }
-  }
+      if (file) {
+        const imageUrl = URL.createObjectURL(file)
+        setImage(imageUrl)
+        setIsImageUploaded(true)
+      }
+    },
+    [setImage, setIsImageUploaded]
+  )
 
-  const handleImageClick = () => {
+  const handleImageClick = useCallback(() => {
     setShowControls(!showControls)
-  }
+  }, [setShowControls, showControls])
 
   useOnClickOutside(targetRef, () => {
     setShowControls(false)
@@ -95,6 +100,21 @@ const ImageUpload = () => {
     document.documentElement.style.setProperty('--borderColor', borderColor)
     setResolution('1920x1080')
   }
+
+  const handleDrag = useCallback(
+    (e: any) => {
+      setTranslateX(e.translate[0])
+      setTranslateY(e.translate[1])
+    },
+    [setTranslateX, setTranslateY]
+  )
+
+  const handleScale = useCallback(
+    (e: any) => {
+      setImageSize(`${e.scale[0]}`)
+    },
+    [setImageSize]
+  )
 
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
 
@@ -171,23 +191,16 @@ const ImageUpload = () => {
               target={targetRef}
               draggable={true}
               throttleDrag={0}
-              onDrag={(e) => {
-                // e.target.style.transform = e.transform
-                setTranslateX(e.translate[0])
-                setTranslateY(e.translate[1])
-              }}
+              onDrag={handleDrag}
               scalable={true}
               keepRatio={true}
-              onScale={(e) => {
-                // e.target.style.transform = e.drag.transform
-                setImageSize(`${e.scale[0]}`)
-              }}
+              onScale={handleScale}
               rotatable={true}
               rotationPosition={'top'}
               onRotate={(e) => {
                 e.target.style.transform = e.drag.transform
               }}
-              snapRotataionThreshold={5}
+              snapRotationThreshold={5}
               snapRotationDegrees={[0, 90, 180, 270]}
               snappable={true}
               snapDirections={{
@@ -195,8 +208,8 @@ const ImageUpload = () => {
                 middle: true,
               }}
               snapThreshold={5}
-              horizontalGuidelines={[domHeight / 2]}
-              verticalGuidelines={[domWidth / 2]}
+              horizontalGuidelines={[domHeight / 2 / scaleFactor / quality]}
+              verticalGuidelines={[domWidth / 2 / scaleFactor / quality]}
             />
           )}
         </>

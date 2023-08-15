@@ -11,7 +11,7 @@ import { useBackgroundOptions } from '@/store/use-background-options'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()
-  const { isMeshGradient, isSolidColor, imageBackground } =
+  const { isMeshGradient, isSolidColor, imageBackground, attribution } =
     useBackgroundOptions()
   const {
     resolution,
@@ -19,7 +19,6 @@ export default function Canvas() {
     scrollScale,
     setScrollScale,
     canvasRoundness,
-    scaleFactor,
     setScaleFactor,
   } = useResizeCanvas()
   const { isImageUploaded, secondImage, imageRoundness, imageShadow } =
@@ -73,7 +72,6 @@ export default function Canvas() {
       const resizeObserver = new ResizeObserver((entries) => {
         for (let entry of entries) {
           const { width: domWidth, height } = entry.contentRect
-
           const dynamicScaleFactor = width / domWidth
           setScaleFactor(dynamicScaleFactor)
           setDomResolution(
@@ -139,10 +137,25 @@ export default function Canvas() {
               alt="background image"
             />
           )}
-
           <ImageUpload />
         </motion.div>
       </section>
+
+      {attribution.name !== null && (
+        <div className="absolute bottom-6 right-32 text-sm text-dark/70">
+          Photo by{' '}
+          <a
+            className="text-blue-500"
+            href={`https://unsplash.com/@${attribution.link}?utm_source=your_app_name&utm_medium=referral`}
+          >
+            {attribution.name}
+          </a>{' '}
+          on{' '}
+          <a href="https://unsplash.com/?utm_source=your_app_name&utm_medium=referral">
+            Unsplash
+          </a>
+        </div>
+      )}
 
       <span className="absolute bottom-4 right-4 isolate inline-flex rounded-md shadow-sm">
         <button

@@ -8,7 +8,8 @@ import { useQuery } from '@tanstack/react-query'
 import { Button } from '@/components/ui/Button'
 
 export default function ImageGradients() {
-  const { setImageBackground, imageBackground } = useBackgroundOptions()
+  const { setImageBackground, imageBackground, setAttribution } =
+    useBackgroundOptions()
   const [currentPage, setCurrentPage] = useState(1)
 
   const fetchUnsplashPictures = async (page: number) => {
@@ -69,8 +70,10 @@ export default function ImageGradients() {
       <ul className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-5 gap-4">
         {unsplashData.map(
           (data: {
+            user: any
+            links: any
             id: Key | null | undefined
-            urls: { small_s3: string | null | undefined; regular: any }
+            urls: { regular: string | null; small_s3: string | undefined }
             alt_description: string | undefined
           }) => (
             <li className={`aspect-square h-12 w-12 rounded-md`} key={data.id}>
@@ -81,6 +84,14 @@ export default function ImageGradients() {
                 }`}
                 onClick={() => {
                   setImageBackground(`${data.urls.regular}`)
+                  setAttribution({
+                    name: data.user.first_name,
+                    link: data.user.username,
+                  })
+                  // Just triggering a download (Unsplash guideline)
+                  fetch(
+                    `${data.links.download_location}&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
+                  )
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

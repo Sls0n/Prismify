@@ -12,6 +12,7 @@ export default function GradientOptions() {
     setIsSolidColor,
     setImageBackground,
     imageBackground,
+    setAttribution
   } = useBackgroundOptions()
 
   const handleGradientClick = useCallback(
@@ -28,8 +29,9 @@ export default function GradientOptions() {
       setIsMeshGradient(isMesh)
       setIsSolidColor(false)
       setImageBackground(null)
+      setAttribution({name: null, link: null})
     },
-    [setBackground, setIsMeshGradient, setIsSolidColor, setImageBackground]
+    [setBackground, setIsMeshGradient, setIsSolidColor, setImageBackground, setAttribution]
   )
 
   return (
