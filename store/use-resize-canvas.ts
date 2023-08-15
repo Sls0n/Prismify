@@ -12,6 +12,9 @@ interface ResizeCanvasState {
 
   scrollScale: number
   setScrollScale: (scrollScale: number) => void
+
+  scaleFactor: number
+  setScaleFactor: (scaleFactor: number) => void
 }
 
 export const useResizeCanvas = create<ResizeCanvasState>()((set) => ({
@@ -26,4 +29,7 @@ export const useResizeCanvas = create<ResizeCanvasState>()((set) => ({
 
   scrollScale: 1,
   setScrollScale: (scrollScale) => set({ scrollScale }),
+
+  scaleFactor: 1,
+  setScaleFactor: (scaleFactor) => set({ scaleFactor }),
 }))

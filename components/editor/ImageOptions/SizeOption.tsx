@@ -1,5 +1,6 @@
 import { Slider } from '@/components/ui/Slider'
 import { useImageOptions } from '@/store/use-image-options'
+import { useMoveable } from '@/store/use-moveable'
 
 type SizeOptionProps = {
   text?: string
@@ -7,6 +8,7 @@ type SizeOptionProps = {
 
 export default function SizeOption({ text = 'Size' }: SizeOptionProps) {
   const { imageSize, setImageSize } = useImageOptions()
+  const {setShowControls} = useMoveable()
   return (
     <>
       <div className="mb-3 mt-2 flex max-w-[70%] items-center px-1">
@@ -24,7 +26,9 @@ export default function SizeOption({ text = 'Size' }: SizeOptionProps) {
           step={0.01}
           onValueChange={(value: number[]) => {
             setImageSize(value[0].toString())
+            setShowControls(false)
           }}
+          value={[+imageSize]}
         />
       </div>
     </>

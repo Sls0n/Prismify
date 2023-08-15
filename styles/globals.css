@@ -45,7 +45,7 @@
     --mesh-bg: '';
     --solid-bg: '';
     --borderSize: '0px';
-    --borderColor: '#ffffff40';
+    --borderColor: #ffffff40;
   }
 
   .dark {
@@ -113,18 +113,14 @@ html {
   }
 }
 
-.react-draggable {
-  cursor: pointer;
+#canvas-container > div > div > img {
+  cursor: grab;
 }
 
-.react-draggable-dragging {
+#canvas-container > div > div > img:active {
   cursor: grabbing;
 }
 
-#canvas-container > div > div > img {
-  -khtml-user-select: none;
-  -o-user-select: none;
-  -moz-user-select: none;
-  -webkit-user-select: none;
-  user-select: none;
+.moveable-control-box {
+  --moveable-color: #898aeb !important;
 }

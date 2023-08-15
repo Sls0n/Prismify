@@ -16,7 +16,7 @@ export default async function Home() {
         username={session?.user?.name || 'User'}
       />
 
-      <main className="flex h-full flex-row gap-6 pt-4 pr-6">
+      <main className="flex h-full flex-row gap-6 pr-6 pt-4">
         <Sidebar />
         <Canvas />
       </main>

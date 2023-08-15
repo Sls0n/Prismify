@@ -29,6 +29,7 @@ import domtoimage from 'dom-to-image'
 import { saveAs } from 'file-saver'
 import { useImageQualityStore } from '@/store/use-image-quality'
 import { useImageOptions } from '@/store/use-image-options'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -45,12 +46,13 @@ export default function Navbar({
 }: NavbarProps) {
   const { quality } = useImageQualityStore()
   const { isImageUploaded } = useImageOptions()
+  const { scaleFactor } = useResizeCanvas()
 
   const snapshotCreator = () => {
     return new Promise<Blob>((resolve, reject) => {
       try {
         if (!isImageUploaded) throw new Error('Upload image and try again')
-        const scale = 1.561 * quality
+        const scale = scaleFactor * quality
         const element = document.getElementById('canvas-container')
         if (!element) {
           reject(new Error('Element not found.'))

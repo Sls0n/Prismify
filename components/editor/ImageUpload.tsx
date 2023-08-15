@@ -2,7 +2,7 @@
 'use client'
 
 import { ImageIcon, Upload } from 'lucide-react'
-import React, { CSSProperties, ChangeEvent } from 'react'
+import React, { CSSProperties, ChangeEvent, useRef } from 'react'
 import { useImageOptions } from '@/store/use-image-options'
 import BrowserFrame from './BrowserFrame'
 import { usePositionOptions } from '@/store/use-position-options'
@@ -11,8 +11,28 @@ import demoImage from '@/public/images/demo-tweet.png'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import { useActiveIndexStore } from '@/store/use-active-index'
+import { useOnClickOutside } from '@/hooks/use-on-click-outside'
+import {
+  makeMoveable,
+  DraggableProps,
+  ScalableProps,
+  RotatableProps,
+  SnappableProps,
+  Draggable,
+  Scalable,
+  Rotatable,
+  Snappable,
+} from 'react-moveable'
+import { useMoveable } from '@/store/use-moveable'
+
+const Moveable = makeMoveable<
+  DraggableProps & ScalableProps & RotatableProps & SnappableProps
+  // @ts-ignore
+>([Draggable, Scalable, Rotatable, Snappable])
 
 const ImageUpload = () => {
+  const targetRef = useRef<HTMLDivElement>(null)
+
   const {
     isImageUploaded,
     setIsImageUploaded,
@@ -27,11 +47,13 @@ const ImageUpload = () => {
     setBorderSize,
     borderColor,
   } = useImageOptions()
-  const { setResolution } = useResizeCanvas()
+  const { setShowControls, showControls } = useMoveable()
+  const { setResolution, domResolution } = useResizeCanvas()
   const { setImageBackground } = useBackgroundOptions()
   const { setActiveIndex } = useActiveIndexStore()
 
-  const { translateX, translateY } = usePositionOptions()
+  const { translateX, translateY, setTranslateX, setTranslateY } =
+    usePositionOptions()
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
     const file = event.target.files?.[0]
@@ -43,8 +65,16 @@ const ImageUpload = () => {
     }
   }
 
+  const handleImageClick = () => {
+    setShowControls(!showControls)
+  }
+
+  useOnClickOutside(targetRef, () => {
+    setShowControls(false)
+  })
+
   const imageStyle: CSSProperties = {
-    transform: `scale(${imageSize}) translate(${translateX}%, ${translateY}%)`,
+    transform: `scale(${imageSize}) translate(${translateX}px, ${translateY}px)`,
     borderRadius: `${imageRoundness}rem`,
     boxShadow: `${imageShadow}`,
     border: `var(--borderSize) solid var(--borderColor)`,
@@ -63,8 +93,10 @@ const ImageUpload = () => {
     setBorderSize('9.5')
     document.documentElement.style.setProperty('--borderSize', `9.5px`)
     document.documentElement.style.setProperty('--borderColor', borderColor)
-    setResolution('1673x938')
+    setResolution('1920x1080')
   }
+
+  const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
 
   return (
     <>
@@ -118,19 +150,56 @@ const ImageUpload = () => {
       )}
 
       {image && isImageUploaded && (
-        <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-          <div
-            className="flex h-full w-full flex-col overflow-hidden"
-            style={imageStyle}
-          >
-            <BrowserFrame />
-            <img
-              className={`h-full w-full flex-1`}
-              src={image}
-              alt="Uploaded image"
-            />
+        <>
+          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
+            <div
+              className="flex h-full w-full flex-col overflow-hidden"
+              style={imageStyle}
+              ref={targetRef}
+              onClick={handleImageClick}
+            >
+              <BrowserFrame />
+              <img
+                className={`h-full w-full flex-1`}
+                src={image}
+                alt="Uploaded image"
+              />
+            </div>
           </div>
-        </div>
+          {showControls && (
+            <Moveable
+              target={targetRef}
+              draggable={true}
+              throttleDrag={0}
+              onDrag={(e) => {
+                // e.target.style.transform = e.transform
+                setTranslateX(e.translate[0])
+                setTranslateY(e.translate[1])
+              }}
+              scalable={true}
+              keepRatio={true}
+              onScale={(e) => {
+                // e.target.style.transform = e.drag.transform
+                setImageSize(`${e.scale[0]}`)
+              }}
+              rotatable={true}
+              rotationPosition={'top'}
+              onRotate={(e) => {
+                e.target.style.transform = e.drag.transform
+              }}
+              snapRotataionThreshold={5}
+              snapRotationDegrees={[0, 90, 180, 270]}
+              snappable={true}
+              snapDirections={{
+                center: true,
+                middle: true,
+              }}
+              snapThreshold={5}
+              horizontalGuidelines={[domHeight / 2]}
+              verticalGuidelines={[domWidth / 2]}
+            />
+          )}
+        </>
       )}
     </>
   )

@@ -8,7 +8,6 @@ import ImageUpload from './ImageUpload'
 import { Minus, Plus } from 'lucide-react'
 import { useImageOptions } from '@/store/use-image-options'
 import { useBackgroundOptions } from '@/store/use-background-options'
-import CustomizedRnd from '@/components/CustomizedRnd'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()
@@ -20,6 +19,8 @@ export default function Canvas() {
     scrollScale,
     setScrollScale,
     canvasRoundness,
+    scaleFactor,
+    setScaleFactor,
   } = useResizeCanvas()
   const { isImageUploaded, secondImage, imageRoundness, imageShadow } =
     useImageOptions()
@@ -73,8 +74,8 @@ export default function Canvas() {
         for (let entry of entries) {
           const { width, height } = entry.contentRect
           setDomResolution(
-            `${Math.round(width * 1.561 * quality)}x${Math.round(
-              height * 1.561 * quality
+            `${Math.round(width * scaleFactor * quality)}x${Math.round(
+              height * scaleFactor * quality
             )}`
           )
         }
@@ -137,18 +138,6 @@ export default function Canvas() {
           )}
 
           <ImageUpload />
-          {secondImage && (
-            <CustomizedRnd className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform ">
-              {/* eslint-disable-next-line @next/next/no-img-element */}
-              <img
-                draggable={false}
-                className={`h-full w-full`}
-                src={secondImage}
-                alt="second image"
-                style={secondImageStyle}
-              />
-            </CustomizedRnd>
-          )}
         </motion.div>
       </section>
 
