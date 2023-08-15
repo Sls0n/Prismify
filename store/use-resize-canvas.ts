@@ -18,7 +18,7 @@ interface ResizeCanvasState {
 }
 
 export const useResizeCanvas = create<ResizeCanvasState>()((set) => ({
-  resolution: '16x9',
+  resolution: '1920x1080',
   setResolution: (res) => set({ resolution: res }),
 
   domResolution: '....x....',

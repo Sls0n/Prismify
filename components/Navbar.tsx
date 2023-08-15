@@ -62,6 +62,8 @@ export default function Navbar({
             variant: 'destructive',
           })
           return
+
+          // {TODO : ANOTHER IF CHECK TO CHECK IF THERE's WATERMARK}
         }
         domtoimage
           .toPng(element, {

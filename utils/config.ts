@@ -32,58 +32,53 @@ export const qualities: Quality[] = [
 export const resolutions: Resolution[] = [
   {
     name: '1:1 (Pfp)',
-    resolution: '1x1',
+    resolution: '1080x1080',
     icon: 'UserSquare2',
   },
   {
     name: '16:9 (Wide)',
-    resolution: '16x9',
+    resolution: '1920x1080',
     icon: 'GalleryThumbnails',
   },
   {
     name: '9:16 (Story/Reels)',
-    resolution: '9x16',
+    resolution: '1080x1920',
     icon: 'GalleryHorizontalEnd',
   },
   {
     name: '4:3 (Old TV)',
-    resolution: '4x3',
+    resolution: '1440x1080',
     icon: 'MonitorPlay',
   },
   {
     name: '4:5 (Portrait)',
-    resolution: '4x5',
+    resolution: '864x1080',
     icon: 'Smartphone',
   },
   {
-    name: '5:4 (Landscape)',
-    resolution: '5x4',
-    icon: 'SmartphoneLandscape',
+    name: '3.65:1 (Banner)',
+    resolution: '1546x423',
+    icon: 'RectangleHorizontal',
   },
   {
-    name: '3:1 (Banner)',
-    resolution: '3x1',
+    name: '1.85:1 (Movie)',
+    resolution: '2048x1107',
     icon: 'RectangleHorizontal',
   },
   {
     name: '21:9 (Cinematic)',
-    resolution: '21x9',
+    resolution: '2560x1080',
     icon: 'RectangleHorizontal',
   },
   {
-    name: '1.85:1 (Movie)',
-    resolution: '1.85x1',
-    icon: 'RectangleHorizontal',
+    name: '5:4 (Landscape)',
+    resolution: '1350x1080',
+    icon: 'SmartphoneLandscape',
   },
   {
-    name: '1.85:1 (Movie)',
-    resolution: '1.85x1',
-    icon: 'RectangleHorizontal',
-  },
-  {
-    name: '3.6:1 (Super Ultrawide)',
-    resolution: '3.6x1',
-    icon: 'RectangleHorizontal',
+    name: '16:10 (Wide)',
+    resolution: '1920x1200',
+    icon: 'GalleryThumbnails',
   },
 ]
 

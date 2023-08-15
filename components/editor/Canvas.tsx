@@ -72,11 +72,14 @@ export default function Canvas() {
     if (element) {
       const resizeObserver = new ResizeObserver((entries) => {
         for (let entry of entries) {
-          const { width, height } = entry.contentRect
+          const { width: domWidth, height } = entry.contentRect
+
+          const dynamicScaleFactor = width / domWidth
+          setScaleFactor(dynamicScaleFactor)
           setDomResolution(
-            `${Math.round(width * scaleFactor * quality)}x${Math.round(
-              height * scaleFactor * quality
-            )}`
+            `${Math.round(
+              domWidth * dynamicScaleFactor * quality
+            )}x${Math.round(height * dynamicScaleFactor * quality)}`
           )
         }
       })

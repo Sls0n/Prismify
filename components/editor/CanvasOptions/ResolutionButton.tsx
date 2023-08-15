@@ -16,8 +16,11 @@ export function ResolutionButton({
   className?: string
   variant: 'outline' | 'stylish'
 }) {
-  const { setResolution } = useResizeCanvas()
+  const { setResolution, setScaleFactor, domResolution } = useResizeCanvas()
   const { isImageUploaded } = useImageOptions()
+
+  const [outputWidth]: number[] = resolution.split('x').map(Number)
+  const [domWidth]: number[] = domResolution.split('x').map(Number)
 
   return (
     <Button
@@ -26,6 +29,8 @@ export function ResolutionButton({
       onClick={() => {
         if (!isImageUploaded) return
         setResolution(resolution)
+
+        setScaleFactor(outputWidth / domWidth)
       }}
       aria-label={name}
     >
