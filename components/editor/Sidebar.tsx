@@ -9,7 +9,6 @@ import {
   TextCursor,
   PanelTop,
   Locate,
-  Download,
   Palette,
 } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/ScrollArea'
@@ -26,27 +25,27 @@ export default function Sidebar() {
   const sidebarButtons = [
     {
       text: 'Canvas',
-      icon: <AppWindow size={20} strokeWidth={activeIndex === 0 ? 2.25 : 2}/>,
+      icon: <AppWindow size={20} strokeWidth={activeIndex === 0 ? 2.25 : 2} />,
     },
     {
       text: 'Image',
-      icon: <Images size={20} strokeWidth={activeIndex === 1 ? 2.25 : 2}/>,
+      icon: <Images size={20} strokeWidth={activeIndex === 1 ? 2.25 : 2} />,
     },
     {
       text: 'Background',
-      icon: <Palette size={20} strokeWidth={activeIndex === 2 ? 2.25 : 2}/>,
+      icon: <Palette size={20} strokeWidth={activeIndex === 2 ? 2.25 : 2} />,
     },
     {
       text: 'Frame',
-      icon: <PanelTop size={20} strokeWidth={activeIndex === 3 ? 2.25 : 2}/>,
+      icon: <PanelTop size={20} strokeWidth={activeIndex === 3 ? 2.25 : 2} />,
     },
     {
       text: 'Text',
-      icon: <TextCursor size={20} strokeWidth={activeIndex === 4 ? 2.25 : 2}/>,
+      icon: <TextCursor size={20} strokeWidth={activeIndex === 4 ? 2.25 : 2} />,
     },
     {
       text: 'Position',
-      icon: <Locate size={20} strokeWidth={activeIndex === 5 ? 2.25 : 2}/>,
+      icon: <Locate size={20} strokeWidth={activeIndex === 5 ? 2.25 : 2} />,
     },
   ]
 

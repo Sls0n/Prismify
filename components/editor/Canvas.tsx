@@ -75,9 +75,9 @@ export default function Canvas() {
           const dynamicScaleFactor = width / domWidth
           setScaleFactor(dynamicScaleFactor)
           setDomResolution(
-            `${Math.round(
-              domWidth * dynamicScaleFactor * quality
-            )}x${Math.round(height * dynamicScaleFactor * quality)}`
+            `${domWidth * dynamicScaleFactor * quality}x${
+              height * dynamicScaleFactor * quality
+            }`
           )
         }
       })
@@ -145,13 +145,16 @@ export default function Canvas() {
         <div className="absolute bottom-6 right-32 text-sm text-dark/70">
           Photo by{' '}
           <a
-            className="text-blue-500"
+            className="text-blue-500 underline"
             href={`https://unsplash.com/@${attribution.link}?utm_source=your_app_name&utm_medium=referral`}
           >
             {attribution.name}
           </a>{' '}
           on{' '}
-          <a href="https://unsplash.com/?utm_source=your_app_name&utm_medium=referral">
+          <a
+            className="underline"
+            href="https://unsplash.com/?utm_source=your_app_name&utm_medium=referral"
+          >
             Unsplash
           </a>
         </div>

@@ -10,6 +10,7 @@ import bcrypt from 'bcrypt'
 export const authOptions: NextAuthOptions = {
   pages: {
     signIn: '/sign-in',
+    error: '/error',
   },
   adapter: PrismaAdapter(prismadb),
   providers: [

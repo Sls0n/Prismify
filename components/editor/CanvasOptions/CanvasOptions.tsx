@@ -70,7 +70,7 @@ export default function CanvasOptions() {
       canvasWidth = canvasHeight * aspectRatio
     }
 
-    return `${Math.round(canvasWidth)}x${Math.round(canvasHeight)}`
+    return `${canvasWidth}x${canvasHeight}`
   }
 
   return (
@@ -78,11 +78,11 @@ export default function CanvasOptions() {
       <h1 className="mb-3 mt-4 px-1 text-[0.85rem]">Current Resolution</h1>
       <div className="flex w-full max-w-sm items-center space-x-2">
         <div className="w-full rounded-lg border border-border bg-formDark px-4 py-2 text-sm ">
-          {width}
+          {Math.round(+width)}
         </div>
         <span className="mx-2 my-auto">x</span>
         <div className="w-full rounded-lg border border-border bg-formDark px-4 py-2 text-sm ">
-          {height}
+          {Math.round(+height)}
         </div>
       </div>
 

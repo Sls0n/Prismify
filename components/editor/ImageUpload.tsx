@@ -103,6 +103,7 @@ const ImageUpload = () => {
 
   const handleDrag = useCallback(
     (e: any) => {
+      e.target.style.transform = e.transform
       setTranslateX(e.translate[0])
       setTranslateY(e.translate[1])
     },
@@ -207,7 +208,7 @@ const ImageUpload = () => {
                 center: true,
                 middle: true,
               }}
-              snapThreshold={5}
+              snapThreshold={10}
               horizontalGuidelines={[domHeight / 2 / scaleFactor / quality]}
               verticalGuidelines={[domWidth / 2 / scaleFactor / quality]}
             />
