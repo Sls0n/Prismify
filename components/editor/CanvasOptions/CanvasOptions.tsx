@@ -7,6 +7,7 @@ import {
   Instagram,
   Linkedin,
   Plus,
+  Minus,
   Twitter,
   UserSquare2,
   Youtube,
@@ -41,7 +42,7 @@ const icons = {
   GalleryHorizontalEnd: <GalleryHorizontalEnd size={18} />,
   MonitorPlay: <MonitorPlay size={18} />,
   Smartphone: <Smartphone size={18} />,
-  SmartphoneLandscape: <Smartphone className='-rotate-90' size={18} />,
+  SmartphoneLandscape: <Smartphone className="-rotate-90" size={18} />,
   GalleryVerticalEnd: <GalleryVerticalEnd size={18} />,
   RectangleHorizontal: <RectangleHorizontal size={18} />,
 }
@@ -49,7 +50,13 @@ const icons = {
 const splitResolution = (resolution: string) => resolution.split('x')
 
 export default function CanvasOptions() {
-  const { resolution, domResolution, setResolution } = useResizeCanvas()
+  const {
+    resolution,
+    domResolution,
+    setResolution,
+    scrollScale,
+    setScrollScale,
+  } = useResizeCanvas()
   const { image, setImageSize } = useImageOptions()
 
   const [width, height] = splitResolution(domResolution)
@@ -85,7 +92,6 @@ export default function CanvasOptions() {
           {Math.round(+height)}
         </div>
       </div>
-
       <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Aspect ratio</h1>
       <div className="flex flex-wrap gap-3">
         <Button
@@ -149,10 +155,39 @@ export default function CanvasOptions() {
           </PopoverContent>
         </Popover>
       </div>
-
       <Separator className="mt-8 h-[0.1rem] w-full" />
 
       <RoundnessSettings />
+
+      <Separator className="mt-8 h-[0.1rem] w-full" />
+
+      <h1 className="mb-3 mt-4 px-1 text-[0.85rem]">Preview scale</h1>
+      <span className="inline-flex rounded-md shadow-sm">
+        <button
+          type="button"
+          className="relative inline-flex items-center rounded-l-md bg-formDark px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
+          disabled={scrollScale === 1}
+          onClick={() => {
+            if (scrollScale === 1) return
+            setScrollScale(scrollScale + 0.1)
+          }}
+        >
+          <span className="sr-only">Scale up</span>
+          <Plus className="h-5 w-5" aria-hidden="true" />
+        </button>
+        <button
+          type="button"
+          className="relative -ml-px inline-flex items-center rounded-r-md bg-formDark px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
+          disabled={scrollScale <= 0.4}
+          onClick={() => {
+            if (scrollScale <= 0.4) return
+            setScrollScale(scrollScale - 0.1)
+          }}
+        >
+          <span className="sr-only">Scale down</span>
+          <Minus className="h-5 w-5" aria-hidden="true" />
+        </button>
+      </span>
     </>
   )
 }

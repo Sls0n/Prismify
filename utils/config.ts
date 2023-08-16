@@ -143,6 +143,16 @@ export const gradients: Gradient[] = [
       'linear-gradient(var(--gradient-angle), rgb(134, 227, 206), rgb(208, 230, 165) 100%)',
   },
   {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(-225deg, #5271C4 0%, #B19FFF 48%, #ECA1FE 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(to top, #f77062 0%, #fe5196 100%)',
+  },
+  {
     type: 'Mesh',
     background: 'rgb(249, 168, 212)',
     gradient:
@@ -159,10 +169,6 @@ export const gradients: Gradient[] = [
     background: 'rgb(249, 168, 212)',
     gradient:
       'radial-gradient(at 95% 85%, rgb(217, 249, 157) 0, transparent 100%), radial-gradient(at 49% 91%, rgb(255, 228, 230) 0, transparent 86%), radial-gradient(at 44% 80%, rgb(191, 219, 254) 0, transparent 21%), radial-gradient(at 62% 12%, rgb(254, 202, 202) 0, transparent 75%), radial-gradient(at 66% 75%, rgb(39, 39, 42) 0, transparent 38%), radial-gradient(at 42% 66%, rgb(253, 164, 175) 0, transparent 66%)',
-  },
-  {
-    type: 'Normal',
-    gradient: 'linear-gradient(0deg, #131313, #151515 100%)',
   },
 ]
 

@@ -50,8 +50,8 @@ export default function Sidebar() {
   ]
 
   return (
-    <aside className="flex w-[28rem] border-r border-border md:w-[30rem]">
-      <ul className="relative flex max-w-[23%] basis-[20%] flex-col items-center gap-6 overflow-y-auto border-r border-border/50 px-4 py-8 dark:bg-sidebar lg:basis-[23%]">
+    <aside className="flex w-[4.5rem] overflow-x-hidden border-r border-border md:w-[6rem] lg:w-[30rem]">
+      <ul className="relative flex basis-[100%] flex-col items-center gap-6 overflow-y-auto overflow-x-hidden border-border/50 px-4 py-8 dark:bg-sidebar lg:max-w-[23%] lg:basis-[23%] lg:border-r">
         {sidebarButtons.map((button, index) => (
           <SidebarButton
             key={index}
@@ -74,7 +74,7 @@ export default function Sidebar() {
         </li> */}
       </ul>
 
-      <div className="relative flex h-full w-full flex-col overflow-hidden">
+      <div className="relative hidden h-full w-full flex-col overflow-hidden lg:flex">
         <ScrollArea type="hover">
           <div className="flex flex-col px-7">
             <div className="flex w-full flex-col py-10">

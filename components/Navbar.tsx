@@ -92,22 +92,19 @@ export default function Navbar({
   }
 
   return (
-    <header className="fixed inset-x-0 top-0 z-[10] flex h-16 items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
+    <header className="fixed inset-x-0 top-0 z-[10] flex h-[3.75rem] items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-8">
           {/* Can add hamburger or something here */}
           <Link href="/" className="inline-flex items-center space-x-3">
             <Image
-              style={{
-                filter: 'drop-shadow(0 0 15px #898aeb40)',
-              }}
               src="/images/image.webp"
               width={35}
               height={35}
               alt="logo"
               priority
             />
-            <span className="text-lg font-medium -tracking-wide text-primary dark:font-normal dark:text-dark sm:font-semibold">
+            <span className="hidden md:block text-lg font-medium -tracking-wide text-primary dark:font-normal dark:text-dark sm:font-semibold">
               Prismify
             </span>
           </Link>
@@ -127,7 +124,7 @@ export default function Navbar({
             </a> */}
           </div>
 
-          <div className="dark:bg-border-dark h-8 w-[2px] bg-border" />
+          <div className="dark:bg-border-dark h-7 w-[2px] bg-border" />
           <div className="flex items-center gap-2">
             {!authenticated && (
               <>
@@ -140,22 +137,27 @@ export default function Navbar({
                         })
                       }}
                       variant="stylish"
+                      size={'sm'}
                       className="mr-1 rounded-xl"
                     >
                       Save image
                       <Download
-                        size={20}
+                        size={18}
                         className="ml-2 inline-block align-middle"
                       />
                     </Button>
 
                     <Dialog>
                       <DialogTrigger asChild>
-                        <Button className="rounded-xl" variant="default">
+                        <Button
+                          className="rounded-xl"
+                          size={'sm'}
+                          variant="default"
+                        >
                           Sign In
                           <LogIn
-                            size={20}
-                            className="ml-2 inline-block align-middle"
+                            size={18}
+                            className="ml-2 flex-center"
                           />
                         </Button>
                       </DialogTrigger>

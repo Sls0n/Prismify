@@ -5,7 +5,7 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { motion } from 'framer-motion'
 import { useImageQualityStore } from '@/store/use-image-quality'
 import ImageUpload from './ImageUpload'
-import { Minus, Plus } from 'lucide-react'
+
 import { useImageOptions } from '@/store/use-image-options'
 import { useBackgroundOptions } from '@/store/use-background-options'
 
@@ -21,8 +21,7 @@ export default function Canvas() {
     canvasRoundness,
     setScaleFactor,
   } = useResizeCanvas()
-  const { isImageUploaded, secondImage, imageRoundness, imageShadow } =
-    useImageOptions()
+  const { isImageUploaded } = useImageOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
 
@@ -55,8 +54,14 @@ export default function Canvas() {
 
   if (aspectRatio < 1) {
     style = { ...style, width: 'auto', height: '100%' }
+  } else if (aspectRatio >= 0.95 && aspectRatio <= 1.1) {
+    const containerSize = '86vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 84vmin (it just makes it a bit smaller)
+    style = {
+      ...style,
+      width: containerSize,
+    }
   } else if (aspectRatio >= 0.9 && aspectRatio <= 1.4) {
-    const containerSize = '84vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 84vmin (it just makes it a bit smaller)
+    const containerSize = '100vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio
     style = {
       ...style,
       width: containerSize,
@@ -107,18 +112,13 @@ export default function Canvas() {
     scale: `${scrollScale}`,
   }
 
-  const secondImageStyle: CSSProperties = {
-    borderRadius: `${imageRoundness}rem`,
-    boxShadow: `${imageShadow}`,
-  }
-
   return (
     <>
       <section
         ref={parentRef}
         style={parentScaleStyle}
         onWheel={handleScroll}
-        className="flex h-full flex-1 items-center justify-center overflow-hidden"
+        className="flex h-full flex-1 items-start justify-center overflow-hidden"
       >
         <motion.div
           className={
@@ -142,50 +142,23 @@ export default function Canvas() {
       </section>
 
       {attribution.name !== null && (
-        <div className="absolute bottom-6 right-32 text-sm text-dark/70">
-          Photo by{' '}
+        <div className="absolute bottom-2 right-4 text-[0.85rem] text-dark/70 bg-sidebar/80 backdrop-blur-md p-2 rounded-md">
+          Background by{' '}
           <a
-            className="text-blue-500 underline"
-            href={`https://unsplash.com/@${attribution.link}?utm_source=your_app_name&utm_medium=referral`}
+            className="text-blue-500"
+            href={`https://unsplash.com/@${attribution.link}?utm_source=Prismify&utm_medium=referral`}
           >
             {attribution.name}
           </a>{' '}
           on{' '}
           <a
-            className="underline"
-            href="https://unsplash.com/?utm_source=your_app_name&utm_medium=referral"
+            className="underline underline-offset-2"
+            href="https://unsplash.com/?utm_source=Prismify&utm_medium=referral"
           >
             Unsplash
           </a>
         </div>
       )}
-
-      <span className="absolute bottom-4 right-4 isolate inline-flex rounded-md shadow-sm">
-        <button
-          type="button"
-          className="relative inline-flex items-center rounded-l-md bg-sidebar px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
-          disabled={scrollScale === 1}
-          onClick={() => {
-            if (scrollScale === 1) return
-            setScrollScale(scrollScale + 0.1)
-          }}
-        >
-          <span className="sr-only">Scale up</span>
-          <Plus className="h-5 w-5" aria-hidden="true" />
-        </button>
-        <button
-          type="button"
-          className="relative -ml-px inline-flex items-center rounded-r-md bg-sidebar px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
-          disabled={scrollScale <= 0.4}
-          onClick={() => {
-            if (scrollScale <= 0.4) return
-            setScrollScale(scrollScale - 0.1)
-          }}
-        >
-          <span className="sr-only">Scale down</span>
-          <Minus className="h-5 w-5" aria-hidden="true" />
-        </button>
-      </span>
     </>
   )
 }

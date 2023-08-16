@@ -21,7 +21,7 @@ export default function SidebarButton({
       className={`relative flex flex-col items-center gap-2`}
     >
       <Button
-        className={`h-12 rounded-xl px-4 py-3`}
+        className={`md:h-12 rounded-xl md:px-4 md:py-3 h-11 px-3 py-2`}
         variant={activeIndex === index ? 'activeIcon' : 'icon'}
         aria-label={`${text} options`}
       >
