@@ -31,6 +31,10 @@ export const qualities: Quality[] = [
 
 export const resolutions: Resolution[] = [
   {
+    name: 'Fit Image',
+    resolution: 'fit',
+  },
+  {
     name: '1:1 (Pfp)',
     resolution: '1080x1080',
     icon: 'UserSquare2',

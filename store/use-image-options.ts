@@ -30,6 +30,17 @@ interface ImageOptionsState {
 
   borderColor: string
   setBorderColor: (borderColor: string) => void
+
+  accordionOpen: {
+    appearanceOpen: boolean
+    shadowOpen: boolean
+    borderOpen: boolean
+  }
+  setAccordionOpen: (accordionOpen: {
+    appearanceOpen: boolean
+    shadowOpen: boolean
+    borderOpen: boolean
+  }) => void
 }
 
 export const useImageOptions = create<ImageOptionsState>()((set) => ({
@@ -62,4 +73,7 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
 
   borderColor: '#ffffff40',
   setBorderColor: (borderColor) => set({ borderColor }),
+
+  accordionOpen: { appearanceOpen: true, shadowOpen: false, borderOpen: false },
+  setAccordionOpen: (accordionOpen) => set({ accordionOpen }),
 }))

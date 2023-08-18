@@ -17,10 +17,29 @@ export function ResolutionButton({
   variant: 'outline' | 'stylish'
 }) {
   const { setResolution, setScaleFactor, domResolution } = useResizeCanvas()
-  const { isImageUploaded } = useImageOptions()
+  const { isImageUploaded, image, setImageSize } = useImageOptions()
 
   const [outputWidth]: number[] = resolution.split('x').map(Number)
   const [domWidth]: number[] = domResolution.split('x').map(Number)
+
+  const calculateCanvasSize = (
+    imgWidth: number,
+    imgHeight: number,
+    padding: number
+  ) => {
+    const aspectRatio = imgWidth / imgHeight
+    let canvasWidth, canvasHeight
+
+    if (aspectRatio > 1) {
+      canvasWidth = imgWidth + 2 * padding
+      canvasHeight = canvasWidth / aspectRatio
+    } else {
+      canvasHeight = imgHeight + 2 * padding
+      canvasWidth = canvasHeight * aspectRatio
+    }
+
+    return `${canvasWidth}x${canvasHeight}`
+  }
 
   return (
     <Button
@@ -28,6 +47,26 @@ export function ResolutionButton({
       variant={variant}
       onClick={() => {
         if (!isImageUploaded) return
+        if (resolution === 'fit') {
+          if (!image) return
+
+          const padding = 200
+          const img = new Image()
+          img.src = image
+
+          img.onload = () => {
+            const { naturalWidth, naturalHeight } = img
+            const newResolution = calculateCanvasSize(
+              naturalWidth,
+              naturalHeight,
+              padding
+            )
+            setResolution(newResolution.toString())
+            console.log(newResolution)
+            setImageSize('1.5')
+          }
+          return
+        }
         setResolution(resolution)
 
         setScaleFactor(outputWidth / domWidth)

@@ -82,7 +82,7 @@ export default function Sidebar() {
                 {sidebarButtons[activeIndex].icon}
                 {sidebarButtons[activeIndex].text}
                 <Button
-                  variant={'destructive'}
+                  variant="destructive"
                   aria-label="delete current project"
                   className="ml-auto scale-75 rounded-md px-3 py-1"
                 >

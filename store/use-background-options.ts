@@ -17,7 +17,13 @@ interface BackgroundOptionsState {
   setImageBackground: (imageBackground: string | null) => void
 
   attribution: { name: string | null; link: string | null }
-  setAttribution: (attribution: { name: string | null; link: string | null }) => void
+  setAttribution: (attribution: {
+    name: string | null
+    link: string | null
+  }) => void
+
+  highResBackground: boolean
+  setHighResBackground: (highResBackground: boolean) => void
 }
 
 export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
@@ -39,4 +45,7 @@ export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
 
   attribution: { name: null, link: null },
   setAttribution: (attribution) => set({ attribution }),
+
+  highResBackground: false,
+  setHighResBackground: (highResBackground) => set({highResBackground}),
 }))

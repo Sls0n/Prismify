@@ -6,14 +6,27 @@ import { Skeleton } from '@/components/ui/Skeleton'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import { toast } from '@/hooks/use-toast'
 import { useQuery } from '@tanstack/react-query'
+import { Settings2 } from 'lucide-react'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/Popover'
+import { Switch } from '@/components/ui/Switch'
 
 export default function PatternOptions() {
-  const { setImageBackground, imageBackground, setAttribution } = useBackgroundOptions()
+  const {
+    setImageBackground,
+    imageBackground,
+    setAttribution,
+    setHighResBackground,
+    highResBackground,
+  } = useBackgroundOptions()
   const [currentPage, setCurrentPage] = useState(1)
 
   const fetchUnsplashPatterns = async (page: number) => {
     const response = await fetch(
-      `https://api.unsplash.com/collections/W121KJsaTEs/photos?page=${page}&per_page=30&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
+      `https://api.unsplash.com/collections/W121KJsaTEs/photos?page=${page}&per_page=30&q=100&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
     )
     const data = await response.json()
     return data
@@ -64,6 +77,22 @@ export default function PatternOptions() {
     <>
       <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
         <span>Patterns:</span>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Settings2 size={20} className="rotate-90" />
+          </PopoverTrigger>
+          <PopoverContent className="flex w-fit flex-col flex-wrap gap-3">
+            <div className="flex gap-3">
+              <h1 className="text-[0.85rem]">High resolution background</h1>
+              <Switch
+                checked={highResBackground}
+                onCheckedChange={(checked) => {
+                  setHighResBackground(checked)
+                }}
+              />
+            </div>
+          </PopoverContent>
+        </Popover>
       </h3>
 
       <ul className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-5 gap-4">
@@ -72,25 +101,36 @@ export default function PatternOptions() {
             user: any
             links: any
             id: Key | null | undefined
-            urls: { regular: string | null; small_s3: string | undefined }
+            urls: {
+              regular: string | null
+              small_s3: string | undefined
+              full: string | undefined
+            }
             alt_description: string | undefined
           }) => (
             <li className={`aspect-square h-12 w-12 rounded-md`} key={data.id}>
               <button
                 className={`h-full w-full rounded-md ${
-                  imageBackground === data.urls.regular &&
+                  imageBackground ===
+                    (highResBackground
+                      ? `${data.urls.full}`
+                      : `${data.urls.regular}`) &&
                   'outline-none ring-2 ring-ring ring-offset-2'
                 }`}
                 onClick={() => {
-                  setImageBackground(`${data.urls.regular}`)
-                   setAttribution({
-                     name: data.user.first_name,
-                     link: data.user.username,
-                   })
-                   // Just triggering a download (Unsplash guideline)
-                   fetch(
-                     `${data.links.download_location}&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
-                   )
+                  setImageBackground(
+                    highResBackground
+                      ? `${data.urls.full}`
+                      : `${data.urls.regular}`
+                  )
+                  setAttribution({
+                    name: data.user.first_name,
+                    link: data.user.username,
+                  })
+                  // Just triggering a download (Unsplash guideline)
+                  fetch(
+                    `${data.links.download_location}&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
+                  )
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
