@@ -29,15 +29,6 @@ export default function BorderSettings() {
         }`}
       >
         <h1 className="text-[0.85rem]">Width</h1>
-
-        <Button
-          aria-label="reset size"
-          variant="secondary"
-          size="sm"
-          className="ml-auto translate-x-2"
-        >
-          <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
-        </Button>
       </div>
 
       <div
@@ -49,7 +40,7 @@ export default function BorderSettings() {
           defaultValue={[0]}
           max={20}
           min={0}
-          step={0.5}
+          step={0.01}
           onValueChange={(value: number[]) => {
             setBorderSize(value[0].toString())
             document.documentElement.style.setProperty(
@@ -82,6 +73,13 @@ export default function BorderSettings() {
           variant="secondary"
           size="sm"
           className="ml-auto translate-x-2"
+          onClick={() => {
+            setImageRoundness(0.7)
+            document.documentElement.style.setProperty(
+              '--borderRoundness',
+              `0.6rem`
+            )
+          }}
         >
           <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
         </Button>
@@ -99,6 +97,10 @@ export default function BorderSettings() {
           step={0.01}
           onValueChange={(value) => {
             setImageRoundness(value[0])
+            document.documentElement.style.setProperty(
+              '--borderRoundness',
+              `${value.toString()}rem`
+            )
           }}
           value={[imageRoundness]}
           disabled={browserFrame !== 'None'}

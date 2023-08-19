@@ -20,7 +20,7 @@ export default function ShadowSettings() {
     shadowColor,
   } = useImageOptions()
 
-  const { isMeshGradient } = useBackgroundOptions()
+  const { backgroundType } = useBackgroundOptions()
 
   const boxShadowStyle = {
     boxShadow: imageShadow,
@@ -28,7 +28,7 @@ export default function ShadowSettings() {
 
   const backgroundStyle = {
     backgroundImage: `var(--gradient-bg)`,
-    backgroundColor: isMeshGradient ? `var(--mesh-bg)` : 'var(--solid-bg)',
+    backgroundColor: backgroundType === 'mesh' ? `var(--mesh-bg)` : 'var(--solid-bg)',
   }
 
   const handleShadowButtonClick = (shadow: {

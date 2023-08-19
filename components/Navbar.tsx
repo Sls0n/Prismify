@@ -138,7 +138,7 @@ export default function Navbar({
                       }}
                       variant="stylish"
                       size={'sm'}
-                      className="mr-1 rounded-xl"
+                      className="mr-1 rounded-lg"
                     >
                       Save image
                       <Download
@@ -150,7 +150,7 @@ export default function Navbar({
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
-                          className="rounded-xl"
+                          className="rounded-lg"
                           size={'sm'}
                           variant="default"
                         >

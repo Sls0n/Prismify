@@ -53,7 +53,7 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   imageSize: '1',
   setImageSize: (imageSize) => set({ imageSize }),
 
-  imageRoundness: 0.8, // in rem
+  imageRoundness: 0.7, // in rem
   setImageRoundness: (imageRoundness) => set({ imageRoundness }),
 
   imageShadow: '0 25px 50px -12px var(--shadow)',
@@ -71,7 +71,7 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   borderSize: '0',
   setBorderSize: (borderSize) => set({ borderSize }),
 
-  borderColor: '#ffffff40',
+  borderColor: '#ffffff50',
   setBorderColor: (borderColor) => set({ borderColor }),
 
   accordionOpen: { appearanceOpen: true, shadowOpen: false, borderOpen: false },

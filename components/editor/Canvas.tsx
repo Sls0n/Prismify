@@ -11,7 +11,7 @@ import { useBackgroundOptions } from '@/store/use-background-options'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()
-  const { isMeshGradient, isSolidColor, imageBackground, attribution } =
+  const { backgroundType, imageBackground, attribution } =
     useBackgroundOptions()
   const {
     resolution,
@@ -38,14 +38,14 @@ export default function Canvas() {
     borderRadius: `${canvasRoundness}rem`,
   }
 
-  if (isMeshGradient) {
+  if (backgroundType === 'mesh') {
     style = {
       ...style,
       backgroundColor: `var(--mesh-bg)`,
     }
   }
 
-  if (isSolidColor) {
+  if (backgroundType === 'solid') {
     style = {
       ...style,
       backgroundColor: `var(--solid-bg)`,

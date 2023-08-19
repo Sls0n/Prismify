@@ -21,6 +21,7 @@ export default function PatternOptions() {
     setAttribution,
     setHighResBackground,
     highResBackground,
+    setBackgroundType,
   } = useBackgroundOptions()
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -118,6 +119,7 @@ export default function PatternOptions() {
                   'outline-none ring-2 ring-ring ring-offset-2'
                 }`}
                 onClick={() => {
+                  setBackgroundType('pattern')
                   setImageBackground(
                     highResBackground
                       ? `${data.urls.full}`

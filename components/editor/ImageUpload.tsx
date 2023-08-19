@@ -25,6 +25,7 @@ import {
 } from 'react-moveable'
 import { useMoveable } from '@/store/use-moveable'
 import { useImageQualityStore } from '@/store/use-image-quality'
+import { useFrameOptions } from '@/store/use-frame-options'
 
 const Moveable = makeMoveable<
   DraggableProps & ScalableProps & RotatableProps & SnappableProps
@@ -53,6 +54,7 @@ const ImageUpload = () => {
   const { quality } = useImageQualityStore()
   const { setImageBackground } = useBackgroundOptions()
   const { setActiveIndex } = useActiveIndexStore()
+  const { browserFrame } = useFrameOptions()
 
   const { translateX, translateY, setTranslateX, setTranslateY } =
     usePositionOptions()
@@ -82,7 +84,15 @@ const ImageUpload = () => {
     transform: `scale(${imageSize}) translate(${translateX}px, ${translateY}px)`,
     borderRadius: `${imageRoundness}rem`,
     boxShadow: `${imageShadow}`,
-    border: `var(--borderSize) solid var(--borderColor)`,
+    // If browserFrame is 'None', then only apply a border only if borderSize is not '0',
+    border:
+      browserFrame !== 'None'
+        ? ''
+        : borderSize === '0'
+        ? ''
+        : `1px solid var(--borderColor)`,
+
+    padding: browserFrame !== 'None' ? '' : `var(--borderSize)`,
     background: borderSize === '0' ? '' : 'var(--borderColor)',
   }
 
@@ -95,9 +105,10 @@ const ImageUpload = () => {
     setActiveIndex(2)
     setImageSize('1.5')
     setImageRoundness(1.13)
-    setBorderSize('9.5')
-    document.documentElement.style.setProperty('--borderSize', `9.5px`)
+    setBorderSize('7')
+    document.documentElement.style.setProperty('--borderSize', `7px`)
     document.documentElement.style.setProperty('--borderColor', borderColor)
+    document.documentElement.style.setProperty('--borderRoundness', '1.13rem')
     setResolution('1920x1080')
   }
 
@@ -184,6 +195,12 @@ const ImageUpload = () => {
                 className={`h-full w-full flex-1`}
                 src={image}
                 alt="Uploaded image"
+                style={{
+                  borderRadius:
+                    browserFrame !== 'None'
+                      ? ``
+                      : 'calc(var(--borderRoundness) - 6px)',
+                }}
               />
             </div>
           </div>

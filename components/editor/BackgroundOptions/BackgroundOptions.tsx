@@ -5,23 +5,23 @@ import PatternOptions from './PatternOptions'
 import CustomOptions from './CustomOptions'
 
 export default function BackgroundOptions() {
-  const { isSolidColor } = useBackgroundOptions()
+  const { backgroundType } = useBackgroundOptions()
 
   return (
     <>
-      <Tabs className="mt-4" defaultValue={isSolidColor ? 'custom' : 'gradients'}>
+      <Tabs className="mt-4" defaultValue={backgroundType === 'solid' ? 'customTab' : backgroundType === 'pattern' ? 'patternsTab' : 'gradientsTab'}>
         <TabsList className="mb-3">
-          <TabsTrigger value="gradients">Gradients</TabsTrigger>
-          <TabsTrigger value="patterns">Patterns</TabsTrigger>
-          <TabsTrigger value="custom">Custom</TabsTrigger>
+          <TabsTrigger value="gradientsTab">Gradients</TabsTrigger>
+          <TabsTrigger value="patternsTab">Patterns</TabsTrigger>
+          <TabsTrigger value="customTab">Custom</TabsTrigger>
         </TabsList>
-        <TabsContent value="gradients">
+        <TabsContent value="gradientsTab">
           <GradientOptions />
         </TabsContent>
-        <TabsContent value="patterns">
+        <TabsContent value="patternsTab">
           <PatternOptions />
         </TabsContent>
-        <TabsContent value="custom">
+        <TabsContent value="customTab">
           <CustomOptions />
         </TabsContent>
       </Tabs>

@@ -6,7 +6,7 @@ export interface Quality {
 export interface Resolution {
   name: string
   resolution: string
-  icon: string
+  icon?: string
 }
 
 export interface Shadow {
@@ -128,6 +128,10 @@ export const shadows: Shadow[] = [
 export const gradients: Gradient[] = [
   {
     type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #E3E9F1, #E3E9F1 100%)',
+  },
+  {
+    type: 'Normal',
     gradient:
       'linear-gradient(var(--gradient-angle), rgb(202, 194, 255), rgb(242, 231, 248) 100%)',
   },
@@ -148,13 +152,11 @@ export const gradients: Gradient[] = [
   },
   {
     type: 'Normal',
-    gradient:
-      'linear-gradient(-225deg, #5271C4 0%, #B19FFF 48%, #ECA1FE 100%)',
+    gradient: 'linear-gradient(-225deg, #5271C4 0%, #B19FFF 48%, #ECA1FE 100%)',
   },
   {
     type: 'Normal',
-    gradient:
-      'linear-gradient(to top, #f77062 0%, #fe5196 100%)',
+    gradient: 'linear-gradient(to top, #f77062 0%, #fe5196 100%)',
   },
   {
     type: 'Mesh',

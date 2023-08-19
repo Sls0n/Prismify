@@ -1,8 +1,10 @@
 import { Button } from '@/components/ui/Button'
 import { useFrameOptions } from '@/store/use-frame-options'
+import { useImageOptions } from '@/store/use-image-options'
 
 export function FrameInsidePopupPreview() {
   const { setBrowserFrame } = useFrameOptions()
+  const { setBorderSize } = useImageOptions()
 
   return (
     <>
@@ -24,6 +26,7 @@ export function FrameInsidePopupPreview() {
           setBrowserFrame('MacOS Dark')
           document.documentElement.style.setProperty('--borderSize', `0px`)
           document.documentElement.style.setProperty('--borderColor', ``)
+          setBorderSize('0')
         }}
       >
         <div className="relative flex h-full w-full flex-col  justify-center overflow-hidden rounded-sm shadow-xl">
@@ -44,6 +47,7 @@ export function FrameInsidePopupPreview() {
         className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
         onClick={() => {
           setBrowserFrame('MacOS Light')
+          setBorderSize('0')
           document.documentElement.style.setProperty('--borderSize', `0px`)
           document.documentElement.style.setProperty('--borderColor', ``)
         }}

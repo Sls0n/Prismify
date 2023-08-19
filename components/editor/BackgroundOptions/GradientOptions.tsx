@@ -8,11 +8,10 @@ export default function GradientOptions() {
   const {
     setBackground,
     background: backgroundInStore,
-    setIsMeshGradient,
-    setIsSolidColor,
+    setBackgroundType,
     setImageBackground,
     imageBackground,
-    setAttribution
+    setAttribution,
   } = useBackgroundOptions()
 
   const handleGradientClick = useCallback(
@@ -26,12 +25,11 @@ export default function GradientOptions() {
         isMesh ? gradient.background! : gradient.gradient
       )
       setBackground(gradient.gradient)
-      setIsMeshGradient(isMesh)
-      setIsSolidColor(false)
+      setBackgroundType('mesh')
       setImageBackground(null)
-      setAttribution({name: null, link: null})
+      setAttribution({ name: null, link: null })
     },
-    [setBackground, setIsMeshGradient, setIsSolidColor, setImageBackground, setAttribution]
+    [setBackground, setBackgroundType, setImageBackground, setAttribution]
   )
 
   return (
@@ -47,7 +45,8 @@ export default function GradientOptions() {
               key={gradient}
               variant="secondary"
               className={`aspect-square rounded-md ${
-                gradient === backgroundInStore && !imageBackground &&
+                gradient === backgroundInStore &&
+                !imageBackground &&
                 'outline-none ring-2 ring-ring ring-offset-2'
               }`}
               onClick={() =>

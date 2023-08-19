@@ -8,8 +8,7 @@ export default function CustomOptions() {
   const {
     setBackground,
     background,
-    setIsMeshGradient,
-    setIsSolidColor,
+    setBackgroundType,
     solidColor,
     setSolidColor,
     setImageBackground,
@@ -24,18 +23,16 @@ export default function CustomOptions() {
 
   const handleColorChange = useCallback(
     (color: string) => {
-      setIsSolidColor(true)
+      setBackgroundType('solid')
       setSolidColor(color)
       setBackground(color)
-      setIsMeshGradient(false)
       setImageBackground(null)
       updateRootStyles(color)
     },
     [
-      setIsSolidColor,
       setSolidColor,
       setBackground,
-      setIsMeshGradient,
+      setBackgroundType,
       updateRootStyles,
       setImageBackground,
     ]
@@ -60,7 +57,7 @@ export default function CustomOptions() {
             return (
               <Button
                 key={solidBackground}
-                className={`aspect-square rounded-sm p-0 overflow-hidden ${
+                className={`aspect-square overflow-hidden rounded-sm p-0 ${
                   background === solidBackground &&
                   !imageBackground &&
                   'outline-none ring-2 ring-ring ring-offset-2'
@@ -70,7 +67,7 @@ export default function CustomOptions() {
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}
                 <img
-                  className='w-full h-full scale-150'
+                  className="h-full w-full scale-150"
                   src="/images/transparent.jpg"
                   alt="transparent background"
                 />

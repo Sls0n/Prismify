@@ -1,8 +1,11 @@
 import { Slider } from '@/components/ui/Slider'
+import { useFrameOptions } from '@/store/use-frame-options'
 import { useImageOptions } from '@/store/use-image-options'
 
 export default function RoundnessOption() {
   const { imageRoundness, setImageRoundness } = useImageOptions()
+  const { browserFrame } = useFrameOptions()
+
   return (
     <>
       <div className="mb-3 mt-8 flex max-w-[70%] items-center px-1">
@@ -14,12 +17,16 @@ export default function RoundnessOption() {
 
       <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
         <Slider
-          defaultValue={[1]}
-          max={4}
+          defaultValue={[0.7]}
+          max={browserFrame !== 'None' ? 2 : 5}
           min={0}
           step={0.01}
           onValueChange={(value) => {
             setImageRoundness(value[0])
+            document.documentElement.style.setProperty(
+              '--borderRoundness',
+              `${value.toString()}rem`
+            )
           }}
           value={[imageRoundness]}
         />

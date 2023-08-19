@@ -21,6 +21,7 @@ export default function ImageGradients() {
     setAttribution,
     setHighResBackground,
     highResBackground,
+    setBackgroundType
   } = useBackgroundOptions()
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -117,6 +118,7 @@ export default function ImageGradients() {
                   'outline-none ring-2 ring-ring ring-offset-2'
                 }`}
                 onClick={() => {
+                  setBackgroundType('gradient')
                   setImageBackground(
                     highResBackground
                       ? `${data.urls.full}`

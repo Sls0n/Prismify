@@ -4,11 +4,10 @@ interface BackgroundOptionsState {
   background: string
   setBackground: (background: string) => void
 
-  isMeshGradient: boolean
-  setIsMeshGradient: (isMeshGradient: boolean) => void
-
-  isSolidColor: boolean
-  setIsSolidColor: (isSolidColor: boolean) => void
+  backgroundType: 'mesh' | 'solid' | 'gradient' | 'pattern' | 'custom'
+  setBackgroundType: (
+    backgroundType: 'mesh' | 'solid' | 'gradient' | 'pattern' | 'custom'
+  ) => void
 
   solidColor: string
   setSolidColor: (solidColor: string) => void
@@ -31,12 +30,6 @@ export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
     'linear-gradient(var(--gradient-angle), rgb(202, 194, 255), rgb(242, 231, 248) 100%)',
   setBackground: (background) => set({ background }),
 
-  isMeshGradient: false,
-  setIsMeshGradient: (isMeshGradient) => set({ isMeshGradient }),
-
-  isSolidColor: false,
-  setIsSolidColor: (isSolidColor) => set({ isSolidColor }),
-
   solidColor: '',
   setSolidColor: (solidColor) => set({ solidColor }),
 
@@ -47,5 +40,8 @@ export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
   setAttribution: (attribution) => set({ attribution }),
 
   highResBackground: false,
-  setHighResBackground: (highResBackground) => set({highResBackground}),
+  setHighResBackground: (highResBackground) => set({ highResBackground }),
+
+  backgroundType: 'gradient',
+  setBackgroundType: (backgroundType) => set({ backgroundType }),
 }))
