@@ -16,7 +16,9 @@ import {
   Smartphone,
   GalleryVerticalEnd,
   RectangleHorizontal,
+  ArrowRight,
 } from 'lucide-react'
+import { useEffect, useState } from 'react'
 import { resolutions } from '@/utils/config'
 import {
   Popover,
@@ -28,6 +30,7 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { Separator } from '@/components/ui/Separator'
 import { ResolutionButton } from './ResolutionButton'
 import RoundnessSettings from './RoundnessSettings'
+import { Input } from '@/components/ui/Input'
 
 const icons = {
   Youtube: <Youtube size={18} />,
@@ -51,6 +54,7 @@ const splitResolution = (resolution: string) => resolution.split('x')
 export default function CanvasOptions() {
   const {
     resolution,
+    setResolution,
     domResolution,
     scrollScale,
     setScrollScale,
@@ -58,18 +62,63 @@ export default function CanvasOptions() {
 
   const [width, height] = splitResolution(domResolution)
 
+  const [inputResolution, setInputResolution] = useState({
+    inputWidth: width,
+    inputHeight: height,
+  })
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    setResolution(
+      `${inputResolution.inputWidth}x${inputResolution.inputHeight}`
+    )
+  }
+
+  useEffect(() => {
+    setInputResolution({
+      inputWidth: `${Math.round(+width)}`,
+      inputHeight: `${Math.round(+height)}`,
+    })
+  }, [height, width])
+
   return (
     <>
-      <h1 className="mb-3 mt-4 px-1 text-[0.85rem]">Current Resolution</h1>
-      <div className="flex w-full max-w-sm items-center space-x-2">
-        <div className="w-full rounded-lg border border-border bg-formDark px-4 py-2 text-sm ">
-          {Math.round(+width)}
-        </div>
+      <h1 className="mb-3 mt-4 px-1 text-[0.85rem]">Custom Resolution</h1>
+      <form
+        onSubmit={handleSubmit}
+        className="flex w-full max-w-sm items-center space-x-2"
+      >
+        <Input
+          type="number"
+          value={inputResolution.inputWidth}
+          min={100}
+          max={5000}
+          onChange={(e) => {
+            setInputResolution({
+              ...inputResolution,
+              inputWidth: e.target.value,
+            })
+          }}
+          className="rounded-lg text-sm"
+        />
         <span className="mx-2 my-auto">x</span>
-        <div className="w-full rounded-lg border border-border bg-formDark px-4 py-2 text-sm ">
-          {Math.round(+height)}
-        </div>
-      </div>
+        <Input
+          type="number"
+          value={inputResolution.inputHeight}
+          min={100}
+          max={5000}
+          className="rounded-lg text-sm"
+          onChange={(e) => {
+            setInputResolution({
+              ...inputResolution,
+              inputHeight: e.target.value,
+            })
+          }}
+        />
+        <Button type="submit" variant="outline" className="rounded-lg text-sm">
+          <ArrowRight size={18} />
+        </Button>
+      </form>
       <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Aspect ratio</h1>
       <div className="flex flex-wrap gap-3">
         {resolutions.slice(0, 7).map((res, index) => (

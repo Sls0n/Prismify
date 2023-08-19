@@ -18,6 +18,7 @@ export default function RoundnessSettings() {
           variant="secondary"
           size="sm"
           className="ml-auto translate-x-2"
+          onClick={() => setCanvasRoundness(0)}
         >
           <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
         </Button>

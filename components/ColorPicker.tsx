@@ -10,7 +10,6 @@ export default function ColorPicker({
   onChange: (color: string) => void
   colorState: string
 }) {
-  // used to pass state of the current color to PopupColorPicker
   const [color, setColor] = useState(colorState)
 
   const style: CSSProperties = {
