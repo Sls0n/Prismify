@@ -3,28 +3,16 @@
 import {
   Dribbble,
   Facebook,
-  GalleryThumbnails,
   Instagram,
   Linkedin,
   Plus,
   Minus,
   Twitter,
-  UserSquare2,
   Youtube,
-  GalleryHorizontalEnd,
-  MonitorPlay,
-  Smartphone,
-  GalleryVerticalEnd,
-  RectangleHorizontal,
   ArrowRight,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
 import { resolutions } from '@/utils/config'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/Popover'
 import { Button } from '@/components/ui/Button'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { Separator } from '@/components/ui/Separator'
@@ -36,29 +24,17 @@ const icons = {
   Youtube: <Youtube size={18} />,
   Instagram: <Instagram size={18} />,
   Facebook: <Facebook size={18} />,
-  Linkedin: <Linkedin size={18} />,
+  LinkedIn: <Linkedin size={18} />,
   Twitter: <Twitter size={18} />,
   Dribble: <Dribbble size={18} />,
-  UserSquare2: <UserSquare2 size={18} />,
-  GalleryThumbnails: <GalleryThumbnails size={18} />,
-  GalleryHorizontalEnd: <GalleryHorizontalEnd size={18} />,
-  MonitorPlay: <MonitorPlay size={18} />,
-  Smartphone: <Smartphone size={18} />,
-  SmartphoneLandscape: <Smartphone className="-rotate-90" size={18} />,
-  GalleryVerticalEnd: <GalleryVerticalEnd size={18} />,
-  RectangleHorizontal: <RectangleHorizontal size={18} />,
+  ProductHunt: <div className="bg-[#898aeb]/5 w-6 h-6 flex-center rounded-full">P</div>,
 }
 
 const splitResolution = (resolution: string) => resolution.split('x')
 
 export default function CanvasOptions() {
-  const {
-    resolution,
-    setResolution,
-    domResolution,
-    scrollScale,
-    setScrollScale,
-  } = useResizeCanvas()
+  const { setResolution, domResolution, scrollScale, setScrollScale } =
+    useResizeCanvas()
 
   const [width, height] = splitResolution(domResolution)
 
@@ -119,43 +95,20 @@ export default function CanvasOptions() {
           <ArrowRight size={18} />
         </Button>
       </form>
-      <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Aspect ratio</h1>
+      <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Canvas size</h1>
       <div className="flex flex-wrap gap-3">
-        {resolutions.slice(0, 7).map((res, index) => (
+        {resolutions.map((res, index) => (
           <ResolutionButton
             key={index}
-            resolution={res.resolution}
-            name={res.name}
-            icon={icons[res.icon as keyof typeof icons]}
-            variant={res.resolution === resolution ? 'stylish' : 'outline'}
+            resolutions={res?.resolutions}
+            name={res?.name}
+            icon={icons[res?.icon as keyof typeof icons]}
+            // variant={res.resolutions === resolution ? 'stylish' : 'outline'}
+            color={res.color}
+            variant="stylish"
             className="rounded-lg"
           />
         ))}
-        <Popover>
-          <PopoverTrigger asChild>
-            <Button
-              className={`flex items-center gap-2 rounded-lg`}
-              variant="outline"
-            >
-              <span>
-                <Plus size={20} />
-              </span>
-              <span>More...</span>
-            </Button>
-          </PopoverTrigger>
-          <PopoverContent className="flex w-[350px] flex-wrap gap-3">
-            {resolutions.slice(7).map((res, index) => (
-              <ResolutionButton
-                key={index}
-                resolution={res.resolution}
-                name={res.name}
-                icon={icons[res.icon as keyof typeof icons]}
-                variant={res.resolution === resolution ? 'stylish' : 'outline'}
-                className="rounded-lg"
-              />
-            ))}
-          </PopoverContent>
-        </Popover>
       </div>
       <Separator className="mt-8 h-[0.1rem] w-full" />
 

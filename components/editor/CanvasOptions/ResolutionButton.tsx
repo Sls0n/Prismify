@@ -2,24 +2,32 @@ import { cn } from '@/utils/buttonUtils'
 import { useImageOptions } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { Button } from '@/components/ui/Button'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/Popover'
+import { PopoverArrow } from '@radix-ui/react-popover'
+import { ChevronDown } from 'lucide-react'
 
 export function ResolutionButton({
-  resolution,
+  resolutions,
   name,
   icon,
   className,
+  color,
   variant,
 }: {
-  resolution: string
+  resolutions: any
   name: string
   icon?: React.ReactNode
   className?: string
+  color?: string
   variant: 'outline' | 'stylish'
 }) {
   const { setResolution, setScaleFactor, domResolution } = useResizeCanvas()
   const { isImageUploaded, image, setImageSize } = useImageOptions()
 
-  const [outputWidth]: number[] = resolution.split('x').map(Number)
   const [domWidth]: number[] = domResolution.split('x').map(Number)
 
   const calculateCanvasSize = (
@@ -41,13 +49,14 @@ export function ResolutionButton({
     return `${canvasWidth}x${canvasHeight}`
   }
 
-  return (
-    <Button
-      className={cn('flex items-center gap-2 rounded-lg', className)}
-      variant={variant}
-      onClick={() => {
-        if (!isImageUploaded) return
-        if (resolution === 'fit') {
+  if (name === 'Fit') {
+    return (
+      <Button
+        name="Fit"
+        className={cn('flex items-center gap-2 rounded-lg', className)}
+        variant={variant}
+        onClick={() => {
+          if (!isImageUploaded) return
           if (!image) return
 
           const padding = 200
@@ -62,19 +71,67 @@ export function ResolutionButton({
               padding
             )
             setResolution(newResolution.toString())
-            console.log(newResolution)
             setImageSize('1.5')
           }
-          return
-        }
-        setResolution(resolution)
+        }}
+        aria-label={name}
+      >
+        Fit image
+      </Button>
+    )
+  }
 
-        setScaleFactor(outputWidth / domWidth)
-      }}
-      aria-label={name}
-    >
-      {icon && <span>{icon}</span>}
-      <span>{name}</span>
-    </Button>
+  return (
+    <Popover>
+      <PopoverTrigger asChild>
+        <Button
+          className={cn('flex items-center gap-1.5 rounded-lg', className)}
+          variant={variant}
+        >
+          {icon && <div>{icon}</div>}
+          <div>{name}</div>
+          <ChevronDown size={18} className="translate-y-[1.5px] text-inherit" />
+        </Button>
+      </PopoverTrigger>
+      <PopoverContent
+        avoidCollisions
+        className="grid w-[220px] grid-cols-1 gap-3"
+      >
+        <PopoverArrow
+          width={14}
+          height={7}
+          className="stroke fill-[#1A1C1F] stroke-border"
+        />
+        {resolutions?.map((res: { resolution: string; preset: string }) => {
+          return (
+            <Button
+              onClick={() => {
+                const [outputWidth]: number[] = res.resolution
+                  .split('x')
+                  .map(Number)
+
+                if (!isImageUploaded) return
+
+                setResolution(res.resolution)
+
+                setScaleFactor(outputWidth / domWidth)
+              }}
+              variant="stylish"
+              size={'sm'}
+              style={{
+                backgroundColor: `${color}1A`,
+                color: `${color}`,
+                borderColor: `${color}33`,
+              }}
+              key={res.resolution}
+            >
+              <p>{`${res.preset}`}</p>
+              &nbsp;
+              <p>({res.resolution})</p>
+            </Button>
+          )
+        })}
+      </PopoverContent>
+    </Popover>
   )
 }

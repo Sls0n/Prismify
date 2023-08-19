@@ -1,7 +1,6 @@
 export const MIN_RESOLUTION = 100
 export const MAX_RESOLUTION = 5000
 
-
 export interface Quality {
   quality: string
   value: number
@@ -9,8 +8,12 @@ export interface Quality {
 
 export interface Resolution {
   name: string
-  resolution: string
+  resolutions?: Array<{
+    preset: string
+    resolution: string
+  }>
   icon?: string
+  color?: string
 }
 
 export interface Shadow {
@@ -34,59 +37,119 @@ export const qualities: Quality[] = [
 ]
 
 export const resolutions: Resolution[] = [
+  { name: 'Fit' },
   {
-    name: 'Fit Image',
-    resolution: 'fit',
+    name: 'Facebook',
+    resolutions: [
+      {
+        preset: 'News feed',
+        resolution: '1200x1200',
+      },
+      {
+        preset: 'Story',
+        resolution: '1080x1920',
+      },
+      {
+        preset: 'Event',
+        resolution: '1920x1005',
+      },
+    ],
+    icon: 'Facebook',
+    color: '#1877F2',
   },
   {
-    name: '1:1 (Pfp)',
-    resolution: '1080x1080',
-    icon: 'UserSquare2',
+    name: 'Youtube',
+    resolutions: [
+      {
+        preset: 'Thumbnail',
+        resolution: '1280x720',
+      },
+      {
+        preset: 'Profile',
+        resolution: '800x800',
+      },
+      {
+        preset: 'Banner',
+        resolution: '1546x423',
+      },
+    ],
+    icon: 'Youtube',
+    color: '#c4302b',
   },
   {
-    name: '16:9 (Wide)',
-    resolution: '1920x1080',
-    icon: 'GalleryThumbnails',
+    name: 'Instagram',
+    resolutions: [
+      {
+        preset: 'Feed',
+        resolution: '1080x1080',
+      },
+      {
+        preset: 'Portrait',
+        resolution: '1080x1350',
+      },
+      {
+        preset: 'Story/Reels',
+        resolution: '1080x1920',
+      },
+    ],
+    icon: 'Instagram',
+    color: '#d62976',
   },
   {
-    name: '9:16 (Story/Reels)',
-    resolution: '1080x1920',
-    icon: 'GalleryHorizontalEnd',
+    name: 'Twitter',
+    resolutions: [
+      {
+        preset: 'Post',
+        resolution: '2400x1350',
+      },
+      {
+        preset: 'Header',
+        resolution: '1500x500',
+      },
+    ],
+    icon: 'Twitter',
+    color: '#2E9DEA',
   },
   {
-    name: '4:3 (Old TV)',
-    resolution: '1440x1080',
-    icon: 'MonitorPlay',
+    name: 'LinkedIn',
+    resolutions: [
+      {
+        preset: 'Post',
+        resolution: '1200x1200',
+      },
+      {
+        preset: 'Banner',
+        resolution: '1584x396',
+      },
+    ],
+    icon: 'LinkedIn',
+    color: '#0077b5',
   },
   {
-    name: '4:5 (Portrait)',
-    resolution: '864x1080',
-    icon: 'Smartphone',
+    name: 'Dribble',
+    resolutions: [
+      {
+        preset: 'Shot',
+        resolution: '1600x1200',
+      },
+      {
+        preset: 'Shot 2k',
+        resolution: '2800x2100',
+      },
+    ],
+    icon: 'Dribble',
+    color: '#D83A79',
   },
   {
-    name: '3.65:1 (Banner)',
-    resolution: '1546x423',
-    icon: 'RectangleHorizontal',
-  },
-  {
-    name: '1.85:1 (Movie)',
-    resolution: '2048x1107',
-    icon: 'RectangleHorizontal',
-  },
-  {
-    name: '21:9 (Cinematic)',
-    resolution: '2560x1080',
-    icon: 'RectangleHorizontal',
-  },
-  {
-    name: '5:4 (Landscape)',
-    resolution: '1350x1080',
-    icon: 'SmartphoneLandscape',
-  },
-  {
-    name: '16:10 (Wide)',
-    resolution: '1920x1200',
-    icon: 'GalleryThumbnails',
+    name: 'ProductHunt',
+    resolutions: [
+      {
+        preset: 'Gallery',
+        resolution: '1270x760',
+      },
+    ],
+    icon: 'ProductHunt',
+    color: '#D55124',
   },
 ]
 
