@@ -23,13 +23,8 @@ import {
 } from '@/components/ui/DropdownMenu'
 import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog'
 import { signOut } from 'next-auth/react'
-import { toast } from '@/hooks/use-toast'
 import SignIn from './SignIn'
-import domtoimage from 'dom-to-image'
-import { saveAs } from 'file-saver'
-import { useImageQualityStore } from '@/store/use-image-quality'
-import { useImageOptions } from '@/store/use-image-options'
-import { useResizeCanvas } from '@/store/use-resize-canvas'
+import { toast } from '@/hooks/use-toast'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -44,53 +39,6 @@ export default function Navbar({
   username,
   img,
 }: NavbarProps) {
-  const { quality } = useImageQualityStore()
-  const { isImageUploaded } = useImageOptions()
-  const { scaleFactor } = useResizeCanvas()
-
-  const snapshotCreator = () => {
-    return new Promise<Blob>((resolve, reject) => {
-      try {
-        if (!isImageUploaded) throw new Error('Upload image and try again')
-        const scale = scaleFactor * quality
-        const element = document.getElementById('canvas-container')
-        if (!element) {
-          reject(new Error('Element not found.'))
-          toast({
-            title: 'Error!',
-            description: 'Canvas container not found.',
-            variant: 'destructive',
-          })
-          return
-
-          // {TODO : ANOTHER IF CHECK TO CHECK IF THERE's WATERMARK}
-        }
-        domtoimage
-          .toPng(element, {
-            height: element.offsetHeight * scale,
-            width: element.offsetWidth * scale,
-
-            style: {
-              transform: 'scale(' + scale + ')',
-              transformOrigin: 'top left',
-              width: element.offsetWidth + 'px',
-              height: element.offsetHeight + 'px',
-            },
-          })
-          .then((dataURL) => {
-            const blob = dataURL as unknown as Blob
-            resolve(blob)
-          })
-      } catch (e: any) {
-        toast({
-          title: 'Image not uploaded',
-          description: e.message,
-          variant: 'destructive',
-        })
-      }
-    })
-  }
-
   return (
     <header className="fixed inset-x-0 top-0 z-[10] flex h-[3.75rem] items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-between">
@@ -104,7 +52,7 @@ export default function Navbar({
               alt="logo"
               priority
             />
-            <span className="hidden md:block text-lg font-medium -tracking-wide text-primary dark:font-normal dark:text-dark sm:font-semibold">
+            <span className="hidden text-lg font-medium -tracking-wide text-primary dark:font-normal dark:text-dark sm:font-semibold md:block">
               Prismify
             </span>
           </Link>
@@ -130,35 +78,27 @@ export default function Navbar({
               <>
                 {mode === 'default' && (
                   <>
-                    <Button
-                      onClick={() => {
-                        snapshotCreator().then((blob) => {
-                          saveAs(blob, 'prismify-render.png')
-                        })
-                      }}
+                    {/* <Button
                       variant="stylish"
                       size={'sm'}
-                      className="mr-1 rounded-lg"
+                      className="mr-1 rounded-[10px]"
                     >
                       Save image
                       <Download
                         size={18}
                         className="ml-2 inline-block align-middle"
                       />
-                    </Button>
+                    </Button> */}
 
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
-                          className="rounded-lg"
+                          className="rounded-xl"
                           size={'sm'}
                           variant="default"
                         >
                           Sign In
-                          <LogIn
-                            size={18}
-                            className="ml-2 flex-center"
-                          />
+                          <LogIn size={18} className="flex-center ml-2" />
                         </Button>
                       </DialogTrigger>
 
@@ -215,15 +155,7 @@ export default function Navbar({
 
             {authenticated && (
               <>
-                <Button
-                  onClick={() => {
-                    snapshotCreator().then((blob) => {
-                      saveAs(blob, 'prismify-render.png')
-                    })
-                  }}
-                  variant="stylish"
-                  className="mr-1 rounded-xl"
-                >
+                <Button variant="stylish" className="mr-1 rounded-xl">
                   Save image
                   <Download
                     size={20}

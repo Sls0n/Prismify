@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import { cn } from '@/utils/buttonUtils'
 import { useImageOptions } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
@@ -25,10 +26,20 @@ export function ResolutionButton({
   color?: string
   variant: 'outline' | 'stylish'
 }) {
+  const [isHovering, setIsHovering] = useState(false)
+
   const { setResolution, setScaleFactor, domResolution } = useResizeCanvas()
   const { isImageUploaded, image, setImageSize } = useImageOptions()
 
   const [domWidth]: number[] = domResolution.split('x').map(Number)
+
+  const handleMouseOver = () => {
+    setIsHovering(true)
+  }
+
+  const handleMouseOut = () => {
+    setIsHovering(false)
+  }
 
   const calculateCanvasSize = (
     imgWidth: number,
@@ -85,7 +96,14 @@ export function ResolutionButton({
     <Popover>
       <PopoverTrigger asChild>
         <Button
-          className={cn('flex items-center gap-1.5 rounded-lg', className)}
+          onMouseOver={handleMouseOver}
+          onMouseOut={handleMouseOut}
+          className={cn('flex items-center gap-1.5 rounded-lg transition-colors', className)}
+          style={{
+            backgroundColor: isHovering ? `${color}1A` : '',
+            color: isHovering ? `${color}` : '',
+            borderColor: isHovering ? `${color}33` : '',
+          }}
           variant={variant}
         >
           {icon && <div>{icon}</div>}

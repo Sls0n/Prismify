@@ -98,7 +98,7 @@ const ImageUpload = () => {
 
   const loadDemoImage = () => {
     setImageBackground(
-      'https://images.unsplash.com/photo-1618367588411-d9a90fefa881?crop=entropy&cs=tinysrgb&fit=max&fm=jpg&ixid=M3w0ODUwOTB8MHwxfGNvbGxlY3Rpb258MTF8NXdnSGNtbjM4bTR8fHx8fDJ8fDE2OTIwMTU4MDZ8&ixlib=rb-4.0.3&q=80&w=1080'
+      'https://images.unsplash.com/photo-1615716039130-2d84e4bef125?crop=entropy&cs=srgb&fm=jpg&ixid=M3w0ODUwOTB8MHwxfGNvbGxlY3Rpb258M3w1d2dIY21uMzhtNHx8fHx8Mnx8MTY5MjUxNzA3MHw&ixlib=rb-4.0.3&q=85'
     )
     setImage(demoImage.src)
     setIsImageUploaded(true)

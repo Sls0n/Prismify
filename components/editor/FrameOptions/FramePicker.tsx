@@ -51,7 +51,7 @@ export default function FramePicker() {
         </PopoverContent>
       </Popover>
 
-      <div className="mb-3 mt-8 flex max-w-[70%] flex-col gap-3 px-1">
+      <div className="mt-8 flex max-w-[70%] flex-col gap-3 px-1">
         <h1 className="text-[0.85rem]">Frame size</h1>
         <Select
           defaultValue={frameHeight}

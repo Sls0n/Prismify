@@ -8,6 +8,7 @@ import ImageUpload from './ImageUpload'
 
 import { useImageOptions } from '@/store/use-image-options'
 import { useBackgroundOptions } from '@/store/use-background-options'
+import FloatingOptions from '@/components/FloatingOptions'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()
@@ -116,34 +117,40 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        style={parentScaleStyle}
-        onWheel={handleScroll}
-        className="flex h-full flex-1 items-start justify-center overflow-hidden"
+        className="relative flex h-full flex-1 items-start justify-center overflow-hidden pt-5"
       >
-        <motion.div
-          className={
-            'relative flex w-full items-center justify-center overflow-hidden '
-          }
-          ref={screenshotRef}
-          id="canvas-container"
-          style={style}
+        <div
+          onWheel={handleScroll}
+          style={parentScaleStyle}
+          className="relative flex h-full flex-1 items-start justify-center overflow-hidden"
         >
-          {isImageUploaded && imageBackground && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              draggable={false}
-              className={`h-full w-full object-cover`}
-              src={imageBackground}
-              alt="background image"
-            />
-          )}
-          <ImageUpload />
-        </motion.div>
+          <motion.div
+            className={
+              'relative flex w-full items-center justify-center overflow-hidden '
+            }
+            ref={screenshotRef}
+            id="canvas-container"
+            style={style}
+          >
+            {isImageUploaded && imageBackground && (
+              // eslint-disable-next-line @next/next/no-img-element
+              <img
+                draggable={false}
+                className={`h-full w-full object-cover`}
+                src={imageBackground}
+                alt="background image"
+              />
+            )}
+            <ImageUpload />
+          </motion.div>
+        </div>
+
+        <FloatingOptions />
       </section>
 
       {attribution.name !== null && (
-        <div className="absolute bottom-2 right-4 text-[0.85rem] text-dark/70 bg-sidebar/80 backdrop-blur-md p-2 rounded-md">
-          Background by{' '}
+        <div className="absolute bottom-2 right-4 rounded-md bg-sidebar/80 p-2 text-[0.85rem] text-dark/70 backdrop-blur-md">
+          Img by{' '}
           <a
             className="text-blue-500"
             href={`https://unsplash.com/@${attribution.link}?utm_source=Prismify&utm_medium=referral`}

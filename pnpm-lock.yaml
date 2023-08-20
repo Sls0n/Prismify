@@ -80,9 +80,6 @@ dependencies:
   clsx:
     specifier: ^1.2.1
     version: 1.2.1
-  dom-to-image:
-    specifier: ^2.6.0
-    version: 2.6.0
   eslint:
     specifier: 8.44.0
     version: 8.44.0
@@ -95,6 +92,9 @@ dependencies:
   framer-motion:
     specifier: ^10.12.18
     version: 10.12.18(react-dom@18.2.0)(react@18.2.0)
+  html-to-image:
+    specifier: ^1.11.11
+    version: 1.11.11
   lucide-react:
     specifier: ^0.265.0
     version: 0.265.0(react@18.2.0)
@@ -148,9 +148,6 @@ dependencies:
     version: 4.3.9(react@18.2.0)
 
 devDependencies:
-  '@types/dom-to-image':
-    specifier: ^2.6.4
-    version: 2.6.4
   '@types/file-saver':
     specifier: ^2.0.5
     version: 2.0.5
@@ -1484,10 +1481,6 @@ packages:
       '@types/node': 20.4.1
     dev: false
 
-  /@types/dom-to-image@2.6.4:
-    resolution: {integrity: sha512-UddUdGF1qulrSDulkz3K2Ypq527MR6ixlgAzqLbxSiQ0icx0XDlIV+h4+edmjq/1dqn0KgN0xGSe1kI9t+vGuw==}
-    dev: true
-
   /@types/file-saver@2.0.5:
     resolution: {integrity: sha512-zv9kNf3keYegP5oThGLaPk8E081DFDuwfqjtiTzm6PoxChdJ1raSuADf2YGCVIyrSynLrgc8JWv296s7Q7pQSQ==}
     dev: true
@@ -2101,10 +2094,6 @@ packages:
     engines: {node: '>=6.0.0'}
     dependencies:
       esutils: 2.0.3
-    dev: false
-
-  /dom-to-image@2.6.0:
-    resolution: {integrity: sha512-Dt0QdaHmLpjURjU7Tnu3AgYSF2LuOmksSGsUcE6ItvJoCWTBEmiMXcqBdNSAm9+QbbwD7JMoVsuuKX6ZVQv1qA==}
     dev: false
 
   /electron-to-chromium@1.4.454:
@@ -2858,6 +2847,10 @@ packages:
     engines: {node: '>= 0.4.0'}
     dependencies:
       function-bind: 1.1.1
+    dev: false
+
+  /html-to-image@1.11.11:
+    resolution: {integrity: sha512-9gux8QhvjRO/erSnDPv28noDZcPZmYE7e1vFsBLKLlRlKDSqNJYebj6Qz1TGd5lsRV+X+xYyjCKjuZdABinWjA==}
     dev: false
 
   /https-proxy-agent@5.0.1:
