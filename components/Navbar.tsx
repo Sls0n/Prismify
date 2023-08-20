@@ -93,11 +93,11 @@ export default function Navbar({
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
-                          className="rounded-xl"
-                          size={'sm'}
+                          className="rounded-xl text-[0.85rem]"
+                          size="sm"
                           variant="default"
                         >
-                          Sign In
+                         <p>Sign In</p>
                           <LogIn size={18} className="flex-center ml-2" />
                         </Button>
                       </DialogTrigger>

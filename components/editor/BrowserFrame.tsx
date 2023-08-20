@@ -8,7 +8,7 @@ export default function BrowserFrame() {
   if (browserFrame === 'MacOS Dark')
     return (
       <div
-        className={`flex items-center gap-4 bg-[#454545]  ${
+        className={`flex items-center gap-4 border-b border-[#333]/20 bg-[#454545]  ${
           frameHeight === 'small'
             ? 'basis-[24px] px-4'
             : frameHeight === 'medium'
@@ -36,7 +36,7 @@ export default function BrowserFrame() {
   if (browserFrame === 'MacOS Light')
     return (
       <div
-        className={`flex items-center gap-4 bg-gradient-to-r from-[#E3E8E9] to-[#DFDEDF] to-90% ${
+        className={`flex items-center gap-4 border-b border-[#A7AAB4]/20 bg-[#fefefe] ${
           frameHeight === 'small'
             ? 'basis-[24px] px-4'
             : frameHeight === 'medium'
@@ -56,7 +56,7 @@ export default function BrowserFrame() {
           <div className="rounded-full bg-[#3cc84a]" />
         </div>
         {showSearchBar && (
-          <div className="flex h-[50%] w-full flex-1 items-center rounded-[0.25rem] bg-[#f3f3f3] px-2" />
+          <div className="flex h-[50%] w-full flex-1 items-center rounded-[0.25rem] bg-[#F7F6F7] px-2" />
         )}
       </div>
     )
