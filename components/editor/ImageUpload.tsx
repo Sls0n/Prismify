@@ -48,6 +48,8 @@ const ImageUpload = () => {
     setImageRoundness,
     setBorderSize,
     borderColor,
+    rotate,
+    setRotate,
   } = useImageOptions()
   const { setShowControls, showControls } = useMoveable()
   const { setResolution, domResolution, scaleFactor } = useResizeCanvas()
@@ -94,6 +96,7 @@ const ImageUpload = () => {
 
     padding: browserFrame !== 'None' ? '' : `var(--borderSize)`,
     background: borderSize === '0' ? '' : 'var(--borderColor)',
+    rotate: `${rotate}deg`,
   }
 
   const loadDemoImage = () => {
@@ -216,7 +219,7 @@ const ImageUpload = () => {
               rotatable={true}
               rotationPosition={'top'}
               onRotate={(e) => {
-                e.target.style.transform = e.drag.transform
+                setRotate(`${e.rotation}`)
               }}
               snapRotationThreshold={5}
               snapRotationDegrees={[0, 90, 180, 270]}

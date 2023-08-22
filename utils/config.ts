@@ -195,7 +195,7 @@ export const shadows: Shadow[] = [
 export const gradients: Gradient[] = [
   {
     type: 'Normal',
-    gradient: 'linear-gradient(var(--gradient-angle), #E3E9F1, #E3E9F1 100%)',
+    gradient: 'linear-gradient(var(--gradient-angle), #DFE0E2, #E3E9F1 100%)',
   },
   {
     type: 'Normal',

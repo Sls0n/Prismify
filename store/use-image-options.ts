@@ -31,6 +31,9 @@ interface ImageOptionsState {
   borderColor: string
   setBorderColor: (borderColor: string) => void
 
+  rotate: string
+  setRotate: (rotate: string) => void
+
   accordionOpen: {
     appearanceOpen: boolean
     shadowOpen: boolean
@@ -76,4 +79,7 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
 
   accordionOpen: { appearanceOpen: true, shadowOpen: false, borderOpen: false },
   setAccordionOpen: (accordionOpen) => set({ accordionOpen }),
+
+  rotate: '0',
+  setRotate: (rotate) => set({ rotate }),
 }))
