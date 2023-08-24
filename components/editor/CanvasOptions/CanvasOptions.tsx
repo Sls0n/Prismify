@@ -120,7 +120,7 @@ export default function CanvasOptions() {
       <span className="inline-flex rounded-md shadow-sm">
         <button
           type="button"
-          className="relative inline-flex items-center rounded-l-md bg-formDark px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
+          className="relative inline-flex items-center rounded-l-md bg-secondary-foreground dark:bg-formDark px-2 py-2 dark:text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
           disabled={scrollScale === 1}
           onClick={() => {
             if (scrollScale === 1) return

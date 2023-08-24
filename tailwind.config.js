@@ -15,6 +15,7 @@ module.exports = {
     extend: {
       backgroundColor: {
         primary: '#FBFBFA',
+        secondaryLight: '#F1F4F4',
         dark: '#181819',
         formDark: 'hsl(216, 9%, 11%)', //	#1a1c1f
         sidebar: '#151515',

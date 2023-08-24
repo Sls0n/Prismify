@@ -22,9 +22,9 @@ const buttonVariants = cva(
           'rounded-xl bg-indigo-500/10 px-3 py-1 text-sm font-normal leading-6 text-purple border border-indigo-500/10', // ring-1 ring-inset ring-indigo-500/20
         destructive:
           'rounded-xl px-3 py-1 text-sm font-medium leading-6 bg-red-500/10 text-red-500 ring-1 ring-red-500/10',
-        icon: 'text-primary bg-formDark border border-input dark:text-dark h-12 px-5 py-2.5 rounded-xl',
+        icon: 'text-primary bg-[#E0E0EC] dark:bg-formDark border border-border dark:text-dark h-12 px-5 py-2.5 rounded-xl',
         activeIcon:
-          'text-white bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#8e8ece] h-12 px-5 py-2.5 rounded-xl font-medium border border-input dark:text-[#F2F3F9] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+          'text-white bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#7d75d0] h-12 px-5 py-2.5 rounded-xl font-medium border border-border dark:text-[#F2F3F9] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
       },
       size: {
         'x-lg': 'h-13 py-[0.8rem] px-[1.1rem]',
