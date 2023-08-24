@@ -233,15 +233,27 @@ export const gradients: Gradient[] = [
   },
   {
     type: 'Mesh',
-    background: 'rgb(153, 246, 228)',
+    background: 'rgb(153, 189, 255)',
     gradient:
-      'radial-gradient(at 46% 16%, rgb(243, 244, 246) 0, transparent 50%), radial-gradient(at 1% 69%, rgb(204, 251, 241) 0, transparent 89%), radial-gradient(at 25% 49%, rgb(212, 212, 216) 0, transparent 81%), radial-gradient(at 43% 53%, rgb(209, 213, 219) 0, transparent 6%), radial-gradient(at 75% 4%, rgb(251, 113, 133) 0, transparent 45%), radial-gradient(at 44% 91%, rgb(107, 114, 128) 0, transparent 5%)',
+      'radial-gradient(at 9% 7%, rgb(115, 237, 210) 0px, transparent 50%), radial-gradient(at 41% 63%, rgb(250, 153, 235) 0px, transparent 50%), radial-gradient(at 40% 79%, rgb(242, 74, 183) 0px, transparent 50%), radial-gradient(at 80% 86%, rgb(250, 142, 232) 0px, transparent 50%), radial-gradient(at 28% 23%, rgb(211, 123, 224) 0px, transparent 50%), radial-gradient(at 82% 83%, rgb(219, 231, 116) 0px, transparent 50%), radial-gradient(at 64% 38%, rgb(146, 114, 233) 0px, transparent 50%)',
   },
   {
     type: 'Mesh',
     background: 'rgb(249, 168, 212)',
     gradient:
       'radial-gradient(at 95% 85%, rgb(217, 249, 157) 0, transparent 100%), radial-gradient(at 49% 91%, rgb(255, 228, 230) 0, transparent 86%), radial-gradient(at 44% 80%, rgb(191, 219, 254) 0, transparent 21%), radial-gradient(at 62% 12%, rgb(254, 202, 202) 0, transparent 75%), radial-gradient(at 66% 75%, rgb(39, 39, 42) 0, transparent 38%), radial-gradient(at 42% 66%, rgb(253, 164, 175) 0, transparent 66%)',
+  },
+  {
+    type: 'Mesh',
+    background: 'rgb(255, 153, 221)',
+    gradient:
+      'radial-gradient(at 14% 29%, rgb(240, 96, 214) 0px, transparent 50%), radial-gradient(at 74% 11%, rgb(238, 114, 172) 0px, transparent 50%), radial-gradient(at 8% 98%, rgb(232, 74, 93) 0px, transparent 50%), radial-gradient(at 48% 27%, rgb(185, 138, 239) 0px, transparent 50%), radial-gradient(at 16% 82%, rgb(248, 109, 230) 0px, transparent 50%), radial-gradient(at 10% 91%, rgb(177, 67, 84) 0px, transparent 50%), radial-gradient(at 5% 23%, rgb(152, 145, 227) 0px, transparent 50%)',
+  },
+  {
+    type: 'Mesh',
+    background: 'rgb(255, 153, 167)',
+    gradient:
+      'radial-gradient(at 85% 2%, rgb(132, 85, 252) 0px, transparent 50%), radial-gradient(at 14% 1%, rgb(165, 93, 223) 0px, transparent 50%), radial-gradient(at 35% 19%, rgb(73, 177, 233) 0px, transparent 50%), radial-gradient(at 81% 33%, rgb(72, 231, 234) 0px, transparent 50%), radial-gradient(at 66% 14%, rgb(233, 198, 144) 0px, transparent 50%), radial-gradient(at 81% 91%, rgb(253, 240, 139) 0px, transparent 50%), radial-gradient(at 68% 71%, rgb(243, 104, 150) 0px, transparent 50%)',
   },
 ]
 
@@ -266,5 +278,8 @@ export const solidColors = [
   },
   {
     background: '#E3E9F1',
+  },
+  {
+    background: '#99bdff',
   },
 ]
