@@ -12,26 +12,9 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import { useActiveIndexStore } from '@/store/use-active-index'
 import { useOnClickOutside } from '@/hooks/use-on-click-outside'
-import {
-  makeMoveable,
-  DraggableProps,
-  ScalableProps,
-  RotatableProps,
-  SnappableProps,
-  Draggable,
-  Scalable,
-  Rotatable,
-  Snappable,
-} from 'react-moveable'
 import { useMoveable } from '@/store/use-moveable'
-import { useImageQualityStore } from '@/store/use-image-quality'
 import { useFrameOptions } from '@/store/use-frame-options'
 import MoveableComponent from './MoveableComponent'
-
-const Moveable = makeMoveable<
-  DraggableProps & ScalableProps & RotatableProps & SnappableProps
-  // @ts-ignore
->([Draggable, Scalable, Rotatable, Snappable])
 
 const ImageUpload = () => {
   const targetRef = useRef<HTMLDivElement>(null)
@@ -52,13 +35,12 @@ const ImageUpload = () => {
     selectedImage,
   } = useImageOptions()
   const { setShowControls, showControls } = useMoveable()
-  const { setResolution, domResolution, scaleFactor } = useResizeCanvas()
+  const { setResolution } = useResizeCanvas()
   const { setImageBackground } = useBackgroundOptions()
   const { setActiveIndex } = useActiveIndexStore()
   const { browserFrame } = useFrameOptions()
 
-  const { translateX, translateY, setTranslateX, setTranslateY } =
-    usePositionOptions()
+  const { translateX, translateY } = usePositionOptions()
 
   const handleImageChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -107,12 +89,12 @@ const ImageUpload = () => {
     )
     setImages([...images, { image: demoImage.src, id: 1 }])
     setActiveIndex(2)
-    setImageSize('1.5')
-    setImageRoundness(1.13)
-    setBorderSize('7')
-    document.documentElement.style.setProperty('--borderSize', `7px`)
+    setImageSize('0.7')
+    setImageRoundness(2)
+    setBorderSize('15')
+    document.documentElement.style.setProperty('--borderSize', `15px`)
     document.documentElement.style.setProperty('--borderColor', borderColor)
-    document.documentElement.style.setProperty('--borderRoundness', '1.13rem')
+    document.documentElement.style.setProperty('--borderRoundness', '2rem')
     setResolution('1920x1080')
   }
 
@@ -169,16 +151,38 @@ const ImageUpload = () => {
 
       {images && (
         <>
-          {images.map((image) => {
-            return (
-              <div
-                key={image.image}
-                className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform"
-              >
+          <div className="absolute flex items-center ">
+            {images.map((image) => {
+              if (selectedImage === image.id) {
+                return (
+                  <div
+                    key={image.image}
+                    className="flex h-full w-full flex-col overflow-hidden"
+                    ref={targetRef}
+                    style={imageStyle}
+                    id={`${image.id}`}
+                    onClick={() => handleImageClick(image.id)}
+                  >
+                    <BrowserFrame />
+                    <img
+                      className={`h-full w-full flex-1`}
+                      src={image.image}
+                      alt="Uploaded image"
+                      style={{
+                        borderRadius:
+                          browserFrame !== 'None'
+                            ? ``
+                            : 'calc(var(--borderRoundness) - 9px)',
+                      }}
+                    />
+                  </div>
+                )
+              }
+              return (
                 <div
+                  key={image.image}
                   className="flex h-full w-full flex-col overflow-hidden"
                   style={imageStyle}
-                  ref={targetRef}
                   id={`${image.id}`}
                   onClick={() => handleImageClick(image.id)}
                 >
@@ -191,13 +195,13 @@ const ImageUpload = () => {
                       borderRadius:
                         browserFrame !== 'None'
                           ? ``
-                          : 'calc(var(--borderRoundness) - 6px)',
+                          : 'calc(var(--borderRoundness) - 9px)',
                     }}
                   />
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
+          </div>
 
           {showControls && <MoveableComponent id={`${selectedImage}`} />}
         </>

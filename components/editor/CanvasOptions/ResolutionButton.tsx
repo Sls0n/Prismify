@@ -81,7 +81,7 @@ export function ResolutionButton({
               padding
             )
             setResolution(newResolution.toString())
-            setImageSize('1.5')
+            setImageSize('0.75')
           }
         }}
         aria-label={name}
