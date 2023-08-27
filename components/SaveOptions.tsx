@@ -1,8 +1,6 @@
 import { Clipboard, Download, Eye } from 'lucide-react'
 import { Button } from './ui/Button'
 import { saveAs } from 'file-saver'
-import Loader from './loader/Loader'
-import { useState } from 'react'
 import { useImageQualityStore } from '@/store/use-image-quality'
 import { useImageOptions } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
@@ -10,8 +8,6 @@ import { toast } from '@/hooks/use-toast'
 import * as htmlToImage from 'html-to-image'
 
 export default function SaveOptions() {
-  const [loading, setLoading] = useState(false)
-
   const { quality } = useImageQualityStore()
   const { images } = useImageOptions()
   const { scaleFactor } = useResizeCanvas()
@@ -40,7 +36,6 @@ export default function SaveOptions() {
 
           // {TODO : ANOTHER IF CHECK TO CHECK IF THERE's WATERMARK}
         }
-        setLoading(true)
 
         htmlToImage
           .toBlob(element, {
@@ -65,8 +60,6 @@ export default function SaveOptions() {
           variant: 'destructive',
         })
         reject(e)
-      } finally {
-        setLoading(false)
       }
     })
   }
@@ -138,22 +131,22 @@ export default function SaveOptions() {
   return (
     <>
       <Button
-        className="text-[0.85rem] font-medium text-neutral-400"
-        variant="outline"
+        className="text-[0.85rem] font-medium"
+        variant="icon"
         size="sm"
       >
         1x
       </Button>
       <Button
-        className="hidden text-[0.85rem] font-medium text-neutral-400 sm:inline-flex"
-        variant="outline"
+        className="hidden text-[0.85rem] font-medium sm:inline-flex"
+        variant="icon"
         size="sm"
       >
         PNG
       </Button>
       <Button
-        className="hidden text-[0.85rem] font-medium text-neutral-400 xl:inline-flex"
-        variant="outline"
+        className="hidden text-[0.85rem] font-medium xl:inline-flex"
+        variant="icon"
         size="sm"
       >
         <Eye size={18} className="mr-2" />
@@ -171,7 +164,6 @@ export default function SaveOptions() {
         </p>
       </Button>
       <Button
-        disabled={loading}
         onClick={() => {
           snapshotCreator()
             .then((blob) => {
@@ -184,21 +176,12 @@ export default function SaveOptions() {
                 description: err.message,
               })
             })
-            .finally(() => {
-              setLoading(false)
-            })
         }}
-        className="w-fit text-[0.85rem]"
-        variant="activeIcon"
+        className="text-[0.85rem]"
+        variant="default"
         size="sm"
       >
-        {loading ? (
-          <div className="mr-2 flex scale-75 items-center">
-            <Loader />
-          </div>
-        ) : (
-          <Download size={18} className="mr-2" />
-        )}
+        <Download size={18} className="mr-2" />
         <p>
           Save <span className="hidden lg:inline-block">image</span>
         </p>

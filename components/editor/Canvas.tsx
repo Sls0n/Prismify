@@ -139,7 +139,7 @@ export default function Canvas() {
             id="canvas-container"
             style={style}
           >
-            {images.length === 0 && imageBackground && (
+            {images.length !== 0 && imageBackground && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 draggable={false}

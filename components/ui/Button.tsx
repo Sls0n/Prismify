@@ -24,7 +24,7 @@ const buttonVariants = cva(
           'rounded-xl px-3 py-1 text-sm font-medium leading-6 bg-red-500/10 text-red-500 ring-1 ring-red-500/10',
         icon: 'text-primary bg-[#E0E0EC] dark:bg-formDark border border-border dark:text-dark h-12 px-5 py-2.5 rounded-xl',
         activeIcon:
-          'text-white bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#7d75d0] h-12 px-5 py-2.5 rounded-xl font-medium border border-border dark:text-[#F2F3F9] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+          'text-white bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#7d75d0] h-12 px-5 py-2.5 rounded-xl font-medium border-0 border-border dark:text-[#F2F3F9] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
       },
       size: {
         'x-lg': 'h-13 py-[0.8rem] px-[1.1rem]',
