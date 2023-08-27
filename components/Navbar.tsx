@@ -82,6 +82,7 @@ export default function Navbar({
                 {mode === 'default' && (
                   <>
                     {shouldFloat && <SaveOptions />}
+                    
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button

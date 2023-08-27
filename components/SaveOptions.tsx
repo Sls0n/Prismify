@@ -9,7 +9,6 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { toast } from '@/hooks/use-toast'
 import * as htmlToImage from 'html-to-image'
 
-
 export default function SaveOptions() {
   const [loading, setLoading] = useState(false)
 
@@ -57,9 +56,7 @@ export default function SaveOptions() {
           })
           .then((dataURL) => {
             const blob = dataURL as unknown as Blob
-            setTimeout(() => {
-              resolve(blob)
-            }, 1500)
+            resolve(blob)
           })
       } catch (e: any) {
         toast({
@@ -131,7 +128,11 @@ export default function SaveOptions() {
           }
         })
     } else {
-      alert('Firefox does not support this functionality')
+      toast({
+        title: "Couldn't copy image",
+        description: "Firefox doesn't support it",
+        variant: 'destructive',
+      })
     }
   }
   return (
