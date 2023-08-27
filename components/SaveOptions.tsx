@@ -13,13 +13,13 @@ export default function SaveOptions() {
   const [loading, setLoading] = useState(false)
 
   const { quality } = useImageQualityStore()
-  const { isImageUploaded } = useImageOptions()
+  const { images } = useImageOptions()
   const { scaleFactor } = useResizeCanvas()
 
   const snapshotCreator = () => {
     return new Promise<Blob>((resolve, reject) => {
       try {
-        if (!isImageUploaded) {
+        if (images.length === 0) {
           toast({
             title: 'Error!',
             description: 'Upload a image then try again',
@@ -145,14 +145,14 @@ export default function SaveOptions() {
         1x
       </Button>
       <Button
-        className="hidden text-[0.85rem] font-medium text-neutral-400 xl:inline-flex"
+        className="hidden text-[0.85rem] font-medium text-neutral-400 sm:inline-flex"
         variant="outline"
         size="sm"
       >
         PNG
       </Button>
       <Button
-        className="hidden text-[0.85rem] font-medium text-neutral-400 sm:inline-flex"
+        className="hidden text-[0.85rem] font-medium text-neutral-400 xl:inline-flex"
         variant="outline"
         size="sm"
       >
