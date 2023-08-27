@@ -18,7 +18,7 @@ export default function RoundnessOption() {
       <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
         <Slider
           defaultValue={[0.7]}
-          max={browserFrame !== 'None' ? 2 : 5}
+          max={browserFrame !== 'None' ? 1 : 5}
           min={0}
           step={0.01}
           onValueChange={(value) => {

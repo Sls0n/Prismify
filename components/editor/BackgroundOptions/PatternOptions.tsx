@@ -129,10 +129,6 @@ export default function PatternOptions() {
                     name: data.user.first_name,
                     link: data.user.username,
                   })
-                  // Just triggering a download (Unsplash guideline)
-                  fetch(
-                    `${data.links.download_location}&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
-                  )
                 }}
               >
                 {/* eslint-disable-next-line @next/next/no-img-element */}

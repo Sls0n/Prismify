@@ -21,6 +21,8 @@ export default function Canvas() {
     setScrollScale,
     canvasRoundness,
     setScaleFactor,
+    shouldFloat,
+    setShouldFloat,
   } = useResizeCanvas()
   const { isImageUploaded } = useImageOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
@@ -85,6 +87,11 @@ export default function Canvas() {
               height * dynamicScaleFactor * quality
             }`
           )
+          if (aspectRatio >= 0 && aspectRatio <= 1.75) {
+            setShouldFloat(true)
+          } else {
+            setShouldFloat(false)
+          }
         }
       })
 

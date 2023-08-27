@@ -15,7 +15,7 @@ export const useFrameOptions = create<FrameOptionsState>()((set) => ({
   browserFrame: 'None',
   setBrowserFrame: (browserFrame) => set({ browserFrame }),
 
-  frameHeight: 'medium',
+  frameHeight: 'small',
   setFrameHeight: (frameHeight) => set({ frameHeight }),
 
   showSearchBar: true,

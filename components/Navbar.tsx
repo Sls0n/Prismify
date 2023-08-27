@@ -25,6 +25,8 @@ import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog'
 import { signOut } from 'next-auth/react'
 import SignIn from './SignIn'
 import { toast } from '@/hooks/use-toast'
+import SaveOptions from './SaveOptions'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -39,6 +41,7 @@ export default function Navbar({
   username,
   img,
 }: NavbarProps) {
+  const { shouldFloat } = useResizeCanvas()
   return (
     <header className="fixed inset-x-0 top-0 z-[10] flex h-[3.75rem] items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-between">
@@ -78,18 +81,7 @@ export default function Navbar({
               <>
                 {mode === 'default' && (
                   <>
-                    {/* <Button
-                      variant="stylish"
-                      size={'sm'}
-                      className="mr-1 rounded-[10px]"
-                    >
-                      Save image
-                      <Download
-                        size={18}
-                        className="ml-2 inline-block align-middle"
-                      />
-                    </Button> */}
-
+                    {shouldFloat && <SaveOptions />}
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
@@ -97,7 +89,7 @@ export default function Navbar({
                           size="sm"
                           variant="default"
                         >
-                         <p>Sign In</p>
+                          <p>Sign In</p>
                           <LogIn size={18} className="flex-center ml-2" />
                         </Button>
                       </DialogTrigger>

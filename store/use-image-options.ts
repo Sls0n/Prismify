@@ -62,10 +62,10 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   imageShadow: '0 25px 50px -12px var(--shadow)',
   setImageShadow: (imageShadow) => set({ imageShadow }),
 
-  shadowName: 'Spread',
+  shadowName: 'Bottom',
   setShadowName: (shadowName) => set({ shadowName }),
 
-  shadowColor: '#00000050',
+  shadowColor: '#00000030',
   setShadowColor: (shadowColor) => set({ shadowColor }),
 
   secondImage: null,

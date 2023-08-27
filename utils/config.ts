@@ -161,10 +161,16 @@ export const shadows: Shadow[] = [
     preview: `0 0 0 0 var(--shadow)`,
   },
   {
-    name: 'spread',
-    fullName: 'Spread',
+    name: 'bottom',
+    fullName: 'Bottom',
     shadow: `0 25px 50px -12px var(--shadow)`,
     preview: `0 25px 50px -12px var(--shadow)`,
+  },
+  {
+    name: 'subtle',
+    fullName: 'Subtle',
+    shadow: `0px 6px 20px var(--shadow)`,
+    preview: `0px 6px 20px var(--shadow)`,
   },
   {
     name: 'sm',
@@ -221,9 +227,14 @@ export const gradients: Gradient[] = [
     type: 'Normal',
     gradient: 'linear-gradient(-225deg, #5271C4 0%, #B19FFF 48%, #ECA1FE 100%)',
   },
+
   {
     type: 'Normal',
-    gradient: 'linear-gradient(to top, #f77062 0%, #fe5196 100%)',
+    gradient: 'linear-gradient(120deg, #898aeb, #d8b9e3)',
+  },
+{
+    type: 'Normal',
+    gradient: 'conic-gradient(at bottom left,#fbcfe8, #4f46e5,#6ee7b7)',
   },
   {
     type: 'Mesh',

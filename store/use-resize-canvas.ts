@@ -15,6 +15,9 @@ interface ResizeCanvasState {
 
   scaleFactor: number
   setScaleFactor: (scaleFactor: number) => void
+
+  shouldFloat: boolean
+  setShouldFloat: (shouldFloat: boolean) => void
 }
 
 export const useResizeCanvas = create<ResizeCanvasState>()((set) => ({
@@ -32,4 +35,7 @@ export const useResizeCanvas = create<ResizeCanvasState>()((set) => ({
 
   scaleFactor: 1,
   setScaleFactor: (scaleFactor) => set({ scaleFactor }),
+
+  shouldFloat: false,
+  setShouldFloat: (shouldFloat) => set({ shouldFloat }),
 }))
