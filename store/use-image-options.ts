@@ -1,15 +1,6 @@
 import { create } from 'zustand'
 
 interface ImageOptionsState {
-  image: string | null
-  setImage: (image: string) => void
-
-  secondImage: string | null
-  setSecondImage: (secondImage: string) => void
-
-  isImageUploaded: boolean
-  setIsImageUploaded: (uploaded: boolean) => void
-
   imageSize: string
   setImageSize: (imageSize: string) => void
 
@@ -44,16 +35,16 @@ interface ImageOptionsState {
     shadowOpen: boolean
     borderOpen: boolean
   }) => void
+
+  images: { id: number; image: string }[]
+  setImages: (images: { id: number; image: string }[]) => void
+
+  selectedImage: number
+  setSelectedImage: (selectedImage: number) => void
 }
 
 export const useImageOptions = create<ImageOptionsState>()((set) => ({
-  image: null,
-  setImage: (image) => set({ image: image }),
-
-  isImageUploaded: false,
-  setIsImageUploaded: (uploaded) => set({ isImageUploaded: uploaded }),
-
-  imageSize: '1',
+  imageSize: '0.8',
   setImageSize: (imageSize) => set({ imageSize }),
 
   imageRoundness: 0.7, // in rem
@@ -68,9 +59,6 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
   shadowColor: '#00000030',
   setShadowColor: (shadowColor) => set({ shadowColor }),
 
-  secondImage: null,
-  setSecondImage: (secondImage) => set({ secondImage }),
-
   borderSize: '0',
   setBorderSize: (borderSize) => set({ borderSize }),
 
@@ -82,4 +70,10 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
 
   rotate: '0',
   setRotate: (rotate) => set({ rotate }),
+
+  images: [],
+  setImages: (images) => set({ images }),
+
+  selectedImage: 0,
+  setSelectedImage: (selectedImage) => set({ selectedImage }),
 }))

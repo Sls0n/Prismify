@@ -29,7 +29,7 @@ export function ResolutionButton({
   const [isHovering, setIsHovering] = useState(false)
 
   const { setResolution, setScaleFactor, domResolution } = useResizeCanvas()
-  const { isImageUploaded, image, setImageSize } = useImageOptions()
+  const {  images, setImageSize } = useImageOptions()
 
   const [domWidth]: number[] = domResolution.split('x').map(Number)
 
@@ -67,12 +67,11 @@ export function ResolutionButton({
         className={cn('flex items-center gap-2 rounded-lg', className)}
         variant={variant}
         onClick={() => {
-          if (!isImageUploaded) return
-          if (!image) return
+          if (images.length === 0) return
 
           const padding = 200
           const img = new Image()
-          img.src = image
+          img.src = images[0].image
 
           img.onload = () => {
             const { naturalWidth, naturalHeight } = img
@@ -82,7 +81,7 @@ export function ResolutionButton({
               padding
             )
             setResolution(newResolution.toString())
-            setImageSize('1.5')
+            setImageSize('0.75')
           }
         }}
         aria-label={name}
@@ -128,7 +127,7 @@ export function ResolutionButton({
                   .split('x')
                   .map(Number)
 
-                if (!isImageUploaded) return
+                if (images.length === 0) return
 
                 setResolution(res.resolution)
 

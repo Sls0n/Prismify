@@ -6,7 +6,7 @@ type SizeOptionProps = {
   text?: string
 }
 
-export default function SizeOption({ text = 'Size' }: SizeOptionProps) {
+export default function SizeOption({ text = 'Scale' }: SizeOptionProps) {
   const { imageSize, setImageSize } = useImageOptions()
   const {setShowControls} = useMoveable()
   return (

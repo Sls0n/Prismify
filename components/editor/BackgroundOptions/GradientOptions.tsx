@@ -1,14 +1,22 @@
-import { useCallback } from 'react'
-import { gradients, Gradient } from '@/utils/config'
 import { Button } from '@/components/ui/Button'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/Popover'
 import { useBackgroundOptions } from '@/store/use-background-options'
+import { Gradient, gradients } from '@/utils/config'
+import { useCallback } from 'react'
 import ImageGradients from './ImageGradients'
+import { Settings2 } from 'lucide-react'
+import CircularSliderComp from '@/components/ui/CircularSlider'
 
 export default function GradientOptions() {
   const {
     setBackground,
     background: backgroundInStore,
     setBackgroundType,
+    backgroundType,
     setImageBackground,
     imageBackground,
     setAttribution,
@@ -25,7 +33,7 @@ export default function GradientOptions() {
         isMesh ? gradient.background! : gradient.gradient
       )
       setBackground(gradient.gradient)
-      setBackgroundType('mesh')
+      setBackgroundType(isMesh ? 'mesh' : 'gradient')
       setImageBackground(null)
       setAttribution({ name: null, link: null })
     },
@@ -44,10 +52,10 @@ export default function GradientOptions() {
             <Button
               key={gradient}
               variant="secondary"
-              className={`aspect-square rounded-md ${
+              className={`aspect-square overflow-hidden rounded-md p-[1px] ${
                 gradient === backgroundInStore &&
                 !imageBackground &&
-                'outline-none ring-2 ring-ring ring-offset-2'
+                'outline-none ring-2 ring-ring ring-offset-1'
               }`}
               onClick={() =>
                 handleGradientClick(
@@ -64,7 +72,21 @@ export default function GradientOptions() {
                   ? { background: gradient }
                   : { backgroundColor: background, backgroundImage: gradient }
               }
-            />
+            >
+              {gradient === backgroundInStore && !imageBackground && backgroundType !== 'mesh' && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Settings2 className="flex-center" color="#333" size={20} />
+                  </PopoverTrigger>
+                  <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
+                    <h1 className="text-[0.85rem]">Gradient angle</h1>
+                    <div className={`circular-slider`}>
+                      <CircularSliderComp />
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              )}
+            </Button>
           ))}
         </div>
 

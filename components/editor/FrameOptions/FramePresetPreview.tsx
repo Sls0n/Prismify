@@ -10,7 +10,7 @@ export function FrameInsidePopupPreview() {
     <>
       <Button
         variant="secondary"
-        className={`flex-center relative h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
+        className={`flex-center relative h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#ffffff15] ring-1 ring-border`}
         onClick={() => {
           setBrowserFrame('None')
         }}
@@ -21,7 +21,7 @@ export function FrameInsidePopupPreview() {
 
       <Button
         variant="secondary"
-        className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
+        className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#ffffff15] ring-1 ring-border`}
         onClick={() => {
           setBrowserFrame('MacOS Dark')
           document.documentElement.style.setProperty('--borderSize', `0px`)
@@ -44,7 +44,7 @@ export function FrameInsidePopupPreview() {
 
       <Button
         variant="secondary"
-        className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#77777754] ring-1 ring-border`}
+        className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#ffffff15] ring-1 ring-border`}
         onClick={() => {
           setBrowserFrame('MacOS Light')
           setBorderSize('0')

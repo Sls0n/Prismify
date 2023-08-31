@@ -12,34 +12,14 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import { useActiveIndexStore } from '@/store/use-active-index'
 import { useOnClickOutside } from '@/hooks/use-on-click-outside'
-import {
-  makeMoveable,
-  DraggableProps,
-  ScalableProps,
-  RotatableProps,
-  SnappableProps,
-  Draggable,
-  Scalable,
-  Rotatable,
-  Snappable,
-} from 'react-moveable'
 import { useMoveable } from '@/store/use-moveable'
-import { useImageQualityStore } from '@/store/use-image-quality'
 import { useFrameOptions } from '@/store/use-frame-options'
-
-const Moveable = makeMoveable<
-  DraggableProps & ScalableProps & RotatableProps & SnappableProps
-  // @ts-ignore
->([Draggable, Scalable, Rotatable, Snappable])
+import MoveableComponent from './MoveableComponent'
 
 const ImageUpload = () => {
   const targetRef = useRef<HTMLDivElement>(null)
 
   const {
-    isImageUploaded,
-    setIsImageUploaded,
-    image,
-    setImage,
     imageSize,
     imageRoundness,
     imageShadow,
@@ -49,17 +29,18 @@ const ImageUpload = () => {
     setBorderSize,
     borderColor,
     rotate,
-    setRotate,
+    images,
+    setImages,
+    setSelectedImage,
+    selectedImage,
   } = useImageOptions()
   const { setShowControls, showControls } = useMoveable()
-  const { setResolution, domResolution, scaleFactor } = useResizeCanvas()
-  const { quality } = useImageQualityStore()
+  const { setResolution } = useResizeCanvas()
   const { setImageBackground } = useBackgroundOptions()
   const { setActiveIndex } = useActiveIndexStore()
   const { browserFrame } = useFrameOptions()
 
-  const { translateX, translateY, setTranslateX, setTranslateY } =
-    usePositionOptions()
+  const { translateX, translateY } = usePositionOptions()
 
   const handleImageChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -67,16 +48,19 @@ const ImageUpload = () => {
 
       if (file) {
         const imageUrl = URL.createObjectURL(file)
-        setImage(imageUrl)
-        setIsImageUploaded(true)
+        setImages([...images, { image: imageUrl, id: images.length + 1 }])
       }
     },
-    [setImage, setIsImageUploaded]
+    [setImages, images]
   )
 
-  const handleImageClick = useCallback(() => {
-    setShowControls(!showControls)
-  }, [setShowControls, showControls])
+  const handleImageClick = useCallback(
+    (id: number) => {
+      setShowControls(!showControls)
+      setSelectedImage(id)
+    },
+    [setShowControls, showControls, setSelectedImage]
+  )
 
   useOnClickOutside(targetRef, () => {
     setShowControls(false)
@@ -103,39 +87,20 @@ const ImageUpload = () => {
     setImageBackground(
       'https://images.unsplash.com/photo-1615716039130-2d84e4bef125?crop=entropy&cs=srgb&fm=jpg&ixid=M3w0ODUwOTB8MHwxfGNvbGxlY3Rpb258M3w1d2dIY21uMzhtNHx8fHx8Mnx8MTY5MjUxNzA3MHw&ixlib=rb-4.0.3&q=85'
     )
-    setImage(demoImage.src)
-    setIsImageUploaded(true)
+    setImages([...images, { image: demoImage.src, id: 1 }])
     setActiveIndex(2)
-    setImageSize('1.5')
-    setImageRoundness(1.13)
-    setBorderSize('7')
-    document.documentElement.style.setProperty('--borderSize', `7px`)
+    setImageSize('0.7')
+    setImageRoundness(2)
+    setBorderSize('15')
+    document.documentElement.style.setProperty('--borderSize', `15px`)
     document.documentElement.style.setProperty('--borderColor', borderColor)
-    document.documentElement.style.setProperty('--borderRoundness', '1.13rem')
+    document.documentElement.style.setProperty('--borderRoundness', '2rem')
     setResolution('1920x1080')
   }
 
-  const handleDrag = useCallback(
-    (e: any) => {
-      e.target.style.transform = e.transform
-      setTranslateX(e.translate[0])
-      setTranslateY(e.translate[1])
-    },
-    [setTranslateX, setTranslateY]
-  )
-
-  const handleScale = useCallback(
-    (e: any) => {
-      setImageSize(`${e.scale[0]}`)
-    },
-    [setImageSize]
-  )
-
-  const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
-
   return (
     <>
-      {!image && !isImageUploaded && (
+      {images.length === 0 && (
         <>
           <div className="h-25 absolute-center w-4/5 lg:w-3/5">
             <div className="scale flex flex-col gap-4 rounded-xl border-[3px] border-border text-center shadow-md ">
@@ -184,55 +149,37 @@ const ImageUpload = () => {
         </>
       )}
 
-      {image && isImageUploaded && (
+      {images && (
         <>
-          <div className="absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 transform">
-            <div
-              className="flex h-full w-full flex-col overflow-hidden"
-              style={imageStyle}
-              ref={targetRef}
-              onClick={handleImageClick}
-            >
-              <BrowserFrame />
-              <img
-                className={`h-full w-full flex-1`}
-                src={image}
-                alt="Uploaded image"
-                style={{
-                  borderRadius:
-                    browserFrame !== 'None'
-                      ? ``
-                      : 'calc(var(--borderRoundness) - 6px)',
-                }}
-              />
-            </div>
+          <div className="absolute flex items-center ">
+            {images.map((image) => {
+              return (
+                <div
+                  key={image.image}
+                  className="flex h-full w-full flex-col overflow-hidden"
+                  ref={image.id === selectedImage ? targetRef : null}
+                  style={imageStyle}
+                  id={`${image.id}`}
+                  onClick={() => handleImageClick(image.id)}
+                >
+                  <BrowserFrame />
+                  <img
+                    className={`h-full w-full flex-1`}
+                    src={image.image}
+                    alt="Uploaded image"
+                    style={{
+                      borderRadius:
+                        browserFrame !== 'None'
+                          ? ``
+                          : 'calc(var(--borderRoundness) - 9px)',
+                    }}
+                  />
+                </div>
+              )
+            })}
           </div>
-          {showControls && (
-            <Moveable
-              target={targetRef}
-              draggable={true}
-              throttleDrag={0}
-              onDrag={handleDrag}
-              scalable={true}
-              keepRatio={true}
-              onScale={handleScale}
-              rotatable={true}
-              rotationPosition={'top'}
-              onRotate={(e) => {
-                setRotate(`${e.rotation}`)
-              }}
-              snapRotationThreshold={5}
-              snapRotationDegrees={[0, 90, 180, 270]}
-              snappable={true}
-              snapDirections={{
-                center: true,
-                middle: true,
-              }}
-              snapThreshold={10}
-              horizontalGuidelines={[domHeight / 2 / scaleFactor / quality]}
-              verticalGuidelines={[domWidth / 2 / scaleFactor / quality]}
-            />
-          )}
+
+          {showControls && <MoveableComponent id={`${selectedImage}`} />}
         </>
       )}
     </>

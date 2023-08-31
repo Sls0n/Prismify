@@ -23,6 +23,9 @@ interface BackgroundOptionsState {
 
   highResBackground: boolean
   setHighResBackground: (highResBackground: boolean) => void
+
+  gradientAngle: number
+  setGradientAngle: (gradientAngle: number) => void
 }
 
 export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
@@ -44,4 +47,7 @@ export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
 
   backgroundType: 'gradient',
   setBackgroundType: (backgroundType) => set({ backgroundType }),
+
+  gradientAngle: 75,
+  setGradientAngle: (gradientAngle) => set({ gradientAngle }),
 }))

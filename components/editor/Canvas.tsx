@@ -21,10 +21,9 @@ export default function Canvas() {
     setScrollScale,
     canvasRoundness,
     setScaleFactor,
-    shouldFloat,
     setShouldFloat,
   } = useResizeCanvas()
-  const { isImageUploaded } = useImageOptions()
+  const { images } = useImageOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
 
@@ -34,9 +33,10 @@ export default function Canvas() {
 
   let style: CSSProperties = {
     aspectRatio,
-    backgroundImage: !isImageUploaded
-      ? 'linear-gradient(0deg, #131313, #151515 100%)'
-      : `var(--gradient-bg)`,
+    backgroundImage:
+      images.length === 0
+        ? 'linear-gradient(0deg, #131313, #151515 100%)'
+        : `var(--gradient-bg)`,
 
     borderRadius: `${canvasRoundness}rem`,
   }
@@ -139,7 +139,7 @@ export default function Canvas() {
             id="canvas-container"
             style={style}
           >
-            {isImageUploaded && imageBackground && (
+            {images.length !== 0 && imageBackground && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 draggable={false}
