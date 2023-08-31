@@ -220,20 +220,46 @@ export const gradients: Gradient[] = [
   },
   {
     type: 'Normal',
-    gradient:
-      'linear-gradient(var(--gradient-angle), rgb(134, 227, 206), rgb(208, 230, 165) 100%)',
+    gradient: 'linear-gradient(var(--gradient-angle), #86e3ce, #d0e6a5 100%)',
   },
   {
     type: 'Normal',
-    gradient: 'linear-gradient(-225deg, #5271C4 0%, #B19FFF 48%, #ECA1FE 100%)',
+    gradient: 'linear-gradient(var(--gradient-angle), #898aeb, #d8b9e3)',
   },
-
   {
     type: 'Normal',
-    gradient: 'linear-gradient(120deg, #898aeb, #d8b9e3)',
+    gradient: 'linear-gradient(var(--gradient-angle), #82d9c5, #ccaae2 100%)',
   },
-{
+  {
     type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #d2d0f5, #f8a9da 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #b9bffa, #fff7fa 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #4675c0, #8fc8eb 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #19335a, #8fc8ea 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #49bcf6, #49deb2 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #ff7d58, #ffebff 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #c7dae1, #fafbff 100%)',
+  },
+  {
+    type: 'Mesh',
     gradient: 'conic-gradient(at bottom left,#fbcfe8, #4f46e5,#6ee7b7)',
   },
   {
@@ -266,25 +292,25 @@ export const gradients: Gradient[] = [
     gradient:
       'radial-gradient(at 85% 2%, rgb(132, 85, 252) 0px, transparent 50%), radial-gradient(at 14% 1%, rgb(165, 93, 223) 0px, transparent 50%), radial-gradient(at 35% 19%, rgb(73, 177, 233) 0px, transparent 50%), radial-gradient(at 81% 33%, rgb(72, 231, 234) 0px, transparent 50%), radial-gradient(at 66% 14%, rgb(233, 198, 144) 0px, transparent 50%), radial-gradient(at 81% 91%, rgb(253, 240, 139) 0px, transparent 50%), radial-gradient(at 68% 71%, rgb(243, 104, 150) 0px, transparent 50%)',
   },
- {
+  {
     type: 'Mesh',
     background: 'rgb(255, 153, 167)',
     gradient:
       'radial-gradient(at 41% 73%, rgb(29, 78, 216) 0px, transparent 84%), radial-gradient(at 13% 1%, rgb(252, 231, 243) 0px, transparent 94%), radial-gradient(at 83% 27%, rgb(220, 38, 38) 0px, transparent 90%), radial-gradient(at 42% 72%, rgb(185, 28, 28) 0px, transparent 63%), radial-gradient(at 41% 98%, rgb(251, 191, 36) 0px, transparent 83%), radial-gradient(at 21% 8%, rgb(8, 145, 178) 0px, transparent 77%)',
   },
- {
+  {
     type: 'Mesh',
     background: 'rgb(244, 114, 182)',
     gradient:
       'radial-gradient(at 46% 10%, rgb(254, 249, 195) 0px, transparent 79%)',
   },
-{
+  {
     type: 'Mesh',
     background: 'rgb(7, 89, 133)',
     gradient:
       'radial-gradient(at 49% 17%, rgb(134, 239, 172) 0px, transparent 87%), radial-gradient(at 0% 75%, rgb(110, 231, 183) 0px, transparent 100%)',
   },
-{
+  {
     type: 'Mesh',
     background: 'rgb(217, 70, 239)',
     gradient:
