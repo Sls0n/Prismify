@@ -36,7 +36,7 @@
     --radius: 0.5rem;
 
     --shadow: #00000030;
-    --gradient-angle: 0deg;
+    --gradient-angle: 75deg;
     --gradient-bg: linear-gradient(
       var(--gradient-angle),
       rgb(202, 194, 255),
@@ -123,4 +123,9 @@ html {
 
 .moveable-control-box {
   --moveable-color: #898aeb !important;
+}
+
+.circular-slider > div {
+  transition: opacity 0s ease-in 0s !important;
+  font-weight: 600;
 }

@@ -80,7 +80,7 @@ export default function ImageGradients() {
         <span>Images:</span>
         <Popover>
           <PopoverTrigger asChild>
-            <Settings2 size={20} className="rotate-90" />
+            <Settings2  size={20}  />
           </PopoverTrigger>
           <PopoverContent className="flex w-fit flex-wrap gap-3">
             <h1 className="text-[0.85rem]">High resolution background</h1>

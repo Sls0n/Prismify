@@ -153,35 +153,11 @@ const ImageUpload = () => {
         <>
           <div className="absolute flex items-center ">
             {images.map((image) => {
-              if (selectedImage === image.id) {
-                return (
-                  <div
-                    key={image.image}
-                    className="flex h-full w-full flex-col overflow-hidden"
-                    ref={targetRef}
-                    style={imageStyle}
-                    id={`${image.id}`}
-                    onClick={() => handleImageClick(image.id)}
-                  >
-                    <BrowserFrame />
-                    <img
-                      className={`h-full w-full flex-1`}
-                      src={image.image}
-                      alt="Uploaded image"
-                      style={{
-                        borderRadius:
-                          browserFrame !== 'None'
-                            ? ``
-                            : 'calc(var(--borderRoundness) - 9px)',
-                      }}
-                    />
-                  </div>
-                )
-              }
               return (
                 <div
                   key={image.image}
                   className="flex h-full w-full flex-col overflow-hidden"
+                  ref={image.id === selectedImage ? targetRef : null}
                   style={imageStyle}
                   id={`${image.id}`}
                   onClick={() => handleImageClick(image.id)}

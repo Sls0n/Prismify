@@ -44,7 +44,7 @@ interface ImageOptionsState {
 }
 
 export const useImageOptions = create<ImageOptionsState>()((set) => ({
-  imageSize: '1',
+  imageSize: '0.8',
   setImageSize: (imageSize) => set({ imageSize }),
 
   imageRoundness: 0.7, // in rem
