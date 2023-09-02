@@ -15,6 +15,7 @@ Prismify is a web app that aims to revitalize & enhance boring images/screenshot
 - React
 - Tailwind
 - Prisma
+- Zustand
 - MySQL
 - PlanetScale
 
