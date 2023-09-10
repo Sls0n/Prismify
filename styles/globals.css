@@ -44,8 +44,8 @@
     );
     --mesh-bg: '';
     --solid-bg: '';
-    --borderSize: '0px';
-    --borderColor: #ffffff50;
+    --borderSize1: '0px';
+    --borderColor1: #ffffff50;
     --borderRoundness1: '1rem';
   }
 

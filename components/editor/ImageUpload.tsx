@@ -89,11 +89,20 @@ const ImageUpload = () => {
     setImageBackground(
       'https://images.unsplash.com/photo-1615716039130-2d84e4bef125?crop=entropy&cs=srgb&fm=jpg&ixid=M3w0ODUwOTB8MHwxfGNvbGxlY3Rpb258M3w1d2dIY21uMzhtNHx8fHx8Mnx8MTY5MjUxNzA3MHw&ixlib=rb-4.0.3&q=85'
     )
-    setImages([...images, { image: demoImage.src, id: 1, style: defaultStyle }])
+    setImages([
+      ...images,
+      {
+        image: demoImage.src,
+        id: 1,
+        style: {
+          ...defaultStyle,
+          borderSize: '15',
+          imageRoundness: 2,
+          imageSize: '0.7',
+        },
+      },
+    ])
     setActiveIndex(2)
-    // setImageSize('0.7')
-    // setImageRoundness(2)
-    // setBorderSize('15')
     document.documentElement.style.setProperty('--borderSize1', `15px`)
     document.documentElement.style.setProperty(
       '--borderColor1',
@@ -174,13 +183,16 @@ const ImageUpload = () => {
                         ? ''
                         : image.style.borderSize === '0'
                         ? ''
-                        : `1px solid var(--borderColor)`,
+                        : `1px solid var(--borderColor${image.id})`,
 
-                    padding: browserFrame !== 'None' ? '' : `var(--borderSize)`,
+                    padding:
+                      browserFrame !== 'None'
+                        ? ''
+                        : `var(--borderSize${image.id})`,
                     background:
                       image.style.borderSize === '0'
                         ? ''
-                        : 'var(--borderColor)',
+                        : `var(--borderColor${image.id})`,
                     rotate: `${image.style.rotate}deg`,
                   }}
                   id={`${image.id}`}
