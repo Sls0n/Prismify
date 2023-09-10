@@ -3,7 +3,7 @@ import { useFrameOptions } from '@/store/use-frame-options'
 import { useImageOptions } from '@/store/use-image-options'
 
 export default function RoundnessOption() {
-  const { imageRoundness, setImageRoundness } = useImageOptions()
+  const { images, setImages, selectedImage } = useImageOptions()
   const { browserFrame } = useFrameOptions()
 
   return (
@@ -11,7 +11,9 @@ export default function RoundnessOption() {
       <div className="mb-3 mt-8 flex max-w-[70%] items-center px-1">
         <h1 className="text-[0.85rem]">Roundness</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
-          {`${Math.round((imageRoundness / 4) * 100)} `}
+          {`${Math.round(
+            Number(images[selectedImage - 1]?.style.imageRoundness ?? 0.2) * 10
+          )} `}
         </p>
       </div>
 
@@ -22,13 +24,25 @@ export default function RoundnessOption() {
           min={0}
           step={0.01}
           onValueChange={(value) => {
-            setImageRoundness(value[0])
+            setImages(
+              images.map((image, index) =>
+                index === selectedImage - 1
+                  ? {
+                      ...image,
+                      style: {
+                        ...image.style,
+                        imageRoundness: value[0],
+                      },
+                    }
+                  : image
+              )
+            )
             document.documentElement.style.setProperty(
-              '--borderRoundness',
+              `--borderRoundness${selectedImage}`,
               `${value.toString()}rem`
             )
           }}
-          value={[imageRoundness]}
+          value={images.length !== 0 ? [+images[selectedImage - 1]?.style.imageRoundness] : [1]}
         />
       </div>
     </>

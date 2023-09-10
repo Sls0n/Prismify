@@ -19,21 +19,8 @@ import MoveableComponent from './MoveableComponent'
 const ImageUpload = () => {
   const targetRef = useRef<HTMLDivElement>(null)
 
-  const {
-    imageSize,
-    imageRoundness,
-    imageShadow,
-    borderSize,
-    setImageSize,
-    setImageRoundness,
-    setBorderSize,
-    borderColor,
-    rotate,
-    images,
-    setImages,
-    setSelectedImage,
-    selectedImage,
-  } = useImageOptions()
+  const { images, setImages, setSelectedImage, selectedImage, defaultStyle } =
+    useImageOptions()
   const { setShowControls, showControls } = useMoveable()
   const { setResolution } = useResizeCanvas()
   const { setImageBackground } = useBackgroundOptions()
@@ -48,11 +35,17 @@ const ImageUpload = () => {
 
       if (file) {
         const imageUrl = URL.createObjectURL(file)
-        setImages([...images, { image: imageUrl, id: images.length + 1 }])
+        console.log(imageUrl)
+        setImages([
+          ...images,
+          { image: imageUrl, id: images.length + 1, style: defaultStyle },
+        ])
       }
     },
-    [setImages, images]
+    [setImages, images, defaultStyle]
   )
+
+  console.log(images)
 
   const handleImageClick = useCallback(
     (id: number) => {
@@ -66,35 +59,47 @@ const ImageUpload = () => {
     setShowControls(false)
   })
 
-  const imageStyle: CSSProperties = {
-    transform: `scale(${imageSize}) translate(${translateX}px, ${translateY}px)`,
-    borderRadius: `${imageRoundness}rem`,
-    boxShadow: `${imageShadow}`,
-    // If browserFrame is 'None', then only apply a border only if borderSize is not '0',
-    border:
-      browserFrame !== 'None'
-        ? ''
-        : borderSize === '0'
-        ? ''
-        : `1px solid var(--borderColor)`,
+  // const {
+  //   imageSize,
+  //   imageRoundness,
+  //   imageShadow,
+  //   borderSize,
+  //   borderColor,
+  //   rotate,
+  // } = images[selectedImage - 1]?.style || {}
 
-    padding: browserFrame !== 'None' ? '' : `var(--borderSize)`,
-    background: borderSize === '0' ? '' : 'var(--borderColor)',
-    rotate: `${rotate}deg`,
-  }
+  // const imageStyle: CSSProperties = {
+  //   transform: `scale(${imageSize}) translate(${translateX}px, ${translateY}px)`,
+  //   borderRadius: `${imageRoundness}rem`,
+  //   boxShadow: `${imageShadow}`,
+  //   // If browserFrame is 'None', then only apply a border only if borderSize is not '0',
+  //   border:
+  //     browserFrame !== 'None'
+  //       ? ''
+  //       : borderSize === '0'
+  //       ? ''
+  //       : `1px solid var(--borderColor)`,
+
+  //   padding: browserFrame !== 'None' ? '' : `var(--borderSize)`,
+  //   background: borderSize === '0' ? '' : 'var(--borderColor)',
+  //   rotate: `${rotate}deg`,
+  // }
 
   const loadDemoImage = () => {
     setImageBackground(
       'https://images.unsplash.com/photo-1615716039130-2d84e4bef125?crop=entropy&cs=srgb&fm=jpg&ixid=M3w0ODUwOTB8MHwxfGNvbGxlY3Rpb258M3w1d2dIY21uMzhtNHx8fHx8Mnx8MTY5MjUxNzA3MHw&ixlib=rb-4.0.3&q=85'
     )
-    setImages([...images, { image: demoImage.src, id: 1 }])
+    setImages([...images, { image: demoImage.src, id: 1, style: defaultStyle }])
     setActiveIndex(2)
-    setImageSize('0.7')
-    setImageRoundness(2)
-    setBorderSize('15')
-    document.documentElement.style.setProperty('--borderSize', `15px`)
-    document.documentElement.style.setProperty('--borderColor', borderColor)
-    document.documentElement.style.setProperty('--borderRoundness', '2rem')
+    // setImageSize('0.7')
+    // setImageRoundness(2)
+    // setBorderSize('15')
+    document.documentElement.style.setProperty('--borderSize1', `15px`)
+    document.documentElement.style.setProperty(
+      '--borderColor1',
+      defaultStyle.borderColor
+    )
+    document.documentElement.style.setProperty('--borderRoundness1', '2rem')
     setResolution('1920x1080')
   }
 
@@ -158,7 +163,26 @@ const ImageUpload = () => {
                   key={image.image}
                   className="flex h-full w-full flex-col overflow-hidden"
                   ref={image.id === selectedImage ? targetRef : null}
-                  style={imageStyle}
+                  style={{
+                    transform: `scale(${image.style.imageSize}) translate(${translateX}px, ${translateY}px)`,
+                    borderRadius: `${image.style.imageRoundness}rem`,
+                    boxShadow: `${image.style.imageShadow} ${image.style.shadowColor}`,
+
+                    // If browserFrame is 'None', then only apply a border only if borderSize is not '0',
+                    border:
+                      browserFrame !== 'None'
+                        ? ''
+                        : image.style.borderSize === '0'
+                        ? ''
+                        : `1px solid var(--borderColor)`,
+
+                    padding: browserFrame !== 'None' ? '' : `var(--borderSize)`,
+                    background:
+                      image.style.borderSize === '0'
+                        ? ''
+                        : 'var(--borderColor)',
+                    rotate: `${image.style.rotate}deg`,
+                  }}
                   id={`${image.id}`}
                   onClick={() => handleImageClick(image.id)}
                 >
@@ -171,7 +195,7 @@ const ImageUpload = () => {
                       borderRadius:
                         browserFrame !== 'None'
                           ? ``
-                          : 'calc(var(--borderRoundness) - 9px)',
+                          : `calc(var(--borderRoundness${image.id}) - 9px)`,
                     }}
                   />
                 </div>
