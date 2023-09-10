@@ -42,7 +42,11 @@ export default function RoundnessOption() {
               `${value.toString()}rem`
             )
           }}
-          value={images.length !== 0 ? [+images[selectedImage - 1]?.style.imageRoundness] : [1]}
+          value={
+            images.length !== 0
+              ? [+images[selectedImage - 1]?.style.imageRoundness]
+              : [1]
+          }
         />
       </div>
     </>

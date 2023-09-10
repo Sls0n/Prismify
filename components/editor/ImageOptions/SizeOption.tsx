@@ -28,6 +28,8 @@ export default function SizeOption({ text = 'Scale' }: SizeOptionProps) {
           min={0.25}
           step={0.01}
           onValueChange={(value: number[]) => {
+            setShowControls(false)
+
             setImages(
               images.map((image, index) =>
                 index === selectedImage - 1
@@ -41,8 +43,8 @@ export default function SizeOption({ text = 'Scale' }: SizeOptionProps) {
                   : image
               )
             )
-            setShowControls(false)
           }}
+          onValueCommit={() => setShowControls(true)}
           value={
             images.length !== 0
               ? [+images[selectedImage - 1]?.style.imageSize]

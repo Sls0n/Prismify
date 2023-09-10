@@ -16,7 +16,6 @@ interface ImageOptionsState {
     id: number
     image: string
     style: {
-      // Define your style properties here
       imageSize: string
       imageRoundness: number
       imageShadow: string
@@ -25,6 +24,8 @@ interface ImageOptionsState {
       borderSize: string | null
       borderColor: string
       rotate: string
+      translateX: number
+      translateY: number
     }
   }[]
   setImages: (
@@ -40,6 +41,8 @@ interface ImageOptionsState {
         borderSize: string | null
         borderColor: string
         rotate: string
+        translateX: number
+        translateY: number
       }
     }[]
   ) => void
@@ -56,6 +59,8 @@ interface ImageOptionsState {
     borderSize: '0'
     borderColor: '#ffffff50'
     rotate: '0'
+    translateX: 0
+    translateY: 0
   }
 }
 
@@ -75,6 +80,8 @@ export const useImageOptions = create<ImageOptionsState>()((set) => ({
     borderSize: '0',
     borderColor: '#ffffff50',
     rotate: '0',
+    translateX: 0,
+    translateY: 0,
   },
 
   images: [],

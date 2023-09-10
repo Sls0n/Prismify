@@ -12,18 +12,31 @@ import {
   ArrowUpRight,
 } from 'lucide-react'
 import { useEffect, useCallback } from 'react'
-import { usePositionOptions } from '@/store/use-position-options'
+import { useImageOptions } from '@/store/use-image-options'
 
 export default function PositionControl() {
-  const { translateX, translateY, setTranslateX, setTranslateY } =
-    usePositionOptions()
+  const { images, setImages, selectedImage } = useImageOptions()
 
   const move = useCallback(
     (deltaX: number, deltaY: number) => {
-      setTranslateX(translateX + deltaX)
-      setTranslateY(translateY + deltaY)
+      setImages(
+        images.map((image, index) =>
+          index === selectedImage - 1
+            ? {
+                ...image,
+                style: {
+                  ...image.style,
+                  translateX:
+                    images[selectedImage - 1]?.style.translateX + deltaX,
+                  translateY:
+                    images[selectedImage - 1]?.style.translateY + deltaY,
+                },
+              }
+            : image
+        )
+      )
     },
-    [translateX, translateY, setTranslateX, setTranslateY]
+    [images, setImages, selectedImage]
   )
 
   useEffect(() => {
@@ -53,8 +66,20 @@ export default function PositionControl() {
   }, [move])
 
   const centerImage = () => {
-    setTranslateX(0)
-    setTranslateY(0)
+    setImages(
+      images.map((image, index) =>
+        index === selectedImage - 1
+          ? {
+              ...image,
+              style: {
+                ...image.style,
+                translateX: 0,
+                translateY: 0,
+              },
+            }
+          : image
+      )
+    )
   }
 
   return (

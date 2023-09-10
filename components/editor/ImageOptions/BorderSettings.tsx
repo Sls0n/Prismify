@@ -1,7 +1,5 @@
-import { Button } from '@/components/ui/Button'
 import { useImageOptions } from '@/store/use-image-options'
 import { Slider } from '@/components/ui/Slider'
-import { RotateCcw } from 'lucide-react'
 import { useFrameOptions } from '@/store/use-frame-options'
 import PopupColorPicker from '@/components/PopupColorPicker'
 import RoundnessOption from './RoundnessOption'
@@ -47,7 +45,7 @@ export default function BorderSettings() {
       >
         <Slider
           defaultValue={[0]}
-          max={20}
+          max={40}
           min={0}
           step={0.01}
           onValueChange={(value: number[]) => {

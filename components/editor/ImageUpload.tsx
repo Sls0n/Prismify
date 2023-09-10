@@ -2,10 +2,9 @@
 'use client'
 
 import { ImageIcon, Upload } from 'lucide-react'
-import React, { CSSProperties, ChangeEvent, useCallback, useRef } from 'react'
+import React, { ChangeEvent, useCallback, useRef } from 'react'
 import { useImageOptions } from '@/store/use-image-options'
 import BrowserFrame from './BrowserFrame'
-import { usePositionOptions } from '@/store/use-position-options'
 import { Button } from '../ui/Button'
 import demoImage from '@/public/images/demo-tweet.png'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
@@ -26,8 +25,6 @@ const ImageUpload = () => {
   const { setImageBackground } = useBackgroundOptions()
   const { setActiveIndex } = useActiveIndexStore()
   const { browserFrame } = useFrameOptions()
-
-  const { translateX, translateY } = usePositionOptions()
 
   const handleImageChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -67,23 +64,6 @@ const ImageUpload = () => {
   //   borderColor,
   //   rotate,
   // } = images[selectedImage - 1]?.style || {}
-
-  // const imageStyle: CSSProperties = {
-  //   transform: `scale(${imageSize}) translate(${translateX}px, ${translateY}px)`,
-  //   borderRadius: `${imageRoundness}rem`,
-  //   boxShadow: `${imageShadow}`,
-  //   // If browserFrame is 'None', then only apply a border only if borderSize is not '0',
-  //   border:
-  //     browserFrame !== 'None'
-  //       ? ''
-  //       : borderSize === '0'
-  //       ? ''
-  //       : `1px solid var(--borderColor)`,
-
-  //   padding: browserFrame !== 'None' ? '' : `var(--borderSize)`,
-  //   background: borderSize === '0' ? '' : 'var(--borderColor)',
-  //   rotate: `${rotate}deg`,
-  // }
 
   const loadDemoImage = () => {
     setImageBackground(
@@ -173,10 +153,9 @@ const ImageUpload = () => {
                   className="flex h-full w-full flex-col overflow-hidden"
                   ref={image.id === selectedImage ? targetRef : null}
                   style={{
-                    transform: `scale(${image.style.imageSize}) translate(${translateX}px, ${translateY}px)`,
+                    transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg)`,
                     borderRadius: `${image.style.imageRoundness}rem`,
                     boxShadow: `${image.style.imageShadow} ${image.style.shadowColor}`,
-
                     // If browserFrame is 'None', then only apply a border only if borderSize is not '0',
                     border:
                       browserFrame !== 'None'
@@ -193,7 +172,6 @@ const ImageUpload = () => {
                       image.style.borderSize === '0'
                         ? ''
                         : `var(--borderColor${image.id})`,
-                    rotate: `${image.style.rotate}deg`,
                   }}
                   id={`${image.id}`}
                   onClick={() => handleImageClick(image.id)}
