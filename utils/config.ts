@@ -208,20 +208,48 @@ export const gradients: Gradient[] = [
   },
   {
     type: 'Normal',
-    gradient:
-      'linear-gradient(var(--gradient-angle), rgb(134, 227, 206), rgb(208, 230, 165) 100%)',
-  },
-  {
-    type: 'Normal',
-    gradient: 'linear-gradient(-225deg, #5271C4 0%, #B19FFF 48%, #ECA1FE 100%)',
+    gradient: 'linear-gradient(var(--gradient-angle), #86e3ce, #d0e6a5 100%)',
   },
 
   {
     type: 'Normal',
-    gradient: 'linear-gradient(120deg, #898aeb, #d8b9e3)',
+    gradient: 'linear-gradient(var(--gradient-angle), #898aeb, #d8b9e3)',
   },
   {
     type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #82d9c5, #ccaae2 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #d2d0f5, #f8a9da 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #b9bffa, #fff7fa 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #4675c0, #8fc8eb 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #49bcf6, #49deb2 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #ff7d58, #ffebff 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #c7dae1, #fafbff 100%)',
+  },
+  {
+    type: 'Mesh',
+    gradient:
+      'linear-gradient(var(--gradient-angle), #5271C4 0%, #B19FFF 48%, #ECA1FE 100%)',
+  },
+  {
+    type: 'Mesh',
     gradient: 'conic-gradient(at bottom left,#fbcfe8, #4f46e5,#6ee7b7)',
   },
   {
