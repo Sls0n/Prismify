@@ -65,7 +65,7 @@ interface ImageOptionsState {
 }
 
 export const useImageOptions = create<ImageOptionsState>()((set) => ({
-  accordionOpen: { appearanceOpen: true, shadowOpen: false, borderOpen: false },
+  accordionOpen: { appearanceOpen: true, shadowOpen: true, borderOpen: false },
   setAccordionOpen: (accordionOpen) => set({ accordionOpen }),
 
   selectedImage: 1,

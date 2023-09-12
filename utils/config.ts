@@ -193,6 +193,10 @@ export const gradients: Gradient[] = [
   },
   {
     type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #c7dae1, #fafbff 100%)',
+  },
+  {
+    type: 'Normal',
     gradient:
       'linear-gradient(var(--gradient-angle), rgb(202, 194, 255), rgb(242, 231, 248) 100%)',
   },
@@ -221,6 +225,52 @@ export const gradients: Gradient[] = [
   },
   {
     type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), rgb(187, 247, 208), rgb(34, 197, 94))',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), #7F7FD5, #86A8E7, #91EAE4)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), #dbeafe, #93c5fd, #3b82f6)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), #f9a8d4, #d8b4fe, #818cf8)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #4e54c8, #8f94fb)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #a8c0ff, #3f2b96)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #c4b5fd, #a78bfa)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #ee9ca7, #ffdde1)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), rgb(244, 63, 94), rgb(248, 113, 113), rgb(239, 68, 68))',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), rgb(254, 249, 195), rgb(253, 224, 71), rgb(234, 179, 8))',
+  },
+  {
+    type: 'Normal',
     gradient: 'linear-gradient(var(--gradient-angle), #d2d0f5, #f8a9da 100%)',
   },
   {
@@ -237,18 +287,21 @@ export const gradients: Gradient[] = [
   },
   {
     type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle),#4CA1AF,#C4E0E5)',
+  },
+  {
+    type: 'Normal',
     gradient: 'linear-gradient(var(--gradient-angle), #ff7d58, #ffebff 100%)',
   },
   {
     type: 'Normal',
-
-    gradient: 'linear-gradient(var(--gradient-angle), #19335a, #8fc8ea 100%)',
+    gradient: 'linear-gradient(var(--gradient-angle),#EECDA3,#EF629F)',
   },
-  
   {
     type: 'Normal',
-    gradient: 'linear-gradient(var(--gradient-angle), #c7dae1, #fafbff 100%)',
+    gradient: 'linear-gradient(var(--gradient-angle), #19335a, #8fc8ea 100%)',
   },
+
   {
     type: 'Mesh',
 

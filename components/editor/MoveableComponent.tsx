@@ -74,7 +74,6 @@ export default function MoveableComponent({ id }: { id: string }) {
     <Moveable
       target={document.getElementById(id)}
       draggable={true}
-      throttleDrag={0}
       onDrag={handleDrag}
       scalable={true}
       keepRatio={true}
