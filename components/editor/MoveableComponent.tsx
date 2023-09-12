@@ -16,7 +16,7 @@ import {
   Snappable,
 } from 'react-moveable'
 import { useImageQualityStore } from '@/store/use-image-quality'
-import { usePositionOptions } from '@/store/use-position-options'
+import { useMoveable } from '@/store/use-moveable'
 
 const Moveable = makeMoveable<
   DraggableProps & ScalableProps & RotatableProps & SnappableProps
@@ -26,23 +26,47 @@ const Moveable = makeMoveable<
 export default function MoveableComponent({ id }: { id: string }) {
   const { quality } = useImageQualityStore()
   const { domResolution, scaleFactor } = useResizeCanvas()
-  const { setRotate, setImageSize } = useImageOptions()
-  const { setTranslateX, setTranslateY } = usePositionOptions()
+  const { setImages, images, selectedImage } = useImageOptions()
 
   const handleDrag = useCallback(
     (e: any) => {
       e.target.style.transform = e.transform
-      setTranslateX(e.translate[0])
-      setTranslateY(e.translate[1])
+
+      setImages(
+        images.map((image, index) =>
+          index === selectedImage - 1
+            ? {
+                ...image,
+                style: {
+                  ...image.style,
+                  translateX: e.translate[0],
+                  translateY: e.translate[1],
+                },
+              }
+            : image
+        )
+      )
     },
-    [setTranslateX, setTranslateY]
+    [images, selectedImage, setImages]
   )
 
   const handleScale = useCallback(
     (e: any) => {
-      setImageSize(`${e.scale[0]}`)
+      setImages(
+        images.map((image, index) =>
+          index === selectedImage - 1
+            ? {
+                ...image,
+                style: {
+                  ...image.style,
+                  imageSize: `${e.scale[0]}`,
+                },
+              }
+            : image
+        )
+      )
     },
-    [setImageSize]
+    [setImages, images, selectedImage]
   )
 
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
@@ -58,7 +82,19 @@ export default function MoveableComponent({ id }: { id: string }) {
       rotatable={true}
       rotationPosition={'top'}
       onRotate={(e) => {
-        setRotate(`${e.rotation}`)
+        setImages(
+          images.map((image, index) =>
+            index === selectedImage - 1
+              ? {
+                  ...image,
+                  style: {
+                    ...image.style,
+                    rotate: `${e.rotation}`,
+                  },
+                }
+              : image
+          )
+        )
       }}
       snapRotationThreshold={5}
       snapRotationDegrees={[0, 90, 180, 270]}

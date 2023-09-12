@@ -157,44 +157,32 @@ export const shadows: Shadow[] = [
   {
     name: 'none',
     fullName: 'None',
-    shadow: `0 0 0 0 var(--shadow)`,
-    preview: `0 0 0 0 var(--shadow)`,
+    shadow: `0 0 0 0`,
+    preview: `0 0 0 0`,
   },
   {
     name: 'bottom',
     fullName: 'Bottom',
-    shadow: `0 25px 50px -12px var(--shadow)`,
-    preview: `0 25px 50px -12px var(--shadow)`,
-  },
-  {
-    name: 'subtle',
-    fullName: 'Subtle',
-    shadow: `0px 6px 20px var(--shadow)`,
-    preview: `0px 6px 20px var(--shadow)`,
+    shadow: `0 25px 50px -12px`,
+    preview: `0 25px 50px -12px`,
   },
   {
     name: 'sm',
     fullName: 'Small',
-    shadow: `0 4px 6px -1px var(--shadow), 0 2px 4px -2px var(--shadow)`,
-    preview: `0 4px 6px -1px var(--shadow), 0 2px 4px -2px var(--shadow)`,
+    shadow: `0px 3px 8px 0px`,
+    preview: `0px 3px 8px 0px`,
   },
   {
     name: 'md',
     fullName: 'Medium',
-    shadow: `0 10px 15px -3px var(--shadow), 0 4px 6px -4px var(--shadow)`,
-    preview: `0 10px 15px -3px var(--shadow), 0 4px 6px -4px var(--shadow)`,
+    shadow: `0px 6px 20px`,
+    preview: `0px 6px 20px`,
   },
   {
     name: 'lg',
     fullName: 'Large',
-    shadow: `0 20px 25px -5px var(--shadow), 0 8px 10px -6px var(--shadow)`,
-    preview: `0 20px 25px -5px var(--shadow), 0 8px 10px -6px var(--shadow)`,
-  },
-  {
-    name: 'glow',
-    fullName: 'Glow',
-    shadow: `0 25px 50px -12px #fff`,
-    preview: `0 25px 25px -12px #ffffff50`,
+    shadow: `0px 7px 29px 0px`,
+    preview: `0px 7px 29px 0px`,
   },
 ]
 
@@ -222,6 +210,7 @@ export const gradients: Gradient[] = [
     type: 'Normal',
     gradient: 'linear-gradient(var(--gradient-angle), #86e3ce, #d0e6a5 100%)',
   },
+
   {
     type: 'Normal',
     gradient: 'linear-gradient(var(--gradient-angle), #898aeb, #d8b9e3)',
@@ -244,6 +233,15 @@ export const gradients: Gradient[] = [
   },
   {
     type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #49bcf6, #49deb2 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #ff7d58, #ffebff 100%)',
+  },
+  {
+    type: 'Normal',
+
     gradient: 'linear-gradient(var(--gradient-angle), #19335a, #8fc8ea 100%)',
   },
   {
@@ -257,6 +255,12 @@ export const gradients: Gradient[] = [
   {
     type: 'Normal',
     gradient: 'linear-gradient(var(--gradient-angle), #c7dae1, #fafbff 100%)',
+  },
+  {
+    type: 'Mesh',
+
+    gradient:
+      'linear-gradient(var(--gradient-angle), #5271C4 0%, #B19FFF 48%, #ECA1FE 100%)',
   },
   {
     type: 'Mesh',

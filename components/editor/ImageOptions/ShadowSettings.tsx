@@ -11,41 +11,65 @@ import { shadows } from '@/utils/config'
 import { ChevronDown } from 'lucide-react'
 
 export default function ShadowSettings() {
-  const {
-    imageShadow,
-    setImageShadow,
-    shadowName,
-    setShadowName,
-    setShadowColor,
-    shadowColor,
-  } = useImageOptions()
+  const { images, setImages, selectedImage, defaultStyle } = useImageOptions()
 
   const { backgroundType } = useBackgroundOptions()
 
   const boxShadowStyle = {
-    boxShadow: imageShadow,
+    boxShadow: images[selectedImage - 1]?.style.imageShadow,
   }
 
   const backgroundStyle = {
     backgroundImage: `var(--gradient-bg)`,
-    backgroundColor: backgroundType === 'mesh' ? `var(--mesh-bg)` : 'var(--solid-bg)',
+    backgroundColor:
+      backgroundType === 'mesh' ? `var(--mesh-bg)` : 'var(--solid-bg)',
   }
 
   const handleShadowButtonClick = (shadow: {
     shadow: string
     fullName: string
   }) => {
-    setImageShadow(shadow.shadow)
-    setShadowName(shadow.fullName)
+    setImages(
+      images.map((image, index) =>
+        index === selectedImage - 1
+          ? {
+              ...image,
+              style: {
+                ...image.style,
+                imageShadow: shadow.shadow,
+                shadowName: shadow.fullName,
+              },
+            }
+          : image
+      )
+    )
   }
 
   const handleColorChange = (color: string) => {
-    setShadowColor(color)
-    setImageShadow(
-      shadows.find((shadow) => shadow.fullName === (shadowName ?? ''))
-        ?.shadow ?? ''
+    setImages(
+      images.map((image, index) =>
+        index === selectedImage - 1
+          ? {
+              ...image,
+              style: {
+                ...image.style,
+                shadowColor: color,
+                imageShadow:
+                  shadows.find(
+                    (shadow) =>
+                      shadow.fullName ===
+                      (images[selectedImage - 1]?.style.shadowName ?? '')
+                  )?.shadow ?? '',
+              },
+            }
+          : image
+      )
     )
-    document.documentElement.style.setProperty('--shadow', color)
+
+    document.documentElement.style.setProperty(
+      `--shadowColor${selectedImage}`,
+      color
+    )
   }
 
   return (
@@ -63,7 +87,7 @@ export default function ShadowSettings() {
           </div>
           <div className="flex h-full w-full flex-1 items-center justify-between px-4">
             <p className="text-[0.85rem] text-primary/70 dark:text-dark/70">
-              {shadowName}
+              {images[selectedImage - 1]?.style.shadowName}
             </p>
             <ChevronDown
               size={18}
@@ -82,7 +106,8 @@ export default function ShadowSettings() {
               key={shadow.name}
               onClick={() => handleShadowButtonClick(shadow)}
               className={`flex-center relative h-20 w-24 cursor-pointer rounded-md ${
-                shadow.shadow === imageShadow &&
+                shadow.shadow ===
+                  images[selectedImage - 1]?.style.imageShadow &&
                 'outline-none ring-2 ring-ring ring-offset-2'
               }`}
               style={backgroundStyle}
@@ -102,7 +127,10 @@ export default function ShadowSettings() {
         <h1 className="text-[0.85rem]">Shadow color</h1>
       </div>
 
-      <PopupColorPicker color={shadowColor} onChange={handleColorChange} />
+      <PopupColorPicker
+        color={images[selectedImage - 1]?.style.shadowColor}
+        onChange={handleColorChange}
+      />
     </>
   )
 }

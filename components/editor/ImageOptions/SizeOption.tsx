@@ -7,14 +7,17 @@ type SizeOptionProps = {
 }
 
 export default function SizeOption({ text = 'Scale' }: SizeOptionProps) {
-  const { imageSize, setImageSize } = useImageOptions()
-  const {setShowControls} = useMoveable()
+  const { images, setImages, selectedImage } = useImageOptions()
+  const { setShowControls } = useMoveable()
   return (
     <>
       <div className="mb-3 mt-2 flex max-w-[70%] items-center px-1">
         <h1 className="text-[0.85rem]">{text}</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
-          {Math.round(Number(imageSize) * 100)}%
+          {Math.round(
+            Number(images[selectedImage - 1]?.style.imageSize ?? 1) * 100
+          )}
+          %
         </p>
       </div>
 
@@ -25,10 +28,28 @@ export default function SizeOption({ text = 'Scale' }: SizeOptionProps) {
           min={0.25}
           step={0.01}
           onValueChange={(value: number[]) => {
-            setImageSize(value[0].toString())
             setShowControls(false)
+
+            setImages(
+              images.map((image, index) =>
+                index === selectedImage - 1
+                  ? {
+                      ...image,
+                      style: {
+                        ...image.style,
+                        imageSize: value[0].toString(),
+                      },
+                    }
+                  : image
+              )
+            )
           }}
-          value={[+imageSize]}
+          onValueCommit={() => setShowControls(true)}
+          value={
+            images.length !== 0
+              ? [+images[selectedImage - 1]?.style.imageSize]
+              : [1]
+          }
         />
       </div>
     </>

@@ -1,30 +1,6 @@
 import { create } from 'zustand'
 
 interface ImageOptionsState {
-  imageSize: string
-  setImageSize: (imageSize: string) => void
-
-  imageRoundness: number
-  setImageRoundness: (imageRoundness: number) => void
-
-  imageShadow: string
-  setImageShadow: (imageShadow: string) => void
-
-  shadowName: string
-  setShadowName: (shadowName: string) => void
-
-  shadowColor: string
-  setShadowColor: (shadowColor: string) => void
-
-  borderSize: string | null
-  setBorderSize: (borderSize: string | null) => void
-
-  borderColor: string
-  setBorderColor: (borderColor: string) => void
-
-  rotate: string
-  setRotate: (rotate: string) => void
-
   accordionOpen: {
     appearanceOpen: boolean
     shadowOpen: boolean
@@ -36,44 +12,79 @@ interface ImageOptionsState {
     borderOpen: boolean
   }) => void
 
-  images: { id: number; image: string }[]
-  setImages: (images: { id: number; image: string }[]) => void
+  images: {
+    id: number
+    image: string
+    style: {
+      imageSize: string
+      imageRoundness: number
+      imageShadow: string
+      shadowName: string
+      shadowColor: string
+      borderSize: string | null
+      borderColor: string
+      rotate: string
+      translateX: number
+      translateY: number
+    }
+  }[]
+  setImages: (
+    images: {
+      id: number
+      image: string
+      style: {
+        imageSize: string
+        imageRoundness: number
+        imageShadow: string
+        shadowName: string
+        shadowColor: string
+        borderSize: string | null
+        borderColor: string
+        rotate: string
+        translateX: number
+        translateY: number
+      }
+    }[]
+  ) => void
 
   selectedImage: number
   setSelectedImage: (selectedImage: number) => void
+
+  defaultStyle: {
+    imageSize: '0.8'
+    imageRoundness: 0.7
+    imageShadow: '0 25px 50px -12px'
+    shadowName: 'Bottom'
+    shadowColor: '#00000030'
+    borderSize: '0'
+    borderColor: '#ffffff50'
+    rotate: '0'
+    translateX: 0
+    translateY: 0
+  }
 }
 
 export const useImageOptions = create<ImageOptionsState>()((set) => ({
-  imageSize: '0.8',
-  setImageSize: (imageSize) => set({ imageSize }),
-
-  imageRoundness: 0.7, // in rem
-  setImageRoundness: (imageRoundness) => set({ imageRoundness }),
-
-  imageShadow: '0 25px 50px -12px var(--shadow)',
-  setImageShadow: (imageShadow) => set({ imageShadow }),
-
-  shadowName: 'Bottom',
-  setShadowName: (shadowName) => set({ shadowName }),
-
-  shadowColor: '#00000030',
-  setShadowColor: (shadowColor) => set({ shadowColor }),
-
-  borderSize: '0',
-  setBorderSize: (borderSize) => set({ borderSize }),
-
-  borderColor: '#ffffff50',
-  setBorderColor: (borderColor) => set({ borderColor }),
-
   accordionOpen: { appearanceOpen: true, shadowOpen: false, borderOpen: false },
   setAccordionOpen: (accordionOpen) => set({ accordionOpen }),
 
-  rotate: '0',
-  setRotate: (rotate) => set({ rotate }),
+  selectedImage: 1,
+  setSelectedImage: (selectedImage) => set({ selectedImage }),
+
+  defaultStyle: {
+    imageSize: '0.8',
+    imageRoundness: 0.7,
+    imageShadow: '0 25px 50px -12px',
+    shadowName: 'Bottom',
+    shadowColor: '#00000030',
+    borderSize: '0',
+    borderColor: '#ffffff50',
+    rotate: '0',
+    translateX: 0,
+    translateY: 0,
+  },
 
   images: [],
-  setImages: (images) => set({ images }),
 
-  selectedImage: 0,
-  setSelectedImage: (selectedImage) => set({ selectedImage }),
+  setImages: (images) => set({ images }),
 }))

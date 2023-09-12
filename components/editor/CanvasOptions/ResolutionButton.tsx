@@ -29,7 +29,7 @@ export function ResolutionButton({
   const [isHovering, setIsHovering] = useState(false)
 
   const { setResolution, setScaleFactor, domResolution } = useResizeCanvas()
-  const {  images, setImageSize } = useImageOptions()
+  const { images, setImages, selectedImage } = useImageOptions()
 
   const [domWidth]: number[] = domResolution.split('x').map(Number)
 
@@ -81,7 +81,19 @@ export function ResolutionButton({
               padding
             )
             setResolution(newResolution.toString())
-            setImageSize('0.75')
+            setImages(
+              images.map((image, index) =>
+                index === selectedImage - 1
+                  ? {
+                      ...image,
+                      style: {
+                        ...image.style,
+                        imageSize: '0.75',
+                      },
+                    }
+                  : image
+              )
+            )
           }
         }}
         aria-label={name}
@@ -97,7 +109,10 @@ export function ResolutionButton({
         <Button
           onMouseOver={handleMouseOver}
           onMouseOut={handleMouseOut}
-          className={cn('flex items-center gap-1.5 rounded-lg transition-colors', className)}
+          className={cn(
+            'flex items-center gap-1.5 rounded-lg transition-colors',
+            className
+          )}
           style={{
             backgroundColor: isHovering ? `${color}1A` : '',
             color: isHovering ? `${color}` : '',

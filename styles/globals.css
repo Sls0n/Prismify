@@ -35,7 +35,8 @@
 
     --radius: 0.5rem;
 
-    --shadow: #00000030;
+    --shadowColor1: #00000030;
+
     --gradient-angle: 120deg;
     --gradient-bg: linear-gradient(
       var(--gradient-angle),
@@ -44,9 +45,9 @@
     );
     --mesh-bg: '';
     --solid-bg: '';
-    --borderSize: '0px';
-    --borderColor: #ffffff50;
-    --borderRoundness: '1rem';
+    --borderSize1: '0px';
+    --borderColor1: #ffffff50;
+    --borderRoundness1: '1rem';
   }
 
   .dark {
@@ -114,7 +115,7 @@ html {
 }
 
 #canvas-container > div > div > img {
-  cursor: grab;
+  cursor: pointer;
 }
 
 #canvas-container > div > div > img:active {
@@ -122,7 +123,7 @@ html {
 }
 
 .moveable-control-box {
-  --moveable-color: #898aeb !important;
+  --moveable-color: #7b7cd3 !important;
 }
 
 .circular-slider > div {

@@ -5,7 +5,7 @@ import { useImageOptions } from '@/store/use-image-options'
 type ImagePreviewProps = {}
 
 export default function ImagePreview({}: ImagePreviewProps) {
-  const { setImages, images } = useImageOptions()
+  const { setImages, images, defaultStyle } = useImageOptions()
 
   const uploadRef = useRef<HTMLInputElement>(null)
 
@@ -19,7 +19,10 @@ export default function ImagePreview({}: ImagePreviewProps) {
 
     if (file) {
       const imageUrl = URL.createObjectURL(file)
-      setImages([...images, { image: imageUrl, id: images.length + 1 }])
+      setImages([
+        ...images,
+        { image: imageUrl, id: images.length + 1, style: defaultStyle },
+      ])
     }
   }
 
