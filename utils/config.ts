@@ -306,13 +306,6 @@ export const gradients: Gradient[] = [
     type: 'Normal',
     gradient: 'linear-gradient(var(--gradient-angle), #19335a, #8fc8ea 100%)',
   },
-
-  {
-    type: 'Mesh',
-
-    gradient:
-      'linear-gradient(var(--gradient-angle), #5271C4 0%, #B19FFF 48%, #ECA1FE 100%)',
-  },
   {
     type: 'Mesh',
     gradient: 'conic-gradient(at bottom left,#fbcfe8, #4f46e5,#6ee7b7)',

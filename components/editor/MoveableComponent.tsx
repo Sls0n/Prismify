@@ -30,8 +30,6 @@ export default function MoveableComponent({ id }: { id: string }) {
 
   const handleDrag = useCallback(
     (e: any) => {
-      e.target.style.transform = e.transform
-
       setImages(
         images.map((image, index) =>
           index === selectedImage - 1
@@ -39,8 +37,28 @@ export default function MoveableComponent({ id }: { id: string }) {
                 ...image,
                 style: {
                   ...image.style,
-                  translateX: e.translate[0],
-                  translateY: e.translate[1],
+                  translateX: e?.lastEvent?.translate[0],
+                  translateY: e?.lastEvent?.translate[1],
+                },
+              }
+            : image
+        )
+      )
+    },
+    [images, selectedImage, setImages]
+  )
+
+  const handleRotate = useCallback(
+    (e: any) => {
+      console.log(e)
+      setImages(
+        images.map((image, index) =>
+          index === selectedImage - 1
+            ? {
+                ...image,
+                style: {
+                  ...image.style,
+                  rotate: e?.lastEvent?.rotate,
                 },
               }
             : image
@@ -59,7 +77,9 @@ export default function MoveableComponent({ id }: { id: string }) {
                 ...image,
                 style: {
                   ...image.style,
-                  imageSize: `${e.scale[0]}`,
+                  imageSize: `${e.lastEvent.scale[0]}`,
+                  translateX: e?.lastEvent?.drag.translate[0],
+                  translateY: e?.lastEvent?.drag.translate[1],
                 },
               }
             : image
@@ -74,27 +94,22 @@ export default function MoveableComponent({ id }: { id: string }) {
     <Moveable
       target={document.getElementById(id)}
       draggable={true}
-      onDrag={handleDrag}
+      onDrag={(e) => {
+        e.target.style.transform = e.transform
+      }}
+      onDragEnd={handleDrag}
       scalable={true}
       keepRatio={true}
-      onScale={handleScale}
+      onScale={(e) => {
+        e.target.style.transform = e.drag.transform
+      }}
+      onScaleEnd={handleScale}
       rotatable={true}
       rotationPosition={'top'}
       onRotate={(e) => {
-        setImages(
-          images.map((image, index) =>
-            index === selectedImage - 1
-              ? {
-                  ...image,
-                  style: {
-                    ...image.style,
-                    rotate: `${e.rotation}`,
-                  },
-                }
-              : image
-          )
-        )
+        e.target.style.transform = e.drag.transform
       }}
+      onRotateEnd={handleRotate}
       snapRotationThreshold={5}
       snapRotationDegrees={[0, 90, 180, 270]}
       snappable={true}
