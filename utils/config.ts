@@ -267,7 +267,12 @@ export const gradients: Gradient[] = [
   {
     type: 'Normal',
     gradient:
-      'linear-gradient(var(--gradient-angle), rgb(254, 249, 195), rgb(253, 224, 71), rgb(234, 179, 8))',
+      'linear-gradient(var(--gradient-angle), rgb(251, 113, 133), rgb(253, 186, 116))',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), #f0abfc, #f5f5f4, #fef08a)',
   },
   {
     type: 'Normal',

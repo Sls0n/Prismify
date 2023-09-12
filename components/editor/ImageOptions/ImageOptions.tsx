@@ -28,7 +28,6 @@ export default function ImageOptions() {
   return (
     <>
       <ImagePreview />
-
       <Accordion
         type="single"
         collapsible
@@ -54,7 +53,6 @@ export default function ImageOptions() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-
       <Accordion
         type="single"
         collapsible
@@ -80,7 +78,6 @@ export default function ImageOptions() {
           </AccordionContent>
         </AccordionItem>
       </Accordion>
-
       <Accordion
         type="single"
         collapsible

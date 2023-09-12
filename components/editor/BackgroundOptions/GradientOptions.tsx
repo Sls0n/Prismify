@@ -47,12 +47,12 @@ export default function GradientOptions() {
           <span>Gradients:</span>
         </h3>
 
-        <div className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-6 gap-4">
+        <div className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-8 gap-4">
           {gradients.map(({ gradient, background, type }: Gradient) => (
             <Button
               key={gradient}
               variant="secondary"
-              className={`aspect-square overflow-hidden rounded-md p-[1px] ${
+              className={`aspect-square w-8 h-8 overflow-hidden rounded-md p-[1px] ${
                 gradient === backgroundInStore &&
                 !imageBackground &&
                 'outline-none ring-2 ring-ring ring-offset-1'

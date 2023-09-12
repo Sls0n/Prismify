@@ -22,7 +22,7 @@ export default function RoundnessOption() {
           defaultValue={[0.7]}
           max={browserFrame !== 'None' ? 1.6 : 5}
           min={0}
-          step={0.01}
+          step={0.05}
           onValueChange={(value) => {
             setImages(
               images.map((image, index) =>
