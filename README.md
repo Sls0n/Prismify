@@ -19,5 +19,7 @@ Prismify is a web app that aims to revitalize & enhance boring images/screenshot
 - MySQL
 - PlanetScale
 
+## Perfect lighthouse score
+![image](https://github.com/Sls0n/Prismify/assets/102340248/be1afc2f-2ad4-4d36-8289-9b2a48afa41c)
 
 
