@@ -22,7 +22,7 @@ const ImageUpload = () => {
     useImageOptions()
   const { setShowControls, showControls } = useMoveable()
   const { setResolution } = useResizeCanvas()
-  const { setImageBackground } = useBackgroundOptions()
+  const { setBackground } = useBackgroundOptions()
   const { setActiveIndex } = useActiveIndexStore()
   const { browserFrame } = useFrameOptions()
 
@@ -66,8 +66,10 @@ const ImageUpload = () => {
   // } = images[selectedImage - 1]?.style || {}
 
   const loadDemoImage = () => {
-    setImageBackground(
-      'https://images.unsplash.com/photo-1615716039130-2d84e4bef125?crop=entropy&cs=srgb&fm=jpg&ixid=M3w0ODUwOTB8MHwxfGNvbGxlY3Rpb258M3w1d2dIY21uMzhtNHx8fHx8Mnx8MTY5MjUxNzA3MHw&ixlib=rb-4.0.3&q=85'
+    setBackground('linear-gradient(var(--gradient-angle), #898aeb, #d8b9e3)')
+    document.documentElement.style.setProperty(
+      '--gradient-bg',
+      ' linear-gradient(var(--gradient-angle), #898aeb, #d8b9e3)'
     )
     setImages([
       ...images,
@@ -78,7 +80,7 @@ const ImageUpload = () => {
           ...defaultStyle,
           borderSize: '15',
           imageRoundness: 2,
-          imageSize: '0.7',
+          imageSize: '0.78',
         },
       },
     ])
