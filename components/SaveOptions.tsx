@@ -14,7 +14,7 @@ import * as htmlToImage from 'html-to-image'
 import { qualities } from '@/utils/config'
 
 export default function SaveOptions() {
-  const { quality, setQuality } = useImageQualityStore()
+  const { quality, setQuality, fileType, setFileType } = useImageQualityStore()
   const { images } = useImageOptions()
   const { scaleFactor } = useResizeCanvas()
 
@@ -24,7 +24,7 @@ export default function SaveOptions() {
         if (images.length === 0) {
           toast({
             title: 'Error!',
-            description: 'Upload a image then try again',
+            description: 'Upload an image then try again',
             variant: 'destructive',
           })
           return
@@ -32,36 +32,65 @@ export default function SaveOptions() {
         const scale = scaleFactor * quality
         const element = document.getElementById('canvas-container')
         if (!element) {
-          reject(new Error('Element not found.'))
-          toast({
-            title: 'Error!',
-            description: 'Canvas container not found.',
-            variant: 'destructive',
-          })
-          return
-
-          // {TODO : ANOTHER IF CHECK TO CHECK IF THERE's WATERMARK}
+          throw new Error('Element not found.')
         }
 
-        htmlToImage
-          .toBlob(element, {
-            height: element.offsetHeight * scale,
-            width: element.offsetWidth * scale,
+        if (fileType === 'JPG') {
+          htmlToImage
+            .toJpeg(element, {
+              height: element.offsetHeight * scale,
+              width: element.offsetWidth * scale,
 
-            style: {
-              transform: 'scale(' + scale + ')',
-              transformOrigin: 'top left',
-              width: element.offsetWidth + 'px',
-              height: element.offsetHeight + 'px',
-            },
-          })
-          .then((dataURL) => {
-            const blob = dataURL as unknown as Blob
-            resolve(blob)
-          })
+              style: {
+                transform: 'scale(' + scale + ')',
+                transformOrigin: 'top left',
+                width: element.offsetWidth + 'px',
+                height: element.offsetHeight + 'px',
+              },
+            })
+            .then((dataURL) => {
+              const blob = dataURL as unknown as Blob
+              resolve(blob)
+            })
+            .catch((e: any) => {
+              toast({
+                title: 'Image not uploaded',
+                description: e.message,
+                variant: 'destructive',
+              })
+              reject(e)
+            })
+        } else if (fileType === 'PNG') {
+          htmlToImage
+            .toBlob(element, {
+              height: element.offsetHeight * scale,
+              width: element.offsetWidth * scale,
+
+              style: {
+                transform: 'scale(' + scale + ')',
+                transformOrigin: 'top left',
+                width: element.offsetWidth + 'px',
+                height: element.offsetHeight + 'px',
+              },
+            })
+            .then((dataURL) => {
+              const blob = dataURL as unknown as Blob
+              resolve(blob)
+            })
+            .catch((e: any) => {
+              toast({
+                title: 'Image not uploaded',
+                description: e.message,
+                variant: 'destructive',
+              })
+              reject(e)
+            })
+        } else {
+          throw new Error('Invalid fileType') // Handle unsupported fileType
+        }
       } catch (e: any) {
         toast({
-          title: 'Image not uploaded',
+          title: 'Error!',
           description: e.message,
           variant: 'destructive',
         })
@@ -146,7 +175,7 @@ export default function SaveOptions() {
             {quality}x
           </Button>
         </PopoverTrigger>
-        <PopoverContent className='mb-4 flex flex-wrap gap-2.5 p-4 w-fit'>
+        <PopoverContent className="mb-4 flex w-fit flex-wrap gap-2.5 p-4">
           {qualities.map((q) => (
             <Button
               variant={q.value === quality ? 'stylish' : 'outline'}
@@ -159,13 +188,29 @@ export default function SaveOptions() {
         </PopoverContent>
       </Popover>
 
-      <Button
-        className="hidden text-[0.85rem] font-medium sm:inline-flex"
-        variant="icon"
-        size="sm"
-      >
-        PNG
-      </Button>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            className="text-[0.85rem] font-medium"
+            variant="icon"
+            size="sm"
+          >
+            {fileType}
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className="mb-4 flex w-fit flex-wrap gap-2.5 p-4">
+          {(['PNG', 'JPG', 'SVG'] as ('PNG' | 'JPG' | 'SVG')[]).map((file) => (
+            <Button
+              variant={file === fileType ? 'stylish' : 'outline'}
+              key={file}
+              onClick={() => setFileType(file)}
+            >
+              {file}
+            </Button>
+          ))}
+        </PopoverContent>
+      </Popover>
+
       {/* <Button
         className="hidden text-[0.85rem] font-medium xl:inline-flex"
         variant="icon"
@@ -189,7 +234,7 @@ export default function SaveOptions() {
         onClick={() => {
           snapshotCreator()
             .then((blob) => {
-              saveAs(blob, 'prismify-render.png')
+              saveAs(blob, 'prismify-render')
             })
             .catch((err) => {
               toast({
