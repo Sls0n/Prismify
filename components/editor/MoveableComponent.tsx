@@ -16,7 +16,6 @@ import {
   Snappable,
 } from 'react-moveable'
 import { useImageQualityStore } from '@/store/use-image-quality'
-import { useMoveable } from '@/store/use-moveable'
 
 const Moveable = makeMoveable<
   DraggableProps & ScalableProps & RotatableProps & SnappableProps
