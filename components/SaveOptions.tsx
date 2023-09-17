@@ -5,10 +5,16 @@ import { useImageQualityStore } from '@/store/use-image-quality'
 import { useImageOptions } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { toast } from '@/hooks/use-toast'
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from '@/components/ui/Popover'
 import * as htmlToImage from 'html-to-image'
+import { qualities } from '@/utils/config'
 
 export default function SaveOptions() {
-  const { quality } = useImageQualityStore()
+  const { quality, setQuality } = useImageQualityStore()
   const { images } = useImageOptions()
   const { scaleFactor } = useResizeCanvas()
 
@@ -130,13 +136,29 @@ export default function SaveOptions() {
   }
   return (
     <>
-      <Button
-        className="text-[0.85rem] font-medium"
-        variant="icon"
-        size="sm"
-      >
-        1x
-      </Button>
+      <Popover>
+        <PopoverTrigger asChild>
+          <Button
+            className="text-[0.85rem] font-medium"
+            variant="icon"
+            size="sm"
+          >
+            {quality}x
+          </Button>
+        </PopoverTrigger>
+        <PopoverContent className='mb-4 flex flex-wrap gap-2.5 p-4 w-fit'>
+          {qualities.map((q) => (
+            <Button
+              variant={q.value === quality ? 'stylish' : 'outline'}
+              key={q.quality}
+              onClick={() => setQuality(q.value)}
+            >
+              {q.quality}
+            </Button>
+          ))}
+        </PopoverContent>
+      </Popover>
+
       <Button
         className="hidden text-[0.85rem] font-medium sm:inline-flex"
         variant="icon"
@@ -144,14 +166,14 @@ export default function SaveOptions() {
       >
         PNG
       </Button>
-      <Button
+      {/* <Button
         className="hidden text-[0.85rem] font-medium xl:inline-flex"
         variant="icon"
         size="sm"
       >
         <Eye size={18} className="mr-2" />
         <p>Preview</p>
-      </Button>
+      </Button> */}
       <Button
         className="w-fit text-[0.85rem] font-medium"
         variant="stylish"

@@ -29,9 +29,10 @@ export interface Gradient {
   background?: string
 }
 
-export const qualities: Quality[] = [
+export const qualities = [
   { quality: '0.5x', value: 0.5 },
   { quality: '1x', value: 1 },
+  { quality: '1.5x', value: 1.5 },
   { quality: '2x', value: 2 },
   { quality: '4x', value: 4 },
 ]
