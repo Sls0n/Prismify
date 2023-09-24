@@ -70,14 +70,14 @@ function TipTapEditor({ content = 'Double click to edit' }) {
       {/* <MenuBar editor={editor} /> */}
       <div
         onDoubleClick={() => {
-          editor?.chain().focus()
+          editor?.chain().selectAll().focus()
           setIsEditable(true)
           setShowTextControls(false)
         }}
       >
         <div
           className={`${
-            isEditable ? 'pointer-events-auto' : 'pointer-events-none'
+            isEditable ? 'pointer-events-auto cursor-text' : 'pointer-events-none'
           }`}
         >
           <EditorContent style={defaultStyle} editor={editor} />
@@ -90,7 +90,7 @@ function TipTapEditor({ content = 'Double click to edit' }) {
 export default function TipTap() {
   const textRef = useRef<HTMLDivElement>(null)
 
-  const { showTextControls, setShowTextControls, setIsEditable } = useMoveable()
+  const { showTextControls, setShowTextControls, setIsEditable, isEditable } = useMoveable()
   const { texts, selectedText, setSelectedText } = useImageOptions()
   useOnClickOutside(textRef, () => {
     setIsEditable(false)
@@ -120,7 +120,7 @@ export default function TipTap() {
           <TipTapEditor />
         </div>
       ))}
-      {showTextControls && <TiptapMoveable id={`text-${selectedText}`} />}
+      {showTextControls && !isEditable && <TiptapMoveable id={`text-${selectedText}`} />}
     </>
   )
 }
