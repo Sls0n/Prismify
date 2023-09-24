@@ -21,6 +21,7 @@ import BackgroundOptions from '@/components/editor/BackgroundOptions/BackgroundO
 import FrameOptions from './FrameOptions/FrameOptions'
 import PositionOptions from './PositionOptions/PositionOptions'
 import { useTemporalStore } from '@/store/use-image-options'
+import TextOptions from './TextOptions/TextOptions'
 
 export default function Sidebar() {
   const activeIndex = useActiveIndexStore((state) => state.activeIndex)
@@ -86,7 +87,11 @@ export default function Sidebar() {
             <div className="flex w-full flex-col py-10">
               <h3 className="mb-8 flex items-center gap-2 text-xs font-semibold uppercase text-primary/70 dark:text-dark/70">
                 {sidebarButtons[activeIndex].icon}
-                {sidebarButtons[activeIndex].text}
+                <div className="">
+                  {sidebarButtons[activeIndex].text}
+
+                  <span className="ml-1 text-[#646464]">/ &nbsp;Layers</span>
+                </div>
                 <div className="ml-auto flex">
                   <Button
                     variant="outline"
@@ -121,6 +126,7 @@ export default function Sidebar() {
               {activeIndex === 1 && <ImageOptions />}
               {activeIndex === 2 && <BackgroundOptions />}
               {activeIndex === 3 && <FrameOptions />}
+              {activeIndex === 4 && <TextOptions />}
               {activeIndex === 5 && <PositionOptions />}
             </div>
           </div>

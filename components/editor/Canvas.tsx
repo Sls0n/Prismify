@@ -9,6 +9,7 @@ import ImageUpload from './ImageUpload'
 import { useImageOptions } from '@/store/use-image-options'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import FloatingOptions from '@/components/FloatingOptions'
+import TipTap from './Tiptap'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()
@@ -148,6 +149,7 @@ export default function Canvas() {
                 alt="background image"
               />
             )}
+            <TipTap />
             <ImageUpload />
           </motion.div>
         </div>

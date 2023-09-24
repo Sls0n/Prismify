@@ -30,15 +30,15 @@ export default function ColorPicker({
             onChange(color)
           }}
         />
-        <div className="relative flex-center w-full h-full rounded-md border border-gray-300 text-center text-sm uppercase text-gray-900  dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm">
-          <span className='absolute left-2 font-medium text-gray-400'>#</span>
+        <div className="flex-center relative h-full w-full rounded-md border border-gray-300 text-center text-sm uppercase text-gray-900  dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm">
+          <span className="absolute left-2 font-medium text-gray-400">#</span>
           <HexColorInput
             color={color}
             onChange={(color) => {
               setColor(color)
               onChange(color)
             }}
-            className="focus:border-[#8e8ece] focus:outline-none focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm w-full h-full py-3 px-3 text-center rounded-md"
+            className="h-full w-full rounded-md px-3 py-3 text-center focus:border-[#8e8ece] focus:outline-none focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
           />
         </div>
       </div>

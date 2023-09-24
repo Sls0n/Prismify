@@ -20,7 +20,7 @@ const ImageUpload = () => {
 
   const { images, setImages, setSelectedImage, selectedImage, defaultStyle } =
     useImageOptions()
-  const { setShowControls, showControls } = useMoveable()
+  const { setShowControls, showControls, setShowTextControls } = useMoveable()
   const { setResolution } = useResizeCanvas()
   const { setBackground } = useBackgroundOptions()
   const { setActiveIndex } = useActiveIndexStore()
@@ -41,8 +41,6 @@ const ImageUpload = () => {
     },
     [setImages, images, defaultStyle]
   )
-
-  console.log(images)
 
   const handleImageClick = useCallback(
     (id: number) => {

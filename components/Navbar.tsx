@@ -47,12 +47,19 @@ export default function Navbar({
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-8">
           {/* Can add hamburger or something here */}
-          <Link href="/" className="inline-flex items-center space-x-3">
+          <Link
+            href="/"
+            className={cn(
+              buttonVariants({ variant: 'ghost' }),
+              'inline-flex items-center space-x-3'
+            )}
+          >
             <Image
               src="/images/image.webp"
               width={35}
               height={35}
-              alt="logo"
+              quality={100}
+              alt="prismify logo"
               priority
             />
             <span className="hidden text-lg font-medium -tracking-wide text-primary dark:font-normal dark:text-dark sm:font-semibold md:block">
@@ -82,7 +89,7 @@ export default function Navbar({
                 {mode === 'default' && (
                   <>
                     {shouldFloat && <SaveOptions />}
-                    
+
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button

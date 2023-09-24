@@ -91,7 +91,7 @@ export default function MoveableComponent({ id }: { id: string }) {
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
   return (
     <Moveable
-      target={document.getElementById(id)}
+      target={document?.getElementById(id)}
       draggable={true}
       onDrag={(e) => {
         e.target.style.transform = e.transform
@@ -115,10 +115,20 @@ export default function MoveableComponent({ id }: { id: string }) {
       snapDirections={{
         center: true,
         middle: true,
+        left: true,
+        top: true,
+        right: true,
+        bottom: true,
       }}
       snapThreshold={10}
-      horizontalGuidelines={[domHeight / 2 / scaleFactor / quality]}
-      verticalGuidelines={[domWidth / 2 / scaleFactor / quality]}
+      horizontalGuidelines={[
+        domHeight / 2 / scaleFactor / quality,
+        domHeight / 1 / scaleFactor / quality,
+      ]}
+      verticalGuidelines={[
+        domWidth / 2 / scaleFactor / quality,
+        domWidth / 1 / scaleFactor / quality,
+      ]}
     />
   )
 }

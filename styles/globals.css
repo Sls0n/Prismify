@@ -130,3 +130,7 @@ html {
   transition: opacity 0s ease-in 0s !important;
   font-weight: 600;
 }
+
+.ProseMirror {
+  outline: none !important;
+}

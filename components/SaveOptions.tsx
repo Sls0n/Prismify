@@ -99,10 +99,11 @@ export default function SaveOptions() {
     })
   }
 
-  const isSafari = /^((?!chrome|android).)*safari/i.test(navigator?.userAgent)
-  const isNotFirefox = navigator.userAgent.indexOf('Firefox') < 0
-
   const copyImageToClipBoardOtherBrowsers = () => {
+     const isSafari = /^((?!chrome|android).)*safari/i.test(
+       navigator?.userAgent
+     )
+     const isNotFirefox = navigator.userAgent.indexOf('Firefox') < 0
     if (isSafari) {
       navigator.clipboard
         .write([
