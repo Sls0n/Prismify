@@ -110,6 +110,9 @@ export default function SaveOptions() {
           new ClipboardItem({
             'image/png': new Promise(async (resolve, reject) => {
               try {
+                if (fileType !== 'PNG') {
+                  throw new Error('Only PNG images can be copied')
+                }
                 const blob = await snapshotCreator()
                 resolve(new Blob([blob], { type: 'image/png' }))
               } catch (err) {

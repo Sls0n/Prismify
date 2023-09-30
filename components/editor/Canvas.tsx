@@ -125,12 +125,15 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        className="relative flex h-full flex-1 items-start justify-center overflow-hidden pt-5"
+        className="relative pt-5 flex h-full flex-1 items-start justify-center overflow-hidden"
       >
+        {/* <div className="flex h-14 w-full items-center border border-border">
+          TODO: ADD UPPER SETTINGS
+        </div> */}
         <div
           onWheel={handleScroll}
           style={parentScaleStyle}
-          className="relative flex h-full flex-1 items-start justify-center overflow-hidden"
+          className="relative flex h-full w-full flex-1 items-start justify-center overflow-hidden"
         >
           <motion.div
             className={

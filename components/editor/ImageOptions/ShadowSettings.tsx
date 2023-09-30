@@ -86,9 +86,15 @@ export default function ShadowSettings() {
             ></div>
           </div>
           <div className="flex h-full w-full flex-1 items-center justify-between px-4">
-            <p className="text-[0.85rem] text-primary/70 dark:text-dark/70">
-              {images[selectedImage - 1]?.style.shadowName}
-            </p>
+            <div className="flex w-full flex-col items-start">
+              <p className="text-[0.85rem] font-medium text-primary/70 dark:text-dark/70">
+                {images[selectedImage - 1]?.style.shadowName}
+              </p>
+              <p className="text-[0.7rem] font-semibold text-primary/50 dark:text-dark/50">
+                {images[selectedImage - 1]?.style.shadowColor.slice(0, 7)}
+              </p>
+            </div>
+
             <ChevronDown
               size={18}
               className="text-primary/70 dark:text-dark/80"

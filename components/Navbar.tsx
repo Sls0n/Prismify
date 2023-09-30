@@ -64,6 +64,9 @@ export default function Navbar({
             />
             <span className="hidden text-lg font-medium -tracking-wide text-primary dark:font-normal dark:text-dark sm:font-semibold md:block">
               Prismify
+              <span className="ml-2 inline-flex items-center rounded-md bg-indigo-500/10 px-2 py-1 text-xs font-medium text-purple shadow-sm ring-1 ring-inset ring-indigo-500/20 dark:bg-indigo-500/10">
+                Beta
+              </span>
             </span>
           </Link>
         </div>

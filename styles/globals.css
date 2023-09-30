@@ -35,7 +35,7 @@
 
     --radius: 0.5rem;
 
-    --shadowColor1: #00000030;
+    --shadowColor1: #00000040;
 
     --gradient-angle: 45deg;
     --gradient-bg: linear-gradient(
@@ -148,3 +148,29 @@ html {
   -moz-user-drag: none;
   -o-user-drag: none;
 }
+
+#font-picker {
+  box-shadow: none !important;
+  border: 1px solid #22262b !important;
+  border-radius: 0.5rem;
+}
+
+#font-picker button {
+  background: #1a1c1f !important;
+  box-shadow: none !important;
+  height: 3rem;
+  border-radius: 0.5rem;
+
+}
+
+.font-list {
+  background: #1a1c1f !important;
+  border-radius: 0.5rem;
+}
+
+
+#font-picker button .dropdown-icon::before {
+  border-top: 6px solid white !important;
+}
+
+

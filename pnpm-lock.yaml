@@ -62,15 +62,6 @@ dependencies:
   '@tanstack/react-query':
     specifier: ^4.32.6
     version: 4.32.6(react-dom@18.2.0)(react@18.2.0)
-  '@tiptap/extension-color':
-    specifier: ^2.1.11
-    version: 2.1.11(@tiptap/core@2.1.11)(@tiptap/extension-text-style@2.1.11)
-  '@tiptap/extension-text-style':
-    specifier: ^2.1.11
-    version: 2.1.11(@tiptap/core@2.1.11)
-  '@tiptap/pm':
-    specifier: ^2.1.11
-    version: 2.1.11
   '@tiptap/react':
     specifier: ^2.1.11
     version: 2.1.11(@tiptap/core@2.1.11)(@tiptap/pm@2.1.11)(react-dom@18.2.0)(react@18.2.0)
@@ -113,6 +104,9 @@ dependencies:
   file-saver:
     specifier: ^2.0.5
     version: 2.0.5
+  font-picker-react:
+    specifier: ^3.5.2
+    version: 3.5.2(@types/react@18.2.14)(react@18.2.0)
   framer-motion:
     specifier: ^10.12.18
     version: 10.12.18(react-dom@18.2.0)(react@18.2.0)
@@ -1525,6 +1519,12 @@ packages:
     resolution: {integrity: sha512-V+MvGwaHH03hYhY+k6Ef/xKd6RYlc4q8WBx+2ANmipHJcKuktNcI/NgEsJgdSUF6Lw32njT6OnrRsKYCdgHjYw==}
     dev: false
 
+  /@samuelmeuli/font-manager@1.4.0:
+    resolution: {integrity: sha512-TaPoX4qA6ABrACiSI18lQOOKjvbLNrT+84UWfzwcguWQ4nT+sprOSRyt/RVXnt9fQp/wFQVC2NcHbzd+AkXffg==}
+    dependencies:
+      '@babel/runtime': 7.22.6
+    dev: false
+
   /@scena/dragscroll@1.4.0:
     resolution: {integrity: sha512-3O8daaZD9VXA9CP3dra6xcgt/qrm0mg0xJCwiX6druCteQ9FFsXffkF8PrqxY4Z4VJ58fFKEa0RlKqbsi/XnRA==}
     dependencies:
@@ -1631,16 +1631,6 @@ packages:
       '@tiptap/core': ^2.0.0
     dependencies:
       '@tiptap/core': 2.1.11(@tiptap/pm@2.1.11)
-    dev: false
-
-  /@tiptap/extension-color@2.1.11(@tiptap/core@2.1.11)(@tiptap/extension-text-style@2.1.11):
-    resolution: {integrity: sha512-xfSfZRnNd40YtFfrXvzpGa2OZsRAZapq0Ce09q7bCEpudhiD7yIIVOjOjggagllOFnafKTwKkFaDLIA0K0eIwg==}
-    peerDependencies:
-      '@tiptap/core': ^2.0.0
-      '@tiptap/extension-text-style': ^2.0.0
-    dependencies:
-      '@tiptap/core': 2.1.11(@tiptap/pm@2.1.11)
-      '@tiptap/extension-text-style': 2.1.11(@tiptap/core@2.1.11)
     dev: false
 
   /@tiptap/extension-document@2.1.11(@tiptap/core@2.1.11):
@@ -1752,14 +1742,6 @@ packages:
 
   /@tiptap/extension-strike@2.1.11(@tiptap/core@2.1.11):
     resolution: {integrity: sha512-UnjeSVgu3bDuyjjUdWsUErRCoQKAHCzH/pAiqTEPEEdFYgZFQPBpcJICRVdlYjRmI2ZKh6d0TMUS55m7ckmwmQ==}
-    peerDependencies:
-      '@tiptap/core': ^2.0.0
-    dependencies:
-      '@tiptap/core': 2.1.11(@tiptap/pm@2.1.11)
-    dev: false
-
-  /@tiptap/extension-text-style@2.1.11(@tiptap/core@2.1.11):
-    resolution: {integrity: sha512-+JDWmcSUyFKzMDm/1xqlk7e0qPJ1nQ/UKIRuDeRtqgbxTyEw4fNlkV2k7GHCoELXqxUoplzweLID+kM1Vk2OaA==}
     peerDependencies:
       '@tiptap/core': ^2.0.0
     dependencies:
@@ -2976,6 +2958,17 @@ packages:
     peerDependenciesMeta:
       debug:
         optional: true
+    dev: false
+
+  /font-picker-react@3.5.2(@types/react@18.2.14)(react@18.2.0):
+    resolution: {integrity: sha512-0JkWIDf2hi6JwnvjIiacLDhO+Sl38RQ4mUGhCWN+Hvj95XalVZ0Aq5zJs/Ybend4uk2yI9rd1QhRRF9RnfHqIQ==}
+    peerDependencies:
+      '@types/react': ^16.0.0
+      react: ^16.0.0
+    dependencies:
+      '@samuelmeuli/font-manager': 1.4.0
+      '@types/react': 18.2.14
+      react: 18.2.0
     dev: false
 
   /for-each@0.3.3:

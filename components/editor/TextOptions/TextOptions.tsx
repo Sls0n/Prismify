@@ -1,32 +1,18 @@
-'use client'
-
-import { Button } from '@/components/ui/Button'
-import { useImageOptions } from '@/store/use-image-options'
-import { CaseLower } from 'lucide-react'
+import { CaseLower, Type } from 'lucide-react'
+import AddTextLayer from './AddTextLayer'
+import FontSettings from './FontSettings'
 
 export default function TextOptions() {
-  const { setTexts, defaultTextStyle, texts } = useImageOptions()
-
   return (
-    <div className="w-full">
-      <Button
-        onClick={() => {
-          setTexts([
-            ...texts,
-            {
-              content: 'Edit this text',
-              id: texts.length + 1,
-              style: defaultTextStyle,
-            },
-          ])
-        }}
-        size="lg"
-        variant="stylish"
-        className="w-full rounded-lg text-center text-base"
-      >
-        <CaseLower size={24} className="mr-2 inline-block align-middle" />
-        <span>Add a text layer</span>
-      </Button>
+    <div className="flex w-full flex-col gap-8">
+      <AddTextLayer />
+
+      <h3 className="flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
+        <Type size={20} />
+        <span>Text options</span>
+      </h3>
+
+      <FontSettings />
     </div>
   )
 }

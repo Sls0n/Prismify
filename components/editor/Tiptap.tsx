@@ -1,9 +1,8 @@
 'use client'
 
-import { useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Editor, EditorContent, useEditor } from '@tiptap/react'
 import StarterKit from '@tiptap/starter-kit'
-import React from 'react'
 import TiptapMoveable from './TiptapMoveable'
 import { useMoveable } from '@/store/use-moveable'
 import { useOnClickOutside } from '@/hooks/use-on-click-outside'
@@ -77,7 +76,9 @@ function TipTapEditor({ content = 'Double click to edit' }) {
       >
         <div
           className={`${
-            isEditable ? 'pointer-events-auto cursor-text' : 'pointer-events-none'
+            isEditable
+              ? 'pointer-events-auto cursor-text'
+              : 'pointer-events-none'
           }`}
         >
           <EditorContent style={defaultStyle} editor={editor} />
@@ -90,7 +91,8 @@ function TipTapEditor({ content = 'Double click to edit' }) {
 export default function TipTap() {
   const textRef = useRef<HTMLDivElement>(null)
 
-  const { showTextControls, setShowTextControls, setIsEditable, isEditable } = useMoveable()
+  const { showTextControls, setShowTextControls, setIsEditable, isEditable } =
+    useMoveable()
   const { texts, selectedText, setSelectedText } = useImageOptions()
   useOnClickOutside(textRef, () => {
     setIsEditable(false)
@@ -106,9 +108,10 @@ export default function TipTap() {
           key={`text-${text.id}`}
           id={`text-${text.id}`}
           ref={text.id === selectedText ? textRef : null}
-          className="absolute z-[120] flex cursor-pointer items-center justify-center"
+          className="absolute z-[120] flex cursor-pointer items-center justify-center apply-font"
           style={{
             fontSize: `${text.style.textSize}rem`,
+            fontFamily: `${text.style.fontFamily}`,
             color: `${text.style.textColor}`,
             fontWeight: `${text.style.fontWeight}`,
           }}
@@ -120,7 +123,9 @@ export default function TipTap() {
           <TipTapEditor />
         </div>
       ))}
-      {showTextControls && !isEditable && <TiptapMoveable id={`text-${selectedText}`} />}
+      {showTextControls && !isEditable && (
+        <TiptapMoveable id={`text-${selectedText}`} />
+      )}
     </>
   )
 }
