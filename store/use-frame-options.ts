@@ -1,8 +1,10 @@
 import { create } from 'zustand'
 
 interface FrameOptionsState {
-  browserFrame: 'MacOS Dark' | 'MacOS Light' | 'None'
-  setBrowserFrame: (browserFrame: 'MacOS Dark' | 'MacOS Light' | 'None') => void
+  browserFrame: 'Arc' | 'MacOS Dark' | 'MacOS Light' | 'None'
+  setBrowserFrame: (
+    browserFrame: 'Arc' | 'MacOS Dark' | 'MacOS Light' | 'None'
+  ) => void
 
   frameHeight: 'small' | 'medium' | 'large' | string
   setFrameHeight: (height: string) => void
