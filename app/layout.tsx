@@ -14,8 +14,10 @@ const Font = LocalFont({
 })
 
 export const metadata: Metadata = {
-  title: 'Prismify — Revitalize & enhance boring images/screenshots.',
-  description: 'Revitalize & enhance boring images/screenshots.',
+  title:
+    'Prismify - Effortlessly Create Beautiful SaaS/Product Shots & Graphics',
+  description:
+    'Easily make your SaaS/product shots and graphics design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations, and more at your fingertips. Try it now and make your designs shine!',
   verification: {
     google: 'cum1ckoCozAtSA3Xcn4UX_xR_FlfrlzKzQRa7nYQ2YM',
   },
