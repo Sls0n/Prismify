@@ -17,8 +17,7 @@ export const metadata: Metadata = {
   title: 'Prismify — Revitalize & enhance boring images/screenshots.',
   description: 'Revitalize & enhance boring images/screenshots.',
   verification: {
-    google:
-      'google-site-verification=cum1ckoCozAtSA3Xcn4UX_xR_FlfrlzKzQRa7nYQ2YM',
+    google: 'cum1ckoCozAtSA3Xcn4UX_xR_FlfrlzKzQRa7nYQ2YM',
   },
   icons: {
     icon: '/favicons/favicon.ico',
