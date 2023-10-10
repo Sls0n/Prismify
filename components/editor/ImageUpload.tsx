@@ -150,7 +150,7 @@ const ImageUpload = () => {
               return (
                 <div
                   key={image.image}
-                  className="flex h-full w-full flex-col overflow-hidden"
+                  className="flex h-full w-full flex-col overflow-hidden image"
                   ref={image.id === selectedImage ? targetRef : null}
                   style={{
                     transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg)`,

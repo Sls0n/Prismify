@@ -182,8 +182,8 @@ export const shadows: Shadow[] = [
   {
     name: 'lg',
     fullName: 'Large',
-    shadow: `0px 7px 49px 4px`,
-    preview: `0px 7px 20px 4px`,
+    shadow: `0px 8px 55px 0px`,
+    preview: `0px 3px 20px 0px`,
   },
 ]
 

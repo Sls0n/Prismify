@@ -140,9 +140,9 @@ export const useImageOptions = create(
     defaultStyle: {
       imageSize: '0.8',
       imageRoundness: 0.7,
-      imageShadow: '0px 7px 49px 4px',
+      imageShadow: '0px 8px 55px 0px',
       shadowName: 'Large',
-      shadowColor: '#00000040',
+      shadowColor: '#00000065',
       borderSize: '0',
       borderColor: '#ffffff50',
       rotate: '0',
