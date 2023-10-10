@@ -88,6 +88,11 @@ export default function MoveableComponent({ id }: { id: string }) {
     [setImages, images, selectedImage]
   )
 
+  const otherImages = images.filter((image) => image.id !== selectedImage)
+  const elementGuidelines = otherImages.map((image) => ({
+    element: document.getElementById(`${image.id}`),
+  }))
+
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
   return (
     <Moveable
@@ -129,6 +134,15 @@ export default function MoveableComponent({ id }: { id: string }) {
         domWidth / 2 / scaleFactor / quality,
         domWidth / 1 / scaleFactor / quality,
       ]}
+      elementSnapDirections={{
+        top: true,
+        left: true,
+        bottom: true,
+        right: true,
+        center: true,
+        middle: true,
+      }}
+      elementGuidelines={elementGuidelines}
     />
   )
 }
