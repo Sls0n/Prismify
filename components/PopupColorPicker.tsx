@@ -5,11 +5,11 @@ import ColorPicker from '@/components/ColorPicker'
 export default function PopupColorPicker({
   onChange,
   color,
-  shouldShowAlpha,
+  shouldShowAlpha = true,
 }: {
   onChange: (color: string) => void
   color: string
-  shouldShowAlpha: boolean
+  shouldShowAlpha?: boolean
 }) {
   return (
     <Popover>

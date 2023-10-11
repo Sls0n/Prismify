@@ -14,7 +14,7 @@ export default function ColorPicker({
 }: {
   onChange: (color: string) => void
   colorState: string
-  shouldShowAlpha: boolean
+  shouldShowAlpha?: boolean
 }) {
   const [color, setColor] = useState(colorState)
 

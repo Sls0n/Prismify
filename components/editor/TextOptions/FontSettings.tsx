@@ -7,8 +7,11 @@ import FontPicker from 'font-picker-react'
 
 export default function FontSettings() {
   const { setTexts, selectedText, texts } = useImageOptions()
-  const [activeFontFamily, setActiveFontFamily] = useState('Open Sans')
+  const [activeFontFamily, setActiveFontFamily] = useState(
+    texts[selectedText - 1]?.style.fontFamily
+  )
 
+  console.log(selectedText)
   return (
     <div className="relative h-52 w-full">
       {/* <Button
@@ -47,7 +50,6 @@ export default function FontSettings() {
         activeFontFamily={activeFontFamily}
         onChange={(font) => {
           console.log(font.family)
-          setActiveFontFamily(font.family)
           setTexts(
             texts.map((text, index) =>
               index === selectedText - 1
@@ -61,6 +63,7 @@ export default function FontSettings() {
                 : text
             )
           )
+          setActiveFontFamily(font.family)
         }}
       />
     </div>
