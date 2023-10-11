@@ -19,6 +19,10 @@ export default function ShadowSettings() {
     boxShadow: images[selectedImage - 1]?.style.imageShadow,
   }
 
+  const boxShadowPreview = {
+    boxShadow: images[selectedImage - 1]?.style.shadowPreview,
+  }
+
   const backgroundStyle = {
     backgroundImage: `var(--gradient-bg)`,
     backgroundColor:
@@ -28,6 +32,7 @@ export default function ShadowSettings() {
   const handleShadowButtonClick = (shadow: {
     shadow: string
     fullName: string
+    preview: string
   }) => {
     setImages(
       images.map((image, index) =>
@@ -38,6 +43,7 @@ export default function ShadowSettings() {
                 ...image.style,
                 imageShadow: shadow.shadow,
                 shadowName: shadow.fullName,
+                shadowPreview: shadow.preview,
               },
             }
           : image
@@ -82,7 +88,7 @@ export default function ShadowSettings() {
           >
             <div
               className="flex-center h-1/2 w-1/2 rounded-md bg-white"
-              style={boxShadowStyle}
+              style={boxShadowPreview}
             ></div>
           </div>
           <div className="flex h-full w-full flex-1 items-center justify-between px-4">
@@ -110,7 +116,9 @@ export default function ShadowSettings() {
             <Button
               variant="secondary"
               key={shadow.name}
-              onClick={() => handleShadowButtonClick(shadow)}
+              onClick={() => {
+                handleShadowButtonClick(shadow)
+              }}
               className={`flex-center relative h-20 w-24 cursor-pointer rounded-md ${
                 shadow.shadow ===
                   images[selectedImage - 1]?.style.imageShadow &&

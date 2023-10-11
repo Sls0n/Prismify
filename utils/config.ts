@@ -165,25 +165,25 @@ export const shadows: Shadow[] = [
     name: 'bottom',
     fullName: 'Bottom',
     shadow: `0 25px 50px -12px`,
-    preview: `0 25px 50px -12px`,
+    preview: `0 25px 50px -12px #00000065`,
   },
   {
     name: 'sm',
     fullName: 'Small',
     shadow: `0px 3px 8px 0px`,
-    preview: `0px 3px 8px 0px`,
+    preview: `0px 3px 8px 0px #00000065`,
   },
   {
     name: 'md',
     fullName: 'Medium',
     shadow: `0px 6px 20px`,
-    preview: `0px 6px 20px`,
+    preview: `0px 6px 20px #00000065`,
   },
   {
     name: 'lg',
     fullName: 'Large',
     shadow: `0px 8px 55px 0px`,
-    preview: `0px 3px 20px 0px`,
+    preview: `0px 6px 30px 0px #00000065`,
   },
 ]
 
