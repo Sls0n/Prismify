@@ -5,9 +5,11 @@ import ColorPicker from '@/components/ColorPicker'
 export default function PopupColorPicker({
   onChange,
   color,
+  shouldShowAlpha,
 }: {
   onChange: (color: string) => void
   color: string
+  shouldShowAlpha: boolean
 }) {
   return (
     <Popover>
@@ -32,6 +34,7 @@ export default function PopupColorPicker({
         className="flex-center w-fit flex-wrap gap-3"
       >
         <ColorPicker
+        shouldShowAlpha={shouldShowAlpha}
           colorState={color}
           onChange={(color) => {
             onChange(color)

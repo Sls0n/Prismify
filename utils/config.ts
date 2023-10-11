@@ -182,8 +182,14 @@ export const shadows: Shadow[] = [
   {
     name: 'lg',
     fullName: 'Large',
-    shadow: `0px 8px 55px 0px`,
+    shadow: `0px 8px 60px 0px`,
     preview: `0px 6px 30px 0px #00000065`,
+  },
+  {
+    name: 'x-lg',
+    fullName: 'X-Large',
+    shadow: `0px 19px 60px 10px`,
+    preview: `0px 10px 60px 0px #00000065`,
   },
 ]
 
@@ -211,6 +217,36 @@ export const gradients: Gradient[] = [
     gradient:
       'linear-gradient(var(--gradient-angle), rgb(246, 244, 231), rgb(248, 201, 195) 100%)',
   },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), #a3a8f2, #fafbff 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), rgb(177, 173, 219) 11.2%, rgb(245, 226, 226) 91.1%)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), rgb(204, 228, 247) 11.2%, rgb(237, 246, 250) 100.2%)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), #e0c3fc 0%, #8ec5fc 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), rgb(218, 185, 252) 11.2%, rgb(125, 89, 252) 91.1%)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), #A9C9FF 0%, #FFBBEC 100%)',
+  },
+
   {
     type: 'Normal',
     gradient: 'linear-gradient(var(--gradient-angle), #86e3ce, #d0e6a5 100%)',
@@ -278,10 +314,6 @@ export const gradients: Gradient[] = [
   {
     type: 'Normal',
     gradient: 'linear-gradient(var(--gradient-angle), #d2d0f5, #f8a9da 100%)',
-  },
-  {
-    type: 'Normal',
-    gradient: 'linear-gradient(var(--gradient-angle), #b9bffa, #fff7fa 100%)',
   },
   {
     type: 'Normal',

@@ -1,15 +1,16 @@
 'use client'
 
-import React, { CSSProperties, useEffect, useRef } from 'react'
-import { useResizeCanvas } from '@/store/use-resize-canvas'
-import { motion } from 'framer-motion'
 import { useImageQualityStore } from '@/store/use-image-quality'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
+import React, { CSSProperties, useEffect, useRef } from 'react'
 import ImageUpload from './ImageUpload'
 
-import { useImageOptions } from '@/store/use-image-options'
-import { useBackgroundOptions } from '@/store/use-background-options'
 import FloatingOptions from '@/components/FloatingOptions'
+import { useBackgroundOptions } from '@/store/use-background-options'
+import { useImageOptions } from '@/store/use-image-options'
+import { motion } from 'framer-motion'
 import TipTap from './Tiptap'
+// import SelectoComponent from './SelectoComponent'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()
@@ -125,12 +126,13 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        className="relative pt-5 flex h-full flex-1 items-start justify-center overflow-hidden"
+        className="relative flex h-full flex-1 items-start justify-center overflow-hidden pt-5"
       >
         {/* <div className="flex h-14 w-full items-center border border-border">
           TODO: ADD UPPER SETTINGS
         </div> */}
-        <div
+        <motion.div
+          layout
           onWheel={handleScroll}
           style={parentScaleStyle}
           className="relative flex h-full w-full flex-1 items-start justify-center overflow-hidden"
@@ -155,7 +157,8 @@ export default function Canvas() {
             <TipTap />
             <ImageUpload />
           </motion.div>
-        </div>
+        </motion.div>
+        {/* <SelectoComponent /> */}
 
         <FloatingOptions />
       </section>

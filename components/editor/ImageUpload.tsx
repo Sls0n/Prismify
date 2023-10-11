@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
+import Selecto from 'react-selecto'
 import { ImageIcon, Upload } from 'lucide-react'
 import React, { ChangeEvent, useCallback, useRef } from 'react'
 import { useImageOptions } from '@/store/use-image-options'
@@ -92,6 +93,27 @@ const ImageUpload = () => {
     setResolution('1920x1080')
   }
 
+
+
+  function convertHex(hexCode: string, opacity = 1) {
+    var hex = hexCode.replace('#', '')
+
+    if (hex.length === 3) {
+      hex = hex[0] + hex[0] + hex[1] + hex[1] + hex[2] + hex[2]
+    }
+
+    var r = parseInt(hex.substring(0, 2), 16),
+      g = parseInt(hex.substring(2, 4), 16),
+      b = parseInt(hex.substring(4, 6), 16)
+
+    /* Backward compatibility for whole number based opacity values. */
+    if (opacity > 1 && opacity <= 100) {
+      opacity = opacity / 100
+    }
+
+    return 'rgba(' + r + ',' + g + ',' + b + ',' + opacity + ')'
+  }
+
   return (
     <>
       {images.length === 0 && (
@@ -150,12 +172,17 @@ const ImageUpload = () => {
               return (
                 <div
                   key={image.image}
-                  className="flex h-full w-full flex-col overflow-hidden image"
+                  className="image flex h-full w-full flex-col overflow-hidden"
                   ref={image.id === selectedImage ? targetRef : null}
                   style={{
                     transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg)`,
                     borderRadius: `${image.style.imageRoundness}rem`,
-                    boxShadow: `${image.style.imageShadow} ${image.style.shadowColor}`,
+                    // boxShadow: `${image.style.imageShadow} ${image.style.shadowColor}`,
+                    boxShadow: `${image.style.imageShadow} ${convertHex(
+                      image.style.shadowColor,
+                      image.style.shadowOpacity
+                    )}`,
+
                     // If browserFrame is 'None', then only apply a border only if borderSize is not '0',
                     border:
                       browserFrame !== 'None'
@@ -192,10 +219,9 @@ const ImageUpload = () => {
               )
             })}
           </div>
-
-          {showControls && <MoveableComponent id={`${selectedImage}`} />}
         </>
       )}
+      {showControls && <MoveableComponent id={`${selectedImage}`} />}
     </>
   )
 }

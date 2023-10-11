@@ -21,6 +21,7 @@ interface ImageOptionsState {
       imageRoundness: number
       imageShadow: string
       shadowName: string
+      shadowOpacity: number
       shadowPreview: string
       shadowColor: string
       borderSize: string | null
@@ -38,6 +39,7 @@ interface ImageOptionsState {
         imageSize: string
         imageRoundness: number
         imageShadow: string
+        shadowOpacity: number
         shadowPreview: string
         shadowName: string
         shadowColor: string
@@ -101,6 +103,7 @@ interface ImageOptionsState {
     imageShadow: string
     shadowPreview: string
     shadowName: string
+    shadowOpacity: number
     shadowColor: string
     borderSize: string
     borderColor: string
@@ -144,9 +147,10 @@ export const useImageOptions = create(
       imageSize: '0.8',
       imageRoundness: 0.7,
       imageShadow: '0px 8px 55px 0px',
-      shadowPreview: '0px 6px 30px 0px #00000065',
+      shadowPreview: '0px 6px 30px 0px #000',
+      shadowOpacity: 0.5,
       shadowName: 'Large',
-      shadowColor: '#00000065',
+      shadowColor: '#000',
       borderSize: '0',
       borderColor: '#ffffff50',
       rotate: '0',

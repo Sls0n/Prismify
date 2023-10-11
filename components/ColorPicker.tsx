@@ -1,14 +1,20 @@
 'use client'
 
-import { HexColorInput, HexAlphaColorPicker } from 'react-colorful'
+import {
+  HexColorInput,
+  HexAlphaColorPicker,
+  HexColorPicker,
+} from 'react-colorful'
 import { CSSProperties, useState } from 'react'
 
 export default function ColorPicker({
   onChange,
   colorState,
+  shouldShowAlpha = true
 }: {
   onChange: (color: string) => void
   colorState: string
+  shouldShowAlpha: boolean
 }) {
   const [color, setColor] = useState(colorState)
 
@@ -23,13 +29,19 @@ export default function ColorPicker({
   return (
     <>
       <div className="flex-center flex-col gap-2">
-        <HexAlphaColorPicker
+        {shouldShowAlpha ? <HexAlphaColorPicker
           color={color}
           onChange={(color) => {
             setColor(color)
             onChange(color)
           }}
-        />
+        /> : <HexColorPicker
+          color={color}
+          onChange={(color) => {
+            setColor(color)
+            onChange(color)
+          }}
+        /> }
         <div className="flex-center relative h-full w-full rounded-md border border-gray-300 text-center text-sm uppercase text-gray-900  dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm">
           <span className="absolute left-2 font-medium text-gray-400">#</span>
           <HexColorInput

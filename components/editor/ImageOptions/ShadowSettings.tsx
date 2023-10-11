@@ -9,6 +9,7 @@ import { useBackgroundOptions } from '@/store/use-background-options'
 import { useImageOptions } from '@/store/use-image-options'
 import { shadows } from '@/utils/config'
 import { ChevronDown } from 'lucide-react'
+import { Slider } from '@/components/ui/Slider'
 
 export default function ShadowSettings() {
   const { images, setImages, selectedImage, defaultStyle } = useImageOptions()
@@ -138,10 +139,50 @@ export default function ShadowSettings() {
       </Popover>
 
       <div className="mb-3 mt-8 flex items-center px-1">
+        <h1 className="text-[0.85rem]">Opacity</h1>
+        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
+          {Math.round(
+            Number(images[selectedImage - 1]?.style.shadowOpacity ?? 1) * 100
+          )}
+          %
+        </p>
+      </div>
+
+      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
+        <Slider
+          defaultValue={[0.5]}
+          min={0}
+          max={1}
+          step={0.05}
+          onValueChange={(value) => {
+            setImages(
+              images.map((image, index) =>
+                index === selectedImage - 1
+                  ? {
+                      ...image,
+                      style: {
+                        ...image.style,
+                        shadowOpacity: value[0],
+                      },
+                    }
+                  : image
+              )
+            )
+          }}
+          value={
+            images.length !== 0
+              ? [+images[selectedImage - 1]?.style.shadowOpacity]
+              : [1]
+          }
+        />
+      </div>
+
+      <div className="mb-3 mt-8 flex items-center px-1">
         <h1 className="text-[0.85rem]">Shadow color</h1>
       </div>
 
       <PopupColorPicker
+      shouldShowAlpha={false}
         color={images[selectedImage - 1]?.style.shadowColor}
         onChange={handleColorChange}
       />
