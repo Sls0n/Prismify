@@ -1,9 +1,10 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 
 import { useImageOptions } from '@/store/use-image-options'
 import FontPicker from 'font-picker-react'
+import PopupColorPicker from '@/components/PopupColorPicker'
 
 export default function FontSettings() {
   const { setTexts, selectedText, texts } = useImageOptions()
@@ -11,7 +12,22 @@ export default function FontSettings() {
     texts[selectedText - 1]?.style.fontFamily
   )
 
-  console.log(selectedText)
+  const handleColorChange = (color: string) => {
+    setTexts(
+      texts.map((text, index) =>
+        index === selectedText - 1
+          ? {
+              ...text,
+              style: {
+                ...text.style,
+                textColor: color,
+              },
+            }
+          : text
+      )
+    )
+  }
+
   return (
     <div className="relative h-52 w-full">
       {/* <Button
@@ -44,12 +60,13 @@ export default function FontSettings() {
           />
         </div>
       </Button> */}
-
+      <div className="mb-3 mt-2 flex max-w-[70%] items-center px-1">
+        <h1 className="text-[0.85rem]">Font family</h1>
+      </div>
       <FontPicker
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY!}
         activeFontFamily={activeFontFamily}
         onChange={(font) => {
-          console.log(font.family)
           setTexts(
             texts.map((text, index) =>
               index === selectedText - 1
@@ -66,6 +83,14 @@ export default function FontSettings() {
           setActiveFontFamily(font.family)
         }}
       />
+
+      <div className={`mt-8 flex flex-col gap-3 px-1`}>
+        <h1 className="text-[0.85rem]">Font color</h1>
+        <PopupColorPicker
+          color={texts[selectedText - 1]?.style.textColor}
+          onChange={handleColorChange}
+        />
+      </div>
     </div>
   )
 }

@@ -9,9 +9,8 @@ export default function TextOptions() {
 
       <h3 className="flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
         <Type size={20} />
-        <span>Text options</span>
+        <span>Appearance</span>
       </h3>
-
       <FontSettings />
     </div>
   )

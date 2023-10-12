@@ -1,12 +1,14 @@
 'use client'
 
-import { useRef } from 'react'
-import { Editor, EditorContent, useEditor } from '@tiptap/react'
-import StarterKit from '@tiptap/starter-kit'
-import TiptapMoveable from './TiptapMoveable'
-import { useMoveable } from '@/store/use-moveable'
+import useTiptapEditor from '@/hooks/use-editor'
 import { useOnClickOutside } from '@/hooks/use-on-click-outside'
 import { useImageOptions } from '@/store/use-image-options'
+import { useMoveable } from '@/store/use-moveable'
+import { Editor, EditorContent } from '@tiptap/react'
+import { useRef, useState } from 'react'
+import TiptapMoveable from './TiptapMoveable'
+import { BubbleMenu } from '@tiptap/react'
+import { useTiptap } from '@/store/use-tiptap'
 
 type MenuBarProps = {
   editor: Editor | null
@@ -19,38 +21,53 @@ const MenuBar = ({ editor }: MenuBarProps) => {
 
   return (
     <>
-      <button
-        onClick={() => {
-          const { selection } = editor.state
-
-          if (selection.empty) {
-            // When there's no text selection, apply formatting to the entire paragraph
-            editor.chain().focus().selectAll().toggleBold().run()
-          } else {
-            // When text is selected, toggle formatting for the selected text
-            editor.chain().focus().toggleBold().run()
-          }
-        }}
-        className={editor.isActive('bold') ? 'is-active' : ''}
+      <BubbleMenu
+        className="bubble-menu"
+        tippyOptions={{ duration: 100 }}
+        editor={editor}
       >
-        bold
-      </button>
-      <button
-        onClick={() => {
-          const { selection } = editor.state
+        <button
+          onClick={() => {
+            const { selection } = editor.state
 
-          if (selection.empty) {
-            // When there's no text selection, apply formatting to the entire paragraph
-            editor.chain().focus().selectAll().toggleItalic().run()
-          } else {
-            // When text is selected, toggle formatting for the selected text
-            editor.chain().focus().toggleItalic().run()
-          }
-        }}
-        className={editor.isActive('italic') ? 'is-active' : ''}
-      >
-        italic
-      </button>
+            if (selection.empty) {
+              // When there's no text selection, apply formatting to the entire paragraph
+              editor.chain().focus().selectAll().toggleBold().run()
+            } else {
+              // When text is selected, toggle formatting for the selected text
+              editor.chain().focus().toggleBold().run()
+            }
+          }}
+          className={editor.isActive('bold') ? 'is-active' : ''}
+        >
+          bold
+        </button>
+        <button
+          onClick={() => {
+            const { selection } = editor.state
+
+            if (selection.empty) {
+              // When there's no text selection, apply formatting to the entire paragraph
+              editor.chain().focus().selectAll().toggleItalic().run()
+            } else {
+              // When text is selected, toggle formatting for the selected text
+              editor.chain().focus().toggleItalic().run()
+            }
+          }}
+          className={editor.isActive('italic') ? 'is-active' : ''}
+        >
+          italic
+        </button>
+
+        <input
+          type="color"
+          onInput={(event: any) => {
+            editor.chain().focus().setColor(event.target.value).run()
+          }}
+          value={editor.getAttributes('textStyle').color}
+          data-testid="setColor"
+        />
+      </BubbleMenu>
     </>
   )
 }
@@ -59,14 +76,10 @@ function TipTapEditor({ content = 'Double click to edit' }) {
   const { setShowTextControls, isEditable, setIsEditable } = useMoveable()
   const { setSelectedText, defaultStyle } = useImageOptions()
 
-  const editor = useEditor({
-    extensions: [StarterKit],
-    content: content,
-  })
+  const { editor } = useTiptapEditor()
 
   return (
     <>
-      {/* <MenuBar editor={editor} /> */}
       <div
         onDoubleClick={() => {
           editor?.chain().selectAll().focus()
@@ -74,6 +87,7 @@ function TipTapEditor({ content = 'Double click to edit' }) {
           setShowTextControls(false)
         }}
       >
+        <MenuBar editor={editor} />
         <div
           className={`${
             isEditable
@@ -94,12 +108,12 @@ export default function TipTap() {
   const { showTextControls, setShowTextControls, setIsEditable, isEditable } =
     useMoveable()
   const { texts, selectedText, setSelectedText } = useImageOptions()
+  const { setShouldShow } = useTiptap()
+
   useOnClickOutside(textRef, () => {
     setIsEditable(false)
     useMoveable.setState({ showTextControls: false })
   })
-
-  console.log(texts)
 
   return (
     <>
@@ -108,7 +122,7 @@ export default function TipTap() {
           key={`text-${text.id}`}
           id={`text-${text.id}`}
           ref={text.id === selectedText ? textRef : null}
-          className="absolute z-[120] flex cursor-pointer items-center justify-center apply-font"
+          className="apply-font absolute z-[120] flex cursor-pointer items-center justify-center"
           style={{
             fontSize: `${text.style.textSize}rem`,
             fontFamily: `${text.style.fontFamily}`,

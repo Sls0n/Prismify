@@ -158,9 +158,9 @@ html {
 #font-picker button {
   background: #1a1c1f !important;
   box-shadow: none !important;
-  height: 3rem;
+  height: 2.5rem;
   border-radius: 0.5rem;
-
+  font-size: 16px;
 }
 
 .font-list {
@@ -168,9 +168,76 @@ html {
   border-radius: 0.5rem;
 }
 
-
 #font-picker button .dropdown-icon::before {
   border-top: 6px solid white !important;
 }
 
+.bubble-menu {
+  display: flex;
+  background-color: #0d0d0d;
+  padding: 0.4rem;
+  border-radius: 0.5rem;
+}
 
+.bubble-menu button {
+  border: none;
+  background: none;
+  color: #fff !important;
+  font-size: 1rem !important;
+  font-weight: 500;
+  padding: 0 0.4rem !important;
+  opacity: 0.6;
+}
+
+.bubble-menu button:hover {
+  opacity: 1;
+}
+
+.bubble-menu button.is-active {
+  opacity: 1;
+}
+
+#tippy-1 ::selection {
+  background-color: #fff;
+  color: #333;
+}
+
+#tippy-1 {
+  position: relative;
+  transform: translate(0, 50px) !important;
+}
+
+#tippy-2 {
+  position: relative;
+  transform: translate(0, 50px) !important;
+}
+
+#tippy-3 {
+  position: relative;
+  transform: translate(0, 50px) !important;
+}
+
+#tippy-4 {
+  position: relative;
+  transform: translate(0, 50px) !important;
+}
+
+#tippy-5 {
+  position: relative;
+  transform: translate(0, 50px) !important;
+}
+
+#tippy-6 {
+  position: relative;
+  transform: translate(0, 50px) !important;
+}
+
+#tippy-7 {
+  position: relative;
+  transform: translate(0, 50px) !important;
+}
+
+#tippy-8 {
+  position: relative;
+  transform: translate(0, 50px) !important;
+}
