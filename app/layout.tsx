@@ -3,7 +3,7 @@ import Providers from '@/context/Providers'
 import { cn } from '@/utils/buttonUtils'
 import type { Metadata } from 'next'
 import LocalFont from 'next/font/local'
-// import { Analytics } from '@vercel/analytics/react'
+import { Analytics } from '@vercel/analytics/react'
 import '@/styles/globals.css'
 
 const Font = LocalFont({
@@ -40,7 +40,7 @@ export default function RootLayout({
     >
       <body className="h-full bg-primary pt-12 text-primary dark:bg-dark dark:text-dark ">
         <Toaster />
-        {/* <Analytics /> */}
+        <Analytics />
 
         <Providers>
           <div className="flex h-full flex-col">{children}</div>

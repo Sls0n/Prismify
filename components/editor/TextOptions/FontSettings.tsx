@@ -86,6 +86,7 @@ export default function FontSettings() {
       <FontPicker
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY!}
         activeFontFamily={activeFontFamily}
+        variants={['200', '300', 'regular', '500', '600', '700', '800']}
         onChange={(font) => {
           setTexts(
             texts.map((text, index) =>
@@ -153,7 +154,7 @@ export default function FontSettings() {
         />
       </div>
 
-      <div className={`max-w-[70%] mt-8 flex flex-col gap-3 px-1`}>
+      <div className={`mt-8 flex max-w-[70%] flex-col gap-3 px-1`}>
         <h1 className="text-[0.85rem]">Letter spacing</h1>
         <Slider
           defaultValue={[0]}
