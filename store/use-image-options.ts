@@ -65,6 +65,7 @@ interface ImageOptionsState {
       textShadow: string
       shadowName: string
       shadowColor: string
+      shadowOpacity: number
       hasBackground: boolean
       backgroundColor: string
       padding: string
@@ -84,6 +85,7 @@ interface ImageOptionsState {
         textShadow: string
         shadowName: string
         shadowColor: string
+        shadowOpacity: number
         hasBackground: boolean
         backgroundColor: string
         padding: string
@@ -122,6 +124,7 @@ interface ImageOptionsState {
     textShadow: string
     shadowName: string
     shadowColor: string
+    shadowOpacity: number
     hasBackground: boolean
     backgroundColor: string
     padding: string
@@ -165,9 +168,10 @@ export const useImageOptions = create(
       fontWeight: 400,
       fontFamily: 'inherit',
       letterSpacing: 0,
-      textShadow: '0 25px 50px -12px',
+      textShadow: '1px 1px 8px',
       shadowName: 'Bottom',
-      shadowColor: '#00000030',
+      shadowColor: '#000',
+      shadowOpacity: 0.1,
       hasBackground: false,
       backgroundColor: '#ffffff50',
       padding: '0',

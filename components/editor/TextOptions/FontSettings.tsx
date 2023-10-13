@@ -11,6 +11,7 @@ import {
   AlignHorizontalJustifyCenter,
   AlignLeft,
   AlignRight,
+  GalleryVerticalEnd,
   Minus,
   Plus,
 } from 'lucide-react'
@@ -39,6 +40,22 @@ export default function FontSettings() {
               style: {
                 ...text.style,
                 textColor: color,
+              },
+            }
+          : text
+      )
+    )
+  }
+
+  const handleShadowColorChange = (color: string) => {
+    setTexts(
+      texts.map((text, index) =>
+        index === selectedText - 1
+          ? {
+              ...text,
+              style: {
+                ...text.style,
+                shadowColor: color,
               },
             }
           : text
@@ -188,7 +205,7 @@ export default function FontSettings() {
 
       <div className={`mt-8 flex flex-col gap-3 px-1`}>
         <h1 className="text-[0.85rem]">Alignment</h1>
-        <div className="flex flex-wrap gap-2">
+        <div className="flex flex-wrap gap-4">
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger asChild>
@@ -244,6 +261,62 @@ export default function FontSettings() {
           </TooltipProvider>
         </div>
       </div>
+
+      <hr className="my-8" />
+
+      <h3 className="flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
+        <GalleryVerticalEnd className="rotate-90" size={20} />
+        <span>Text shadow</span>
+      </h3>
+
+      <div className="mb-3 mt-8 flex items-center px-1">
+        <h1 className="text-[0.85rem]">Opacity</h1>
+        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
+          {Math.round(
+            Number(texts[selectedText - 1]?.style.shadowOpacity ?? 1) * 100
+          )}
+          %
+        </p>
+      </div>
+
+      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
+        <Slider
+          defaultValue={[0.1]}
+          min={0}
+          max={1}
+          step={0.01}
+          onValueChange={(value) => {
+            setTexts(
+              texts.map((text, index) =>
+                index === selectedText - 1
+                  ? {
+                      ...text,
+                      style: {
+                        ...text.style,
+                        shadowOpacity: value[0],
+                      },
+                    }
+                  : text
+              )
+            )
+          }}
+          value={
+            texts.length !== 0
+              ? [texts[selectedText - 1]?.style.shadowOpacity]
+              : [0.1]
+          }
+        />
+      </div>
+
+      <div className="mb-3 mt-8 flex items-center px-1">
+        <h1 className="text-[0.85rem]">Shadow color</h1>
+      </div>
+
+      <PopupColorPicker
+        shouldShowAlpha={false}
+        color={texts[selectedText - 1]?.style.shadowColor}
+        onChange={handleShadowColorChange}
+      />
     </div>
   )
 }

@@ -9,6 +9,7 @@ import { useRef, useState } from 'react'
 import TiptapMoveable from './TiptapMoveable'
 import { BubbleMenu } from '@tiptap/react'
 import { useTiptap } from '@/store/use-tiptap'
+import { convertHex } from '@/utils/helperFns'
 
 type MenuBarProps = {
   editor: Editor | null
@@ -130,6 +131,10 @@ export default function TipTap() {
             fontWeight: `${text.style.fontWeight}`,
             textAlign: `${text.style.textAlign}`,
             letterSpacing: `${text.style.letterSpacing}em`,
+            filter: `drop-shadow(${text.style.textShadow} ${convertHex(
+              text.style.shadowColor,
+              text.style.shadowOpacity
+            )})`,
           }}
           onClick={() => {
             setShowTextControls(!showTextControls)

@@ -182,7 +182,7 @@ export default function ShadowSettings() {
       </div>
 
       <PopupColorPicker
-      shouldShowAlpha={false}
+        shouldShowAlpha={false}
         color={images[selectedImage - 1]?.style.shadowColor}
         onChange={handleColorChange}
       />
