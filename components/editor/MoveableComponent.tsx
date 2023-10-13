@@ -16,7 +16,6 @@ import {
   Snappable,
 } from 'react-moveable'
 import { useImageQualityStore } from '@/store/use-image-quality'
-import Selecto from 'react-selecto'
 
 const Moveable = makeMoveable<
   DraggableProps & ScalableProps & RotatableProps & SnappableProps
@@ -101,6 +100,29 @@ export default function MoveableComponent({ id }: { id: string }) {
       <Moveable
         ref={moveableRef as any}
         target={document?.getElementById(id)}
+        // target={'.image'}
+        // onDragGroup={({ events }) => {
+        //   events.forEach((ev) => {
+        //     ev.target.style.transform = ev.transform
+        //   })
+        // }}
+        // hideChildMoveableDefaultLines={false}
+        // onResizeGroupStart={({ setMin, setMax }) => {
+        //   setMin([0, 0])
+        //   setMax([0, 0])
+        // }}
+        // onScaleGroup={({ scale, dist, events }) => {
+        //   events.forEach((ev) => {
+        //     ev.target.style.transform = ev.drag.transform
+        //   })
+        // }}
+        // onResizeGroup={({ events }) => {
+        //   events.forEach((ev) => {
+        //     ev.target.style.width = `${ev.width}px`
+        //     ev.target.style.height = `${ev.height}px`
+        //     ev.target.style.transform = ev.drag.transform
+        //   })
+        // }}
         draggable={true}
         onDrag={(e) => {
           e.target.style.transform = e.transform

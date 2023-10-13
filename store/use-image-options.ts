@@ -58,10 +58,10 @@ interface ImageOptionsState {
     style: {
       textSize: string
       textColor: string
-      textAlign: string
-      fontWeight: string
+      textAlign: 'left' | 'center' | 'right'
+      fontWeight: number
       fontFamily: string
-      letterSpacing: string
+      letterSpacing: number
       textShadow: string
       shadowName: string
       shadowColor: string
@@ -77,10 +77,10 @@ interface ImageOptionsState {
       style: {
         textSize: string
         textColor: string
-        textAlign: string
-        fontWeight: string
+        textAlign: 'left' | 'center' | 'right'
+        fontWeight: number
         fontFamily: string
-        letterSpacing: string
+        letterSpacing: number
         textShadow: string
         shadowName: string
         shadowColor: string
@@ -115,10 +115,10 @@ interface ImageOptionsState {
   defaultTextStyle: {
     textSize: string
     textColor: string
-    textAlign: string
-    fontWeight: string
+    textAlign: 'left' | 'center' | 'right'
+    fontWeight: number
     fontFamily: string
-    letterSpacing: string
+    letterSpacing: number
     textShadow: string
     shadowName: string
     shadowColor: string
@@ -162,9 +162,9 @@ export const useImageOptions = create(
       textSize: '3',
       textColor: '#151515',
       textAlign: 'center',
-      fontWeight: '400',
+      fontWeight: 400,
       fontFamily: 'inherit',
-      letterSpacing: '0',
+      letterSpacing: 0,
       textShadow: '0 25px 50px -12px',
       shadowName: 'Bottom',
       shadowColor: '#00000030',

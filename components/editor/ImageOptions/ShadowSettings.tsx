@@ -153,7 +153,7 @@ export default function ShadowSettings() {
           defaultValue={[0.5]}
           min={0}
           max={1}
-          step={0.05}
+          step={0.01}
           onValueChange={(value) => {
             setImages(
               images.map((image, index) =>

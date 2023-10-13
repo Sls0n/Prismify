@@ -93,8 +93,6 @@ const ImageUpload = () => {
     setResolution('1920x1080')
   }
 
-
-
   function convertHex(hexCode: string, opacity = 1) {
     var hex = hexCode.replace('#', '')
 
@@ -172,16 +170,25 @@ const ImageUpload = () => {
               return (
                 <div
                   key={image.image}
-                  className="image flex h-full w-full flex-col overflow-hidden"
+                  className={`image flex h-full w-full flex-col overflow-hidden `}
                   ref={image.id === selectedImage ? targetRef : null}
                   style={{
                     transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg)`,
                     borderRadius: `${image.style.imageRoundness}rem`,
                     // boxShadow: `${image.style.imageShadow} ${image.style.shadowColor}`,
-                    boxShadow: `${image.style.imageShadow} ${convertHex(
-                      image.style.shadowColor,
-                      image.style.shadowOpacity
-                    )}`,
+                    boxShadow:
+                      image.style.shadowName !== 'Small'
+                        ? `${image.style.imageShadow} ${convertHex(
+                            image.style.shadowColor,
+                            image.style.shadowOpacity
+                          )}`
+                        : `0 10px 25px -5px ${convertHex(
+                            image.style.shadowColor,
+                            image.style.shadowOpacity - 0.25
+                          )}, 0 8px 10px -6px ${convertHex(
+                            image.style.shadowColor,
+                            image.style.shadowOpacity - 0.25
+                          )}`,
 
                     // If browserFrame is 'None', then only apply a border only if borderSize is not '0',
                     border:

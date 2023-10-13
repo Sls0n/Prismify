@@ -128,6 +128,8 @@ export default function TipTap() {
             fontFamily: `${text.style.fontFamily}`,
             color: `${text.style.textColor}`,
             fontWeight: `${text.style.fontWeight}`,
+            textAlign: `${text.style.textAlign}`,
+            letterSpacing: `${text.style.letterSpacing}em`,
           }}
           onClick={() => {
             setShowTextControls(!showTextControls)

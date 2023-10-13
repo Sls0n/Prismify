@@ -26,10 +26,9 @@ export default function SizeOption({ text = 'Scale' }: SizeOptionProps) {
           defaultValue={[1]}
           max={3}
           min={0.25}
-          step={0.05}
+          step={0.01}
           onValueChange={(value: number[]) => {
             setShowControls(false)
-
             setImages(
               images.map((image, index) =>
                 index === selectedImage - 1

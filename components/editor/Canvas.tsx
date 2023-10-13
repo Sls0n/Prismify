@@ -126,7 +126,7 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        className="relative flex h-full flex-1 items-start justify-center overflow-hidden pt-5"
+        className="relative flex h-full flex-1 items-start justify-center overflow-hidden bg-[#161616] px-6 py-4 pt-5"
       >
         {/* <div className="flex h-14 w-full items-center border border-border">
           TODO: ADD UPPER SETTINGS
@@ -138,6 +138,7 @@ export default function Canvas() {
           className="relative flex h-full w-full flex-1 items-start justify-center overflow-hidden"
         >
           <motion.div
+            layout
             className={
               'relative flex w-full items-center justify-center overflow-hidden '
             }
