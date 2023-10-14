@@ -10,7 +10,6 @@ import { useBackgroundOptions } from '@/store/use-background-options'
 import { useImageOptions } from '@/store/use-image-options'
 import { motion } from 'framer-motion'
 import TipTap from './Tiptap'
-// import SelectoComponent from './SelectoComponent'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()

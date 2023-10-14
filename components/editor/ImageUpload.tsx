@@ -13,9 +13,10 @@ import { useOnClickOutside } from '@/hooks/use-on-click-outside'
 import { useMoveable } from '@/store/use-moveable'
 import { useFrameOptions } from '@/store/use-frame-options'
 import MoveableComponent from './MoveableComponent'
-import { convertHex } from '@/utils/helperFns'
+import { calculateEqualCanvasSize, convertHex } from '@/utils/helperFns'
 import { useColorExtractor } from '@/store/use-color-extractor'
 import analyze from 'rgbaster'
+import ContextMenuImage from './ContextMenuImage'
 
 const ImageUpload = () => {
   const targetRef = useRef<HTMLDivElement>(null)
@@ -33,8 +34,7 @@ const ImageUpload = () => {
     }
     const extractColors = async () => {
       const result = await analyze(images[images.length - 1].image, {
-        scale: 0.1,
-        ignore: ['rgb(0,0,0)'],
+        scale: 0.3,
       })
       const extractedColors = result.slice(0, 12)
       setImages(
@@ -45,7 +45,7 @@ const ImageUpload = () => {
                 extractedColors,
                 style: {
                   ...image.style,
-                  insetColor: extractedColors[1].color,
+                  insetColor: extractedColors[0].color,
                 },
               }
             : image
@@ -89,77 +89,65 @@ const ImageUpload = () => {
           <div className="absolute flex items-center ">
             {images.map((image) => {
               return (
-                <div
-                  key={image.image}
-                  className={`image flex h-full w-full flex-col overflow-hidden `}
-                  ref={image.id === selectedImage ? targetRef : null}
-                  style={{
-                    transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg)`,
-                    borderRadius: `${image.style.imageRoundness}rem`,
-                    // boxShadow: `${image.style.imageShadow} ${image.style.shadowColor}`,
-                    boxShadow:
-                      image.style.shadowName !== 'Small'
-                        ? `${image.style.imageShadow} ${convertHex(
-                            image.style.shadowColor,
-                            image.style.shadowOpacity
-                          )}`
-                        : `0 10px 25px -5px ${convertHex(
-                            image.style.shadowColor,
-                            image.style.shadowOpacity - 0.25
-                          )}, 0 8px 10px -6px ${convertHex(
-                            image.style.shadowColor,
-                            image.style.shadowOpacity - 0.25
-                          )}`,
-
-                    // If browserFrame is 'None', then only apply a border only if borderSize is not '0',
-                    // border:
-                    //   browserFrame !== 'None'
-                    //     ? ''
-                    //     : image.style.insetSize === '0'
-                    //     ? ''
-                    //     : `1px solid var(--borderColor${image.id})`,
-
-                    // padding:
-                    //   browserFrame !== 'None'
-                    //     ? ''
-                    //     : `var(--borderSize${image.id})`,
-                    // background:
-                    //   image.style.borderSize === '0'
-                    //     ? ''
-                    //     : `var(--borderColor${image.id})`,
-
-                    padding:
-                      browserFrame !== 'None'
-                        ? ''
-                        : `${image.style.insetSize}px`,
-
-                    backgroundColor:
-                      image.style.insetSize !== '0'
-                        ? `${image?.style.insetColor}`
-                        : '',
-                  }}
-                  id={`${image.id}`}
-                  onClick={() => handleImageClick(image.id)}
-                >
-                  <BrowserFrame />
-
-                  <img
-                    className={`h-full w-full flex-1`}
-                    src={image.image}
-                    alt="Uploaded image"
+                <ContextMenuImage key={image.id}>
+                  <div
+                    key={image.image}
+                    className={`image flex h-full w-full flex-col overflow-hidden `}
+                    ref={image.id === selectedImage ? targetRef : null}
                     style={{
-                      borderRadius:
-                        browserFrame !== 'None'
-                          ? ''
-                          : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
+                      transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg)`,
+                      borderRadius: `${image.style.imageRoundness}rem`,
+                      boxShadow:
+                        image.style.shadowName !== 'Small'
+                          ? `${image.style.imageShadow} ${convertHex(
+                              image.style.shadowColor,
+                              image.style.shadowOpacity
+                            )}`
+                          : `0 10px 25px -5px ${convertHex(
+                              image.style.shadowColor,
+                              image.style.shadowOpacity - 0.25
+                            )}, 0 8px 10px -6px ${convertHex(
+                              image.style.shadowColor,
+                              image.style.shadowOpacity - 0.25
+                            )}`,
 
                       padding:
-                        browserFrame === 'None'
+                        browserFrame !== 'None'
                           ? ''
                           : `${image.style.insetSize}px`,
+
+                      backgroundColor:
+                        image.style.insetSize !== '0'
+                          ? `${image?.style.insetColor}`
+                          : '',
                     }}
-                  />
-                </div>
+                    id={`${image.id}`}
+                    onClick={() => handleImageClick(image.id)}
+                    // on right click too do the same
+                    onContextMenu={(e) => {
+                      handleImageClick(image.id)
+                    }}
+                  >
+                    <BrowserFrame />
+
+                    <img
+                      className={`h-full w-full flex-1`}
+                      src={image.image}
+                      alt="Uploaded image"
+                      style={{
+                        borderRadius:
+                          browserFrame !== 'None'
+                            ? ''
+                            : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
+
+                        padding:
+                          browserFrame === 'None'
+                            ? ''
+                            : `${image.style.insetSize}px`,
+                      }}
+                    />
+                  </div>
+                </ContextMenuImage>
               )
             })}
           </div>
@@ -179,25 +167,6 @@ function LoadAImage() {
   const { setResolution, automaticResolution } = useResizeCanvas()
   const { setBackground } = useBackgroundOptions()
 
-  const calculateCanvasSize = (
-    imgWidth: number,
-    imgHeight: number,
-    padding: number
-  ) => {
-    const aspectRatio = imgWidth / imgHeight
-    let canvasWidth, canvasHeight
-
-    if (aspectRatio > 1) {
-      canvasWidth = imgWidth + 2 * padding
-      canvasHeight = imgHeight + 2 * padding
-    } else {
-      canvasHeight = imgHeight + 2 * padding
-      canvasWidth = imgWidth + 2 * padding
-    }
-
-    return `${canvasWidth}x${canvasHeight}`
-  }
-
   const handleImageChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
@@ -212,7 +181,7 @@ function LoadAImage() {
         ])
         setSelectedImage(images.length + 1)
 
-        if (images.length > 0) return;
+        if (images.length > 0) return
         if (automaticResolution) {
           const padding = 200
           const img = new Image()
@@ -220,25 +189,12 @@ function LoadAImage() {
 
           img.onload = () => {
             const { naturalWidth, naturalHeight } = img
-            const newResolution = calculateCanvasSize(
+            const newResolution = calculateEqualCanvasSize(
               naturalWidth,
               naturalHeight,
               padding
             )
             setResolution(newResolution.toString())
-            setImages(
-              images.map((image, index) =>
-                index === 0
-                  ? {
-                      ...image,
-                      style: {
-                        ...image.style,
-                        imageSize: '0.75',
-                      },
-                    }
-                  : image
-              )
-            )
           }
         }
       }

@@ -42,7 +42,7 @@ export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
   attribution: { name: null, link: null },
   setAttribution: (attribution) => set({ attribution }),
 
-  highResBackground: false,
+  highResBackground: true,
   setHighResBackground: (highResBackground) => set({ highResBackground }),
 
   backgroundType: 'gradient',

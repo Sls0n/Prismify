@@ -2,6 +2,8 @@ import { ChangeEvent, useRef } from 'react'
 import { X, Plus } from 'lucide-react'
 import { useImageOptions } from '@/store/use-image-options'
 import { useColorExtractor } from '@/store/use-color-extractor'
+import { calculateEqualCanvasSize } from '@/utils/helperFns'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
 
 type ImagePreviewProps = {}
 
@@ -9,6 +11,7 @@ export default function ImagePreview({}: ImagePreviewProps) {
   const { setImages, images, defaultStyle } = useImageOptions()
   const { imagesCheck, setImagesCheck } = useColorExtractor()
   const uploadRef = useRef<HTMLInputElement>(null)
+  const { automaticResolution, setResolution } = useResizeCanvas()
 
   const handleImageDelete = (id: number) => {
     const newImages = images.filter((image) => image.id !== id)
@@ -25,6 +28,23 @@ export default function ImagePreview({}: ImagePreviewProps) {
         { image: imageUrl, id: images.length + 1, style: defaultStyle },
       ])
       setImagesCheck([...imagesCheck, imageUrl])
+
+      if (images.length > 0) return
+      if (automaticResolution) {
+        const padding = 200
+        const img = new Image()
+        img.src = imageUrl
+
+        img.onload = () => {
+          const { naturalWidth, naturalHeight } = img
+          const newResolution = calculateEqualCanvasSize(
+            naturalWidth,
+            naturalHeight,
+            padding
+          )
+          setResolution(newResolution.toString())
+        }
+      }
     }
   }
 
