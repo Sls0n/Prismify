@@ -22,9 +22,13 @@ import FrameOptions from './FrameOptions/FrameOptions'
 import PositionOptions from './PositionOptions/PositionOptions'
 import { useTemporalStore } from '@/store/use-image-options'
 import TextOptions from './TextOptions/TextOptions'
+import useStore from '@/hooks/use-store'
 
 export default function Sidebar() {
-  const activeIndex = useActiveIndexStore((state) => state.activeIndex)
+  const activeIndex = useStore(
+    useActiveIndexStore,
+    (state) => state.activeIndex
+  )
   const { undo, redo, futureStates, pastStates } = useTemporalStore(
     (state) => state
   )
@@ -86,9 +90,9 @@ export default function Sidebar() {
           <div className="flex flex-col px-7">
             <div className="flex w-full flex-col py-10">
               <h3 className="mb-8 flex items-center gap-2 text-xs font-semibold uppercase text-primary/70 dark:text-dark/70">
-                {sidebarButtons[activeIndex].icon}
+                {sidebarButtons[activeIndex ?? 1].icon}
                 <div className="">
-                  {sidebarButtons[activeIndex].text}
+                  {sidebarButtons[activeIndex ?? 1].text}
 
                   <span className="ml-1 text-[#646464]">/ &nbsp;Layers</span>
                 </div>

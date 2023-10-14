@@ -119,6 +119,9 @@ dependencies:
   html-to-image:
     specifier: ^1.11.11
     version: 1.11.11
+  just-throttle:
+    specifier: ^4.2.0
+    version: 4.2.0
   lucide-react:
     specifier: ^0.265.0
     version: 0.265.0(react@18.2.0)
@@ -174,8 +177,8 @@ dependencies:
     specifier: ^3.21.4
     version: 3.21.4
   zundo:
-    specifier: 2.0.0-beta.25
-    version: 2.0.0-beta.25(zustand@4.3.9)
+    specifier: 2.0.0
+    version: 2.0.0(zustand@4.3.9)
   zustand:
     specifier: ^4.3.9
     version: 4.3.9(react@18.2.0)
@@ -3590,6 +3593,10 @@ packages:
       object.values: 1.1.6
     dev: false
 
+  /just-throttle@4.2.0:
+    resolution: {integrity: sha512-/iAZv1953JcExpvsywaPKjSzfTiCLqeguUTE6+VmK15mOcwxBx7/FHrVvS4WEErMR03TRazH8kcBSHqMagYIYg==}
+    dev: false
+
   /keycode@2.2.1:
     resolution: {integrity: sha512-Rdgz9Hl9Iv4QKi8b0OlCRQEzp4AgVxyCtz5S/+VIHezDmrDhkp2N2TqBWOLz0/gbeREXOOiI9/4b8BY9uw2vFg==}
     dev: false
@@ -5281,8 +5288,8 @@ packages:
     resolution: {integrity: sha512-m46AKbrzKVzOzs/DZgVnG5H55N1sv1M8qZU3A8RIKbs3mrACDNeIOeilDymVb2HdmP8uwshOCF4uJ8uM9rCqJw==}
     dev: false
 
-  /zundo@2.0.0-beta.25(zustand@4.3.9):
-    resolution: {integrity: sha512-afcQflpt9ikWPXh3eXcHqyoM4vw6sajinLtLttqhzj/zUtSNEfVw4wcuHolczPJuAlt9qwoPLUwPat4YEMf8RQ==}
+  /zundo@2.0.0(zustand@4.3.9):
+    resolution: {integrity: sha512-XzKDyunmyxvQHKDjgTmOClOQscJAm5NAa1iEazR0DilvV/uwCjnDwlHJuJ+GmG/oj5RMjzsD0ptghZzjEj1w4g==}
     peerDependencies:
       zustand: ^4.3.0
     dependencies:

@@ -1,5 +1,6 @@
 import { create, useStore } from 'zustand'
 import { temporal, TemporalState } from 'zundo'
+import throttle from 'just-throttle'
 
 interface ImageOptionsState {
   accordionOpen: {
@@ -140,59 +141,69 @@ interface ImageOptionsState {
 }
 
 export const useImageOptions = create(
-  temporal<ImageOptionsState>((set) => ({
-    accordionOpen: {
-      appearanceOpen: true,
-      shadowOpen: true,
-      borderOpen: false,
-    },
-    setAccordionOpen: (accordionOpen) => set({ accordionOpen }),
+  temporal<ImageOptionsState>(
+    (set) => ({
+      accordionOpen: {
+        appearanceOpen: true,
+        shadowOpen: true,
+        borderOpen: false,
+      },
+      setAccordionOpen: (accordionOpen) => set({ accordionOpen }),
 
-    selectedImage: 1,
-    setSelectedImage: (selectedImage) => set({ selectedImage }),
+      selectedImage: 1,
+      setSelectedImage: (selectedImage) => set({ selectedImage }),
 
-    selectedText: 1,
-    setSelectedText: (selectedText) => set({ selectedText }),
+      selectedText: 1,
+      setSelectedText: (selectedText) => set({ selectedText }),
 
-    defaultStyle: {
-      imageSize: '0.8',
-      imageRoundness: 0.7,
-      imageShadow: '0px 8px 55px 0px',
-      shadowPreview: '0px 6px 30px 0px #000',
-      shadowOpacity: 0.5,
-      shadowName: 'Large',
-      shadowColor: '#000',
-      borderSize: '0',
-      borderColor: '#ffffff50',
-      insetSize: '0',
-      insetColor: '#fff',  
-      rotate: '0',
-      translateX: 0,
-      translateY: 0,
-    },
+      defaultStyle: {
+        imageSize: '0.8',
+        imageRoundness: 0.7,
+        imageShadow: '0px 8px 55px 0px',
+        shadowPreview: '0px 6px 30px 0px #000',
+        shadowOpacity: 0.5,
+        shadowName: 'Large',
+        shadowColor: '#000',
+        borderSize: '0',
+        borderColor: '#ffffff50',
+        insetSize: '0',
+        insetColor: '#fff',
+        rotate: '0',
+        translateX: 0,
+        translateY: 0,
+      },
 
-    defaultTextStyle: {
-      textSize: '3',
-      textColor: '#151515',
-      textAlign: 'center',
-      fontWeight: 400,
-      fontFamily: 'DM Sans',
-      letterSpacing: -0.01,
-      textShadow: '1px 1px 8px',
-      shadowName: 'Bottom',
-      shadowColor: '#000',
-      shadowOpacity: 0.1,
-      hasBackground: false,
-      backgroundColor: '#ffffff50',
-      padding: '0',
-    },
+      defaultTextStyle: {
+        textSize: '3',
+        textColor: '#151515',
+        textAlign: 'center',
+        fontWeight: 400,
+        fontFamily: 'DM Sans',
+        letterSpacing: -0.01,
+        textShadow: '1px 1px 8px',
+        shadowName: 'Bottom',
+        shadowColor: '#000',
+        shadowOpacity: 0.1,
+        hasBackground: false,
+        backgroundColor: '#ffffff50',
+        padding: '0',
+      },
 
-    images: [],
-    setImages: (images) => set({ images }),
+      images: [],
+      setImages: (images) => set({ images }),
 
-    texts: [],
-    setTexts: (texts) => set({ texts }),
-  }))
+      texts: [],
+      setTexts: (texts) => set({ texts }),
+    }),
+    {
+      limit: 30,
+      handleSet: (handleSet) =>
+        throttle<typeof handleSet>((state) => {
+          console.info('handleSet called')
+          handleSet(state)
+        }, 1000),
+    }
+  )
 )
 
 export const useTemporalStore = <T extends unknown>(
