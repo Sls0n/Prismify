@@ -24,7 +24,7 @@ export default function Canvas() {
     setScaleFactor,
     setShouldFloat,
   } = useResizeCanvas()
-  const { images } = useImageOptions()
+  const { images, initialImageUploaded } = useImageOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
 
@@ -34,10 +34,9 @@ export default function Canvas() {
 
   let style: CSSProperties = {
     aspectRatio,
-    backgroundImage:
-      images.length === 0
-        ? 'linear-gradient(0deg, #131313, #151515 100%)'
-        : `var(--gradient-bg)`,
+    backgroundImage: !initialImageUploaded
+      ? 'linear-gradient(0deg, #131313, #151515 100%)'
+      : `var(--gradient-bg)`,
 
     borderRadius: `${canvasRoundness}rem`,
   }

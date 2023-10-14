@@ -21,8 +21,14 @@ import ContextMenuImage from './ContextMenuImage'
 const ImageUpload = () => {
   const targetRef = useRef<HTMLDivElement>(null)
 
-  const { images, setImages, setSelectedImage, selectedImage } =
-    useImageOptions()
+  const {
+    images,
+    setImages,
+    setSelectedImage,
+    selectedImage,
+    setInitialImageUploaded,
+    initialImageUploaded,
+  } = useImageOptions()
   const { setShowControls, showControls } = useMoveable()
 
   const { browserFrame } = useFrameOptions()
@@ -32,6 +38,7 @@ const ImageUpload = () => {
     if (images.length === 0) {
       return
     }
+    setInitialImageUploaded(true)
     const extractColors = async () => {
       const result = await analyze(images[images.length - 1].image, {
         scale: 0.3,
@@ -83,7 +90,7 @@ const ImageUpload = () => {
 
   return (
     <>
-      {images.length === 0 && <LoadAImage />}
+      {!initialImageUploaded && <LoadAImage />}
       {images && (
         <>
           <div className="absolute flex items-center ">
@@ -161,8 +168,13 @@ const ImageUpload = () => {
 export default ImageUpload
 
 function LoadAImage() {
-  const { images, setImages, defaultStyle, setSelectedImage } =
-    useImageOptions()
+  const {
+    images,
+    setImages,
+    defaultStyle,
+    setSelectedImage,
+    setInitialImageUploaded,
+  } = useImageOptions()
   const { imagesCheck, setImagesCheck } = useColorExtractor()
   const { setResolution, automaticResolution } = useResizeCanvas()
   const { setBackground } = useBackgroundOptions()
@@ -173,6 +185,7 @@ function LoadAImage() {
 
       if (file) {
         const imageUrl = URL.createObjectURL(file)
+        setInitialImageUploaded(true)
 
         setImagesCheck([...imagesCheck, imageUrl])
         setImages([
@@ -200,13 +213,14 @@ function LoadAImage() {
       }
     },
     [
-      images,
-      automaticResolution,
+      setInitialImageUploaded,
       setImagesCheck,
       imagesCheck,
       setImages,
+      images,
       defaultStyle,
       setSelectedImage,
+      automaticResolution,
       setResolution,
     ]
   )

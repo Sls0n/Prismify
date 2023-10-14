@@ -29,7 +29,8 @@ export function ResolutionButton({
   const [isHovering, setIsHovering] = useState(false)
 
   const { setResolution, setScaleFactor, domResolution } = useResizeCanvas()
-  const { images, setImages, selectedImage } = useImageOptions()
+  const { images, setImages, selectedImage, initialImageUploaded } =
+    useImageOptions()
 
   const [domWidth]: number[] = domResolution.split('x').map(Number)
 
@@ -142,7 +143,7 @@ export function ResolutionButton({
                   .split('x')
                   .map(Number)
 
-                if (images.length === 0) return
+                if (!initialImageUploaded) return
 
                 setResolution(res.resolution)
 

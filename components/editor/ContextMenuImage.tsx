@@ -19,8 +19,7 @@ export default function ContextMenuImage({
 }: {
   children: React.ReactNode
 }) {
-  const { setImages, images, defaultStyle, selectedImage } = useImageOptions()
-  const { imagesCheck, setImagesCheck } = useColorExtractor()
+  const { setImages, images, selectedImage } = useImageOptions()
 
   const handleImageDelete = (id: number) => {
     const newImages = images.filter((image) => image.id !== id)

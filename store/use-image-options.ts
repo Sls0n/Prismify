@@ -14,6 +14,9 @@ interface ImageOptionsState {
     borderOpen: boolean
   }) => void
 
+  initialImageUploaded: boolean
+  setInitialImageUploaded: (initialImageUploaded: boolean) => void
+
   images: {
     id: number
     image: string
@@ -149,6 +152,10 @@ export const useImageOptions = create(
         borderOpen: false,
       },
       setAccordionOpen: (accordionOpen) => set({ accordionOpen }),
+
+      initialImageUploaded: false,
+      setInitialImageUploaded: (initialImageUploaded) =>
+        set({ initialImageUploaded }),
 
       selectedImage: 1,
       setSelectedImage: (selectedImage) => set({ selectedImage }),
