@@ -1,4 +1,5 @@
-import { create } from 'zustand'
+import { create, StateCreator } from 'zustand'
+import { persist, createJSONStorage, PersistOptions } from 'zustand/middleware'
 
 interface ResizeCanvasState {
   resolution: string
@@ -18,24 +19,44 @@ interface ResizeCanvasState {
 
   shouldFloat: boolean
   setShouldFloat: (shouldFloat: boolean) => void
+
+  automaticResolution: boolean
+  setAutomaticResolution: (automaticResolution: boolean) => void
 }
 
-export const useResizeCanvas = create<ResizeCanvasState>()((set) => ({
-  resolution: '1920x1080',
-  setResolution: (res) => set({ resolution: res }),
+type MyPersist = (
+  config: StateCreator<ResizeCanvasState>,
+  options: PersistOptions<ResizeCanvasState>
+) => StateCreator<ResizeCanvasState>
 
-  domResolution: '....x....',
-  setDomResolution: (res) => set({ domResolution: res }),
+export const useResizeCanvas = create<ResizeCanvasState, []>(
+  (persist as MyPersist)(
+    (set): ResizeCanvasState => ({
+      resolution: '1920x1080',
+      setResolution: (res) => set({ resolution: res }),
 
-  canvasRoundness: 0,
-  setCanvasRoundness: (canvasRoundness) => set({ canvasRoundness }),
+      domResolution: '....x....',
+      setDomResolution: (res) => set({ domResolution: res }),
 
-  scrollScale: 1,
-  setScrollScale: (scrollScale) => set({ scrollScale }),
+      canvasRoundness: 0,
+      setCanvasRoundness: (canvasRoundness) => set({ canvasRoundness }),
 
-  scaleFactor: 1,
-  setScaleFactor: (scaleFactor) => set({ scaleFactor }),
+      scrollScale: 1,
+      setScrollScale: (scrollScale) => set({ scrollScale }),
 
-  shouldFloat: false,
-  setShouldFloat: (shouldFloat) => set({ shouldFloat }),
-}))
+      scaleFactor: 1,
+      setScaleFactor: (scaleFactor) => set({ scaleFactor }),
+
+      shouldFloat: false,
+      setShouldFloat: (shouldFloat) => set({ shouldFloat }),
+
+      automaticResolution: true,
+      setAutomaticResolution: (automaticResolution) =>
+        set({ automaticResolution }),
+    }),
+    {
+      name: 'resize-canvas',
+      storage: createJSONStorage(() => localStorage),
+    }
+  )
+)

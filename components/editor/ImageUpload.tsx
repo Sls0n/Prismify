@@ -132,8 +132,11 @@ const ImageUpload = () => {
                       browserFrame !== 'None'
                         ? ''
                         : `${image.style.insetSize}px`,
-                        
-                    backgroundColor: image.style.insetSize !== '0' ? `${image?.style.insetColor}` : '',
+
+                    backgroundColor:
+                      image.style.insetSize !== '0'
+                        ? `${image?.style.insetColor}`
+                        : '',
                   }}
                   id={`${image.id}`}
                   onClick={() => handleImageClick(image.id)}
@@ -173,8 +176,27 @@ function LoadAImage() {
   const { images, setImages, defaultStyle, setSelectedImage } =
     useImageOptions()
   const { imagesCheck, setImagesCheck } = useColorExtractor()
-  const { setResolution } = useResizeCanvas()
+  const { setResolution, automaticResolution } = useResizeCanvas()
   const { setBackground } = useBackgroundOptions()
+
+  const calculateCanvasSize = (
+    imgWidth: number,
+    imgHeight: number,
+    padding: number
+  ) => {
+    const aspectRatio = imgWidth / imgHeight
+    let canvasWidth, canvasHeight
+
+    if (aspectRatio > 1) {
+      canvasWidth = imgWidth + 2 * padding
+      canvasHeight = imgHeight + 2 * padding
+    } else {
+      canvasHeight = imgHeight + 2 * padding
+      canvasWidth = imgWidth + 2 * padding
+    }
+
+    return `${canvasWidth}x${canvasHeight}`
+  }
 
   const handleImageChange = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -189,15 +211,47 @@ function LoadAImage() {
           { image: imageUrl, id: images.length + 1, style: defaultStyle },
         ])
         setSelectedImage(images.length + 1)
+
+        if (images.length > 0) return;
+        if (automaticResolution) {
+          const padding = 200
+          const img = new Image()
+          img.src = imageUrl
+
+          img.onload = () => {
+            const { naturalWidth, naturalHeight } = img
+            const newResolution = calculateCanvasSize(
+              naturalWidth,
+              naturalHeight,
+              padding
+            )
+            setResolution(newResolution.toString())
+            setImages(
+              images.map((image, index) =>
+                index === 0
+                  ? {
+                      ...image,
+                      style: {
+                        ...image.style,
+                        imageSize: '0.75',
+                      },
+                    }
+                  : image
+              )
+            )
+          }
+        }
       }
     },
     [
+      images,
+      automaticResolution,
       setImagesCheck,
       imagesCheck,
       setImages,
-      images,
       defaultStyle,
       setSelectedImage,
+      setResolution,
     ]
   )
 

@@ -19,6 +19,14 @@ import { Separator } from '@/components/ui/Separator'
 import { ResolutionButton } from './ResolutionButton'
 import RoundnessSettings from './RoundnessSettings'
 import { Input } from '@/components/ui/Input'
+import { Switch } from '@/components/ui/Switch'
+import {
+  TooltipProvider,
+  Tooltip,
+  TooltipTrigger,
+  TooltipContent,
+} from '@/components/ui/Tooltip'
+import Icon from '@/components/icons'
 
 const icons = {
   Youtube: <Youtube size={18} />,
@@ -27,14 +35,22 @@ const icons = {
   LinkedIn: <Linkedin size={18} />,
   Twitter: <Twitter size={18} />,
   Dribble: <Dribbble size={18} />,
-  ProductHunt: <div className="bg-[#898aeb]/5 w-6 h-6 flex-center rounded-full">P</div>,
+  ProductHunt: (
+    <div className="flex-center h-6 w-6 rounded-full bg-[#898aeb]/5">P</div>
+  ),
 }
 
 const splitResolution = (resolution: string) => resolution.split('x')
 
 export default function CanvasOptions() {
-  const { setResolution, domResolution, scrollScale, setScrollScale } =
-    useResizeCanvas()
+  const {
+    setResolution,
+    domResolution,
+    scrollScale,
+    setScrollScale,
+    automaticResolution,
+    setAutomaticResolution,
+  } = useResizeCanvas()
 
   const [width, height] = splitResolution(domResolution)
 
@@ -59,7 +75,34 @@ export default function CanvasOptions() {
 
   return (
     <>
-      <h1 className="mb-3 mt-4 px-1 text-[0.85rem]">Custom Resolution</h1>
+      <div className="mt-4 flex w-full max-w-[85%] justify-between px-1">
+        <div className="flex-center">
+          <h1 className="mr-1 text-[0.85rem]">Toggle auto resoultion</h1>
+          <TooltipProvider>
+            <Tooltip>
+              <TooltipTrigger>
+                <Icon variant="duotone" name="info" color="none" />
+              </TooltipTrigger>
+              <TooltipContent className="max-w-[12rem]">
+                <p>
+                  When enabled, the canvas will automatically resize to fit your
+                  image.
+                </p>
+              </TooltipContent>
+            </Tooltip>
+          </TooltipProvider>
+        </div>
+        <Switch
+          checked={automaticResolution}
+          onCheckedChange={(checked) => {
+            setAutomaticResolution(checked)
+          }}
+        />
+      </div>
+
+      <hr className="my-4 border-border" />
+
+      <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Custom Resolution</h1>
       <form
         onSubmit={handleSubmit}
         className="flex w-full max-w-sm items-center space-x-2"
@@ -95,6 +138,7 @@ export default function CanvasOptions() {
           <ArrowRight size={18} />
         </Button>
       </form>
+
       <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Canvas size</h1>
       <div className="flex flex-wrap gap-3">
         {resolutions.map((res, index) => (
@@ -120,7 +164,7 @@ export default function CanvasOptions() {
       <span className="inline-flex rounded-md shadow-sm">
         <button
           type="button"
-          className="relative inline-flex items-center rounded-l-md bg-secondary-foreground dark:bg-formDark px-2 py-2 dark:text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
+          className="relative inline-flex items-center rounded-l-md bg-secondary-foreground px-2 py-2 ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed dark:bg-formDark dark:text-dark"
           disabled={scrollScale === 1}
           onClick={() => {
             if (scrollScale === 1) return
