@@ -127,11 +127,19 @@ const ImageUpload = () => {
                     //   image.style.borderSize === '0'
                     //     ? ''
                     //     : `var(--borderColor${image.id})`,
+
+                    padding:
+                      browserFrame !== 'None'
+                        ? ''
+                        : `${image.style.insetSize}px`,
+                        
+                    backgroundColor: image.style.insetSize !== '0' ? `${image?.style.insetColor}` : '',
                   }}
                   id={`${image.id}`}
                   onClick={() => handleImageClick(image.id)}
                 >
                   <BrowserFrame />
+
                   <img
                     className={`h-full w-full flex-1`}
                     src={image.image}
@@ -139,11 +147,13 @@ const ImageUpload = () => {
                     style={{
                       borderRadius:
                         browserFrame !== 'None'
-                          ? ``
-                          : `calc(var(--borderRoundness${image.id}) - 9px)`,
+                          ? ''
+                          : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
 
-                      padding: `${image.style.insetSize}px`,
-                      backgroundColor: `${image?.style.insetColor}`,
+                      padding:
+                        browserFrame === 'None'
+                          ? ''
+                          : `${image.style.insetSize}px`,
                     }}
                   />
                 </div>

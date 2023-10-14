@@ -1,10 +1,23 @@
 import { Button } from '@/components/ui/Button'
-import { useFrameOptions } from '@/store/use-frame-options'
+import { FrameTypes, useFrameOptions } from '@/store/use-frame-options'
 import { useImageOptions } from '@/store/use-image-options'
 
 export function FrameInsidePopupPreview() {
   const { setBrowserFrame } = useFrameOptions()
-  // const { setBorderSize } = useImageOptions()
+  const { setImages, images } = useImageOptions()
+
+  const frameChangeHandler = (frame: FrameTypes) => {
+    setBrowserFrame(frame)
+    setImages(
+      images.map((image) => ({
+        ...image,
+        style: {
+          ...image.style,
+          imageRoundness: frame === 'None' ? 0.4 : 0.7,
+        },
+      }))
+    )
+  }
 
   return (
     <>
@@ -12,7 +25,7 @@ export function FrameInsidePopupPreview() {
         variant="secondary"
         className={`flex-center relative h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#ffffff15] ring-1 ring-border`}
         onClick={() => {
-          setBrowserFrame('None')
+          frameChangeHandler('None')
         }}
       >
         <div className="flex-center h-full w-full flex-col rounded-sm bg-primary shadow-xl" />
@@ -23,10 +36,7 @@ export function FrameInsidePopupPreview() {
         variant="secondary"
         className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#ffffff15] ring-1 ring-border`}
         onClick={() => {
-          setBrowserFrame('MacOS Dark')
-          // document.documentElement.style.setProperty('--borderSize', `0px`)
-          // document.documentElement.style.setProperty('--borderColor', ``)
-          // setBorderSize('0')
+          frameChangeHandler('MacOS Dark')
         }}
       >
         <div className="relative flex h-full w-full flex-col  justify-center overflow-hidden rounded-sm shadow-xl">
@@ -46,10 +56,7 @@ export function FrameInsidePopupPreview() {
         variant="secondary"
         className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#ffffff15] ring-1 ring-border`}
         onClick={() => {
-          setBrowserFrame('MacOS Light')
-          // setBorderSize('0')
-          // document.documentElement.style.setProperty('--borderSize', `0px`)
-          // document.documentElement.style.setProperty('--borderColor', ``)
+          frameChangeHandler('MacOS Light')
         }}
       >
         <div className="relative flex h-full w-full flex-col  justify-center overflow-hidden rounded-sm shadow-xl">

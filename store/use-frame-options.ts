@@ -1,9 +1,11 @@
 import { create } from 'zustand'
 
+export type FrameTypes =  'Arc' | 'MacOS Dark' | 'MacOS Light' | 'None'
+
 interface FrameOptionsState {
-  browserFrame: 'Arc' | 'MacOS Dark' | 'MacOS Light' | 'None'
+  browserFrame: FrameTypes
   setBrowserFrame: (
-    browserFrame: 'Arc' | 'MacOS Dark' | 'MacOS Light' | 'None'
+    browserFrame: FrameTypes
   ) => void
 
   frameHeight: 'small' | 'medium' | 'large' | string
@@ -20,6 +22,6 @@ export const useFrameOptions = create<FrameOptionsState>()((set) => ({
   frameHeight: 'small',
   setFrameHeight: (frameHeight) => set({ frameHeight }),
 
-  showSearchBar: true,
+  showSearchBar: false,
   setShowSearchBar: (searchBar) => set({ showSearchBar: searchBar }),
 }))

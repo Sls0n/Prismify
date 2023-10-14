@@ -8,7 +8,7 @@ export default function BrowserFrame() {
   if (browserFrame === 'MacOS Dark')
     return (
       <div
-        className={`flex items-center gap-4 border-b border-[#333]/20 bg-[#454545]  ${
+        className={`flex items-center gap-4 border-b border-[#3d3d3d] bg-[#454545]  ${
           frameHeight === 'small'
             ? 'basis-[2.8rem] px-8'
             : frameHeight === 'medium'
@@ -36,7 +36,7 @@ export default function BrowserFrame() {
   if (browserFrame === 'MacOS Light')
     return (
       <div
-        className={`flex items-center gap-4 border-b border-[#A7AAB4]/20 bg-[#fefefe] ${
+        className={`flex items-center gap-4 border-b border-[#A7AAB4] bg-[#fefefe] ${
           frameHeight === 'small'
             ? 'basis-[45px] px-8'
             : frameHeight === 'medium'
@@ -64,7 +64,7 @@ export default function BrowserFrame() {
   if (browserFrame === 'Arc')
     return (
       <div
-        className={`flex items-center gap-4 border-b border-[#A7AAB4]/20 bg-[#fefefe] ${
+        className={`flex items-center gap-4 border-b border-[#dddddf] bg-[#fefefe] ${
           frameHeight === 'small'
             ? 'basis-[45px] px-8'
             : frameHeight === 'medium'
