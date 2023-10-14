@@ -64,7 +64,8 @@ export default function Canvas() {
       width: containerSize,
     }
   } else if (aspectRatio >= 0.9 && aspectRatio <= 1.4) {
-    const containerSize = '100vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio
+    const containerSize = '95vmin'
+    // const containerSize = '100vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio
     style = {
       ...style,
       width: containerSize,
@@ -87,7 +88,12 @@ export default function Canvas() {
               height * dynamicScaleFactor * quality
             }`
           )
-          if (aspectRatio >= 0 && aspectRatio <= 1.75) {
+          // if (aspectRatio >= 0 && aspectRatio <= 1.75) {
+          //   setShouldFloat(true)
+          // } else {
+          //   setShouldFloat(false)
+          // }
+          if (aspectRatio <= 1.1) {
             setShouldFloat(true)
           } else {
             setShouldFloat(false)

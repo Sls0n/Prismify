@@ -93,69 +93,70 @@ const ImageUpload = () => {
       {!initialImageUploaded && <LoadAImage />}
       {images && (
         <>
-          <div className="absolute flex items-center ">
+          <div className="absolute ">
             {images.map((image) => {
-              return (
-                <ContextMenuImage key={image.id}>
-                  <div
-                    key={image.image}
-                    className={`image flex h-full w-full flex-col overflow-hidden `}
-                    ref={image.id === selectedImage ? targetRef : null}
-                    style={{
-                      transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg)`,
-                      borderRadius: `${image.style.imageRoundness}rem`,
-                      boxShadow:
-                        image.style.shadowName !== 'Small'
-                          ? `${image.style.imageShadow} ${convertHex(
-                              image.style.shadowColor,
-                              image.style.shadowOpacity
-                            )}`
-                          : `0 10px 25px -5px ${convertHex(
-                              image.style.shadowColor,
-                              image.style.shadowOpacity - 0.25
-                            )}, 0 8px 10px -6px ${convertHex(
-                              image.style.shadowColor,
-                              image.style.shadowOpacity - 0.25
-                            )}`,
-
-                      padding:
-                        browserFrame !== 'None'
-                          ? ''
-                          : `${image.style.insetSize}px`,
-
-                      backgroundColor:
-                        image.style.insetSize !== '0'
-                          ? `${image?.style.insetColor}`
-                          : '',
-                    }}
-                    id={`${image.id}`}
-                    onClick={() => handleImageClick(image.id)}
-                    // on right click too do the same
-                    onContextMenu={(e) => {
-                      handleImageClick(image.id)
-                    }}
-                  >
-                    <BrowserFrame />
-
-                    <img
-                      className={`h-full w-full flex-1`}
-                      src={image.image}
-                      alt="Uploaded image"
+              if (image.image !== '' || image.image !== null)
+                return (
+                  <ContextMenuImage key={image.id}>
+                    <div
+                      key={image.image}
+                      className={`image flex h-full w-full flex-col overflow-hidden `}
+                      ref={image.id === selectedImage ? targetRef : null}
                       style={{
-                        borderRadius:
-                          browserFrame !== 'None'
-                            ? ''
-                            : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
+                        transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg)`,
+                        borderRadius: `${image.style.imageRoundness}rem`,
+                        boxShadow:
+                          image.style.shadowName !== 'Small'
+                            ? `${image.style.imageShadow} ${convertHex(
+                                image.style.shadowColor,
+                                image.style.shadowOpacity
+                              )}`
+                            : `0 10px 25px -5px ${convertHex(
+                                image.style.shadowColor,
+                                image.style.shadowOpacity - 0.25
+                              )}, 0 8px 10px -6px ${convertHex(
+                                image.style.shadowColor,
+                                image.style.shadowOpacity - 0.25
+                              )}`,
 
                         padding:
-                          browserFrame === 'None'
+                          browserFrame !== 'None'
                             ? ''
                             : `${image.style.insetSize}px`,
+
+                        backgroundColor:
+                          image.style.insetSize !== '0'
+                            ? `${image?.style.insetColor}`
+                            : '',
                       }}
-                    />
-                  </div>
-                </ContextMenuImage>
-              )
+                      id={`${image.id}`}
+                      onClick={() => handleImageClick(image.id)}
+                      // on right click too do the same
+                      onContextMenu={(e) => {
+                        handleImageClick(image.id)
+                      }}
+                    >
+                      <BrowserFrame />
+
+                      <img
+                        className={`h-full w-full flex-1`}
+                        src={image.image}
+                        alt="Uploaded image"
+                        style={{
+                          borderRadius:
+                            browserFrame !== 'None'
+                              ? ''
+                              : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
+
+                          padding:
+                            browserFrame === 'None'
+                              ? ''
+                              : `${image.style.insetSize}px`,
+                        }}
+                      />
+                    </div>
+                  </ContextMenuImage>
+                )
             })}
           </div>
         </>

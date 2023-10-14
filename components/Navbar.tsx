@@ -27,6 +27,7 @@ import SignIn from './SignIn'
 import { toast } from '@/hooks/use-toast'
 import SaveOptions from './SaveOptions'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
+import SpotlightButton from './ui/SpotlightButton'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -73,7 +74,7 @@ export default function Navbar({
         {/* add a vertical separator */}
         <nav className="flex items-center gap-10 ">
           <div className="flex">
-            <ThemeButtonIcon />
+            {/* <ThemeButtonIcon /> */}
             {/* <a
               href="https://www.github.com/Sls0n/prismify"
               target="_blank"
@@ -93,7 +94,9 @@ export default function Navbar({
                   <>
                     {shouldFloat && <SaveOptions />}
 
-                    <Dialog>
+                    <div className="dark:bg-border-dark h-7 mx-3 w-[2px] bg-border" />
+
+                    {/* <Dialog>
                       <DialogTrigger asChild>
                         <Button
                           className="rounded-xl text-[0.85rem]"
@@ -110,7 +113,8 @@ export default function Navbar({
                           <SignIn />
                         </div>
                       </DialogContent>
-                    </Dialog>
+                    </Dialog> */}
+                    <SpotlightButton text="Vote" />
                   </>
                 )}
 
