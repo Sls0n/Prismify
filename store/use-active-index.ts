@@ -1,6 +1,5 @@
 import { create } from 'zustand'
 
-
 interface ActiveIndexState {
   activeIndex: number
   setActiveIndex: (index: number) => void

@@ -16,6 +16,7 @@ interface ImageOptionsState {
   images: {
     id: number
     image: string
+    extractedColors?: { color: string; count: number }[]
     style: {
       imageSize: string
       imageRoundness: number
@@ -26,6 +27,8 @@ interface ImageOptionsState {
       shadowColor: string
       borderSize: string | null
       borderColor: string
+      insetSize: string
+      insetColor: string
       rotate: string
       translateX: number
       translateY: number
@@ -35,6 +38,7 @@ interface ImageOptionsState {
     images: {
       id: number
       image: string
+      extractedColors?: { color: string; count: number }[]
       style: {
         imageSize: string
         imageRoundness: number
@@ -45,6 +49,8 @@ interface ImageOptionsState {
         shadowColor: string
         borderSize: string | null
         borderColor: string
+        insetSize: string
+        insetColor: string
         rotate: string
         translateX: number
         translateY: number
@@ -109,6 +115,8 @@ interface ImageOptionsState {
     shadowColor: string
     borderSize: string
     borderColor: string
+    insetSize: string
+    insetColor: string
     rotate: string
     translateX: number
     translateY: number
@@ -156,6 +164,8 @@ export const useImageOptions = create(
       shadowColor: '#000',
       borderSize: '0',
       borderColor: '#ffffff50',
+      insetSize: '0',
+      insetColor: '#fff',  
       rotate: '0',
       translateX: 0,
       translateY: 0,
@@ -166,8 +176,8 @@ export const useImageOptions = create(
       textColor: '#151515',
       textAlign: 'center',
       fontWeight: 400,
-      fontFamily: 'inherit',
-      letterSpacing: 0,
+      fontFamily: 'DM Sans',
+      letterSpacing: -0.01,
       textShadow: '1px 1px 8px',
       shadowName: 'Bottom',
       shadowColor: '#000',

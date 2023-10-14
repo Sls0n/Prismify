@@ -2,27 +2,26 @@
 
 import { useState } from 'react'
 
-import { useImageOptions } from '@/store/use-image-options'
-import FontPicker from 'font-picker-react'
 import PopupColorPicker from '@/components/PopupColorPicker'
 import { Button } from '@/components/ui/Button'
-import {
-  AlignCenter,
-  AlignHorizontalJustifyCenter,
-  AlignLeft,
-  AlignRight,
-  GalleryVerticalEnd,
-  Minus,
-  Plus,
-} from 'lucide-react'
+import { Slider } from '@/components/ui/Slider'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/Tooltip'
-import { Slider } from '@/components/ui/Slider'
+import { useImageOptions } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
+import FontPicker from 'font-picker-react'
+import {
+  AlignHorizontalJustifyCenter,
+  AlignLeft,
+  AlignRight,
+  GalleryVerticalEnd,
+  Minus,
+  Plus
+} from 'lucide-react'
 
 export default function FontSettings() {
   const { setTexts, selectedText, texts } = useImageOptions()
@@ -175,7 +174,7 @@ export default function FontSettings() {
         <h1 className="text-[0.85rem]">Letter spacing</h1>
         <Slider
           defaultValue={[0]}
-          max={0.1}
+          max={0.2}
           min={-0.05}
           step={0.01}
           value={

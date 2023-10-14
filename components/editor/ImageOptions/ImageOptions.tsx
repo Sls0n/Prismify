@@ -5,7 +5,6 @@ import { BoxSelect, Focus, GalleryVerticalEnd, Info } from 'lucide-react'
 import ImagePreview from './ImagePreview'
 import AppearenceSettings from './AppearenceSettings'
 import ShadowSettings from './ShadowSettings'
-import BorderSettings from './BorderSettings'
 import {
   Popover,
   PopoverContent,
@@ -75,48 +74,6 @@ export default function ImageOptions() {
           </AccordionTrigger>
           <AccordionContent>
             <ShadowSettings />
-          </AccordionContent>
-        </AccordionItem>
-      </Accordion>
-      <Accordion
-        type="single"
-        collapsible
-        defaultValue={accordionOpen.borderOpen ? 'border' : ''}
-        className="mt-2 w-full"
-      >
-        <AccordionItem value="border">
-          <AccordionTrigger
-            onClick={() =>
-              setAccordionOpen({
-                ...accordionOpen,
-                borderOpen: !accordionOpen.borderOpen,
-              })
-            }
-          >
-            <h3 className="flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
-              <BoxSelect size={20} />
-              <span>Border</span>
-              {browserFrame !== 'None' && (
-                <Popover>
-                  <PopoverTrigger className="ml-2">
-                    <Info className="text-red-400/60" size={18} />
-                  </PopoverTrigger>
-                  <PopoverContent
-                    className="ml-16 max-w-[14rem] text-center"
-                    align="center"
-                  >
-                    <p className="text-sm text-neutral-400 ">
-                      <Balancer>
-                        You have to disable frame in order to add border.
-                      </Balancer>
-                    </p>
-                  </PopoverContent>
-                </Popover>
-              )}
-            </h3>
-          </AccordionTrigger>
-          <AccordionContent>
-            <BorderSettings />
           </AccordionContent>
         </AccordionItem>
       </Accordion>

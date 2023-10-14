@@ -25,8 +25,21 @@ const Moveable = makeMoveable<
 export default function TiptapMoveable({ id }: { id: string }) {
   const { quality } = useImageQualityStore()
   const { domResolution, scaleFactor } = useResizeCanvas()
+  const { images, selectedImage, texts, selectedText } = useImageOptions()
 
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
+
+  const otherImages = images.filter((image) => image.id !== selectedImage)
+  const otherTexts = texts.filter((text) => text.id !== selectedText)
+  const elementGuidelines = [
+    ...otherImages.map((image) => ({
+      element: document.getElementById(`${image.id}`),
+    })),
+    ...otherTexts.map((text) => ({
+      element: document.getElementById(`text-${text.id}`),
+    })),
+  ]
+
   return (
     <Moveable
       target={document?.getElementById(id)}
@@ -34,29 +47,47 @@ export default function TiptapMoveable({ id }: { id: string }) {
       onDrag={(e) => {
         e.target.style.transform = e.transform
       }}
-      // onDragEnd={handleDrag}
       scalable={true}
       keepRatio={true}
       onScale={(e) => {
         e.target.style.transform = e.drag.transform
       }}
-      // onScaleEnd={handleScale}
       rotatable={true}
       rotationPosition={'top'}
       onRotate={(e) => {
         e.target.style.transform = e.drag.transform
       }}
-      // onRotateEnd={handleRotate}
       snapRotationThreshold={5}
       snapRotationDegrees={[0, 90, 180, 270]}
       snappable={true}
       snapDirections={{
+        top: true,
+        left: true,
+        bottom: true,
+        right: true,
         center: true,
         middle: true,
       }}
-      snapThreshold={10}
-      horizontalGuidelines={[domHeight / 2 / scaleFactor / quality]}
-      verticalGuidelines={[domWidth / 2 / scaleFactor / quality]}
+      snapThreshold={7}
+      horizontalGuidelines={[
+        domHeight / 2 / scaleFactor / quality,
+        domHeight / 1 / scaleFactor / quality,
+        0,
+      ]}
+      verticalGuidelines={[
+        domWidth / 2 / scaleFactor / quality,
+        domWidth / 1 / scaleFactor / quality,
+        0,
+      ]}
+      elementSnapDirections={{
+        top: true,
+        left: true,
+        bottom: true,
+        right: true,
+        center: true,
+        middle: true,
+      }}
+      elementGuidelines={elementGuidelines}
     />
   )
 }

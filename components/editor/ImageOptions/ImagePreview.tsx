@@ -1,17 +1,18 @@
 import { ChangeEvent, useRef } from 'react'
 import { X, Plus } from 'lucide-react'
 import { useImageOptions } from '@/store/use-image-options'
+import { useColorExtractor } from '@/store/use-color-extractor'
 
 type ImagePreviewProps = {}
 
 export default function ImagePreview({}: ImagePreviewProps) {
   const { setImages, images, defaultStyle } = useImageOptions()
-
+  const { imagesCheck, setImagesCheck } = useColorExtractor()
   const uploadRef = useRef<HTMLInputElement>(null)
 
-  const handleImageDelete = () => {
-    // setImage('')
-    // TODO
+  const handleImageDelete = (id: number) => {
+    const newImages = images.filter((image) => image.id !== id)
+    setImages(newImages)
   }
 
   const handleImageChange = (event: ChangeEvent<HTMLInputElement>) => {
@@ -23,6 +24,7 @@ export default function ImagePreview({}: ImagePreviewProps) {
         ...images,
         { image: imageUrl, id: images.length + 1, style: defaultStyle },
       ])
+      setImagesCheck([...imagesCheck, imageUrl])
     }
   }
 
