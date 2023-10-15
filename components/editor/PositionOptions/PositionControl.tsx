@@ -83,7 +83,7 @@ export default function PositionControl() {
   }
 
   return (
-    <div className="relative grid h-40 max-w-[70%] border-spacing-8 grid-cols-3 overflow-hidden rounded-lg border border-border bg-formDark p-1 [&>*]:cursor-pointer [&>*]:border-dashed [&>*]:border-border [&>*]:transition-colors">
+    <div className="relative grid h-40 border-spacing-8 grid-cols-3 overflow-hidden rounded-lg border border-border bg-formDark p-1 md:max-w-[70%] [&>*]:cursor-pointer [&>*]:border-dashed [&>*]:border-border [&>*]:transition-colors">
       <button
         className="flex-center :hover:bg-dark border-b-[2px] border-r-[2px]"
         aria-label="Translate up left"

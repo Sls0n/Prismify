@@ -47,12 +47,12 @@ export default function GradientOptions() {
           <span>Gradients:</span>
         </h3>
 
-        <div className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-8 gap-4">
+        <div className="mt-4 grid auto-rows-auto grid-cols-6 md:max-w-[18rem] md:grid-cols-8 gap-4">
           {gradients.map(({ gradient, background, type }: Gradient) => (
             <Button
               key={gradient}
               variant="secondary"
-              className={`aspect-square w-8 h-8 overflow-hidden rounded-md p-[1px] ${
+              className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
                 gradient === backgroundInStore &&
                 !imageBackground &&
                 'outline-none ring-2 ring-ring ring-offset-1'
@@ -73,19 +73,25 @@ export default function GradientOptions() {
                   : { backgroundColor: background, backgroundImage: gradient }
               }
             >
-              {gradient === backgroundInStore && !imageBackground && backgroundType !== 'mesh' && (
-                <Popover>
-                  <PopoverTrigger asChild>
-                    <Settings2 className="flex-center" color="#333" size={20} />
-                  </PopoverTrigger>
-                  <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
-                    <h1 className="text-[0.85rem]">Gradient angle</h1>
-                    <div className={`circular-slider`}>
-                      <CircularSliderComp />
-                    </div>
-                  </PopoverContent>
-                </Popover>
-              )}
+              {gradient === backgroundInStore &&
+                !imageBackground &&
+                backgroundType !== 'mesh' && (
+                  <Popover>
+                    <PopoverTrigger asChild>
+                      <Settings2
+                        className="flex-center"
+                        color="#333"
+                        size={20}
+                      />
+                    </PopoverTrigger>
+                    <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
+                      <h1 className="text-[0.85rem]">Gradient angle</h1>
+                      <div className={`circular-slider`}>
+                        <CircularSliderComp />
+                      </div>
+                    </PopoverContent>
+                  </Popover>
+                )}
             </Button>
           ))}
         </div>

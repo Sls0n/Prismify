@@ -22,14 +22,14 @@ export default function FramePicker() {
 
   return (
     <>
-      <div className="mb-3 mt-4 flex max-w-[70%] items-center px-1">
+      <div className="mb-3 mt-4 flex items-center px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Frame:</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {browserFrame}
         </p>
       </div>
       <Popover>
-        <PopoverTrigger className="relative h-24 max-w-[50%] overflow-hidden rounded-lg border border-border bg-formDark">
+        <PopoverTrigger className="relative h-24 max-w-[100%] md:max-w-[50%] overflow-hidden rounded-lg border border-border bg-formDark py-2 md:py-0 px-4 md:px-0">
           <div className="flex items-center justify-between">
             <div className="flex-center basis-[80%]">
               <FramePopupPreview />
@@ -51,7 +51,7 @@ export default function FramePicker() {
         </PopoverContent>
       </Popover>
 
-      <div className="mt-8 flex max-w-[70%] flex-col gap-3 px-1">
+      <div className="mt-8 flex flex-col gap-3 px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Frame size</h1>
         <Select
           defaultValue={frameHeight}

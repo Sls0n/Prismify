@@ -23,7 +23,7 @@ export default function BackgroundOptions() {
         <TabsList className="mb-3">
           <TabsTrigger value="gradientsTab">Gradients</TabsTrigger>
           <TabsTrigger value="patternsTab">Patterns</TabsTrigger>
-          <TabsTrigger value="customTab">Custom</TabsTrigger>
+          <TabsTrigger className='hidden sm:flex' value="customTab">Custom</TabsTrigger>
         </TabsList>
         <NoiseOptions />
         <TabsContent value="gradientsTab">

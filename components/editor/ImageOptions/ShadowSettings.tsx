@@ -148,7 +148,7 @@ export default function ShadowSettings() {
         </p>
       </div>
 
-      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
+      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0.5]}
           min={0}

@@ -13,7 +13,7 @@ export default function MiscFrameOptions() {
           <span>Additional options</span>
         </h3>
 
-        <div className="flex max-w-[70%] items-center gap-4 px-1">
+        <div className="flex items-center gap-4 px-1 md:max-w-[70%]">
           <h1 className="text-[0.85rem]">Show search bar :</h1>
           <Switch
             defaultChecked={false}

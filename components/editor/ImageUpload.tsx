@@ -338,18 +338,18 @@ function LoadAImage() {
           {...getRootProps()}
           className="h-25 absolute-center w-4/5 lg:w-3/5"
         >
-          <div className="flex flex-col gap-4 rounded-xl border-[3px] border-border text-center shadow-md ">
-            <div className="flex flex-col items-center justify-center rounded-lg bg-sidebar p-10">
+          <div className="flex flex-col gap-4 rounded-xl border-border text-center md:shadow-md md:border-[3px] ">
+            <div className="flex-center flex-col rounded-lg p-10 md:bg-sidebar">
               <Upload
                 style={{
                   transition: 'all 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
                 }}
-                className={`hidden sm:block mx-auto h-10 w-10 text-gray-400 ${
+                className={`mx-auto hidden h-10 w-10 text-gray-400 sm:block ${
                   isDragging ? 'rotate-180' : 'rotate-0'
                 }`}
                 aria-hidden="true"
               />
-              <div className="mt-4 flex-center text-base leading-6 text-gray-400">
+              <div className="flex-center mt-4 text-base leading-6 text-gray-400">
                 <label
                   htmlFor="file-upload"
                   className="focus-within:ring-purple relative cursor-pointer rounded-md font-semibold text-purple focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:text-indigo-500"
@@ -368,13 +368,13 @@ function LoadAImage() {
                 <p className="hidden pl-1 md:block">or drag and drop</p>
               </div>
 
-              <p className="hidden sm:block mt-4 text-sm font-semibold leading-5 text-gray-500">
+              <p className="mt-4 hidden text-sm font-semibold leading-5 text-gray-500 sm:block">
                 OR
               </p>
 
               <Button
                 onClick={loadDemoImage}
-                className="hidden sm:inline-flex z-[120] mt-4 rounded-md"
+                className="z-[120] mt-4 hidden rounded-md sm:inline-flex"
                 variant="stylish"
               >
                 Try with a demo image

@@ -4,6 +4,8 @@ import Link from 'next/link'
 import { cn } from '@/utils/buttonUtils'
 import { Button, buttonVariants } from '@/components/ui/Button'
 import ThemeButtonIcon from './ui/ThemeButtonIcon'
+import { saveAs } from 'file-saver'
+import * as htmlToImage from 'html-to-image'
 import Image from 'next/image'
 import {
   ChevronDown,
@@ -28,6 +30,7 @@ import { toast } from '@/hooks/use-toast'
 import SaveOptions from './SaveOptions'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import SpotlightButton from './ui/SpotlightButton'
+import { useImageOptions } from '@/store/use-image-options'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -42,7 +45,59 @@ export default function Navbar({
   username,
   img,
 }: NavbarProps) {
-  const { shouldFloat } = useResizeCanvas()
+  const { shouldFloat, scaleFactor } = useResizeCanvas()
+  const { images } = useImageOptions()
+  const snapshotCreator = () => {
+    return new Promise<Blob>((resolve, reject) => {
+      try {
+        if (images.length === 0) {
+          toast({
+            title: 'Error!',
+            description: 'Upload an image then try again',
+            variant: 'destructive',
+          })
+          return
+        }
+        const scale = scaleFactor * 2
+        const element = document.getElementById('canvas-container')
+        if (!element) {
+          throw new Error('Element not found.')
+        }
+
+        htmlToImage
+          .toJpeg(element, {
+            height: element.offsetHeight * scale,
+            width: element.offsetWidth * scale,
+
+            style: {
+              transform: 'scale(' + scale + ')',
+              transformOrigin: 'top left',
+              width: element.offsetWidth + 'px',
+              height: element.offsetHeight + 'px',
+            },
+          })
+          .then((dataURL) => {
+            const blob = dataURL as unknown as Blob
+            resolve(blob)
+          })
+          .catch((e: any) => {
+            toast({
+              title: 'Image not uploaded',
+              description: e.message,
+              variant: 'destructive',
+            })
+            reject(e)
+          })
+      } catch (e: any) {
+        toast({
+          title: 'Error!',
+          description: e.message,
+          variant: 'destructive',
+        })
+        reject(e)
+      }
+    })
+  }
   return (
     <header className="fixed inset-x-0 top-0 z-[10] flex h-[3.75rem] items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-between">
@@ -93,7 +148,28 @@ export default function Navbar({
                 {mode === 'default' && (
                   <>
                     {shouldFloat && <SaveOptions />}
-
+                    <Button
+                      variant="stylish"
+                      className="mr-1 rounded-xl md:hidden"
+                      onClick={() => {
+                        snapshotCreator()
+                          .then((blob) => {
+                            saveAs(blob, 'prismify-render')
+                          })
+                          .catch((err) => {
+                            toast({
+                              variant: 'destructive',
+                              title: 'Error!',
+                              description: err.message,
+                            })
+                          })
+                      }}
+                    >
+                      <Download
+                        size={20}
+                        className="inline-block align-middle md:ml-2"
+                      />
+                    </Button>
                     <div className="dark:bg-border-dark mx-3 h-7 w-[2px] bg-border" />
 
                     {/* <Dialog>

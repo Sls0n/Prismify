@@ -8,7 +8,7 @@ export default function RoundnessOption() {
 
   return (
     <>
-      <div className="mb-3 mt-6 flex max-w-[70%] items-center px-1">
+      <div className="mb-3 mt-6 flex items-center px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Roundness</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(
@@ -17,10 +17,10 @@ export default function RoundnessOption() {
         </p>
       </div>
 
-      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
+      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0.7]}
-          max={browserFrame !== 'None' && browserFrame !=='Arc' ? 1.6 : 5}
+          max={browserFrame !== 'None' && browserFrame !== 'Arc' ? 1.6 : 5}
           min={0}
           step={0.05}
           onValueChange={(value) => {

@@ -10,8 +10,22 @@ import { useBackgroundOptions } from '@/store/use-background-options'
 import { useImageOptions } from '@/store/use-image-options'
 import TipTap from './Tiptap'
 import Noise from './Noise'
+import { useActiveIndexStore } from '@/store/use-active-index'
+import CanvasOptions from '@/components/editor/CanvasOptions/CanvasOptions'
+import ImageOptions from '@/components/editor/ImageOptions/ImageOptions'
+import BackgroundOptions from '@/components/editor/BackgroundOptions/BackgroundOptions'
+import FrameOptions from '@/components/editor/FrameOptions/FrameOptions'
+import TextOptions from '@/components/editor/TextOptions/TextOptions'
+import PerspectiveOptions from '@/components/editor/PerspectiveOptions/PerspectiveOptions'
+import PositionOptions from '@/components/editor/PositionOptions/PositionOptions'
+import useStore from '@/hooks/use-store'
+import { ScrollArea } from '../ui/ScrollArea'
 
 export default function Canvas() {
+  const activeIndex = useStore(
+    useActiveIndexStore,
+    (state) => state.activeIndex
+  )
   const { quality } = useImageQualityStore()
   const { backgroundType, imageBackground, attribution } =
     useBackgroundOptions()
@@ -138,11 +152,11 @@ export default function Canvas() {
         <div
           onWheel={handleScroll}
           style={parentScaleStyle}
-          className="relative flex h-full w-full flex-1 items-start justify-center overflow-hidden"
+          className="relative flex h-full w-full flex-col items-center justify-start overflow-hidden"
         >
           <div
             className={
-              'relative flex w-full items-center justify-center overflow-hidden '
+              'relative flex max-h-[15rem] md:max-h-full min-h-[15rem] w-full items-center justify-center overflow-hidden '
             }
             ref={screenshotRef}
             id="canvas-container"
@@ -161,9 +175,19 @@ export default function Canvas() {
             <TipTap />
             <ImageUpload />
           </div>
+          <ScrollArea className="mt-4 w-full" type="auto">
+            <div className="w-full md:hidden">
+              {activeIndex === 0 && <CanvasOptions />}
+              {activeIndex === 1 && <ImageOptions />}
+              {activeIndex === 2 && <BackgroundOptions />}
+              {activeIndex === 3 && <FrameOptions />}
+              {activeIndex === 4 && <TextOptions />}
+              {activeIndex === 5 && <PerspectiveOptions />}
+              {activeIndex === 6 && <PositionOptions />}
+            </div>
+          </ScrollArea>
         </div>
         {/* <SelectoComponent /> */}
-
         <FloatingOptions />
       </section>
 
