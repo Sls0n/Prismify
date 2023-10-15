@@ -41,7 +41,7 @@ export default function RotateOptions() {
         </Button>
       </div>
 
-      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
+      <div className="flex mb-3 max-w-[70%] gap-4 text-[0.85rem]">
         <Slider
           defaultValue={[0]}
           max={1000}
