@@ -86,7 +86,7 @@ export default function Navbar({
             </a> */}
           </div>
 
-          <div className="dark:bg-border-dark h-7 w-[2px] bg-border" />
+          {/* <div className="dark:bg-border-dark h-7 w-[2px] bg-border" /> */}
           <div className="flex items-center gap-2">
             {!authenticated && (
               <>
@@ -94,7 +94,7 @@ export default function Navbar({
                   <>
                     {shouldFloat && <SaveOptions />}
 
-                    <div className="dark:bg-border-dark h-7 mx-3 w-[2px] bg-border" />
+                    <div className="dark:bg-border-dark mx-3 h-7 w-[2px] bg-border" />
 
                     {/* <Dialog>
                       <DialogTrigger asChild>
@@ -114,7 +114,14 @@ export default function Navbar({
                         </div>
                       </DialogContent>
                     </Dialog> */}
-                    <SpotlightButton text="Vote" />
+                    <Link
+                      href={
+                        'https://thefullstack.network/slson/project/prismify'
+                      }
+                      target="_blank"
+                    >
+                      <SpotlightButton text="Vote" />
+                    </Link>
                   </>
                 )}
 
