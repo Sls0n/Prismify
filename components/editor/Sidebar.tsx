@@ -25,14 +25,34 @@ import { useTemporalStore } from '@/store/use-image-options'
 import TextOptions from './TextOptions/TextOptions'
 import useStore from '@/hooks/use-store'
 import PerspectiveOptions from './PerspectiveOptions/PerspectiveOptions'
+import { useHotkeys } from 'react-hotkeys-hook'
+import { useMoveable } from '@/store/use-moveable'
 
 export default function Sidebar() {
   const activeIndex = useStore(
     useActiveIndexStore,
     (state) => state.activeIndex
   )
+  const { setShowControls } = useMoveable()
   const { undo, redo, futureStates, pastStates } = useTemporalStore(
     (state) => state
+  )
+
+  useHotkeys(
+    'ctrl+z',
+    () => {
+      undo()
+      setShowControls(false)
+    },
+    [undo]
+  )
+  useHotkeys(
+    'ctrl+y',
+    () => {
+      redo()
+      setShowControls(false)
+    },
+    [redo]
   )
 
   const sidebarButtons = [
