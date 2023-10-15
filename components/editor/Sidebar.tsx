@@ -87,7 +87,7 @@ export default function Sidebar() {
   ]
 
   return (
-    <aside className="flex w-[4.5rem] overflow-x-hidden border-r border-border md:w-[6rem] lg:w-[30rem]">
+    <aside className="flex w-[5rem] overflow-x-hidden border-r border-border md:w-[6rem] lg:w-[30rem]">
       <ul className="relative flex basis-[100%] flex-col items-center gap-6 overflow-y-auto overflow-x-hidden border-border bg-secondaryLight px-4 py-8 dark:border-[#22262b]/50 dark:bg-sidebar lg:max-w-[23%] lg:basis-[23%] lg:border-r">
         {sidebarButtons.map((button, index) => (
           <SidebarButton

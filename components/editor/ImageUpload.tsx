@@ -338,18 +338,18 @@ function LoadAImage() {
           {...getRootProps()}
           className="h-25 absolute-center w-4/5 lg:w-3/5"
         >
-          <div className="scale flex flex-col gap-4 rounded-xl border-[3px] border-border text-center shadow-md ">
+          <div className="flex flex-col gap-4 rounded-xl border-[3px] border-border text-center shadow-md ">
             <div className="flex flex-col items-center justify-center rounded-lg bg-sidebar p-10">
               <Upload
                 style={{
                   transition: 'all 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
                 }}
-                className={`mx-auto h-10 w-10 text-gray-400 ${
+                className={`hidden sm:block mx-auto h-10 w-10 text-gray-400 ${
                   isDragging ? 'rotate-180' : 'rotate-0'
                 }`}
                 aria-hidden="true"
               />
-              <div className="mt-4 flex text-base leading-6 text-gray-400">
+              <div className="mt-4 flex-center text-base leading-6 text-gray-400">
                 <label
                   htmlFor="file-upload"
                   className="focus-within:ring-purple relative cursor-pointer rounded-md font-semibold text-purple focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:text-indigo-500"
@@ -365,20 +365,16 @@ function LoadAImage() {
                   accept="image/*"
                   className="sr-only"
                 />
-                <p className="hidden pl-1 sm:block">or drag and drop</p>
+                <p className="hidden pl-1 md:block">or drag and drop</p>
               </div>
 
-              <p className="text-sm leading-5 text-gray-400/80">
-                All image types supported!
-              </p>
-
-              <p className="mt-4 text-sm font-semibold leading-5 text-gray-500">
+              <p className="hidden sm:block mt-4 text-sm font-semibold leading-5 text-gray-500">
                 OR
               </p>
 
               <Button
                 onClick={loadDemoImage}
-                className="z-[120] mt-4 rounded-md"
+                className="hidden sm:inline-flex z-[120] mt-4 rounded-md"
                 variant="stylish"
               >
                 Try with a demo image

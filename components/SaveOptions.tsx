@@ -100,10 +100,8 @@ export default function SaveOptions() {
   }
 
   const copyImageToClipBoardOtherBrowsers = () => {
-     const isSafari = /^((?!chrome|android).)*safari/i.test(
-       navigator?.userAgent
-     )
-     const isNotFirefox = navigator.userAgent.indexOf('Firefox') < 0
+    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator?.userAgent)
+    const isNotFirefox = navigator.userAgent.indexOf('Firefox') < 0
     if (isSafari) {
       navigator.clipboard
         .write([
@@ -229,8 +227,8 @@ export default function SaveOptions() {
         size="sm"
         onClick={copyImageToClipBoardOtherBrowsers}
       >
-        <Clipboard size={18} className="mr-2" />
-        <p>
+        <Clipboard size={18} className="mr-0 sm:mr-2" />
+        <p className="hidden sm:block">
           Copy <span className="hidden lg:inline-block">to clipboard</span>
         </p>
       </Button>
@@ -252,8 +250,8 @@ export default function SaveOptions() {
         variant="default"
         size="sm"
       >
-        <Download size={18} className="mr-2" />
-        <p>
+        <Download size={18} className="mr-0 sm:mr-2" />
+        <p className="hidden sm:block">
           Save <span className="hidden lg:inline-block">image</span>
         </p>
       </Button>
