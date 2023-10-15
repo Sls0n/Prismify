@@ -21,7 +21,7 @@ export default function ImageGradients() {
     setAttribution,
     setHighResBackground,
     highResBackground,
-    setBackgroundType
+    setBackgroundType,
   } = useBackgroundOptions()
   const [currentPage, setCurrentPage] = useState(1)
 
@@ -33,6 +33,26 @@ export default function ImageGradients() {
     return data
   }
 
+  const fetchPrismifyExclusive = async () => {
+    const response = await fetch(
+      `https://api.unsplash.com/collections/-pJft70WrDE/photos?page=${1}&per_page=55&q=100&fit=clip&w=1500&client_id=${
+        process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY
+      }`
+    )
+    const data = await response.json()
+    return data
+  }
+
+  const {
+    isLoading: isPrismifyExclusiveLoading,
+    isError: isPrismifyError,
+    data: prismifyData,
+    error: prismifyError,
+  } = useQuery({
+    queryKey: ['prismify-gradients'],
+    queryFn: () => fetchPrismifyExclusive(),
+  })
+
   const {
     isLoading,
     isError,
@@ -43,7 +63,7 @@ export default function ImageGradients() {
     queryFn: () => fetchUnsplashPictures(currentPage),
   })
 
-  if (isLoading) {
+  if (isLoading || isPrismifyExclusiveLoading) {
     const skeletonLoaders = Array.from({ length: 30 }).map((_, index) => (
       <li
         className={`aspect-square h-12 w-12 rounded-md`}
@@ -55,6 +75,12 @@ export default function ImageGradients() {
 
     return (
       <>
+        <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
+          <span>Prismify exclusives:</span>
+        </h3>
+        <ul className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-5 gap-4">
+          {skeletonLoaders}
+        </ul>
         <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
           <span>Images:</span>
         </h3>
@@ -73,14 +99,83 @@ export default function ImageGradients() {
     })
     return <span>Error: {error.message}</span>
   }
+  if (isPrismifyError && prismifyError instanceof Error) {
+    toast({
+      title: 'Error',
+      description: prismifyError.message ?? 'Something went wrong',
+      variant: 'destructive',
+    })
+    return <span>Error: {prismifyError.message}</span>
+  }
 
   return (
     <>
       <h3 className="mt-8 flex max-w-[18rem] items-center gap-2 text-xs font-medium uppercase text-dark/70">
-        <span>Images:</span>
+        <span>Prismify exclusives:</span>
         <Popover>
           <PopoverTrigger asChild>
-            <Settings2  size={20}  />
+            <Settings2 size={20} />
+          </PopoverTrigger>
+          <PopoverContent className="flex w-fit flex-wrap gap-3">
+            <h1 className="text-[0.85rem]">High resolution background</h1>
+            <Switch
+              checked={highResBackground}
+              onCheckedChange={(checked) => {
+                setHighResBackground(checked)
+              }}
+            />
+          </PopoverContent>
+        </Popover>
+      </h3>
+
+      <ul className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-5 gap-4">
+        {prismifyData.map(
+          (data: {
+            user: any
+            links: any
+            id: Key | null | undefined
+            urls: {
+              regular: string | null
+              small_s3: string | undefined
+              full: string | undefined
+            }
+            alt_description: string | undefined
+          }) => (
+            <li className={`aspect-square h-12 w-12 rounded-md`} key={data.id}>
+              <button
+                className={`h-full w-full rounded-md ${
+                  imageBackground ===
+                    (highResBackground
+                      ? `${data.urls.full}`
+                      : `${data.urls.regular}`) &&
+                  'outline-none ring-2 ring-ring ring-offset-2'
+                }`}
+                onClick={() => {
+                  setBackgroundType('gradient')
+                  setImageBackground(
+                    highResBackground
+                      ? `${data.urls.full}`
+                      : `${data.urls.regular}`
+                  )
+                }}
+              >
+                {/* eslint-disable-next-line @next/next/no-img-element */}
+                <img
+                  className="h-full w-full rounded-md object-cover"
+                  src={data.urls.small_s3!}
+                  alt={data.alt_description}
+                />
+              </button>
+            </li>
+          )
+        )}
+      </ul>
+
+      <h3 className="mt-8 flex max-w-[18rem] items-center gap-2 text-xs font-medium uppercase text-dark/70">
+        <span>Unsplash gradients:</span>
+        <Popover>
+          <PopoverTrigger asChild>
+            <Settings2 size={20} />
           </PopoverTrigger>
           <PopoverContent className="flex w-fit flex-wrap gap-3">
             <h1 className="text-[0.85rem]">High resolution background</h1>
@@ -144,6 +239,7 @@ export default function ImageGradients() {
           )
         )}
       </ul>
+
       <div className="flex max-w-[18rem] justify-end gap-2">
         <Button
           size="sm"

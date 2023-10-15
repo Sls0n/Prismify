@@ -64,7 +64,7 @@ export default function Canvas() {
       width: containerSize,
     }
   } else if (aspectRatio >= 0.9 && aspectRatio <= 1.4) {
-    const containerSize = '95vmin'
+    const containerSize = '100vmin'
     // const containerSize = '100vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio
     style = {
       ...style,

@@ -24,6 +24,11 @@ export default function ContextMenuImage({
   const handleImageDelete = (id: number) => {
     // const newImages = images.filter((image) => image.id !== id)
     // setImages(newImages)
+
+    if (images.length === 1) {
+      setImages([])
+      return
+    }
     setImages(
       images.map((image, index) =>
         index === selectedImage - 1
