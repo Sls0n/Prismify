@@ -108,7 +108,7 @@ const ImageUpload = () => {
                       className={`image flex h-full w-full flex-col overflow-hidden `}
                       ref={image.id === selectedImage ? targetRef : null}
                       style={{
-                        transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg)`,
+                        transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg) perspective(${image.style.perspective}px) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
                         borderRadius: `${image.style.imageRoundness}rem`,
                         boxShadow:
                           image.style.shadowName !== 'Small'

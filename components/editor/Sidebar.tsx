@@ -12,6 +12,7 @@ import {
   Palette,
   Undo2,
   Redo2,
+  Box,
 } from 'lucide-react'
 import { ScrollArea } from '@/components/ui/ScrollArea'
 import { useActiveIndexStore } from '@/store/use-active-index'
@@ -23,6 +24,7 @@ import PositionOptions from './PositionOptions/PositionOptions'
 import { useTemporalStore } from '@/store/use-image-options'
 import TextOptions from './TextOptions/TextOptions'
 import useStore from '@/hooks/use-store'
+import PerspectiveOptions from './PerspectiveOptions/PerspectiveOptions'
 
 export default function Sidebar() {
   const activeIndex = useStore(
@@ -55,8 +57,12 @@ export default function Sidebar() {
       icon: <TextCursor size={20} strokeWidth={activeIndex === 4 ? 2.25 : 2} />,
     },
     {
+      text: '3D',
+      icon: <Box size={20} strokeWidth={activeIndex === 5 ? 2.25 : 2} />,
+    },
+    {
       text: 'Position',
-      icon: <Locate size={20} strokeWidth={activeIndex === 5 ? 2.25 : 2} />,
+      icon: <Locate size={20} strokeWidth={activeIndex === 6 ? 2.25 : 2} />,
     },
   ]
 
@@ -131,7 +137,8 @@ export default function Sidebar() {
               {activeIndex === 2 && <BackgroundOptions />}
               {activeIndex === 3 && <FrameOptions />}
               {activeIndex === 4 && <TextOptions />}
-              {activeIndex === 5 && <PositionOptions />}
+              {activeIndex === 5 && <PerspectiveOptions />}
+              {activeIndex === 6 && <PositionOptions />}
             </div>
           </div>
         </ScrollArea>

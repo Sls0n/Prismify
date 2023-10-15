@@ -34,6 +34,10 @@ interface ImageOptionsState {
       insetSize: string
       insetColor: string
       rotate: string
+      rotateX: number
+      rotateY: number
+      rotateZ: number
+      perspective: number
       translateX: number
       translateY: number
     }
@@ -56,6 +60,10 @@ interface ImageOptionsState {
         insetSize: string
         insetColor: string
         rotate: string
+        rotateX: number
+        rotateY: number
+        rotateZ: number
+        perspective: number
         translateX: number
         translateY: number
       }
@@ -122,6 +130,10 @@ interface ImageOptionsState {
     insetSize: string
     insetColor: string
     rotate: string
+    rotateX: number
+    rotateY: number
+    rotateZ: number
+    perspective: number
     translateX: number
     translateY: number
   }
@@ -176,6 +188,10 @@ export const useImageOptions = create(
         insetSize: '0',
         insetColor: '#fff',
         rotate: '0',
+        rotateX: 0,
+        rotateY: 0,
+        rotateZ: 0,
+        perspective: 500,
         translateX: 0,
         translateY: 0,
       },
@@ -206,7 +222,6 @@ export const useImageOptions = create(
       limit: 30,
       handleSet: (handleSet) =>
         throttle<typeof handleSet>((state) => {
-          console.info('handleSet called')
           handleSet(state)
         }, 1000),
     }
