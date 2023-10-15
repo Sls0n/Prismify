@@ -93,9 +93,9 @@ const ImageUpload = () => {
       {!initialImageUploaded && <LoadAImage />}
       {images && (
         <>
-          <div className="absolute ">
+          <div className="absolute flex items-center">
             {images.map((image) => {
-              if (image.image !== '' || image.image !== null)
+              if (image.image !== '')
                 return (
                   <ContextMenuImage key={image.id}>
                     <div
