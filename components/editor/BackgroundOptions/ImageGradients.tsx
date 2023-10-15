@@ -189,7 +189,7 @@ export default function ImageGradients() {
         </Popover>
       </h3>
 
-      <ul className="mt-4 grid d:max-w-[18rem] auto-rows-auto grid-cols-4 md:grid-cols-5 gap-4">
+      <ul className="mt-4 grid md:max-w-[18rem] auto-rows-auto grid-cols-4 md:grid-cols-5 gap-4">
         {unsplashData.map(
           (data: {
             user: any
