@@ -8,8 +8,8 @@ import ImageUpload from './ImageUpload'
 import FloatingOptions from '@/components/FloatingOptions'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import { useImageOptions } from '@/store/use-image-options'
-import { motion } from 'framer-motion'
 import TipTap from './Tiptap'
+import Noise from './Noise'
 
 export default function Canvas() {
   const { quality } = useImageQualityStore()
@@ -135,14 +135,12 @@ export default function Canvas() {
         {/* <div className="flex h-14 w-full items-center border border-border">
           TODO: ADD UPPER SETTINGS
         </div> */}
-        <motion.div
-          layout
+        <div
           onWheel={handleScroll}
           style={parentScaleStyle}
           className="relative flex h-full w-full flex-1 items-start justify-center overflow-hidden"
         >
-          <motion.div
-            layout
+          <div
             className={
               'relative flex w-full items-center justify-center overflow-hidden '
             }
@@ -150,6 +148,7 @@ export default function Canvas() {
             id="canvas-container"
             style={style}
           >
+            <Noise />
             {images.length !== 0 && imageBackground && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
@@ -161,8 +160,8 @@ export default function Canvas() {
             )}
             <TipTap />
             <ImageUpload />
-          </motion.div>
-        </motion.div>
+          </div>
+        </div>
         {/* <SelectoComponent /> */}
 
         <FloatingOptions />

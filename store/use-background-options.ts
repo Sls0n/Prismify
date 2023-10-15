@@ -26,6 +26,9 @@ interface BackgroundOptionsState {
 
   gradientAngle: number
   setGradientAngle: (gradientAngle: number) => void
+
+  noise: number
+  setNoise: (noise: number) => void
 }
 
 export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
@@ -50,4 +53,7 @@ export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
 
   gradientAngle: 45,
   setGradientAngle: (gradientAngle) => set({ gradientAngle }),
+
+  noise: 0,
+  setNoise: (noise) => set({ noise }),
 }))
