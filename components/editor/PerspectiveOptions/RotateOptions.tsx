@@ -102,9 +102,9 @@ export default function RotateOptions() {
       <div className="mb-3 flex max-w-[70%] gap-4 text-[0.85rem]">
         <Slider
           defaultValue={[0]}
-          max={1000}
-          min={-1000}
-          step={0.00001}
+          max={180}
+          min={-180}
+          step={0.0001}
           value={[images[selectedImage - 1]?.style.rotateX]}
           onValueChange={(value: number[]) => {
             setImages(
@@ -160,9 +160,9 @@ export default function RotateOptions() {
       <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
         <Slider
           defaultValue={[0]}
-          max={500}
-          min={-500}
-          step={0.00001}
+          max={180}
+          min={-180}
+          step={0.0001}
           value={[images[selectedImage - 1]?.style.rotateY]}
           onValueChange={(value: number[]) => {
             setImages(
@@ -218,9 +218,9 @@ export default function RotateOptions() {
       <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
         <Slider
           defaultValue={[0]}
-          max={500}
-          min={-500}
-          step={0.00001}
+          max={180}
+          min={-180}
+          step={0.0001}
           value={[images[selectedImage - 1]?.style.rotateZ]}
           onValueChange={(value: number[]) => {
             setImages(
