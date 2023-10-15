@@ -58,6 +58,7 @@
     "react-dom": "18.2.0",
     "react-dropzone": "^14.2.3",
     "react-hook-form": "^7.45.1",
+    "react-hotkeys-hook": "^4.4.1",
     "react-joystick-component": "^6.2.1",
     "react-moveable": "^0.54.1",
     "react-selecto": "^1.26.0",

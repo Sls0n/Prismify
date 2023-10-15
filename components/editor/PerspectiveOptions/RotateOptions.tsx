@@ -44,7 +44,7 @@ export default function RotateOptions() {
       <div className="flex mb-3 max-w-[70%] gap-4 text-[0.85rem]">
         <Slider
           defaultValue={[0]}
-          max={1000}
+          max={2500}
           min={0}
           step={0.00001}
           value={[images[selectedImage - 1]?.style.perspective]}

@@ -9,10 +9,11 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from '@/components/ui/ContextMenu'
-import { useColorExtractor } from '@/store/use-color-extractor'
 import { useImageOptions } from '@/store/use-image-options'
+import { useMoveable } from '@/store/use-moveable'
 import { BringToFront, Crop, SendToBack, Trash } from 'lucide-react'
 import React from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 export default function ContextMenuImage({
   children,
@@ -20,6 +21,7 @@ export default function ContextMenuImage({
   children: React.ReactNode
 }) {
   const { setImages, images, selectedImage } = useImageOptions()
+  const { showControls, setShowControls } = useMoveable()
 
   const handleImageDelete = (id: number) => {
     // const newImages = images.filter((image) => image.id !== id)
@@ -40,6 +42,13 @@ export default function ContextMenuImage({
       )
     )
   }
+
+  useHotkeys('Delete', () => {
+    if (showControls) {
+      handleImageDelete(selectedImage)
+      setShowControls(false)
+    }
+  })
 
   return (
     <ContextMenu>

@@ -23,7 +23,6 @@ export default function PerspectiveOptions() {
         stickColor="#898aeb"
         baseColor="#898aeb40"
         move={(event: IJoystickUpdateEvent) => {
-          console.log(event)
           const { type, x, y } = event
           if (type === 'move') {
             setImages(
