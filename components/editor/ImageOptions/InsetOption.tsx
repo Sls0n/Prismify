@@ -16,7 +16,7 @@ export default function InsetOption() {
 
   return (
     <>
-      <div className="mb-3 mt-6 flex max-w-[70%] items-center px-1">
+      <div className="mb-3 mt-6 flex items-center px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Inset</h1>
         {images.length !== 0 && (
           <Popover>
@@ -77,7 +77,7 @@ export default function InsetOption() {
         )}
       </div>
 
-      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
+      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0]}
           max={150}

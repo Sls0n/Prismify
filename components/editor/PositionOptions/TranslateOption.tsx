@@ -5,13 +5,12 @@ import { RotateCcw } from 'lucide-react'
 import { useImageOptions } from '@/store/use-image-options'
 
 export default function TranslateOption() {
-  const { images, setImages, selectedImage } =
-    useImageOptions()
+  const { images, setImages, selectedImage } = useImageOptions()
   const { setShowControls } = useMoveable()
 
   return (
     <>
-      <div className="mb-3 mt-2 flex max-w-[70%] items-center px-1">
+      <div className="mb-3 mt-2 flex items-center px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Translate X</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(images[selectedImage - 1]?.style.translateX)}px`}
@@ -41,7 +40,7 @@ export default function TranslateOption() {
         </Button>
       </div>
 
-      <div className="mb-3 flex max-w-[70%] gap-4 text-[0.85rem]">
+      <div className="mb-3 flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0]}
           max={1000}
@@ -68,7 +67,7 @@ export default function TranslateOption() {
         />
       </div>
 
-      <div className="mb-3 mt-3 flex max-w-[70%] items-center px-1">
+      <div className="mb-3 mt-3 flex items-center px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Translate Y</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(images[selectedImage - 1]?.style.translateY)}px`}
@@ -98,7 +97,7 @@ export default function TranslateOption() {
         </Button>
       </div>
 
-      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
+      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0]}
           max={500}

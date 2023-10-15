@@ -11,7 +11,7 @@ export default function RotateOptions() {
   return (
     <>
       {/* Perspective */}
-      <div className="mb-3 mt-8 flex max-w-[70%] items-center px-1">
+      <div className="mb-3 mt-8 flex items-center px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Perspective</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(images[selectedImage - 1]?.style.perspective)}px`}
@@ -41,7 +41,7 @@ export default function RotateOptions() {
         </Button>
       </div>
 
-      <div className="flex mb-3 max-w-[70%] gap-4 text-[0.85rem]">
+      <div className="mb-3 flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0]}
           max={2500}
@@ -69,7 +69,7 @@ export default function RotateOptions() {
       </div>
 
       {/* RotateX */}
-      <div className="mb-3 flex max-w-[70%] items-center px-1">
+      <div className="mb-3 flex items-center px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Rotate X</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(images[selectedImage - 1]?.style.rotateX)}px`}
@@ -99,7 +99,7 @@ export default function RotateOptions() {
         </Button>
       </div>
 
-      <div className="mb-3 flex max-w-[70%] gap-4 text-[0.85rem]">
+      <div className="mb-3 flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0]}
           max={180}
@@ -127,7 +127,7 @@ export default function RotateOptions() {
       </div>
 
       {/* RotateY */}
-      <div className="mb-3 mt-3 flex max-w-[70%] items-center px-1">
+      <div className="mb-3 mt-3 flex items-center px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Rotate Y</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(images[selectedImage - 1]?.style.rotateY)}px`}
@@ -157,7 +157,7 @@ export default function RotateOptions() {
         </Button>
       </div>
 
-      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
+      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0]}
           max={180}
@@ -185,7 +185,7 @@ export default function RotateOptions() {
       </div>
 
       {/* RotateZ */}
-      <div className="mb-3 mt-3 flex max-w-[70%] items-center px-1">
+      <div className="mb-3 mt-3 flex items-center px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Rotate Z</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(images[selectedImage - 1]?.style.rotateZ)}px`}
@@ -215,7 +215,7 @@ export default function RotateOptions() {
         </Button>
       </div>
 
-      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
+      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0]}
           max={180}

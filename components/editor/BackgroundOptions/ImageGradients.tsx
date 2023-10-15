@@ -128,7 +128,7 @@ export default function ImageGradients() {
         </Popover>
       </h3>
 
-      <ul className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-5 gap-4">
+      <ul className="mt-4 grid md:max-w-[18rem] auto-rows-auto grid-cols-4 md:grid-cols-5 gap-4">
         {prismifyData.map(
           (data: {
             user: any
@@ -171,7 +171,7 @@ export default function ImageGradients() {
         )}
       </ul>
 
-      <h3 className="mt-8 flex max-w-[18rem] items-center gap-2 text-xs font-medium uppercase text-dark/70">
+      <h3 className="mt-8 flex md:max-w-[18rem] items-center gap-2 text-xs font-medium uppercase text-dark/70">
         <span>Unsplash gradients:</span>
         <Popover>
           <PopoverTrigger asChild>
@@ -189,7 +189,7 @@ export default function ImageGradients() {
         </Popover>
       </h3>
 
-      <ul className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-5 gap-4">
+      <ul className="mt-4 grid d:max-w-[18rem] auto-rows-auto grid-cols-4 md:grid-cols-5 gap-4">
         {unsplashData.map(
           (data: {
             user: any
@@ -240,7 +240,7 @@ export default function ImageGradients() {
         )}
       </ul>
 
-      <div className="flex max-w-[18rem] justify-end gap-2">
+      <div className="flex md:max-w-[18rem] justify-end gap-2">
         <Button
           size="sm"
           variant={'stylish'}

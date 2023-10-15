@@ -58,7 +58,7 @@ export default function PatternOptions() {
         <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
           <span>Patterns:</span>
         </h3>
-        <ul className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-5 gap-4">
+        <ul className="mt-4 grid md:max-w-[18rem] auto-rows-auto grid-cols-4 md:grid-cols-5 gap-4">
           {skeletonLoaders}
         </ul>
       </>
@@ -96,7 +96,7 @@ export default function PatternOptions() {
         </Popover>
       </h3>
 
-      <ul className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-5 gap-4">
+      <ul className="mt-4 grid md:max-w-[18rem] auto-rows-auto grid-cols-4 md:grid-cols-5 gap-4">
         {unsplashData.map(
           (data: {
             user: any
@@ -143,7 +143,7 @@ export default function PatternOptions() {
         )}
       </ul>
 
-      <div className="flex max-w-[18rem] justify-end gap-2">
+      <div className="flex md:max-w-[18rem] justify-end gap-2">
         <Button
           size="sm"
           variant={'stylish'}

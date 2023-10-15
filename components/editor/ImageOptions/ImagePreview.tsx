@@ -50,12 +50,12 @@ export default function ImagePreview({}: ImagePreviewProps) {
 
   return (
     <>
-      <div className="mb-3 mt-4 flex h-[4rem] gap-6 px-1 text-sm">
-        <div className="relative flex h-full basis-[25%] flex-col rounded-xl  border-2 border-[#898aeb]/20 p-1 hover:border-[#898aeb]/60">
+      <div className="mb-3 mt-4 hidden h-[4rem] gap-6 px-1 text-sm md:flex">
+        <div className="relative flex h-full basis-[25%] flex-col rounded-xl border-2  border-[#898aeb]/20 p-1 hover:border-[#898aeb]/60 ">
           <>
             <label
               htmlFor="upload"
-              className="flex-center group h-full w-full cursor-pointer rounded-xl"
+              className="group flex h-full w-full cursor-pointer items-center justify-center rounded-xl"
               tabIndex={0}
               onKeyDown={(e) => {
                 if (e.key === 'Enter') {

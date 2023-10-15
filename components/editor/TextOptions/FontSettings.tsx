@@ -20,7 +20,7 @@ import {
   AlignRight,
   GalleryVerticalEnd,
   Minus,
-  Plus
+  Plus,
 } from 'lucide-react'
 
 export default function FontSettings() {
@@ -96,7 +96,7 @@ export default function FontSettings() {
 
   return (
     <div className="relative h-full w-full">
-      <div className="mb-3 mt-2 flex max-w-[70%] items-center px-1">
+      <div className="mb-3 mt-2 flex items-center px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Font family</h1>
       </div>
       <FontPicker
@@ -170,7 +170,7 @@ export default function FontSettings() {
         />
       </div>
 
-      <div className={`mt-8 flex max-w-[70%] flex-col gap-3 px-1`}>
+      <div className={`mt-8 flex flex-col gap-3 px-1 md:max-w-[70%]`}>
         <h1 className="text-[0.85rem]">Letter spacing</h1>
         <Slider
           defaultValue={[0]}
@@ -278,7 +278,7 @@ export default function FontSettings() {
         </p>
       </div>
 
-      <div className="flex max-w-[70%] gap-4 text-[0.85rem]">
+      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0.1]}
           min={0}
