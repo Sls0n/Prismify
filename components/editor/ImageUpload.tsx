@@ -126,13 +126,19 @@ const ImageUpload = () => {
 
                         padding:
                           browserFrame !== 'None'
-                            ? ''
+                            ? browserFrame === 'Arc'
+                              ? '15px'
+                              : ''
                             : `${image.style.insetSize}px`,
 
                         backgroundColor:
-                          image.style.insetSize !== '0'
+                          image.style.insetSize !== '0' &&
+                          browserFrame === 'None'
                             ? `${image?.style.insetColor}`
                             : '',
+
+                        border:
+                          browserFrame === 'Arc' ? '1px solid #ffffff60' : '',
                       }}
                       id={`${image.id}`}
                       onClick={() => handleImageClick(image.id)}
@@ -142,7 +148,6 @@ const ImageUpload = () => {
                       }}
                     >
                       <BrowserFrame />
-
                       <img
                         className={`h-full w-full flex-1`}
                         src={image.image}
@@ -150,13 +155,21 @@ const ImageUpload = () => {
                         style={{
                           borderRadius:
                             browserFrame !== 'None'
-                              ? ''
+                              ? browserFrame === 'Arc'
+                                ? `calc(${image.style.imageRoundness}rem - 9px)`
+                                : ''
                               : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
 
                           padding:
                             browserFrame === 'None'
                               ? ''
                               : `${image.style.insetSize}px`,
+
+                          backgroundColor:
+                            image.style.insetSize !== '0' &&
+                            browserFrame !== 'None'
+                              ? `${image?.style.insetColor}`
+                              : '',
                         }}
                       />
                     </div>

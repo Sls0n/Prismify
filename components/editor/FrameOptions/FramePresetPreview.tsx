@@ -13,7 +13,7 @@ export function FrameInsidePopupPreview() {
         ...image,
         style: {
           ...image.style,
-          imageRoundness: frame === 'None' ? 0.4 : 0.7,
+          imageRoundness: frame === 'None' ? 0.4 : frame === 'Arc' ? 1.5 : 0.7,
         },
       }))
     )
@@ -71,6 +71,19 @@ export function FrameInsidePopupPreview() {
         </div>
         <div className="text-xs font-medium text-dark">MacOS Light</div>
       </Button>
+
+      <Button
+        variant="secondary"
+        className={`flex-center h-[7rem] w-36 cursor-pointer flex-col gap-2 rounded-md bg-[#ffffff15] ring-1 ring-border`}
+        onClick={() => {
+          frameChangeHandler('Arc')
+        }}
+      >
+        <div className="flex-center h-full w-full flex-col rounded-md border border-[#fff]/20 bg-[#fff]/20 p-1 shadow-xl">
+          <div className="h-full w-full rounded-sm bg-primary" />
+        </div>
+        <div className="text-xs font-medium text-dark">Transparent</div>
+      </Button>
     </>
   )
 }
@@ -122,6 +135,13 @@ export function FramePopupPreview() {
           </div>
           <div className="w-full flex-1 bg-primary" />
         </div>
+      </div>
+    )
+
+  if (browserFrame === 'Arc')
+    return (
+      <div className="flex-center h-[4.5rem] w-24 flex-col rounded-md border border-[#fff]/20 bg-[#fff]/20 p-1 shadow-xl">
+        <div className="h-full w-full rounded-sm bg-primary" />
       </div>
     )
 }

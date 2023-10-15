@@ -1,12 +1,10 @@
 import { create } from 'zustand'
 
-export type FrameTypes =  'Arc' | 'MacOS Dark' | 'MacOS Light' | 'None'
+export type FrameTypes = 'Arc' | 'MacOS Dark' | 'MacOS Light' | 'None'
 
 interface FrameOptionsState {
   browserFrame: FrameTypes
-  setBrowserFrame: (
-    browserFrame: FrameTypes
-  ) => void
+  setBrowserFrame: (browserFrame: FrameTypes) => void
 
   frameHeight: 'small' | 'medium' | 'large' | string
   setFrameHeight: (height: string) => void
