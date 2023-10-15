@@ -191,7 +191,7 @@ export const useImageOptions = create(
         rotateX: 0,
         rotateY: 0,
         rotateZ: 0,
-        perspective: 500,
+        perspective: 1000,
         translateX: 0,
         translateY: 0,
       },

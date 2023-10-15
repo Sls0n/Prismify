@@ -46,7 +46,7 @@ export default function RotateOptions() {
           defaultValue={[0]}
           max={1000}
           min={0}
-          step={0.01}
+          step={0.00001}
           value={[images[selectedImage - 1]?.style.perspective]}
           onValueChange={(value: number[]) => {
             setImages(
@@ -104,7 +104,7 @@ export default function RotateOptions() {
           defaultValue={[0]}
           max={1000}
           min={-1000}
-          step={0.01}
+          step={0.00001}
           value={[images[selectedImage - 1]?.style.rotateX]}
           onValueChange={(value: number[]) => {
             setImages(
@@ -162,7 +162,7 @@ export default function RotateOptions() {
           defaultValue={[0]}
           max={500}
           min={-500}
-          step={0.01}
+          step={0.00001}
           value={[images[selectedImage - 1]?.style.rotateY]}
           onValueChange={(value: number[]) => {
             setImages(
@@ -220,7 +220,7 @@ export default function RotateOptions() {
           defaultValue={[0]}
           max={500}
           min={-500}
-          step={0.01}
+          step={0.00001}
           value={[images[selectedImage - 1]?.style.rotateZ]}
           onValueChange={(value: number[]) => {
             setImages(
