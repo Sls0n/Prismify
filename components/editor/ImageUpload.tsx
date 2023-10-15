@@ -135,7 +135,7 @@ const ImageUpload = () => {
                           image.style.insetSize !== '0' &&
                           browserFrame === 'None'
                             ? `${image?.style.insetColor}`
-                            : (browserFrame === 'Arc' ? '#ffffff40' : ''),
+                            : (browserFrame === 'Arc' ? '#ffffff50' : ''),
 
                         border:
                           browserFrame === 'Arc' ? '1px solid #ffffff60' : '',
