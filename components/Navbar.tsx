@@ -192,7 +192,7 @@ export default function Navbar({
                     </Dialog> */}
                     <Link
                       href={
-                        'https://thefullstack.network/slson/project/prismify'
+                        'https://thefullstack.network/slson/project/prismify-effortlessly-create-beautiful-saas-product-shots-graphics'
                       }
                       target="_blank"
                     >

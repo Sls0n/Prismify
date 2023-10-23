@@ -77,7 +77,7 @@ export default function CanvasOptions() {
     <>
       <div className="mt-4 flex w-full max-w-[85%] justify-between px-1">
         <div className="flex-center">
-          <h1 className="mr-1 text-[0.85rem]">Toggle auto resoultion</h1>
+          <h1 className="mr-1 text-[0.85rem]">Toggle auto resolution</h1>
           <TooltipProvider>
             <Tooltip>
               <TooltipTrigger>
