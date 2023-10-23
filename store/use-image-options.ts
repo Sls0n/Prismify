@@ -177,7 +177,7 @@ export const useImageOptions = create(
 
       defaultStyle: {
         imageSize: '0.8',
-        imageRoundness: 1,
+        imageRoundness: 1.6,
         imageShadow: '0px 8px 55px 0px',
         shadowPreview: '0px 6px 30px 0px #000',
         shadowOpacity: 0.5,
@@ -191,7 +191,7 @@ export const useImageOptions = create(
         rotateX: 0,
         rotateY: 0,
         rotateZ: 0,
-        perspective: 1000,
+        perspective: 2000,
         translateX: 0,
         translateY: 0,
       },

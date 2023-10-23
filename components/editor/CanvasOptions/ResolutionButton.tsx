@@ -10,6 +10,7 @@ import {
 } from '@/components/ui/Popover'
 import { PopoverArrow } from '@radix-ui/react-popover'
 import { ChevronDown } from 'lucide-react'
+import { calculateEqualCanvasSize } from '@/utils/helperFns'
 
 export function ResolutionButton({
   resolutions,
@@ -100,6 +101,49 @@ export function ResolutionButton({
         aria-label={name}
       >
         Fit image
+      </Button>
+    )
+  }
+
+  if (name === 'Equal padding') {
+    return (
+      <Button
+        name="Equal padding"
+        className={cn('flex items-center gap-2 rounded-lg', className)}
+        variant={variant}
+        onClick={() => {
+          if (images.length === 0) return
+
+          const padding = 250
+          const img = new Image()
+          img.src = images[0].image
+
+          img.onload = () => {
+            const { naturalWidth, naturalHeight } = img
+            const newResolution = calculateEqualCanvasSize(
+              naturalWidth,
+              naturalHeight,
+              padding
+            )
+            setResolution(newResolution.toString())
+            setImages(
+              images.map((image, index) =>
+                index === selectedImage - 1
+                  ? {
+                      ...image,
+                      style: {
+                        ...image.style,
+                        imageSize: '0.75',
+                      },
+                    }
+                  : image
+              )
+            )
+          }
+        }}
+        aria-label={name}
+      >
+        Equal padding
       </Button>
     )
   }

@@ -12,7 +12,7 @@ export default function RotateOptions() {
     <>
       {/* Perspective */}
       <div className="mb-3 mt-8 flex items-center px-1 md:max-w-[70%]">
-        <h1 className="text-[0.85rem]">Perspective</h1>
+        <h1 className="text-[0.85rem]">3D Depth</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(images[selectedImage - 1]?.style.perspective)}px`}
         </p>
@@ -67,6 +67,8 @@ export default function RotateOptions() {
           onValueCommit={() => setShowControls(true)}
         />
       </div>
+
+      <hr className="my-6" />
 
       {/* RotateX */}
       <div className="mb-3 flex items-center px-1 md:max-w-[70%]">

@@ -39,6 +39,7 @@ export const qualities = [
 
 export const resolutions: Resolution[] = [
   { name: 'Fit' },
+  { name: 'Equal padding' },
   {
     name: 'Facebook',
     resolutions: [
@@ -180,7 +181,7 @@ export const shadows: Shadow[] = [
     preview: `0px 6px 20px #000000`,
   },
   {
-    name: 'lg', 
+    name: 'lg',
     fullName: 'Large',
     shadow: `0px 10px 60px 0px`,
     preview: `0px 6px 30px 0px #000000`,

@@ -86,7 +86,7 @@ export default function CanvasOptions() {
               <TooltipContent className="max-w-[12rem]">
                 <p>
                   When enabled, the canvas will automatically resize to fit your
-                  image.
+                  image when you upload it.
                 </p>
               </TooltipContent>
             </Tooltip>
