@@ -8,5 +8,6 @@ export default function useTiptapEditor() {
     extensions: [StarterKit, Color, TextStyle],
     content: 'Double click to edit',
   })
+
   return { editor }
 }

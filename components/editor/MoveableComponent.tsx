@@ -77,7 +77,7 @@ export default function MoveableComponent({ id }: { id: string }) {
                 ...image,
                 style: {
                   ...image.style,
-                  imageSize: `${e.lastEvent.scale[0]}`,
+                  imageSize: `${e.lastEvent?.scale[0]}`,
                   translateX: e?.lastEvent?.drag.translate[0],
                   translateY: e?.lastEvent?.drag.translate[1],
                 },
@@ -91,7 +91,7 @@ export default function MoveableComponent({ id }: { id: string }) {
 
   const otherImages = images.filter((image) => image.id !== selectedImage)
   const elementGuidelines = otherImages.map((image) => ({
-    element: document.getElementById(`${image.id}`),
+    element: document?.getElementById(`${image.id}`),
   }))
 
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)

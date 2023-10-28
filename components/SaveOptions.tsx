@@ -30,7 +30,9 @@ export default function SaveOptions() {
           return
         }
         const scale = scaleFactor * quality
-        const element = document.getElementById('canvas-container')
+        const element =
+          typeof window !== 'undefined' &&
+          document.getElementById('canvas-container')
         if (!element) {
           throw new Error('Element not found.')
         }

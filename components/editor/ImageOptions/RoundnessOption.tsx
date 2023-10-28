@@ -37,7 +37,7 @@ export default function RoundnessOption() {
                   : image
               )
             )
-            document.documentElement.style.setProperty(
+            document?.documentElement.style.setProperty(
               `--borderRoundness${selectedImage}`,
               `${value.toString()}rem`
             )

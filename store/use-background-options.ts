@@ -51,7 +51,7 @@ export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
   backgroundType: 'gradient',
   setBackgroundType: (backgroundType) => set({ backgroundType }),
 
-  gradientAngle: 45,
+  gradientAngle: 170,
   setGradientAngle: (gradientAngle) => set({ gradientAngle }),
 
   noise: 0,

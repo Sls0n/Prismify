@@ -59,7 +59,9 @@ export default function Navbar({
           return
         }
         const scale = scaleFactor * 2
-        const element = document.getElementById('canvas-container')
+        const element =
+          typeof window !== 'undefined' &&
+          document?.getElementById('canvas-container')
         if (!element) {
           throw new Error('Element not found.')
         }

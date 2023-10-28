@@ -1,4 +1,4 @@
-import { CaseLower, Type } from 'lucide-react'
+import { Type } from 'lucide-react'
 import AddTextLayer from './AddTextLayer'
 import FontSettings from './FontSettings'
 

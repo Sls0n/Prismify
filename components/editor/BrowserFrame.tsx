@@ -10,17 +10,17 @@ export default function BrowserFrame() {
       <div
         className={`flex items-center gap-4 border-b border-[#3d3d3d] bg-[#454545]  ${
           frameHeight === 'small'
-            ? 'basis-[2.8rem] px-8'
+            ? 'h-[3vw] px-[1.6vw]'
             : frameHeight === 'medium'
-            ? 'basis-[50px] px-9'
-            : 'basis-[55px] px-9'
+            ? 'h-[3.4vw] px-[1.8vw]'
+            : 'h-[3.8vw] px-[2vw]'
         }`}
       >
         <div
           className={`mr-2 flex basis-[6%]  ${
             frameHeight === 'small'
-              ? 'gap-2 [&>*]:h-2.5 [&>*]:w-2.5'
-              : 'gap-2.5 [&>*]:h-3.5 [&>*]:w-3.5'
+              ? 'gap-[0.6vw] [&>*]:h-[0.7vw] [&>*]:w-[0.7vw]'
+              : 'gap-[0.7vw] [&>*]:h-[0.9vw] [&>*]:w-[0.9vw]'
           }`}
         >
           <div className="rounded-full bg-[#f7645ccc]" />
@@ -36,19 +36,19 @@ export default function BrowserFrame() {
   if (browserFrame === 'MacOS Light')
     return (
       <div
-        className={`flex items-center gap-4 border-b border-[#A7AAB4]/50 bg-[#fefefe] ${
+        className={`flex items-center gap-4 border-b border-[#cfcfcf] bg-[#fefefe] ${
           frameHeight === 'small'
-            ? 'basis-[45px] px-8'
+            ? 'h-[3vw] px-[1.6vw]'
             : frameHeight === 'medium'
-            ? 'basis-[50px] px-9'
-            : 'basis-[55px] px-9'
+            ? 'h-[3.4vw] px-[1.8vw]'
+            : 'h-[3.8vw] px-[2vw]'
         }`}
       >
         <div
           className={`flex basis-[5%]  ${
             frameHeight === 'small'
-              ? 'gap-2 [&>*]:h-2.5 [&>*]:w-2.5'
-              : 'gap-2.5 [&>*]:h-3.5 [&>*]:w-3.5'
+              ? 'gap-[0.6vw] [&>*]:h-[0.7vw] [&>*]:w-[0.7vw]'
+              : 'gap-[0.7vw] [&>*]:h-[0.9vw] [&>*]:w-[0.9vw]'
           }`}
         >
           <div className="rounded-full bg-[#f7645c]" />

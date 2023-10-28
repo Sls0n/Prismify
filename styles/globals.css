@@ -37,7 +37,7 @@
 
     --shadowColor1: #000;
 
-    --gradient-angle: 45deg;
+    --gradient-angle: 170deg;
     --gradient-bg: linear-gradient(
       var(--gradient-angle),
       rgb(202, 194, 255),

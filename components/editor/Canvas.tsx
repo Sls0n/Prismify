@@ -125,6 +125,7 @@ export default function Canvas() {
   }, [resolution, quality])
 
   const handleScroll = (e: React.WheelEvent<HTMLDivElement>) => {
+    if (typeof window !== 'undefined' && window.innerWidth <= 700) return
     if (e.deltaY < 0) {
       // Scrolling up
       if (scrollScale === 1) return
@@ -156,7 +157,7 @@ export default function Canvas() {
         >
           <div
             className={
-              'relative flex max-h-[15rem] md:max-h-full min-h-[15rem] w-full items-center justify-center overflow-hidden '
+              'relative flex max-h-[15rem] min-h-[15rem] w-full items-center justify-center overflow-hidden md:max-h-full '
             }
             ref={screenshotRef}
             id="canvas-container"
@@ -173,10 +174,12 @@ export default function Canvas() {
               />
             )}
             <TipTap />
-            <ImageUpload />
+            <div className="absolute left-0 top-0 flex h-full min-h-[15rem] w-full items-center justify-center">
+              <ImageUpload />
+            </div>
           </div>
-          <ScrollArea className="mt-4 w-full" type="auto">
-            <div className="w-full md:hidden">
+          <ScrollArea className="mt-6 w-full" type="auto">
+            <div className="w-full max-w-[90%] md:hidden">
               {activeIndex === 0 && <CanvasOptions />}
               {activeIndex === 1 && <ImageOptions />}
               {activeIndex === 2 && <BackgroundOptions />}

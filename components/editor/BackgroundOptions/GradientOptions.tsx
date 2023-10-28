@@ -24,11 +24,11 @@ export default function GradientOptions() {
 
   const handleGradientClick = useCallback(
     (gradient: Gradient, isMesh: boolean) => {
-      document.documentElement.style.setProperty(
+      document?.documentElement.style.setProperty(
         '--gradient-bg',
         gradient.gradient
       )
-      document.documentElement.style.setProperty(
+      document?.documentElement.style.setProperty(
         '--mesh-bg',
         isMesh ? gradient.background! : gradient.gradient
       )

@@ -46,6 +46,7 @@ const ImageUpload = () => {
       return
     }
     setInitialImageUploaded(true)
+    console.log('is extracting colors')
     const extractColors = async () => {
       const result = await analyze(images[images.length - 1].image, {
         scale: 0.3,
@@ -98,87 +99,86 @@ const ImageUpload = () => {
       {!initialImageUploaded && <LoadAImage />}
       {images && (
         <>
-          <div className="absolute flex items-center">
-            {images.map((image) => {
-              if (image.image !== '')
-                return (
-                  <ContextMenuImage key={image.id}>
-                    <div
-                      key={image.image}
-                      className={`image flex h-full w-full flex-col overflow-hidden `}
-                      ref={image.id === selectedImage ? targetRef : null}
-                      style={{
-                        transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg) perspective(${image.style.perspective}px) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
-                        borderRadius: `${image.style.imageRoundness}rem`,
-                        boxShadow:
-                          image.style.shadowName !== 'Small'
-                            ? `${image.style.imageShadow} ${convertHex(
-                                image.style.shadowColor,
-                                image.style.shadowOpacity
-                              )}`
-                            : `0 10px 25px -5px ${convertHex(
-                                image.style.shadowColor,
-                                image.style.shadowOpacity - 0.25
-                              )}, 0 8px 10px -6px ${convertHex(
-                                image.style.shadowColor,
-                                image.style.shadowOpacity - 0.25
-                              )}`,
+          {images.map((image) => {
+            if (image.image !== '')
+              return (
+                <ContextMenuImage key={image.id}>
+                  <div
+                    key={image.image}
+                    className={`image pointer-events-auto overflow-hidden flex-1`}
+                    ref={image.id === selectedImage ? targetRef : null}
+                    style={{
+                      transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg) perspective(${image.style.perspective}px) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
+                      borderRadius: `${image.style.imageRoundness}rem`,
+                      boxShadow:
+                        image.style.shadowName !== 'Small'
+                          ? `${image.style.imageShadow} ${convertHex(
+                              image.style.shadowColor,
+                              image.style.shadowOpacity
+                            )}`
+                          : `0 10px 25px -5px ${convertHex(
+                              image.style.shadowColor,
+                              image.style.shadowOpacity - 0.25
+                            )}, 0 8px 10px -6px ${convertHex(
+                              image.style.shadowColor,
+                              image.style.shadowOpacity - 0.25
+                            )}`,
 
-                        padding:
+                      padding:
+                        browserFrame !== 'None'
+                          ? browserFrame === 'Arc'
+                            ? '15px'
+                            : ''
+                          : `${image.style.insetSize}px`,
+
+                      backgroundColor:
+                        image.style.insetSize !== '0' && browserFrame === 'None'
+                          ? `${image?.style.insetColor}`
+                          : browserFrame === 'Arc'
+                          ? '#ffffff50'
+                          : '',
+
+                      border:
+                        browserFrame === 'Arc' ? '1px solid #ffffff60' : '',
+                    }}
+                    id={`${image.id}`}
+                    onClick={() => handleImageClick(image.id)}
+                    // on right click too do the same
+                    onContextMenu={(e) => {
+                      handleImageClick(image.id)
+                    }}
+                  >
+                    <BrowserFrame />
+                    <img
+                      className={`h-full w-full ${
+                        browserFrame === 'Arc' ? 'shadow-md' : ''
+                      }`}
+                      src={image.image}
+                      alt="Uploaded image"
+                      style={{
+                        borderRadius:
                           browserFrame !== 'None'
                             ? browserFrame === 'Arc'
-                              ? '15px'
+                              ? `calc(${image.style.imageRoundness}rem - 9px)`
                               : ''
+                            : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
+
+                        padding:
+                          browserFrame === 'None'
+                            ? ''
                             : `${image.style.insetSize}px`,
 
                         backgroundColor:
                           image.style.insetSize !== '0' &&
-                          browserFrame === 'None'
+                          browserFrame !== 'None'
                             ? `${image?.style.insetColor}`
-                            : browserFrame === 'Arc'
-                            ? '#ffffff50'
                             : '',
-
-                        border:
-                          browserFrame === 'Arc' ? '1px solid #ffffff60' : '',
                       }}
-                      id={`${image.id}`}
-                      onClick={() => handleImageClick(image.id)}
-                      // on right click too do the same
-                      onContextMenu={(e) => {
-                        handleImageClick(image.id)
-                      }}
-                    >
-                      <BrowserFrame />
-                      <img
-                        className={`h-full w-full flex-1`}
-                        src={image.image}
-                        alt="Uploaded image"
-                        style={{
-                          borderRadius:
-                            browserFrame !== 'None'
-                              ? browserFrame === 'Arc'
-                                ? `calc(${image.style.imageRoundness}rem - 9px)`
-                                : ''
-                              : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
-
-                          padding:
-                            browserFrame === 'None'
-                              ? ''
-                              : `${image.style.insetSize}px`,
-
-                          backgroundColor:
-                            image.style.insetSize !== '0' &&
-                            browserFrame !== 'None'
-                              ? `${image?.style.insetColor}`
-                              : '',
-                        }}
-                      />
-                    </div>
-                  </ContextMenuImage>
-                )
-            })}
-          </div>
+                    />
+                  </div>
+                </ContextMenuImage>
+              )
+          })}
         </>
       )}
       {showControls && <MoveableComponent id={`${selectedImage}`} />}
@@ -314,12 +314,12 @@ function LoadAImage() {
       },
     ])
     setImagesCheck([...imagesCheck, demoImage.src])
-    document.documentElement.style.setProperty('--borderSize1', `15px`)
-    document.documentElement.style.setProperty(
+    document?.documentElement.style.setProperty('--borderSize1', `15px`)
+    document?.documentElement.style.setProperty(
       '--borderColor1',
       defaultStyle.borderColor
     )
-    document.documentElement.style.setProperty('--borderRoundness1', '2rem')
+    document?.documentElement.style.setProperty('--borderRoundness1', '2rem')
     setResolution('1920x1080')
   }
 
@@ -338,7 +338,7 @@ function LoadAImage() {
           {...getRootProps()}
           className="h-25 absolute-center w-4/5 lg:w-3/5"
         >
-          <div className="flex flex-col gap-4 rounded-xl border-border text-center md:shadow-md md:border-[3px] ">
+          <div className="flex flex-col gap-4 rounded-xl border-border text-center md:border-[3px] md:shadow-md ">
             <div className="flex-center flex-col rounded-lg p-10 md:bg-sidebar">
               <Upload
                 style={{

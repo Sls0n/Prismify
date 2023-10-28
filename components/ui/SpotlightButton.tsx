@@ -1,7 +1,6 @@
 'use client'
 
-import { Sparkles, Star } from 'lucide-react'
-import React from 'react'
+import { Sparkles } from 'lucide-react'
 
 type Props = {
   text: string

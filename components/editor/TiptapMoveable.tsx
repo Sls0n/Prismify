@@ -33,10 +33,10 @@ export default function TiptapMoveable({ id }: { id: string }) {
   const otherTexts = texts.filter((text) => text.id !== selectedText)
   const elementGuidelines = [
     ...otherImages.map((image) => ({
-      element: document.getElementById(`${image.id}`),
+      element: document?.getElementById(`${image.id}`),
     })),
     ...otherTexts.map((text) => ({
-      element: document.getElementById(`text-${text.id}`),
+      element: document?.getElementById(`text-${text.id}`),
     })),
   ]
 

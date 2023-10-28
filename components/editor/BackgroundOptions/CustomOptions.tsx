@@ -16,9 +16,10 @@ export default function CustomOptions() {
   } = useBackgroundOptions()
 
   const updateRootStyles = useCallback((color: string) => {
-    document.documentElement.style.setProperty('--solid-bg', color)
-    document.documentElement.style.setProperty('--gradient-bg', color)
-    document.documentElement.style.setProperty('--mesh-bg', color)
+
+    document?.documentElement.style.setProperty('--solid-bg', color)
+    document?.documentElement.style.setProperty('--gradient-bg', color)
+    document?.documentElement.style.setProperty('--mesh-bg', color)
   }, [])
 
   const handleColorChange = useCallback(
