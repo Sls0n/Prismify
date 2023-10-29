@@ -206,6 +206,11 @@ export const gradients: Gradient[] = [
   {
     type: 'Normal',
     gradient:
+      'linear-gradient(var(--gradient-angle), rgb(119, 136, 153), rgb(211, 211, 211) 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient:
       'linear-gradient(var(--gradient-angle), rgb(202, 194, 255), rgb(242, 231, 248) 100%)',
   },
   {
@@ -240,6 +245,11 @@ export const gradients: Gradient[] = [
   {
     type: 'Normal',
     gradient:
+      'linear-gradient(var(--gradient-angle), rgb(255, 182, 148), rgb(171, 199, 242) 50%)',
+  },
+  {
+    type: 'Normal',
+    gradient:
       'linear-gradient(var(--gradient-angle), rgb(218, 185, 252) 11.2%, rgb(125, 89, 252) 91.1%)',
   },
   {
@@ -264,7 +274,7 @@ export const gradients: Gradient[] = [
   {
     type: 'Normal',
     gradient:
-      'linear-gradient(var(--gradient-angle), rgb(187, 247, 208), rgb(34, 197, 94))',
+      'linear-gradient(var(--gradient-angle), rgb(71, 140, 118), rgb(138, 206, 144) 100%)',
   },
   {
     type: 'Normal',
@@ -275,6 +285,11 @@ export const gradients: Gradient[] = [
     type: 'Normal',
     gradient:
       'linear-gradient(var(--gradient-angle), #dbeafe, #93c5fd, #3b82f6)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), rgb(26, 98, 138), rgb(255, 254, 255) 100%)',
   },
   {
     type: 'Normal',
@@ -338,11 +353,26 @@ export const gradients: Gradient[] = [
   },
   {
     type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), rgb(221, 153, 51), rgb(248, 233, 190) 100%)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), rgb(245, 126, 217), rgb(255, 236, 162) 100%)',
+  },
+  {
+    type: 'Normal',
     gradient: 'linear-gradient(var(--gradient-angle), #19335a, #8fc8ea 100%)',
   },
   {
     type: 'Mesh',
     gradient: 'conic-gradient(at bottom left,#fbcfe8, #4f46e5,#6ee7b7)',
+  },
+  {
+    type: 'Normal',
+    gradient:
+      'linear-gradient(var(--gradient-angle), rgb(142, 211, 217) 15%, rgb(238, 67, 244) 50%, rgb(76, 83, 167) 85%)',
   },
   {
     type: 'Mesh',
