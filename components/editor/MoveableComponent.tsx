@@ -14,8 +14,12 @@ import {
   Scalable,
   Rotatable,
   Snappable,
+  OnRotateEnd,
+  OnDragEnd,
+  OnScaleEnd,
 } from 'react-moveable'
 import { useImageQualityStore } from '@/store/use-image-quality'
+import { splitWidthHeight } from '@/utils/helperFns'
 
 const Moveable = makeMoveable<
   DraggableProps & ScalableProps & RotatableProps & SnappableProps
@@ -24,12 +28,13 @@ const Moveable = makeMoveable<
 
 export default function MoveableComponent({ id }: { id: string }) {
   const { quality } = useImageQualityStore()
-  const { domResolution, scaleFactor } = useResizeCanvas()
+  const { domResolution, scaleFactor, exactDomResolution } = useResizeCanvas()
   const { setImages, images, selectedImage } = useImageOptions()
   const moveableRef = React.useRef<typeof Moveable>(null)
+  const { width, height } = splitWidthHeight(exactDomResolution)
 
   const handleDrag = useCallback(
-    (e: any) => {
+    (e: OnDragEnd) => {
       setImages(
         images.map((image, index) =>
           index === selectedImage - 1
@@ -45,12 +50,12 @@ export default function MoveableComponent({ id }: { id: string }) {
         )
       )
     },
-    [images, selectedImage, setImages]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [images, setImages]
   )
 
   const handleRotate = useCallback(
-    (e: any) => {
-      console.log(e)
+    (e: OnRotateEnd) => {
       setImages(
         images.map((image, index) =>
           index === selectedImage - 1
@@ -65,11 +70,12 @@ export default function MoveableComponent({ id }: { id: string }) {
         )
       )
     },
-    [images, selectedImage, setImages]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [images, setImages]
   )
 
   const handleScale = useCallback(
-    (e: any) => {
+    (e: OnScaleEnd) => {
       setImages(
         images.map((image, index) =>
           index === selectedImage - 1
@@ -78,7 +84,7 @@ export default function MoveableComponent({ id }: { id: string }) {
                 style: {
                   ...image.style,
                   imageSize: `${e.lastEvent?.scale[0]}`,
-                  translateX: e?.lastEvent?.drag.translate[0],
+                  translateX: e?.lastEvent?.drag?.translate[0],
                   translateY: e?.lastEvent?.drag.translate[1],
                 },
               }
@@ -86,7 +92,8 @@ export default function MoveableComponent({ id }: { id: string }) {
         )
       )
     },
-    [setImages, images, selectedImage]
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [setImages, images]
   )
 
   const otherImages = images.filter((image) => image.id !== selectedImage)

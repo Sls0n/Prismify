@@ -32,6 +32,8 @@ export default function Canvas() {
   const {
     resolution,
     setDomResolution,
+    exactDomResolution,
+    setExactDomResolution,
     scrollScale,
     setScrollScale,
     canvasRoundness,
@@ -41,11 +43,13 @@ export default function Canvas() {
   const { images, initialImageUploaded } = useImageOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
-
+ 
   const [width, height]: number[] = resolution.split('x').map(Number)
 
   const aspectRatio = width / height
-
+ console.log(`Current DOM resoltion: ${
+    exactDomResolution
+  }`)
   let style: CSSProperties = {
     aspectRatio,
     backgroundImage: !initialImageUploaded
@@ -94,12 +98,13 @@ export default function Canvas() {
     if (element) {
       const resizeObserver = new ResizeObserver((entries) => {
         for (let entry of entries) {
-          const { width: domWidth, height } = entry.contentRect
+          const { width: domWidth, height: domHeight } = entry.contentRect
           const dynamicScaleFactor = width / domWidth
           setScaleFactor(dynamicScaleFactor)
+          setExactDomResolution(`${domWidth}x${domHeight}`)
           setDomResolution(
             `${domWidth * dynamicScaleFactor * quality}x${
-              height * dynamicScaleFactor * quality
+              domHeight * dynamicScaleFactor * quality
             }`
           )
           // if (aspectRatio >= 0 && aspectRatio <= 1.75) {
@@ -174,7 +179,7 @@ export default function Canvas() {
               />
             )}
             <TipTap />
-            <div className="absolute left-0 top-0 flex h-full min-h-[15rem] w-full items-center justify-center">
+            <div className="absolute flex h-full min-h-[15rem] w-full items-center justify-center">
               <ImageUpload />
             </div>
           </div>

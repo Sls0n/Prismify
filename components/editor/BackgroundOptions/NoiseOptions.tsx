@@ -17,9 +17,9 @@ export default function NoiseOptions() {
       <div className="mb-3 flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0]}
-          max={0.5}
+          max={0.8}
           min={0}
-          step={0.01}
+          step={0.05}
           value={[noise]}
           onValueChange={(value: number[]) => {
             setNoise(value[0])

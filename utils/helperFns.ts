@@ -1,3 +1,8 @@
+export function splitWidthHeight(resolution: string) {
+  const [width, height] = resolution.split('x')
+  return { width, height }
+}
+
 export function convertHex(hexCode: string, opacity = 1) {
   var hex = hexCode.replace('#', '')
 

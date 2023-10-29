@@ -22,6 +22,9 @@ interface ResizeCanvasState {
 
   automaticResolution: boolean
   setAutomaticResolution: (automaticResolution: boolean) => void
+
+  exactDomResolution: string
+  setExactDomResolution: (exactDomResolution: string) => void
 }
 
 type MyPersist = (
@@ -34,6 +37,10 @@ export const useResizeCanvas = create<ResizeCanvasState, []>(
     (set): ResizeCanvasState => ({
       resolution: '1920x1080',
       setResolution: (res) => set({ resolution: res }),
+
+      exactDomResolution: '1920x1080',
+      setExactDomResolution: (exactDomResolution) =>
+        set({ exactDomResolution }),
 
       domResolution: '....x....',
       setDomResolution: (res) => set({ domResolution: res }),

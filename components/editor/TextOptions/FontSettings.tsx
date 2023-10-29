@@ -176,7 +176,7 @@ export default function FontSettings() {
           defaultValue={[0]}
           max={0.2}
           min={-0.05}
-          step={0.01}
+          step={0.001}
           value={
             texts.length !== 0
               ? [+texts[selectedText - 1]?.style.letterSpacing]

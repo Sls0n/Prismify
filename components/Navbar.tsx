@@ -174,7 +174,7 @@ export default function Navbar({
                     </Button>
                     <div className="dark:bg-border-dark mx-3 h-7 w-[2px] bg-border" />
 
-                    {/* <Dialog>
+                    <Dialog>
                       <DialogTrigger asChild>
                         <Button
                           className="rounded-xl text-[0.85rem]"
@@ -191,15 +191,7 @@ export default function Navbar({
                           <SignIn />
                         </div>
                       </DialogContent>
-                    </Dialog> */}
-                    <Link
-                      href={
-                        'https://thefullstack.network/slson/project/prismify-effortlessly-create-beautiful-saas-product-shots-graphics'
-                      }
-                      target="_blank"
-                    >
-                      <SpotlightButton text="Vote" />
-                    </Link>
+                    </Dialog>
                   </>
                 )}
 

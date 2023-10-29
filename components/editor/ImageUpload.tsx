@@ -19,7 +19,11 @@ import { useOnClickOutside } from '@/hooks/use-on-click-outside'
 import { useMoveable } from '@/store/use-moveable'
 import { useFrameOptions } from '@/store/use-frame-options'
 import MoveableComponent from './MoveableComponent'
-import { calculateEqualCanvasSize, convertHex } from '@/utils/helperFns'
+import {
+  calculateEqualCanvasSize,
+  convertHex,
+  splitWidthHeight,
+} from '@/utils/helperFns'
 import { useColorExtractor } from '@/store/use-color-extractor'
 import analyze from 'rgbaster'
 import ContextMenuImage from './ContextMenuImage'
@@ -37,7 +41,9 @@ const ImageUpload = () => {
     initialImageUploaded,
   } = useImageOptions()
   const { setShowControls, showControls } = useMoveable()
-
+  const { exactDomResolution } = useResizeCanvas()
+  const { width: exactDomWidth, height: exactDomHeight } =
+    splitWidthHeight(exactDomResolution)
   const { browserFrame } = useFrameOptions()
   const { imagesCheck } = useColorExtractor()
 
@@ -99,29 +105,28 @@ const ImageUpload = () => {
       {!initialImageUploaded && <LoadAImage />}
       {images && (
         <>
-          {images.map((image) => {
+          {images.map((image, index) => {
             if (image.image !== '')
               return (
-                <ContextMenuImage key={image.id}>
+                <ContextMenuImage key={image.id + index}>
                   <div
-                    key={image.image}
-                    className={`image pointer-events-auto overflow-hidden flex-1`}
+                    className={`image pointer-events-auto flex-1 overflow-hidden`}
                     ref={image.id === selectedImage ? targetRef : null}
                     style={{
                       transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg) perspective(${image.style.perspective}px) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
                       borderRadius: `${image.style.imageRoundness}rem`,
                       boxShadow:
-                        image.style.shadowName !== 'Small'
+                        image.style.shadowName !== 'Medium'
                           ? `${image.style.imageShadow} ${convertHex(
                               image.style.shadowColor,
                               image.style.shadowOpacity
                             )}`
-                          : `0 10px 25px -5px ${convertHex(
+                          : `0px 18px 88px -4px ${convertHex(
                               image.style.shadowColor,
-                              image.style.shadowOpacity - 0.25
-                            )}, 0 8px 10px -6px ${convertHex(
+                              image.style.shadowOpacity
+                            )}, 0px 8px 28px -6px ${convertHex(
                               image.style.shadowColor,
-                              image.style.shadowOpacity - 0.25
+                              image.style.shadowOpacity
                             )}`,
 
                       padding:

@@ -1,21 +1,20 @@
 'use client'
 
-import React, { useCallback } from 'react'
 import { useImageOptions } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 
-import {
-  makeMoveable,
-  DraggableProps,
-  ScalableProps,
-  RotatableProps,
-  SnappableProps,
-  Draggable,
-  Scalable,
-  Rotatable,
-  Snappable,
-} from 'react-moveable'
 import { useImageQualityStore } from '@/store/use-image-quality'
+import {
+  Draggable,
+  DraggableProps,
+  Rotatable,
+  RotatableProps,
+  Scalable,
+  ScalableProps,
+  Snappable,
+  SnappableProps,
+  makeMoveable,
+} from 'react-moveable'
 
 const Moveable = makeMoveable<
   DraggableProps & ScalableProps & RotatableProps & SnappableProps
@@ -29,10 +28,9 @@ export default function TiptapMoveable({ id }: { id: string }) {
 
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
 
-  const otherImages = images.filter((image) => image.id !== selectedImage)
   const otherTexts = texts.filter((text) => text.id !== selectedText)
   const elementGuidelines = [
-    ...otherImages.map((image) => ({
+    ...images.map((image) => ({
       element: document?.getElementById(`${image.id}`),
     })),
     ...otherTexts.map((text) => ({

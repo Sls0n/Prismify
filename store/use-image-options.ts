@@ -40,6 +40,7 @@ interface ImageOptionsState {
       perspective: number
       translateX: number
       translateY: number
+      hasFrame: boolean
     }
   }[]
   setImages: (
@@ -66,6 +67,7 @@ interface ImageOptionsState {
         perspective: number
         translateX: number
         translateY: number
+        hasFrame: boolean
       }
     }[]
   ) => void
@@ -136,6 +138,7 @@ interface ImageOptionsState {
     perspective: number
     translateX: number
     translateY: number
+    hasFrame: boolean
   }
 
   defaultTextStyle: {
@@ -188,12 +191,13 @@ export const useImageOptions = create(
         insetSize: '0',
         insetColor: '#fff',
         rotate: '0',
-        rotateX: 0,
+        rotateX: 0.0001,
         rotateY: 0,
         rotateZ: 0,
         perspective: 2000,
         translateX: 0,
         translateY: 0,
+        hasFrame: false,
       },
 
       defaultTextStyle: {

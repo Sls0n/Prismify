@@ -171,13 +171,13 @@ export const shadows: Shadow[] = [
   {
     name: 'sm',
     fullName: 'Small',
-    shadow: `0px 3px 8px 0px`,
-    preview: `0px 3px 8px 0px #00000080`,
+    shadow: `0px 6px 20px`,
+    preview: `0px 6px 20px #00000080`,
   },
   {
     name: 'md',
     fullName: 'Medium',
-    shadow: `0px 6px 20px`,
+    shadow: ``,
     preview: `0px 6px 20px #000000`,
   },
   {
