@@ -123,7 +123,7 @@ export default function TipTap() {
           key={`text-${text.id}`}
           id={`text-${text.id}`}
           ref={text.id === selectedText ? textRef : null}
-          className="apply-font absolute z-[120] flex cursor-pointer items-center justify-center"
+          className="text apply-font absolute z-[120] flex cursor-pointer items-center justify-center"
           style={{
             fontSize: `${text.style.textSize}rem`,
             fontFamily: `${text.style.fontFamily}`,

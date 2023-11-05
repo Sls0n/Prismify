@@ -9,6 +9,12 @@ interface MoveableState {
 
   isEditable: boolean
   setIsEditable: (isEditable: boolean) => void
+
+  isSelecting: boolean
+  setIsSelecting: (isSelecting: boolean) => void
+
+  isMultipleTargetSelected: boolean
+  setIsMultipleTargetSelected: (isMultipleTargetSelected: boolean) => void
 }
 
 export const useMoveable = create<MoveableState>()((set) => ({
@@ -20,4 +26,11 @@ export const useMoveable = create<MoveableState>()((set) => ({
 
   isEditable: false,
   setIsEditable: (isEditable) => set({ isEditable }),
+
+  isSelecting: false,
+  setIsSelecting: (isSelecting) => set({ isSelecting }),
+
+  isMultipleTargetSelected: false,
+  setIsMultipleTargetSelected: (isMultipleTargetSelected) =>
+    set({ isMultipleTargetSelected }),
 }))

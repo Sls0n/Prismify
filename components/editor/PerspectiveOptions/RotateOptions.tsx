@@ -89,7 +89,7 @@ export default function RotateOptions() {
                       ...image,
                       style: {
                         ...image.style,
-                        rotateX: 0,
+                        rotateX: 0.0001,
                       },
                     }
                   : image

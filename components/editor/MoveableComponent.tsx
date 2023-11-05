@@ -1,28 +1,34 @@
 'use client'
 
-import React, { useCallback } from 'react'
 import { useImageOptions } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
+import React, { useCallback } from 'react'
 
-import {
-  makeMoveable,
-  DraggableProps,
-  ScalableProps,
-  RotatableProps,
-  SnappableProps,
-  Draggable,
-  Scalable,
-  Rotatable,
-  Snappable,
-  OnRotateEnd,
-  OnDragEnd,
-  OnScaleEnd,
-} from 'react-moveable'
 import { useImageQualityStore } from '@/store/use-image-quality'
+import { useMoveable } from '@/store/use-moveable'
 import { splitWidthHeight } from '@/utils/helperFns'
+import {
+  Draggable,
+  DraggableProps,
+  GroupableProps,
+  OnDragEnd,
+  OnRotateEnd,
+  OnScaleEnd,
+  Rotatable,
+  RotatableProps,
+  Scalable,
+  ScalableProps,
+  Snappable,
+  SnappableProps,
+  makeMoveable,
+} from 'react-moveable'
 
 const Moveable = makeMoveable<
-  DraggableProps & ScalableProps & RotatableProps & SnappableProps
+  DraggableProps &
+    ScalableProps &
+    RotatableProps &
+    SnappableProps &
+    GroupableProps
   // @ts-ignore
 >([Draggable, Scalable, Rotatable, Snappable])
 
@@ -32,9 +38,15 @@ export default function MoveableComponent({ id }: { id: string }) {
   const { setImages, images, selectedImage } = useImageOptions()
   const moveableRef = React.useRef<typeof Moveable>(null)
   const { width, height } = splitWidthHeight(exactDomResolution)
+  const {
+    isMultipleTargetSelected,
+    setIsMultipleTargetSelected,
+    setShowControls,
+  } = useMoveable()
 
   const handleDrag = useCallback(
     (e: OnDragEnd) => {
+      console.log(e)
       setImages(
         images.map((image, index) =>
           index === selectedImage - 1
@@ -76,6 +88,7 @@ export default function MoveableComponent({ id }: { id: string }) {
 
   const handleScale = useCallback(
     (e: OnScaleEnd) => {
+      console.log(e)
       setImages(
         images.map((image, index) =>
           index === selectedImage - 1
@@ -106,30 +119,10 @@ export default function MoveableComponent({ id }: { id: string }) {
     <>
       <Moveable
         ref={moveableRef as any}
-        target={document?.getElementById(id)}
-        // target={'.image'}
-        // onDragGroup={({ events }) => {
-        //   events.forEach((ev) => {
-        //     ev.target.style.transform = ev.transform
-        //   })
-        // }}
-        // hideChildMoveableDefaultLines={false}
-        // onResizeGroupStart={({ setMin, setMax }) => {
-        //   setMin([0, 0])
-        //   setMax([0, 0])
-        // }}
-        // onScaleGroup={({ scale, dist, events }) => {
-        //   events.forEach((ev) => {
-        //     ev.target.style.transform = ev.drag.transform
-        //   })
-        // }}
-        // onResizeGroup={({ events }) => {
-        //   events.forEach((ev) => {
-        //     ev.target.style.width = `${ev.width}px`
-        //     ev.target.style.height = `${ev.height}px`
-        //     ev.target.style.transform = ev.drag.transform
-        //   })
-        // }}
+        target={
+          isMultipleTargetSelected ? '.selected' : document?.getElementById(id)
+        }
+        hideChildMoveableDefaultLines={true}
         draggable={true}
         onDrag={(e) => {
           e.target.style.transform = e.transform
@@ -177,7 +170,17 @@ export default function MoveableComponent({ id }: { id: string }) {
           center: true,
           middle: true,
         }}
-        elementGuidelines={elementGuidelines}
+        elementGuidelines={!isMultipleTargetSelected ? elementGuidelines : []}
+        onRenderGroup={(e) => {
+          if (!isMultipleTargetSelected) return
+
+          e.events.forEach((ev) => {
+            ev.target.style.transform = ev.transform
+          })
+        }}
+        onRenderGroupEnd={(e) => {
+          console.log('end')
+        }}
       />
     </>
   )

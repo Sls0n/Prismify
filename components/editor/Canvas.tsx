@@ -20,6 +20,9 @@ import PerspectiveOptions from '@/components/editor/PerspectiveOptions/Perspecti
 import PositionOptions from '@/components/editor/PositionOptions/PositionOptions'
 import useStore from '@/hooks/use-store'
 import { ScrollArea } from '../ui/ScrollArea'
+import MoveableComponent from './MoveableComponent'
+import { useMoveable } from '@/store/use-moveable'
+import SelectoComponent from './SelectoComponent'
 
 export default function Canvas() {
   const activeIndex = useStore(
@@ -40,16 +43,15 @@ export default function Canvas() {
     setScaleFactor,
     setShouldFloat,
   } = useResizeCanvas()
-  const { images, initialImageUploaded } = useImageOptions()
+  const { images, initialImageUploaded, selectedImage } = useImageOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
- 
+  const { showControls } = useMoveable()
+
   const [width, height]: number[] = resolution.split('x').map(Number)
 
   const aspectRatio = width / height
- console.log(`Current DOM resoltion: ${
-    exactDomResolution
-  }`)
+  console.log(`Current DOM resoltion: ${exactDomResolution}`)
   let style: CSSProperties = {
     aspectRatio,
     backgroundImage: !initialImageUploaded
@@ -146,6 +148,8 @@ export default function Canvas() {
     scale: `${scrollScale}`,
   }
 
+  console.log(`SelectedImage : - ${selectedImage}`)
+
   return (
     <>
       <section
@@ -162,14 +166,14 @@ export default function Canvas() {
         >
           <div
             className={
-              'relative flex max-h-[15rem] min-h-[15rem] w-full items-center justify-center overflow-hidden md:max-h-full '
+              'canvas-container relative flex max-h-[15rem] min-h-[15rem] w-full items-center justify-center overflow-hidden md:max-h-full '
             }
             ref={screenshotRef}
             id="canvas-container"
             style={style}
           >
             <Noise />
-            {images.length !== 0 && imageBackground && (
+            {initialImageUploaded && imageBackground && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 draggable={false}
@@ -179,7 +183,9 @@ export default function Canvas() {
               />
             )}
             <TipTap />
-            <div className="absolute flex h-full min-h-[15rem] w-full items-center justify-center">
+            {showControls && <MoveableComponent id={`${selectedImage}`} />}
+
+            <div className="selecto-area absolute flex h-full min-h-[15rem] w-full items-center justify-center">
               <ImageUpload />
             </div>
           </div>
@@ -195,7 +201,7 @@ export default function Canvas() {
             </div>
           </ScrollArea>
         </div>
-        {/* <SelectoComponent /> */}
+        <SelectoComponent />
         <FloatingOptions />
       </section>
 

@@ -1,36 +1,31 @@
 /* eslint-disable @next/next/no-img-element */
 'use client'
 
-import { ImageIcon, Upload } from 'lucide-react'
-import React, {
-  ChangeEvent,
-  useCallback,
-  useEffect,
-  useRef,
-  useState,
-} from 'react'
-import { useImageOptions } from '@/store/use-image-options'
-import BrowserFrame from './BrowserFrame'
-import { Button } from '../ui/Button'
-import demoImage from '@/public/images/demo-tweet.png'
-import { useResizeCanvas } from '@/store/use-resize-canvas'
-import { useBackgroundOptions } from '@/store/use-background-options'
 import { useOnClickOutside } from '@/hooks/use-on-click-outside'
-import { useMoveable } from '@/store/use-moveable'
+import demoImage from '@/public/images/demo-tweet.png'
+import { useBackgroundOptions } from '@/store/use-background-options'
+import { useColorExtractor } from '@/store/use-color-extractor'
 import { useFrameOptions } from '@/store/use-frame-options'
-import MoveableComponent from './MoveableComponent'
+import { useImageOptions } from '@/store/use-image-options'
+import { useMoveable } from '@/store/use-moveable'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
 import {
   calculateEqualCanvasSize,
   convertHex,
   splitWidthHeight,
 } from '@/utils/helperFns'
-import { useColorExtractor } from '@/store/use-color-extractor'
-import analyze from 'rgbaster'
-import ContextMenuImage from './ContextMenuImage'
+import { ImageIcon, Upload } from 'lucide-react'
+import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
 import Dropzone from 'react-dropzone'
+import analyze from 'rgbaster'
+import { Button } from '../ui/Button'
+import BrowserFrame from './BrowserFrame'
+import ContextMenuImage from './ContextMenuImage'
+import { useEventListener } from '@/hooks/use-event-listener'
 
 const ImageUpload = () => {
   const targetRef = useRef<HTMLDivElement>(null)
+  const multipleTargetRef = useRef<HTMLDivElement>(null)
 
   const {
     images,
@@ -40,7 +35,14 @@ const ImageUpload = () => {
     setInitialImageUploaded,
     initialImageUploaded,
   } = useImageOptions()
-  const { setShowControls, showControls } = useMoveable()
+  const {
+    setShowControls,
+    showControls,
+    setIsSelecting,
+    isSelecting,
+    isMultipleTargetSelected,
+    setIsMultipleTargetSelected,
+  } = useMoveable()
   const { exactDomResolution } = useResizeCanvas()
   const { width: exactDomWidth, height: exactDomHeight } =
     splitWidthHeight(exactDomResolution)
@@ -79,17 +81,26 @@ const ImageUpload = () => {
   console.log(imagesCheck)
   console.log(images)
 
-  const handleImageClick = useCallback(
-    (id: number) => {
-      setShowControls(!showControls)
-      setSelectedImage(id)
+  const handleImageClick = (id: number) => {
+    isMultipleTargetSelected && setIsMultipleTargetSelected(false)
+    setShowControls(!showControls)
+    setSelectedImage(id)
+  }
+
+  useOnClickOutside(
+    targetRef,
+    () => {
+      // if (isMultipleTargetSelected) return
+      setShowControls(false)
     },
-    [setShowControls, showControls, setSelectedImage]
+    isMultipleTargetSelected ? 'mouseup' : 'mousedown'
   )
 
-  useOnClickOutside(targetRef, () => {
-    setShowControls(false)
-  })
+  // useOnClickOutside(multipleTargetRef, () => {
+  //   setShowControls(false)
+
+  //   setIsSelecting(false)
+  // })
 
   // const {
   //   imageSize,
@@ -110,8 +121,16 @@ const ImageUpload = () => {
               return (
                 <ContextMenuImage key={image.id + index}>
                   <div
-                    className={`image pointer-events-auto flex-1 overflow-hidden`}
-                    ref={image.id === selectedImage ? targetRef : null}
+                    className={`image pointer-events-auto flex-1 overflow-hidden ${
+                      isSelecting ? 'selectable' : ''
+                    }`}
+                    ref={
+                      !isMultipleTargetSelected
+                        ? image.id === selectedImage
+                          ? targetRef
+                          : null
+                        : targetRef
+                    }
                     style={{
                       transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg) perspective(${image.style.perspective}px) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
                       borderRadius: `${image.style.imageRoundness}rem`,
@@ -147,7 +166,9 @@ const ImageUpload = () => {
                         browserFrame === 'Arc' ? '1px solid #ffffff60' : '',
                     }}
                     id={`${image.id}`}
-                    onClick={() => handleImageClick(image.id)}
+                    onClick={() => {
+                      handleImageClick(image.id)
+                    }}
                     // on right click too do the same
                     onContextMenu={(e) => {
                       handleImageClick(image.id)
@@ -186,7 +207,6 @@ const ImageUpload = () => {
           })}
         </>
       )}
-      {showControls && <MoveableComponent id={`${selectedImage}`} />}
     </>
   )
 }

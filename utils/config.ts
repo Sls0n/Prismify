@@ -453,7 +453,7 @@ export const solidColors = [
     background: '#99bdff',
   },
   {
-    background: '#E3E9F1',
+    background: '#E1E0E1',
   },
   {
     background: '#D8D9DD',

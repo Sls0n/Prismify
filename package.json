@@ -59,6 +59,7 @@
     "react-hotkeys-hook": "^4.4.1",
     "react-joystick-component": "^6.2.1",
     "react-moveable": "^0.54.1",
+    "react-selecto": "^1.26.0",
     "react-wrap-balancer": "^1.0.0",
     "rgbaster": "^2.1.1",
     "tailwind-merge": "^1.13.2",

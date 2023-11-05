@@ -36,7 +36,7 @@ export default function BrowserFrame() {
   if (browserFrame === 'MacOS Light')
     return (
       <div
-        className={`flex items-center gap-4 border-b border-[#cfcfcf] bg-[#fefefe] ${
+        className={`flex items-center gap-4 border-b border-[#ECEDEF] bg-[#fefefe] ${
           frameHeight === 'small'
             ? 'h-[3vw] px-[1.6vw]'
             : frameHeight === 'medium'

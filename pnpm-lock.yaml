@@ -155,6 +155,9 @@ dependencies:
   react-moveable:
     specifier: ^0.54.1
     version: 0.54.1
+  react-selecto:
+    specifier: ^1.26.0
+    version: 1.26.0
   react-wrap-balancer:
     specifier: ^1.0.0
     version: 1.0.0(react@18.2.0)

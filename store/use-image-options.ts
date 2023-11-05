@@ -3,6 +3,9 @@ import { temporal, TemporalState } from 'zundo'
 import throttle from 'just-throttle'
 
 interface ImageOptionsState {
+  scale: number
+  setScale: (scale: number) => void
+
   accordionOpen: {
     appearanceOpen: boolean
     shadowOpen: boolean
@@ -161,6 +164,9 @@ interface ImageOptionsState {
 export const useImageOptions = create(
   temporal<ImageOptionsState>(
     (set) => ({
+      scale: 1,
+      setScale: (scale) => set({ scale }),
+
       accordionOpen: {
         appearanceOpen: true,
         shadowOpen: true,

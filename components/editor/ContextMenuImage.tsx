@@ -136,7 +136,7 @@ function ReplaceImage() {
     }
   }
   return (
-    <div className='data-[disabled]:opacity-50" relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none'>
+    <div className='data-[disabled]:opacity-50 relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none'>
       <label className="ml-6" htmlFor="file-replace">
         Replace image
       </label>
