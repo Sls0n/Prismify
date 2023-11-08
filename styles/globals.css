@@ -160,7 +160,10 @@ html {
   box-shadow: none !important;
   height: 2.5rem;
   border-radius: 0.5rem;
-  font-size: 16px;
+}
+
+.dropdown-font-family {
+  font-size: 14px !important;
 }
 
 .font-list {
@@ -240,4 +243,9 @@ html {
 #tippy-8 {
   position: relative;
   transform: translate(0, 50px) !important;
+}
+
+/* custom selection */
+::selection {
+  background-color: #595b96;
 }

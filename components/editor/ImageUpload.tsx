@@ -82,19 +82,14 @@ const ImageUpload = () => {
   console.log(images)
 
   const handleImageClick = (id: number) => {
-    isMultipleTargetSelected && setIsMultipleTargetSelected(false)
     setShowControls(!showControls)
     setSelectedImage(id)
   }
 
-  useOnClickOutside(
-    targetRef,
-    () => {
-      // if (isMultipleTargetSelected) return
-      setShowControls(false)
-    },
-    isMultipleTargetSelected ? 'mouseup' : 'mousedown'
-  )
+  useOnClickOutside(targetRef, () => {
+    if (isMultipleTargetSelected) return
+    setShowControls(false)
+  })
 
   // useOnClickOutside(multipleTargetRef, () => {
   //   setShowControls(false)
@@ -121,7 +116,7 @@ const ImageUpload = () => {
               return (
                 <ContextMenuImage key={image.id + index}>
                   <div
-                    className={`image pointer-events-auto flex-1 overflow-hidden ${
+                    className={`image absolute image-check pointer-events-auto flex-1 overflow-hidden ${
                       isSelecting ? 'selectable' : ''
                     }`}
                     ref={
@@ -176,7 +171,7 @@ const ImageUpload = () => {
                   >
                     <BrowserFrame />
                     <img
-                      className={`h-full w-full ${
+                      className={`h-full w-full shrink-0 ${
                         browserFrame === 'Arc' ? 'shadow-md' : ''
                       }`}
                       src={image.image}

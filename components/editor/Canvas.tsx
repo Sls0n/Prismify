@@ -4,6 +4,7 @@ import { useImageQualityStore } from '@/store/use-image-quality'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import React, { CSSProperties, useEffect, useRef } from 'react'
 import ImageUpload from './ImageUpload'
+import { motion } from 'framer-motion'
 
 import FloatingOptions from '@/components/FloatingOptions'
 import { useBackgroundOptions } from '@/store/use-background-options'
@@ -23,6 +24,7 @@ import { ScrollArea } from '../ui/ScrollArea'
 import MoveableComponent from './MoveableComponent'
 import { useMoveable } from '@/store/use-moveable'
 import SelectoComponent from './SelectoComponent'
+import { useHotkeys } from 'react-hotkeys-hook'
 
 export default function Canvas() {
   const activeIndex = useStore(
@@ -46,7 +48,12 @@ export default function Canvas() {
   const { images, initialImageUploaded, selectedImage } = useImageOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
-  const { showControls } = useMoveable()
+  const {
+    showControls,
+    setShowControls,
+    isMultipleTargetSelected,
+    setIsMultipleTargetSelected,
+  } = useMoveable()
 
   const [width, height]: number[] = resolution.split('x').map(Number)
 
@@ -148,6 +155,13 @@ export default function Canvas() {
     scale: `${scrollScale}`,
   }
 
+  useHotkeys('Escape', () => {
+    if (showControls) {
+      setShowControls(false)
+      setIsMultipleTargetSelected(false)
+    }
+  })
+
   console.log(`SelectedImage : - ${selectedImage}`)
 
   return (
@@ -172,6 +186,22 @@ export default function Canvas() {
             id="canvas-container"
             style={style}
           >
+            <div className="absolute bottom-[3%] left-[2%] z-50">
+              <motion.div
+                animate={{
+                  opacity: showControls && isMultipleTargetSelected ? 1 : 0,
+                  y: showControls && isMultipleTargetSelected ? 0 : 20,
+                }}
+                transition={{
+                  duration: 0.2,
+                }}
+                className="rounded-lg bg-sidebar/80 p-2 text-center text-xs text-dark backdrop-blur-md md:text-sm "
+              >
+                <p>
+                  Press <span className="font-semibold">ESC</span> to deselect.
+                </p>
+              </motion.div>
+            </div>
             <Noise />
             {initialImageUploaded && imageBackground && (
               // eslint-disable-next-line @next/next/no-img-element
@@ -182,11 +212,11 @@ export default function Canvas() {
                 alt="background image"
               />
             )}
-            <TipTap />
             {showControls && <MoveableComponent id={`${selectedImage}`} />}
 
-            <div className="selecto-area absolute flex h-full min-h-[15rem] w-full items-center justify-center">
+            <div className="selecto-area relative flex h-full min-h-[15rem] w-full place-items-center items-center justify-center">
               <ImageUpload />
+              <TipTap />
             </div>
           </div>
           <ScrollArea className="mt-6 w-full" type="auto">

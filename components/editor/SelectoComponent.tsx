@@ -10,8 +10,10 @@ export default function SelectoComponent() {
     isSelecting,
     setIsSelecting,
     setIsMultipleTargetSelected,
+    setShowTextControls,
+    setIsEditable,
   } = useMoveable()
-  const { setSelectedImage } = useImageOptions()
+  const { setSelectedImage, setSelectedText } = useImageOptions()
   const selectoRef = React.useRef<Selecto>(null)
 
   if (showControls) return
@@ -41,9 +43,17 @@ export default function SelectoComponent() {
 
         if (e?.selected.length !== 0) {
           setShowControls(true)
-
           setSelectedImage(+e?.selected?.[0]?.id! ?? 0)
         }
+
+        // if (
+        //   e?.selected.length === 1 &&
+        //   e?.selected?.[0]?.classList.contains('text')
+        // ) {
+        //   setShowTextControls(true)
+        //   setIsEditable(true)
+        //   setSelectedText(+e?.selected?.[0]?.id.charAt(-1)! ?? 0)
+        // }
 
         if (e?.selected.length > 1) {
           setIsMultipleTargetSelected(true)

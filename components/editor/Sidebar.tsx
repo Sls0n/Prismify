@@ -83,7 +83,7 @@ export default function Sidebar() {
 
   return (
     <aside className="flex w-[5rem] overflow-x-hidden border-r border-border  md:w-[30rem]">
-      <ul className="relative flex basis-[100%] flex-col items-center gap-6 overflow-y-auto overflow-x-hidden border-border bg-secondaryLight px-4 py-8 dark:border-[#22262b]/50 dark:bg-sidebar md:max-w-[23%] md:basis-[23%] md:border-r">
+      <ul className="relative flex basis-[100%] flex-col items-center gap-6 overflow-y-auto overflow-x-hidden border-border bg-secondaryLight px-4 py-8 dark:border-[#22262b]/50 dark:bg-sidebar md:max-w-[25%] md:basis-[25%] md:border-r">
         {sidebarButtons.map((button, index) => (
           <SidebarButton
             key={index}

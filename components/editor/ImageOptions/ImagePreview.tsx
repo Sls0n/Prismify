@@ -25,7 +25,17 @@ export default function ImagePreview({}: ImagePreviewProps) {
       const imageUrl = URL.createObjectURL(file)
       setImages([
         ...images,
-        { image: imageUrl, id: images.length + 1, style: defaultStyle },
+        {
+          image: imageUrl,
+          id: images.length + 1,
+          style:
+            images.length < 1
+              ? defaultStyle
+              : {
+                  ...defaultStyle,
+                  imageSize: '0.35',
+                },
+        },
       ])
       setImagesCheck([...imagesCheck, imageUrl])
 
