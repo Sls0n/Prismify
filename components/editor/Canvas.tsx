@@ -207,7 +207,7 @@ export default function Canvas() {
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 draggable={false}
-                className={`h-full w-full object-cover`}
+                className={`h-full w-full object-cover absolute z-[0]`}
                 src={imageBackground}
                 alt="background image"
               />

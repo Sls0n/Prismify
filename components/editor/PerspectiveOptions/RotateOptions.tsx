@@ -29,7 +29,7 @@ export default function RotateOptions() {
                       ...image,
                       style: {
                         ...image.style,
-                        perspective: 500,
+                        perspective: 2000,
                       },
                     }
                   : image
@@ -44,9 +44,9 @@ export default function RotateOptions() {
       <div className="mb-3 flex gap-4 text-[0.85rem] md:max-w-[70%]">
         <Slider
           defaultValue={[0]}
-          max={2500}
+          max={6500}
           min={0}
-          step={0.00001}
+          step={0.0001}
           value={[images[selectedImage - 1]?.style.perspective]}
           onValueChange={(value: number[]) => {
             setImages(

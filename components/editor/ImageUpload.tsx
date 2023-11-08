@@ -116,7 +116,7 @@ const ImageUpload = () => {
               return (
                 <ContextMenuImage key={image.id + index}>
                   <div
-                    className={`image absolute image-check pointer-events-auto flex-1 overflow-hidden ${
+                    className={`image image-check pointer-events-auto absolute z-[2] flex-1 overflow-hidden ${
                       isSelecting ? 'selectable' : ''
                     }`}
                     ref={

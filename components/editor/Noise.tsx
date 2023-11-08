@@ -10,7 +10,7 @@ export default function Noise() {
         // eslint-disable-next-line @next/next/no-img-element
         <img
           draggable={false}
-          className={`pointer-events-none absolute h-full w-full object-cover`}
+          className={`pointer-events-none z-[1] absolute h-full w-full object-cover`}
           style={{
             opacity: noise,
           }}
