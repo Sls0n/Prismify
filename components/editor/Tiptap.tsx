@@ -115,34 +115,42 @@ export default function TipTap() {
 
   return (
     <>
-      {texts.map((text, index) => (
-        <ContextMenuText key={text.id + index}>
-          <div
-            key={`text-${text.id}`}
-            id={`text-${text.id}`}
-            ref={text.id === selectedText ? textRef : null}
-            className="text apply-font image absolute z-[120] flex cursor-pointer items-center justify-center"
-            style={{
-              fontSize: `${text.style.textSize}rem`,
-              fontFamily: `${text.style.fontFamily}`,
-              color: `${text.style.textColor}`,
-              fontWeight: `${text.style.fontWeight}`,
-              textAlign: `${text.style.textAlign}`,
-              letterSpacing: `${text.style.letterSpacing}em`,
-              filter: `drop-shadow(${text.style.textShadow} ${convertHex(
-                text.style.shadowColor,
-                text.style.shadowOpacity
-              )})`,
-            }}
-            onClick={() => {
-              setShowTextControls(true)
-              setSelectedText(text.id)
-            }}
-          >
-            <TipTapEditor />
-          </div>
-        </ContextMenuText>
-      ))}
+      {texts.map((text, index) => {
+        return (
+          <ContextMenuText key={text.id + index}>
+            <div
+              key={`text-${text.id}`}
+              id={`text-${text.id}`}
+              ref={text.id === selectedText ? textRef : null}
+              className={`text apply-font absolute z-[120] flex cursor-pointer items-center justify-center ${
+                text.content === '' ? 'pointer-events-none hidden' : 'image'
+              }`}
+              style={{
+                fontSize: `${text.style.textSize}rem`,
+                fontFamily: `${text.style.fontFamily}`,
+                color: `${text.style.textColor}`,
+                fontWeight: `${text.style.fontWeight}`,
+                textAlign: `${text.style.textAlign}`,
+                letterSpacing: `${text.style.letterSpacing}em`,
+                filter: `drop-shadow(${text.style.textShadow} ${convertHex(
+                  text.style.shadowColor,
+                  text.style.shadowOpacity
+                )})`,
+              }}
+              onContextMenu={() => {
+                setShowTextControls(true)
+                setSelectedText(text.id)
+              }}
+              onClick={() => {
+                setShowTextControls(true)
+                setSelectedText(text.id)
+              }}
+            >
+              <TipTapEditor />
+            </div>
+          </ContextMenuText>
+        )
+      })}
     </>
   )
 }

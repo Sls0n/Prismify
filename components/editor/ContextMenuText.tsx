@@ -4,7 +4,7 @@ import {
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuShortcut,
-  ContextMenuTrigger
+  ContextMenuTrigger,
 } from '@/components/ui/ContextMenu'
 import { useImageOptions } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
@@ -20,7 +20,23 @@ export default function ContextMenuText({
   const { setTexts, texts, selectedText, setSelectedText } = useImageOptions()
   const { showTextControls, setShowTextControls } = useMoveable()
 
-  const handleTextDelete = (id: number) => {}
+  const handleTextDelete = (id: number) => {
+    if (texts.length === 1) {
+      setTexts([])
+      return
+    }
+    setTexts(
+      texts.map((text, index) =>
+        index === selectedText - 1
+          ? {
+              ...text,
+              content: '',
+              text: '',
+            }
+          : text
+      )
+    )
+  }
 
   useHotkeys('Delete', () => {
     if (showTextControls && selectedText) {

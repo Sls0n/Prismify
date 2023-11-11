@@ -359,7 +359,7 @@ function LoadAImage() {
           className="h-25 absolute-center w-4/5 xl:w-2/5"
         >
           <div className="flex flex-col gap-4 rounded-xl  text-center  md:shadow-2xl">
-            <div className="flex-center flex-col rounded-xl px-4 py-10 md:bg-[#f5f5f5]">
+            <div className="flex-center flex-col rounded-xl px-4 py-10 md:bg-[#f1f1f1]">
               <Upload
                 style={{
                   transition: 'all 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
@@ -372,7 +372,7 @@ function LoadAImage() {
               <div className="flex-center mt-4 text-base leading-6 text-gray-400">
                 <label
                   htmlFor="file-upload"
-                  className="focus-within:ring-purple relative cursor-pointer rounded-md text-purple focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:text-indigo-500 font-bold"
+                  className="focus-within:ring-purple relative cursor-pointer rounded-md font-bold text-purple focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:text-indigo-500"
                 >
                   <span>Load a image</span>
                 </label>
@@ -385,7 +385,9 @@ function LoadAImage() {
                   accept="image/*"
                   className="sr-only"
                 />
-                <p className="hidden text-[#333]/70 font-medium pl-1 lg:block">or drag and drop</p>
+                <p className="hidden pl-1 font-medium text-[#333]/70 lg:block">
+                  or drag and drop
+                </p>
               </div>
 
               <p className="mt-4 hidden text-sm font-extrabold leading-5 text-[#555]/80 sm:block">
@@ -394,7 +396,7 @@ function LoadAImage() {
 
               <Button
                 onClick={loadDemoImage}
-                className="z-[120] mt-4 hidden rounded-md sm:inline-flex bg-[#898aeb]/30 border-[#898aeb]/40 shadow-sm text-[#6264aa] font-semibold"
+                className="z-[120] mt-4 hidden rounded-md border-[#898aeb]/40 bg-[#898aeb]/30 font-semibold text-[#6264aa] shadow-sm sm:inline-flex"
                 variant="stylish"
               >
                 Try with a demo image
