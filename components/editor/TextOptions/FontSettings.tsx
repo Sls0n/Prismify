@@ -122,7 +122,7 @@ export default function FontSettings() {
       />
 
       <div className={`mt-8 flex flex-col gap-3 px-1`}>
-        <h1 className="text-[0.85rem]">Font weight</h1>
+        <h1 className="text-[0.85rem]">Weight</h1>
         <span className="inline-flex rounded-md shadow-sm">
           <button
             type="button"
@@ -163,7 +163,7 @@ export default function FontSettings() {
       </div>
 
       <div className={`mt-8 flex flex-col gap-3 px-1`}>
-        <h1 className="text-[0.85rem]">Font color</h1>
+        <h1 className="text-[0.85rem]">Color</h1>
         <PopupColorPicker
           color={texts[selectedText - 1]?.style.textColor}
           onChange={handleColorChange}

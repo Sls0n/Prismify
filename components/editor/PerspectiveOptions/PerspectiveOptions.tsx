@@ -5,7 +5,7 @@ import { IJoystickUpdateEvent } from 'react-joystick-component/build/lib/Joystic
 import { useImageOptions } from '@/store/use-image-options'
 
 export default function PerspectiveOptions() {
-  const { images, setImages } = useImageOptions()
+  const { images, setImages, selectedImage } = useImageOptions()
   return (
     <div>
       <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
@@ -27,7 +27,7 @@ export default function PerspectiveOptions() {
           if (type === 'move') {
             setImages(
               images.map((image, index) =>
-                index === 0
+                index === selectedImage - 1
                   ? {
                       ...image,
                       style: {
