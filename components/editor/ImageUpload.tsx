@@ -356,15 +356,15 @@ function LoadAImage() {
       {({ getRootProps, getInputProps }) => (
         <div
           {...getRootProps()}
-          className="h-25 absolute-center w-4/5 lg:w-3/5"
+          className="h-25 absolute-center w-4/5 xl:w-2/5"
         >
-          <div className="flex flex-col gap-4 rounded-xl border-border text-center md:border-[3px] md:shadow-md ">
-            <div className="flex-center flex-col rounded-lg p-10 md:bg-sidebar">
+          <div className="flex flex-col gap-4 rounded-xl  text-center  md:shadow-2xl">
+            <div className="flex-center flex-col rounded-xl px-4 py-10 md:bg-[#f5f5f5]">
               <Upload
                 style={{
                   transition: 'all 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
                 }}
-                className={`mx-auto hidden h-10 w-10 text-gray-400 sm:block ${
+                className={`mx-auto mb-2 hidden h-10 w-10 text-[#332]/80 sm:block ${
                   isDragging ? 'rotate-180' : 'rotate-0'
                 }`}
                 aria-hidden="true"
@@ -372,7 +372,7 @@ function LoadAImage() {
               <div className="flex-center mt-4 text-base leading-6 text-gray-400">
                 <label
                   htmlFor="file-upload"
-                  className="focus-within:ring-purple relative cursor-pointer rounded-md font-semibold text-purple focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:text-indigo-500"
+                  className="focus-within:ring-purple relative cursor-pointer rounded-md text-purple focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:text-indigo-500 font-bold"
                 >
                   <span>Load a image</span>
                 </label>
@@ -385,16 +385,16 @@ function LoadAImage() {
                   accept="image/*"
                   className="sr-only"
                 />
-                <p className="hidden pl-1 md:block">or drag and drop</p>
+                <p className="hidden text-[#333]/70 font-medium pl-1 lg:block">or drag and drop</p>
               </div>
 
-              <p className="mt-4 hidden text-sm font-semibold leading-5 text-gray-500 sm:block">
+              <p className="mt-4 hidden text-sm font-extrabold leading-5 text-[#555]/80 sm:block">
                 OR
               </p>
 
               <Button
                 onClick={loadDemoImage}
-                className="z-[120] mt-4 hidden rounded-md sm:inline-flex"
+                className="z-[120] mt-4 hidden rounded-md sm:inline-flex bg-[#898aeb]/30 border-[#898aeb]/40 shadow-sm text-[#6264aa] font-semibold"
                 variant="stylish"
               >
                 Try with a demo image

@@ -57,7 +57,7 @@ export const useResizeCanvas = create<ResizeCanvasState, []>(
       shouldFloat: false,
       setShouldFloat: (shouldFloat) => set({ shouldFloat }),
 
-      automaticResolution: true,
+      automaticResolution: false,
       setAutomaticResolution: (automaticResolution) =>
         set({ automaticResolution }),
     }),

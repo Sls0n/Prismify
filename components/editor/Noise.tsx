@@ -1,23 +1,19 @@
 import { useBackgroundOptions } from '@/store/use-background-options'
-import { useImageOptions } from '@/store/use-image-options'
 
 export default function Noise() {
-  const { initialImageUploaded } = useImageOptions()
-  const { noise, setNoise } = useBackgroundOptions()
+  const { noise } = useBackgroundOptions()
   return (
     <>
-      {initialImageUploaded && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img
-          draggable={false}
-          className={`pointer-events-none z-[1] absolute h-full w-full object-cover`}
-          style={{
-            opacity: noise,
-          }}
-          src={'/images/Noise.svg'}
-          alt="noise"
-        />
-      )}
+      {/* eslint-disable-next-line @next/next/no-img-element */}
+      <img
+        draggable={false}
+        className={`pointer-events-none absolute z-[1] h-full w-full object-cover`}
+        style={{
+          opacity: noise,
+        }}
+        src={'/images/Noise.svg'}
+        alt="noise"
+      />
     </>
   )
 }

@@ -101,7 +101,7 @@ export default function Navbar({
     })
   }
   return (
-    <header className="fixed inset-x-0 top-0 z-[10] flex h-[3.75rem] items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
+    <header className="fixed bg-[#131313] inset-x-0 top-0 z-[10] flex h-[3.75rem] items-center border-b border-border px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center gap-8">
           {/* Can add hamburger or something here */}
@@ -186,7 +186,7 @@ export default function Navbar({
                         </Button>
                       </DialogTrigger>
 
-                      <DialogContent className="container mx-auto flex h-[85vh] max-h-screen max-w-2xl items-center rounded-lg bg-primary dark:bg-dark">
+                      <DialogContent className="container mx-auto flex h-[85vh] max-h-screen max-w-2xl items-center rounded-lg bg-primary dark:bg-[#141414] border border-[#181818]">
                         <div className="h-fit w-full">
                           <SignIn />
                         </div>

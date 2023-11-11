@@ -165,7 +165,7 @@ export default function SignIn({ authenticated }: SignInProps) {
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300 dark:border-[#22262b]" />
             </div>
-            <div className="relative flex justify-center text-sm">
+            <div className="relative rounded-md flex justify-center text-sm">
               <span className="bg-primary px-2 text-primary dark:bg-dark dark:text-dark/80">
                 Or continue with
               </span>

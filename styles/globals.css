@@ -40,8 +40,8 @@
     --gradient-angle: 170deg;
     --gradient-bg: linear-gradient(
       var(--gradient-angle),
-      rgb(202, 194, 255),
-      rgb(242, 231, 248) 100%
+      #D8D9DD,
+      #cccdd1 100%
     );
     --mesh-bg: '';
     --solid-bg: '';

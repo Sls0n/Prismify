@@ -5,7 +5,6 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import React, { CSSProperties, useEffect, useRef } from 'react'
 import ImageUpload from './ImageUpload'
 import { motion } from 'framer-motion'
-
 import FloatingOptions from '@/components/FloatingOptions'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import { useImageOptions } from '@/store/use-image-options'
@@ -25,6 +24,7 @@ import MoveableComponent from './MoveableComponent'
 import { useMoveable } from '@/store/use-moveable'
 import SelectoComponent from './SelectoComponent'
 import { useHotkeys } from 'react-hotkeys-hook'
+import TiptapMoveable from './TiptapMoveable'
 
 export default function Canvas() {
   const activeIndex = useStore(
@@ -45,7 +45,8 @@ export default function Canvas() {
     setScaleFactor,
     setShouldFloat,
   } = useResizeCanvas()
-  const { images, initialImageUploaded, selectedImage } = useImageOptions()
+  const { images, initialImageUploaded, selectedImage, selectedText } =
+    useImageOptions()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
   const {
@@ -53,6 +54,8 @@ export default function Canvas() {
     setShowControls,
     isMultipleTargetSelected,
     setIsMultipleTargetSelected,
+    showTextControls,
+    isEditable,
   } = useMoveable()
 
   const [width, height]: number[] = resolution.split('x').map(Number)
@@ -61,9 +64,7 @@ export default function Canvas() {
   console.log(`Current DOM resoltion: ${exactDomResolution}`)
   let style: CSSProperties = {
     aspectRatio,
-    backgroundImage: !initialImageUploaded
-      ? 'linear-gradient(0deg, #131313, #151515 100%)'
-      : `var(--gradient-bg)`,
+    backgroundImage: `var(--gradient-bg)`,
 
     borderRadius: `${canvasRoundness}rem`,
   }
@@ -168,7 +169,7 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        className="relative flex h-full flex-1 items-start justify-center overflow-hidden bg-[#161616] px-6 py-4 pt-5"
+        className="relative flex h-full flex-1 items-start justify-center overflow-hidden bg-[#111] px-6 py-4 pt-5"
       >
         {/* <div className="flex h-14 w-full items-center border border-border">
           TODO: ADD UPPER SETTINGS
@@ -203,16 +204,19 @@ export default function Canvas() {
               </motion.div>
             </div>
             <Noise />
-            {initialImageUploaded && imageBackground && (
+            {imageBackground && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 draggable={false}
-                className={`h-full w-full object-cover absolute z-[0]`}
+                className={`absolute z-[0] h-full w-full object-cover`}
                 src={imageBackground}
                 alt="background image"
               />
             )}
             {showControls && <MoveableComponent id={`${selectedImage}`} />}
+            {showTextControls && !isEditable && (
+              <TiptapMoveable id={`text-${selectedText}`} />
+            )}
 
             <div className="selecto-area relative flex h-full min-h-[15rem] w-full place-items-center items-center justify-center">
               <ImageUpload />

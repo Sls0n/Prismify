@@ -4,12 +4,11 @@ import useTiptapEditor from '@/hooks/use-editor'
 import { useOnClickOutside } from '@/hooks/use-on-click-outside'
 import { useImageOptions } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
-import { Editor, EditorContent } from '@tiptap/react'
-import { useRef, useState } from 'react'
-import TiptapMoveable from './TiptapMoveable'
-import { BubbleMenu } from '@tiptap/react'
 import { useTiptap } from '@/store/use-tiptap'
 import { convertHex } from '@/utils/helperFns'
+import { BubbleMenu, Editor, EditorContent } from '@tiptap/react'
+import { useRef } from 'react'
+import ContextMenuText from './ContextMenuText'
 
 type MenuBarProps = {
   editor: Editor | null
@@ -106,10 +105,8 @@ function TipTapEditor({ content = 'Double click to edit' }) {
 export default function TipTap() {
   const textRef = useRef<HTMLDivElement>(null)
 
-  const { showTextControls, setShowTextControls, setIsEditable, isEditable } =
-    useMoveable()
+  const { setShowTextControls, setIsEditable } = useMoveable()
   const { texts, selectedText, setSelectedText } = useImageOptions()
-  const { setShouldShow } = useTiptap()
 
   useOnClickOutside(textRef, () => {
     setIsEditable(false)
@@ -118,35 +115,34 @@ export default function TipTap() {
 
   return (
     <>
-      {texts.map((text) => (
-        <div
-          key={`text-${text.id}`}
-          id={`text-${text.id}`}
-          ref={text.id === selectedText ? textRef : null}
-          className="text apply-font absolute z-[120] flex cursor-pointer items-center justify-center image"
-          style={{
-            fontSize: `${text.style.textSize}rem`,
-            fontFamily: `${text.style.fontFamily}`,
-            color: `${text.style.textColor}`,
-            fontWeight: `${text.style.fontWeight}`,
-            textAlign: `${text.style.textAlign}`,
-            letterSpacing: `${text.style.letterSpacing}em`,
-            filter: `drop-shadow(${text.style.textShadow} ${convertHex(
-              text.style.shadowColor,
-              text.style.shadowOpacity
-            )})`,
-          }}
-          onClick={() => {
-            setShowTextControls(true)
-            setSelectedText(text.id)
-          }}
-        >
-          <TipTapEditor />
-        </div>
+      {texts.map((text, index) => (
+        <ContextMenuText key={text.id + index}>
+          <div
+            key={`text-${text.id}`}
+            id={`text-${text.id}`}
+            ref={text.id === selectedText ? textRef : null}
+            className="text apply-font image absolute z-[120] flex cursor-pointer items-center justify-center"
+            style={{
+              fontSize: `${text.style.textSize}rem`,
+              fontFamily: `${text.style.fontFamily}`,
+              color: `${text.style.textColor}`,
+              fontWeight: `${text.style.fontWeight}`,
+              textAlign: `${text.style.textAlign}`,
+              letterSpacing: `${text.style.letterSpacing}em`,
+              filter: `drop-shadow(${text.style.textShadow} ${convertHex(
+                text.style.shadowColor,
+                text.style.shadowOpacity
+              )})`,
+            }}
+            onClick={() => {
+              setShowTextControls(true)
+              setSelectedText(text.id)
+            }}
+          >
+            <TipTapEditor />
+          </div>
+        </ContextMenuText>
       ))}
-      {showTextControls && !isEditable && (
-        <TiptapMoveable id={`text-${selectedText}`} />
-      )}
     </>
   )
 }

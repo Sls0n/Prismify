@@ -1,0 +1,68 @@
+import {
+  ContextMenu,
+  ContextMenuContent,
+  ContextMenuItem,
+  ContextMenuSeparator,
+  ContextMenuShortcut,
+  ContextMenuTrigger
+} from '@/components/ui/ContextMenu'
+import { useImageOptions } from '@/store/use-image-options'
+import { useMoveable } from '@/store/use-moveable'
+import { BringToFront, SendToBack, Trash } from 'lucide-react'
+import React from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
+
+export default function ContextMenuText({
+  children,
+}: {
+  children: React.ReactNode
+}) {
+  const { setTexts, texts, selectedText, setSelectedText } = useImageOptions()
+  const { showTextControls, setShowTextControls } = useMoveable()
+
+  const handleTextDelete = (id: number) => {}
+
+  useHotkeys('Delete', () => {
+    if (showTextControls && selectedText) {
+      handleTextDelete(selectedText)
+      setShowTextControls(false)
+    }
+  })
+
+  return (
+    <ContextMenu>
+      <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
+      <ContextMenuContent className="w-64">
+        <ContextMenuItem inset disabled>
+          Send back
+          <ContextMenuShortcut>
+            <BringToFront size={19} className="opacity-80" />
+          </ContextMenuShortcut>
+        </ContextMenuItem>
+        <ContextMenuItem inset disabled>
+          Bring forward
+          <ContextMenuShortcut>
+            <SendToBack size={19} className="opacity-80" />
+          </ContextMenuShortcut>
+        </ContextMenuItem>
+
+        <ContextMenuSeparator />
+        <ContextMenuItem
+          inset
+          onClick={() => {
+            if (selectedText) {
+              handleTextDelete(selectedText)
+              setShowTextControls(false)
+            }
+          }}
+          className="text-[#F46567]/70 focus:text-[#f46567]/80"
+        >
+          Delete
+          <ContextMenuShortcut>
+            <Trash size={19} className="text-[#F46567]/70 opacity-80" />
+          </ContextMenuShortcut>
+        </ContextMenuItem>
+      </ContextMenuContent>
+    </ContextMenu>
+  )
+}

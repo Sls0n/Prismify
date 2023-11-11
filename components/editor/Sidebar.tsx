@@ -83,7 +83,7 @@ export default function Sidebar() {
 
   return (
     <aside className="flex w-[5rem] overflow-x-hidden border-r border-border  md:w-[30rem]">
-      <ul className="relative flex basis-[100%] flex-col items-center gap-6 overflow-y-auto overflow-x-hidden border-border bg-secondaryLight px-4 py-8 dark:border-[#22262b]/50 dark:bg-sidebar md:max-w-[25%] md:basis-[25%] md:border-r">
+      <ul className="relative flex basis-[100%] flex-col items-center gap-6 overflow-y-auto overflow-x-hidden border-border bg-secondaryLight px-4 py-8 dark:border-[#22262b]/60 dark:bg-[#131313] md:max-w-[25%] md:basis-[25%] md:border-r">
         {sidebarButtons.map((button, index) => (
           <SidebarButton
             key={index}
@@ -93,7 +93,7 @@ export default function Sidebar() {
           />
         ))}
       </ul>
-      <div className="relative hidden h-full w-full flex-col overflow-hidden md:flex">
+      <div className="relative hidden h-full w-full flex-col overflow-hidden md:flex dark:bg-[#151515]">
         <SidebarImageSettings />
       </div>
     </aside>
