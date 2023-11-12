@@ -2,9 +2,8 @@
 
 import useTiptapEditor from '@/hooks/use-editor'
 import { useOnClickOutside } from '@/hooks/use-on-click-outside'
-import { useImageOptions } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
-import { useTiptap } from '@/store/use-tiptap'
 import { convertHex } from '@/utils/helperFns'
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/react'
 import { useRef } from 'react'
@@ -74,7 +73,8 @@ const MenuBar = ({ editor }: MenuBarProps) => {
 
 function TipTapEditor({ content = 'Double click to edit' }) {
   const { setShowTextControls, isEditable, setIsEditable } = useMoveable()
-  const { setSelectedText, defaultStyle } = useImageOptions()
+  const { defaultStyle } = useImageOptions()
+  const { setSelectedText } = useSelectedLayers()
 
   const { editor } = useTiptapEditor()
 
@@ -105,8 +105,10 @@ function TipTapEditor({ content = 'Double click to edit' }) {
 export default function TipTap() {
   const textRef = useRef<HTMLDivElement>(null)
 
-  const { setShowTextControls, setIsEditable } = useMoveable()
-  const { texts, selectedText, setSelectedText } = useImageOptions()
+  const { setShowTextControls, setIsEditable, setShowControls } = useMoveable()
+  const { texts } = useImageOptions()
+  const { selectedText, setSelectedText, setSelectedImage } =
+    useSelectedLayers()
 
   useOnClickOutside(textRef, () => {
     setIsEditable(false)
@@ -140,10 +142,14 @@ export default function TipTap() {
               onContextMenu={() => {
                 setShowTextControls(true)
                 setSelectedText(text.id)
+                setSelectedImage(null)
+                setShowControls(false)
               }}
               onClick={() => {
                 setShowTextControls(true)
                 setSelectedText(text.id)
+                setSelectedImage(null)
+                setShowControls(false)
               }}
             >
               <TipTapEditor />

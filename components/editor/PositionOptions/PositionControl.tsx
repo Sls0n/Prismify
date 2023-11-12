@@ -12,29 +12,31 @@ import {
   ArrowUpRight,
 } from 'lucide-react'
 import { useEffect, useCallback } from 'react'
-import { useImageOptions } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 
 export default function PositionControl() {
-  const { images, setImages, selectedImage } = useImageOptions()
+  const { images, setImages } = useImageOptions()
+   const { selectedImage } = useSelectedLayers()
 
   const move = useCallback(
     (deltaX: number, deltaY: number) => {
-      setImages(
-        images.map((image, index) =>
-          index === selectedImage - 1
-            ? {
-                ...image,
-                style: {
-                  ...image.style,
-                  translateX:
-                    images[selectedImage - 1]?.style.translateX + deltaX,
-                  translateY:
-                    images[selectedImage - 1]?.style.translateY + deltaY,
-                },
-              }
-            : image
+      selectedImage &&
+        setImages(
+          images.map((image, index) =>
+            index === selectedImage - 1
+              ? {
+                  ...image,
+                  style: {
+                    ...image.style,
+                    translateX:
+                      images[selectedImage - 1]?.style.translateX + deltaX,
+                    translateY:
+                      images[selectedImage - 1]?.style.translateY + deltaY,
+                  },
+                }
+              : image
+          )
         )
-      )
     },
     [images, setImages, selectedImage]
   )
@@ -66,24 +68,29 @@ export default function PositionControl() {
   }, [move])
 
   const centerImage = () => {
-    setImages(
-      images.map((image, index) =>
-        index === selectedImage - 1
-          ? {
-              ...image,
-              style: {
-                ...image.style,
-                translateX: 0,
-                translateY: 0,
-              },
-            }
-          : image
+    selectedImage &&
+      setImages(
+        images.map((image, index) =>
+          index === selectedImage - 1
+            ? {
+                ...image,
+                style: {
+                  ...image.style,
+                  translateX: 0,
+                  translateY: 0,
+                },
+              }
+            : image
+        )
       )
-    )
   }
 
   return (
-    <div className="relative grid h-40 border-spacing-8 grid-cols-3 overflow-hidden rounded-lg border border-border bg-formDark p-1 md:max-w-[70%] [&>*]:cursor-pointer [&>*]:border-dashed [&>*]:border-border [&>*]:transition-colors">
+    <div
+      className={`relative grid h-40 border-spacing-8 grid-cols-3 overflow-hidden rounded-lg border border-border bg-formDark p-1 md:max-w-[70%] [&>*]:cursor-pointer [&>*]:border-dashed [&>*]:border-border [&>*]:transition-colors ${
+        selectedImage ? '' : 'pointer-events-none opacity-40'
+      }`}
+    >
       <button
         className="flex-center :hover:bg-dark border-b-[2px] border-r-[2px]"
         aria-label="Translate up left"

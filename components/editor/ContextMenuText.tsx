@@ -6,7 +6,7 @@ import {
   ContextMenuShortcut,
   ContextMenuTrigger,
 } from '@/components/ui/ContextMenu'
-import { useImageOptions } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
 import { BringToFront, SendToBack, Trash } from 'lucide-react'
 import React from 'react'
@@ -17,7 +17,8 @@ export default function ContextMenuText({
 }: {
   children: React.ReactNode
 }) {
-  const { setTexts, texts, selectedText, setSelectedText } = useImageOptions()
+  const { setTexts, texts } = useImageOptions()
+  const { selectedText, setSelectedText } = useSelectedLayers()
   const { showTextControls, setShowTextControls } = useMoveable()
 
   const handleTextDelete = (id: number) => {

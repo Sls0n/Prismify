@@ -10,7 +10,7 @@ import {
   ContextMenuTrigger,
 } from '@/components/ui/ContextMenu'
 import { useColorExtractor } from '@/store/use-color-extractor'
-import { useImageOptions } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
 import { BringToFront, Crop, ImagePlus, SendToBack, Trash } from 'lucide-react'
 import React, { ChangeEvent } from 'react'
@@ -22,8 +22,9 @@ export default function ContextMenuImage({
 }: {
   children: React.ReactNode
 }) {
-  const { setImages, images, selectedImage, setSelectedImage } =
+  const { setImages, images } =
     useImageOptions()
+     const { selectedImage, setSelectedImage } = useSelectedLayers()
   const { showControls, setShowControls } = useMoveable()
 
   const handleImageDelete = (id: number) => {
@@ -34,23 +35,30 @@ export default function ContextMenuImage({
       setImages([])
       return
     }
-    setImages(
-      images.map((image, index) =>
-        index === selectedImage - 1
-          ? {
-              ...image,
-              image: '',
-            }
-          : image
+
+    if (selectedImage) {
+      setImages(
+        images.map((image, index) =>
+          index === selectedImage - 1
+            ? {
+                ...image,
+                image: '',
+              }
+            : image
+        )
       )
-    )
+    }
+
+    setSelectedImage(null)
   }
 
   useHotkeys('Delete', () => {
-    if (showControls) {
-      handleImageDelete(selectedImage)
-      setShowControls(false)
-    }
+    if (selectedImage)
+      if (showControls) {
+        handleImageDelete(selectedImage)
+        setShowControls(false)
+        setSelectedImage(null)
+      }
   })
 
   return (
@@ -92,7 +100,7 @@ export default function ContextMenuImage({
         <ContextMenuItem
           inset
           onClick={() => {
-            handleImageDelete(selectedImage)
+            selectedImage && handleImageDelete(selectedImage)
           }}
           className="text-[#F46567]/70 focus:text-[#f46567]/80"
         >
@@ -107,8 +115,10 @@ export default function ContextMenuImage({
 }
 
 function ReplaceImage() {
-  const { setImages, images, selectedImage, setSelectedImage } =
+  const { setImages, images } =
     useImageOptions()
+     const { selectedImage, setSelectedImage } = useSelectedLayers()
+  
   const { setImagesCheck, imagesCheck } = useColorExtractor()
 
   const onDrop = async (file: any) => {
@@ -120,23 +130,24 @@ function ReplaceImage() {
       })
       const extractedColors = result.slice(0, 12)
 
-      setImages(
-        images.map((image, index) =>
-          index === selectedImage - 1
-            ? {
-                ...image,
-                image: imageUrl,
-                colors: extractedColors,
-              }
-            : image
+      selectedImage &&
+        setImages(
+          images.map((image, index) =>
+            index === selectedImage - 1
+              ? {
+                  ...image,
+                  image: imageUrl,
+                  colors: extractedColors,
+                }
+              : image
+          )
         )
-      )
 
       setImagesCheck([...imagesCheck, imageUrl])
     }
   }
   return (
-    <div className='data-[disabled]:opacity-50 relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none'>
+    <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
       <label className="ml-6" htmlFor="file-replace">
         Replace image
       </label>

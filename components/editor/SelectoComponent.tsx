@@ -1,4 +1,4 @@
-import { useImageOptions } from '@/store/use-image-options'
+import { useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
 import React from 'react'
 import Selecto from 'react-selecto'
@@ -13,7 +13,7 @@ export default function SelectoComponent() {
     setShowTextControls,
     setIsEditable,
   } = useMoveable()
-  const { setSelectedImage, setSelectedText } = useImageOptions()
+  const { setSelectedImage, setSelectedText } = useSelectedLayers()
   const selectoRef = React.useRef<Selecto>(null)
 
   if (showControls) return
@@ -33,6 +33,9 @@ export default function SelectoComponent() {
       }}
       onSelectEnd={(e) => {
         console.log(e)
+        setTimeout(() => {
+          setIsSelecting(false)
+        }, 100)
         e.added.forEach((el) => {
           el.classList.add('selected')
         })

@@ -1,7 +1,7 @@
 'use client'
 
 import { Slider } from '@/components/ui/Slider'
-import { useImageOptions } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
 import {
   Popover,
@@ -11,11 +11,12 @@ import {
 import { Button } from '@/components/ui/Button'
 
 export default function InsetOption() {
-  const { images, setImages, selectedImage } = useImageOptions()
-  const { setShowControls } = useMoveable()
+  const { images, setImages } = useImageOptions()
+  const { setShowControls, showControls } = useMoveable()
+  const {selectedImage} = useSelectedLayers()
 
   return (
-    <>
+    <div className={`${selectedImage ? '' : 'pointer-events-none opacity-40'}`}>
       <div className="mb-3 mt-6 flex items-center px-1 md:max-w-[70%]">
         <h1 className="text-[0.85rem]">Inset</h1>
         {images.length !== 0 && (
@@ -24,7 +25,9 @@ export default function InsetOption() {
               <Button
                 className="ml-2 h-5 w-5 rounded-md"
                 style={{
-                  backgroundColor: images[selectedImage - 1]?.style.insetColor,
+                  backgroundColor: selectedImage
+                    ? images[selectedImage - 1]?.style.insetColor
+                    : '#fff',
                 }}
                 variant="outline"
               />
@@ -40,12 +43,12 @@ export default function InsetOption() {
                   </h4>
                   <hr className="border-border pt-2" />
                   <div className="flex flex-wrap gap-2">
-                    {images[selectedImage - 1]?.extractedColors?.map(
+                    {images[selectedImage! - 1]?.extractedColors?.map(
                       (color) => (
                         <button
                           key={color.color}
                           className={`h-7 w-7 rounded-sm ${
-                            images[selectedImage - 1]?.style.insetColor ===
+                            images[selectedImage! - 1]?.style.insetColor ===
                             color.color
                               ? 'ring-2 ring-ring ring-offset-2'
                               : ''
@@ -54,7 +57,7 @@ export default function InsetOption() {
                           onClick={() => {
                             setImages(
                               images.map((image, index) =>
-                                index === selectedImage - 1
+                                index === selectedImage! - 1
                                   ? {
                                       ...image,
                                       style: {
@@ -85,28 +88,29 @@ export default function InsetOption() {
           step={0.02}
           onValueChange={(value: number[]) => {
             setShowControls(false)
-            setImages(
-              images.map((image, index) =>
-                index === selectedImage - 1
-                  ? {
-                      ...image,
-                      style: {
-                        ...image.style,
-                        insetSize: value[0].toString(),
-                      },
-                    }
-                  : image
+            selectedImage &&
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          insetSize: value[0].toString(),
+                        },
+                      }
+                    : image
+                )
               )
-            )
           }}
           value={
-            images.length !== 0
+            images.length !== 0 && selectedImage
               ? [+images[selectedImage - 1]?.style.insetSize]
               : [10]
           }
           onValueCommit={() => setShowControls(true)}
         />
       </div>
-    </>
+    </div>
   )
 }

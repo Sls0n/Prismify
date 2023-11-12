@@ -6,7 +6,7 @@ import demoImage from '@/public/images/demo-tweet.png'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import { useColorExtractor } from '@/store/use-color-extractor'
 import { useFrameOptions } from '@/store/use-frame-options'
-import { useImageOptions } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import {
@@ -21,7 +21,6 @@ import analyze from 'rgbaster'
 import { Button } from '../ui/Button'
 import BrowserFrame from './BrowserFrame'
 import ContextMenuImage from './ContextMenuImage'
-import { useEventListener } from '@/hooks/use-event-listener'
 
 const ImageUpload = () => {
   const targetRef = useRef<HTMLDivElement>(null)
@@ -30,11 +29,11 @@ const ImageUpload = () => {
   const {
     images,
     setImages,
-    setSelectedImage,
-    selectedImage,
+
     setInitialImageUploaded,
     initialImageUploaded,
   } = useImageOptions()
+  const { selectedImage, setSelectedImage } = useSelectedLayers()
   const {
     setShowControls,
     showControls,
@@ -57,15 +56,33 @@ const ImageUpload = () => {
     console.log('is extracting colors')
     const extractColors = async () => {
       const result = await analyze(images[images.length - 1].image, {
-        scale: 0.3,
+        scale: 0.5,
       })
+
       const extractedColors = result.slice(0, 12)
+
+      //  const upperThreshold = [180, 180, 180]
+      //  const lowerThreshold = [50, 50, 50]
+
+      //  const filteredColors = result.slice(0, 50).filter((color) => {
+      //    const rgb = color.color.match(/\d+/g).map(Number) // Extract RGB values
+      //    return (
+      //      rgb.every((value, index) => value <= upperThreshold[index]) &&
+      //      rgb.every((value, index) => value >= lowerThreshold[index])
+      //    )
+      //  })
+
+      //  // Now, use the filtered colors to create a gradient
+      //  const gradientColors = filteredColors.map((color) => color.color)
+
+
       setImages(
         images.map((image, index) =>
           index === images.length - 1
             ? {
                 ...image,
                 extractedColors,
+                // gradientColors,
                 style: {
                   ...image.style,
                   insetColor: extractedColors[0].color,
@@ -81,14 +98,9 @@ const ImageUpload = () => {
   console.log(imagesCheck)
   console.log(images)
 
-  const handleImageClick = (id: number) => {
-    setShowControls(!showControls)
-    setSelectedImage(id)
-  }
-
   useOnClickOutside(targetRef, () => {
     if (isMultipleTargetSelected) return
-    setShowControls(false)
+    // setShowControls(false)
   })
 
   // useOnClickOutside(multipleTargetRef, () => {
@@ -116,9 +128,9 @@ const ImageUpload = () => {
               return (
                 <ContextMenuImage key={image.id + index}>
                   <div
-                    className={`image image-check pointer-events-auto absolute z-[2] flex-1 overflow-hidden ${
+                    className={`image image-check absolute z-[2] flex-1 overflow-hidden ${
                       isSelecting ? 'selectable' : ''
-                    }`}
+                    } ${selectedImage ? '' : ''}`}
                     ref={
                       !isMultipleTargetSelected
                         ? image.id === selectedImage
@@ -127,6 +139,10 @@ const ImageUpload = () => {
                         : targetRef
                     }
                     style={{
+                      transition:
+                        'box-shadow 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
+                      transformStyle: 'preserve-3d',
+                      transformOrigin: `50% 50%`,
                       transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg) perspective(${image.style.perspective}px) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
                       borderRadius: `${image.style.imageRoundness}rem`,
                       boxShadow:
@@ -162,16 +178,19 @@ const ImageUpload = () => {
                     }}
                     id={`${image.id}`}
                     onClick={() => {
-                      handleImageClick(image.id)
+                      setShowControls(true)
+                      setSelectedImage(image.id)
                     }}
                     // on right click too do the same
                     onContextMenu={(e) => {
-                      handleImageClick(image.id)
+                      setShowControls(true)
+                      setSelectedImage(image.id)
                     }}
                   >
                     <BrowserFrame />
                     <img
-                      className={`h-full w-full shrink-0 ${
+                      draggable={false}
+                      className={`pointer-events-none h-full w-full shrink-0 ${
                         browserFrame === 'Arc' ? 'shadow-md' : ''
                       }`}
                       src={image.image}
@@ -209,13 +228,9 @@ const ImageUpload = () => {
 export default ImageUpload
 
 function LoadAImage() {
-  const {
-    images,
-    setImages,
-    defaultStyle,
-    setSelectedImage,
-    setInitialImageUploaded,
-  } = useImageOptions()
+  const { images, setImages, defaultStyle, setInitialImageUploaded } =
+    useImageOptions()
+  const { setSelectedImage } = useSelectedLayers()
   const { imagesCheck, setImagesCheck } = useColorExtractor()
   const { setResolution, automaticResolution } = useResizeCanvas()
   const { setBackground } = useBackgroundOptions()
@@ -372,7 +387,7 @@ function LoadAImage() {
               <div className="flex-center mt-4 text-base leading-6 text-gray-400">
                 <label
                   htmlFor="file-upload"
-                  className="focus-within:ring-purple relative cursor-pointer rounded-md font-bold text-purple focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:text-indigo-500"
+                  className="focus-within:ring-purple relative cursor-pointer rounded-md font-bold text-indigo-500 focus-within:outline-none focus-within:ring-2 focus-within:ring-offset-2 hover:text-purple"
                 >
                   <span>Load a image</span>
                 </label>
@@ -385,7 +400,7 @@ function LoadAImage() {
                   accept="image/*"
                   className="sr-only"
                 />
-                <p className="hidden pl-1 font-medium text-[#333]/70 lg:block">
+                <p className="hidden pl-1 font-medium text-[#333]/80 lg:block">
                   or drag and drop
                 </p>
               </div>

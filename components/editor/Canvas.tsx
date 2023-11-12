@@ -1,29 +1,30 @@
 'use client'
 
-import { useImageQualityStore } from '@/store/use-image-quality'
-import { useResizeCanvas } from '@/store/use-resize-canvas'
-import React, { CSSProperties, useEffect, useRef } from 'react'
-import ImageUpload from './ImageUpload'
-import { motion } from 'framer-motion'
 import FloatingOptions from '@/components/FloatingOptions'
-import { useBackgroundOptions } from '@/store/use-background-options'
-import { useImageOptions } from '@/store/use-image-options'
-import TipTap from './Tiptap'
-import Noise from './Noise'
-import { useActiveIndexStore } from '@/store/use-active-index'
-import CanvasOptions from '@/components/editor/CanvasOptions/CanvasOptions'
-import ImageOptions from '@/components/editor/ImageOptions/ImageOptions'
 import BackgroundOptions from '@/components/editor/BackgroundOptions/BackgroundOptions'
+import CanvasOptions from '@/components/editor/CanvasOptions/CanvasOptions'
 import FrameOptions from '@/components/editor/FrameOptions/FrameOptions'
-import TextOptions from '@/components/editor/TextOptions/TextOptions'
+import ImageOptions from '@/components/editor/ImageOptions/ImageOptions'
 import PerspectiveOptions from '@/components/editor/PerspectiveOptions/PerspectiveOptions'
 import PositionOptions from '@/components/editor/PositionOptions/PositionOptions'
+import TextOptions from '@/components/editor/TextOptions/TextOptions'
+import { useEventListener } from '@/hooks/use-event-listener'
 import useStore from '@/hooks/use-store'
-import { ScrollArea } from '../ui/ScrollArea'
-import MoveableComponent from './MoveableComponent'
+import { useActiveIndexStore } from '@/store/use-active-index'
+import { useBackgroundOptions } from '@/store/use-background-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
+import { useImageQualityStore } from '@/store/use-image-quality'
 import { useMoveable } from '@/store/use-moveable'
-import SelectoComponent from './SelectoComponent'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
+import { motion } from 'framer-motion'
+import React, { CSSProperties, useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
+import { ScrollArea } from '../ui/ScrollArea'
+import ImageUpload from './ImageUpload'
+import MoveableComponent from './MoveableComponent'
+import Noise from './Noise'
+import SelectoComponent from './SelectoComponent'
+import TipTap from './Tiptap'
 import TiptapMoveable from './TiptapMoveable'
 
 export default function Canvas() {
@@ -45,8 +46,14 @@ export default function Canvas() {
     setScaleFactor,
     setShouldFloat,
   } = useResizeCanvas()
-  const { images, initialImageUploaded, selectedImage, selectedText } =
-    useImageOptions()
+  const {
+    images,
+    initialImageUploaded,
+   
+    scale,
+
+  } = useImageOptions()
+   const { selectedImage, selectedText, setSelectedImage } = useSelectedLayers()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
   const {
@@ -56,6 +63,7 @@ export default function Canvas() {
     setIsMultipleTargetSelected,
     showTextControls,
     isEditable,
+    isSelecting,
   } = useMoveable()
 
   const [width, height]: number[] = resolution.split('x').map(Number)
@@ -163,6 +171,23 @@ export default function Canvas() {
     }
   })
 
+  useEventListener(
+    'click',
+    (e: any) => {
+      if (isSelecting) return
+      if (!selectedImage && !showControls) return
+      if (
+        e?.target?.classList?.contains('canvas-container') ||
+        e?.target?.classList?.contains('selecto-area')
+      ) {
+        setSelectedImage(null)
+        setShowControls(false)
+        setIsMultipleTargetSelected(false)
+      }
+    },
+    screenshotRef
+  )
+
   console.log(`SelectedImage : - ${selectedImage}`)
 
   return (
@@ -181,13 +206,13 @@ export default function Canvas() {
         >
           <div
             className={
-              'canvas-container relative flex max-h-[15rem] min-h-[15rem] w-full items-center justify-center overflow-hidden md:max-h-full '
+              'canvas-container relative flex w-full items-center justify-center overflow-hidden md:max-h-full '
             }
             ref={screenshotRef}
             id="canvas-container"
             style={style}
           >
-            <div className="absolute bottom-[3%] left-[2%] z-50">
+            <div className="pointer-events-none absolute bottom-[3%] left-[2%] z-50">
               <motion.div
                 animate={{
                   opacity: showControls && isMultipleTargetSelected ? 1 : 0,
@@ -208,7 +233,7 @@ export default function Canvas() {
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 draggable={false}
-                className={`absolute z-[0] h-full w-full object-cover`}
+                className={`pointer-events-none absolute z-[0] h-full w-full object-cover`}
                 src={imageBackground}
                 alt="background image"
               />
@@ -218,7 +243,12 @@ export default function Canvas() {
               <TiptapMoveable id={`text-${selectedText}`} />
             )}
 
-            <div className="selecto-area relative flex h-full min-h-[15rem] w-full place-items-center items-center justify-center">
+            <div
+              className="selecto-area relative flex h-full min-h-[15rem] w-full place-items-center items-center justify-center"
+              style={{
+                scale,
+              }}
+            >
               <ImageUpload />
               <TipTap />
             </div>

@@ -18,7 +18,7 @@ export default function SidebarButton({
   return (
     <li
       onClick={() => setActiveIndex(index)}
-      className={`relative flex flex-col items-center gap-2`}
+      className={`relative flex flex-col items-center gap-2 click-ignored`}
     >
       <Button
         className={`md:h-12 rounded-xl md:px-4 md:py-3 h-11 px-3 py-2`}

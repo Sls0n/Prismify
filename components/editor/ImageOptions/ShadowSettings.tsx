@@ -6,22 +6,29 @@ import {
   PopoverTrigger,
 } from '@/components/ui/Popover'
 import { useBackgroundOptions } from '@/store/use-background-options'
-import { useImageOptions } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { shadows } from '@/utils/config'
 import { ChevronDown } from 'lucide-react'
 import { Slider } from '@/components/ui/Slider'
+import { useMoveable } from '@/store/use-moveable'
 
 export default function ShadowSettings() {
-  const { images, setImages, selectedImage, defaultStyle } = useImageOptions()
+  const { images, setImages, defaultStyle } = useImageOptions()
+  const { showControls } = useMoveable()
+  const { selectedImage } = useSelectedLayers()
 
   const { backgroundType } = useBackgroundOptions()
 
   const boxShadowStyle = {
-    boxShadow: images[selectedImage - 1]?.style.imageShadow,
+    boxShadow: selectedImage
+      ? images[selectedImage - 1]?.style.imageShadow
+      : '',
   }
 
   const boxShadowPreview = {
-    boxShadow: images[selectedImage - 1]?.style.shadowPreview,
+    boxShadow: selectedImage
+      ? images[selectedImage - 1]?.style.shadowPreview
+      : '',
   }
 
   const backgroundStyle = {
@@ -35,43 +42,45 @@ export default function ShadowSettings() {
     fullName: string
     preview: string
   }) => {
-    setImages(
-      images.map((image, index) =>
-        index === selectedImage - 1
-          ? {
-              ...image,
-              style: {
-                ...image.style,
-                imageShadow: shadow.shadow,
-                shadowName: shadow.fullName,
-                shadowPreview: shadow.preview,
-              },
-            }
-          : image
+    selectedImage &&
+      setImages(
+        images.map((image, index) =>
+          index === selectedImage - 1
+            ? {
+                ...image,
+                style: {
+                  ...image.style,
+                  imageShadow: shadow.shadow,
+                  shadowName: shadow.fullName,
+                  shadowPreview: shadow.preview,
+                },
+              }
+            : image
+        )
       )
-    )
   }
 
   const handleColorChange = (color: string) => {
-    setImages(
-      images.map((image, index) =>
-        index === selectedImage - 1
-          ? {
-              ...image,
-              style: {
-                ...image.style,
-                shadowColor: color,
-                imageShadow:
-                  shadows.find(
-                    (shadow) =>
-                      shadow.fullName ===
-                      (images[selectedImage - 1]?.style.shadowName ?? '')
-                  )?.shadow ?? '',
-              },
-            }
-          : image
+    selectedImage &&
+      setImages(
+        images.map((image, index) =>
+          index === selectedImage - 1
+            ? {
+                ...image,
+                style: {
+                  ...image.style,
+                  shadowColor: color,
+                  imageShadow:
+                    shadows.find(
+                      (shadow) =>
+                        shadow.fullName ===
+                        (images[selectedImage - 1]?.style.shadowName ?? '')
+                    )?.shadow ?? '',
+                },
+              }
+            : image
+        )
       )
-    )
 
     document.documentElement.style.setProperty(
       `--shadowColor${selectedImage}`,
@@ -80,7 +89,7 @@ export default function ShadowSettings() {
   }
 
   return (
-    <>
+    <div className={`${selectedImage ? '' : 'pointer-events-none opacity-40'}`}>
       <Popover>
         <PopoverTrigger className="relative mt-2 flex h-14 w-[70%] items-center overflow-hidden rounded-lg border border-border bg-formDark">
           <div
@@ -95,10 +104,14 @@ export default function ShadowSettings() {
           <div className="flex h-full w-full flex-1 items-center justify-between px-4">
             <div className="flex w-full flex-col items-start">
               <p className="text-[0.85rem] font-medium text-primary/70 dark:text-dark/70">
-                {images[selectedImage - 1]?.style.shadowName}
+                {selectedImage
+                  ? images[selectedImage - 1]?.style.shadowName
+                  : 'None'}
               </p>
               <p className="text-[0.7rem] font-semibold text-primary/50 dark:text-dark/50">
-                {images[selectedImage - 1]?.style.shadowColor.slice(0, 7)}
+                {selectedImage
+                  ? images[selectedImage - 1]?.style.shadowColor.slice(0, 7)
+                  : '#000'}
               </p>
             </div>
 
@@ -122,7 +135,7 @@ export default function ShadowSettings() {
               }}
               className={`flex-center relative h-20 w-24 cursor-pointer rounded-md ${
                 shadow.shadow ===
-                  images[selectedImage - 1]?.style.imageShadow &&
+                  images[selectedImage! - 1]?.style.imageShadow &&
                 'outline-none ring-2 ring-ring ring-offset-2'
               }`}
               style={backgroundStyle}
@@ -142,7 +155,11 @@ export default function ShadowSettings() {
         <h1 className="text-[0.85rem]">Opacity</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {Math.round(
-            Number(images[selectedImage - 1]?.style.shadowOpacity ?? 1) * 100
+            Number(
+              selectedImage
+                ? images[selectedImage - 1]?.style.shadowOpacity
+                : 0.5 ?? 1
+            ) * 100
           )}
           %
         </p>
@@ -155,22 +172,23 @@ export default function ShadowSettings() {
           max={1}
           step={0.01}
           onValueChange={(value) => {
-            setImages(
-              images.map((image, index) =>
-                index === selectedImage - 1
-                  ? {
-                      ...image,
-                      style: {
-                        ...image.style,
-                        shadowOpacity: value[0],
-                      },
-                    }
-                  : image
+            selectedImage &&
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          shadowOpacity: value[0],
+                        },
+                      }
+                    : image
+                )
               )
-            )
           }}
           value={
-            images.length !== 0
+            images.length !== 0 && selectedImage
               ? [+images[selectedImage - 1]?.style.shadowOpacity]
               : [1]
           }
@@ -183,9 +201,11 @@ export default function ShadowSettings() {
 
       <PopupColorPicker
         shouldShowAlpha={false}
-        color={images[selectedImage - 1]?.style.shadowColor}
+        color={
+          selectedImage ? images[selectedImage - 1]?.style.shadowColor : '#000'
+        }
         onChange={handleColorChange}
       />
-    </>
+    </div>
   )
 }

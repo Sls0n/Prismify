@@ -10,8 +10,9 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/Select'
-import { ChevronDown } from 'lucide-react'
 import { useFrameOptions } from '@/store/use-frame-options'
+import { useSelectedLayers } from '@/store/use-image-options'
+import { ChevronDown } from 'lucide-react'
 import {
   FrameInsidePopupPreview,
   FramePopupPreview,
@@ -19,17 +20,26 @@ import {
 
 export default function FramePicker() {
   const { browserFrame, setFrameHeight, frameHeight } = useFrameOptions()
+  const { selectedImage } = useSelectedLayers()
 
   return (
     <>
-      <div className="mb-3 mt-4 flex items-center px-1 md:max-w-[70%]">
+      <div
+        className={`mb-3 mt-4 flex items-center px-1 md:max-w-[70%] 
+        ${selectedImage ? '' : 'pointer-events-none opacity-40'}
+      `}
+      >
         <h1 className="text-[0.85rem]">Frame:</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {browserFrame}
         </p>
       </div>
       <Popover>
-        <PopoverTrigger className="relative h-24 max-w-[100%] md:max-w-[50%] overflow-hidden rounded-lg border border-border bg-formDark py-2 md:py-0 px-4 md:px-0">
+        <PopoverTrigger
+          className={`relative h-24 max-w-[100%] overflow-hidden rounded-lg border border-border bg-formDark px-4 py-2 md:max-w-[50%] md:px-0 md:py-0 ${
+            selectedImage ? '' : 'pointer-events-none opacity-40'
+          }`}
+        >
           <div className="flex items-center justify-between">
             <div className="flex-center basis-[80%]">
               <FramePopupPreview />
@@ -51,7 +61,11 @@ export default function FramePicker() {
         </PopoverContent>
       </Popover>
 
-      <div className="mt-8 flex flex-col gap-3 px-1 md:max-w-[70%]">
+      <div
+        className={`mt-8 flex flex-col gap-3 px-1 md:max-w-[70%] ${
+          selectedImage ? '' : 'pointer-events-none opacity-40'
+        }`}
+      >
         <h1 className="text-[0.85rem]">Frame size</h1>
         <Select
           defaultValue={frameHeight}

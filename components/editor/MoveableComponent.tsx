@@ -1,8 +1,8 @@
 'use client'
 
-import { useImageOptions } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
-import React, { useCallback } from 'react'
+import React from 'react'
 
 import { useImageQualityStore } from '@/store/use-image-quality'
 import { useMoveable } from '@/store/use-moveable'
@@ -12,6 +12,7 @@ import {
   DraggableProps,
   GroupableProps,
   OnDragEnd,
+  OnRenderGroupEnd,
   OnRotateEnd,
   OnScaleEnd,
   Rotatable,
@@ -35,39 +36,36 @@ const Moveable = makeMoveable<
 export default function MoveableComponent({ id }: { id: string }) {
   const { quality } = useImageQualityStore()
   const { domResolution, scaleFactor, exactDomResolution } = useResizeCanvas()
-  const { setImages, images, selectedImage } = useImageOptions()
-  const moveableRef = React.useRef<typeof Moveable>(null)
+  const { setImages, images } = useImageOptions()
+  const { selectedImage } = useSelectedLayers()
+  const moveableRef = React.useRef<typeof Moveable>()
   const { width, height } = splitWidthHeight(exactDomResolution)
-  const {
-    isMultipleTargetSelected,
-    setIsMultipleTargetSelected,
-    setShowControls,
-  } = useMoveable()
+  const { isMultipleTargetSelected } = useMoveable()
 
-  const handleDrag = useCallback(
-    (e: OnDragEnd) => {
+  const handleDrag = (e: OnDragEnd) => {
+    // e.target.style.transform = e?.lastEvent.style.transform
+    if (e?.lastEvent?.translate) {
       console.log(e)
-      setImages(
-        images.map((image, index) =>
-          index === selectedImage - 1
-            ? {
-                ...image,
-                style: {
-                  ...image.style,
-                  translateX: e?.lastEvent?.translate[0],
-                  translateY: e?.lastEvent?.translate[1],
-                },
-              }
-            : image
+      selectedImage &&
+        setImages(
+          images.map((image, index) =>
+            index === selectedImage - 1
+              ? {
+                  ...image,
+                  style: {
+                    ...image.style,
+                    translateX: e?.lastEvent?.translate[0],
+                    translateY: e?.lastEvent?.translate[1],
+                  },
+                }
+              : image
+          )
         )
-      )
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [images, setImages]
-  )
+    }
+  }
 
-  const handleRotate = useCallback(
-    (e: OnRotateEnd) => {
+  const handleRotate = (e: OnRotateEnd) => {
+    selectedImage &&
       setImages(
         images.map((image, index) =>
           index === selectedImage - 1
@@ -81,14 +79,11 @@ export default function MoveableComponent({ id }: { id: string }) {
             : image
         )
       )
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [images, setImages]
-  )
+  }
 
-  const handleScale = useCallback(
-    (e: OnScaleEnd) => {
-      console.log(e)
+  const handleScale = (e: OnScaleEnd) => {
+    console.log(e)
+    selectedImage &&
       setImages(
         images.map((image, index) =>
           index === selectedImage - 1
@@ -104,10 +99,43 @@ export default function MoveableComponent({ id }: { id: string }) {
             : image
         )
       )
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [setImages, images]
-  )
+  }
+
+  const handleRenderGroupEnd = (e: OnRenderGroupEnd) => {
+    if (isMultipleTargetSelected) {
+      const updatedImages = images.map((image, index) => {
+        const targetIndex = e.events.findIndex(
+          (ev: any) => ev.target.id === `${image.id}`
+        )
+        const updatedEvent = e.events[targetIndex]
+
+        if (targetIndex !== -1) {
+          const updatedEvent = e.events[targetIndex]
+
+          console.log(updatedEvent)
+
+          return {
+            ...image,
+            style: {
+              ...image.style,
+              translateX: updatedEvent.transformObject.translate[0],
+              translateY: updatedEvent.transformObject.translate[1],
+              rotate: updatedEvent.transformObject.rotate,
+              imageSize: `${updatedEvent.transformObject.scale[0]}`,
+              rotateX: updatedEvent.transformObject.rotateX,
+              rotateY: updatedEvent.transformObject.rotateY,
+              rotateZ: updatedEvent.transformObject.rotateZ,
+            },
+          }
+        }
+
+        // Return the original image if the target is not found
+        return image
+      })
+
+      setImages(updatedImages)
+    }
+  }
 
   const otherImages = images.filter((image) => image.id !== selectedImage)
   const elementGuidelines = otherImages.map((image) => ({
@@ -126,6 +154,15 @@ export default function MoveableComponent({ id }: { id: string }) {
         draggable={true}
         onDrag={(e) => {
           e.target.style.transform = e.transform
+          // const x = e.beforeTranslate[0]
+          // const y = e.beforeTranslate[1]
+
+          // // Calculate percentage values based on the parent dimensions
+          // const translateXPercent = (x / +width) * 100
+          // const translateYPercent = (y / +height) * 100
+
+          // // Apply the translate with percentage values
+          // e.target.style.transform = `translate(${translateXPercent}%, ${translateYPercent}%)`
         }}
         onDragEnd={handleDrag}
         scalable={true}
@@ -178,9 +215,7 @@ export default function MoveableComponent({ id }: { id: string }) {
             ev.target.style.transform = ev.transform
           })
         }}
-        onRenderGroupEnd={(e) => {
-          console.log('end')
-        }}
+        onRenderGroupEnd={handleRenderGroupEnd}
       />
     </>
   )

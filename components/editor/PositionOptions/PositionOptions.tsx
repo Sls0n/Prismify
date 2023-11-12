@@ -16,11 +16,11 @@ export default function PositionOptions() {
       </div>
 
       <div className="mb-2">
-        <TranslateOption />
+        <SizeOption text="Scale" />
       </div>
 
       <div className="mb-4">
-        <SizeOption text="Scale" />
+        <TranslateOption />
       </div>
     </>
   )

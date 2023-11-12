@@ -116,12 +116,6 @@ interface ImageOptionsState {
     }[]
   ) => void
 
-  selectedImage: number
-  setSelectedImage: (selectedImage: number) => void
-
-  selectedText: number
-  setSelectedText: (selectedText: number) => void
-
   defaultStyle: {
     imageSize: string
     imageRoundness: number
@@ -178,15 +172,9 @@ export const useImageOptions = create(
       setInitialImageUploaded: (initialImageUploaded) =>
         set({ initialImageUploaded }),
 
-      selectedImage: 1,
-      setSelectedImage: (selectedImage) => set({ selectedImage }),
-
-      selectedText: 1,
-      setSelectedText: (selectedText) => set({ selectedText }),
-
       defaultStyle: {
         imageSize: '0.8',
-        imageRoundness: 1.6,
+        imageRoundness: 1,
         imageShadow: '0px 8px 55px 0px',
         shadowPreview: '0px 6px 30px 0px #000',
         shadowOpacity: 0.5,
@@ -233,7 +221,7 @@ export const useImageOptions = create(
       handleSet: (handleSet) =>
         throttle<typeof handleSet>((state) => {
           handleSet(state)
-        }, 1000),
+        }, 800),
     }
   )
 )
@@ -242,3 +230,19 @@ export const useTemporalStore = <T extends unknown>(
   selector: (state: TemporalState<ImageOptionsState>) => T,
   equality?: (a: T, b: T) => boolean
 ) => useStore(useImageOptions.temporal, selector, equality)
+
+interface SelectedLayerState {
+  selectedImage: number | null
+  setSelectedImage: (selectedImage: number | null) => void
+
+  selectedText: number
+  setSelectedText: (selectedText: number) => void
+}
+
+export const useSelectedLayers = create<SelectedLayerState>((set) => ({
+  selectedImage: null,
+  setSelectedImage: (selectedImage) => set({ selectedImage }),
+
+  selectedText: 1,
+  setSelectedText: (selectedText) => set({ selectedText }),
+}))

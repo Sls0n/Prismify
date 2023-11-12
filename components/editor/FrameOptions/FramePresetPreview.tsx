@@ -1,10 +1,12 @@
 import { Button } from '@/components/ui/Button'
 import { FrameTypes, useFrameOptions } from '@/store/use-frame-options'
 import { useImageOptions } from '@/store/use-image-options'
+import { useMoveable } from '@/store/use-moveable'
 
 export function FrameInsidePopupPreview() {
   const { setBrowserFrame } = useFrameOptions()
   const { setImages, images } = useImageOptions()
+  const {setShowControls} = useMoveable()
 
   const frameChangeHandler = (frame: FrameTypes) => {
     setBrowserFrame(frame)
@@ -17,6 +19,7 @@ export function FrameInsidePopupPreview() {
         },
       }))
     )
+    setShowControls(false)
   }
 
   return (

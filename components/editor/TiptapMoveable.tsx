@@ -1,6 +1,6 @@
 'use client'
 
-import { useImageOptions } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 
 import { useImageQualityStore } from '@/store/use-image-quality'
@@ -24,7 +24,8 @@ const Moveable = makeMoveable<
 export default function TiptapMoveable({ id }: { id: string }) {
   const { quality } = useImageQualityStore()
   const { domResolution, scaleFactor } = useResizeCanvas()
-  const { images, selectedImage, texts, selectedText } = useImageOptions()
+  const { images, texts } = useImageOptions()
+  const { selectedImage, selectedText } = useSelectedLayers()
 
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
 

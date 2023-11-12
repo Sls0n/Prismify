@@ -101,6 +101,60 @@ export default function SaveOptions() {
     })
   }
 
+  const snapShotCreatorForCopy = () => {
+    return new Promise<Blob>((resolve, reject) => {
+      try {
+        if (images.length === 0) {
+          toast({
+            title: 'Error!',
+            description: 'Upload an image then try again',
+            variant: 'destructive',
+          })
+          return
+        }
+        const scale = scaleFactor * quality
+        const element =
+          typeof window !== 'undefined' &&
+          document.getElementById('canvas-container')
+        if (!element) {
+          throw new Error('Element not found.')
+        }
+
+        htmlToImage
+          .toBlob(element, {
+            height: element.offsetHeight * scale,
+            width: element.offsetWidth * scale,
+
+            style: {
+              transform: 'scale(' + scale + ')',
+              transformOrigin: 'top left',
+              width: element.offsetWidth + 'px',
+              height: element.offsetHeight + 'px',
+            },
+          })
+          .then((dataURL) => {
+            const blob = dataURL as unknown as Blob
+            resolve(blob)
+          })
+          .catch((e: any) => {
+            toast({
+              title: 'Image not uploaded',
+              description: e.message,
+              variant: 'destructive',
+            })
+            reject(e)
+          })
+      } catch (e: any) {
+        toast({
+          title: 'Error!',
+          description: e.message,
+          variant: 'destructive',
+        })
+        reject(e)
+      }
+    })
+  }
+
   const copyImageToClipBoardOtherBrowsers = () => {
     const isSafari = /^((?!chrome|android).)*safari/i.test(navigator?.userAgent)
     const isNotFirefox = navigator.userAgent.indexOf('Firefox') < 0
@@ -110,9 +164,6 @@ export default function SaveOptions() {
           new ClipboardItem({
             'image/png': new Promise(async (resolve, reject) => {
               try {
-                if (fileType !== 'PNG') {
-                  throw new Error('Only PNG images can be copied')
-                }
                 const blob = await snapshotCreator()
                 resolve(new Blob([blob], { type: 'image/png' }))
               } catch (err) {
@@ -141,13 +192,14 @@ export default function SaveOptions() {
         .then(async (result) => {
           if (result.state === 'granted') {
             const type = 'image/png'
-            const blob = await snapshotCreator()
+            const blob = await snapShotCreatorForCopy()
             let data = [new ClipboardItem({ [type]: blob })]
             navigator.clipboard
               .write(data)
               .then(() => {
                 toast({
-                  title: 'Successfully copied 🥳',
+                  title: 'Copied to clipboard. 🥳',
+                  description: 'Command + V to paste/use it.'
                 })
               })
               .catch((err) => {
@@ -207,6 +259,7 @@ export default function SaveOptions() {
             <Button
               variant={file === fileType ? 'stylish' : 'outline'}
               key={file}
+              disabled={file === 'SVG'}
               onClick={() => setFileType(file)}
             >
               {file}
@@ -231,7 +284,7 @@ export default function SaveOptions() {
       >
         <Clipboard size={18} className="mr-0 sm:mr-2" />
         <p className="hidden sm:block">
-          Copy <span className="hidden lg:inline-block">to clipboard</span>
+          Copy <span className="hidden lg:inline-block">as PNG</span>
         </p>
       </Button>
       <Button

@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { cn } from '@/utils/buttonUtils'
-import { useImageOptions } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { Button } from '@/components/ui/Button'
 import {
@@ -30,8 +30,8 @@ export function ResolutionButton({
   const [isHovering, setIsHovering] = useState(false)
 
   const { setResolution, setScaleFactor, domResolution } = useResizeCanvas()
-  const { images, setImages, selectedImage, initialImageUploaded } =
-    useImageOptions()
+  const { images, setImages, initialImageUploaded } = useImageOptions()
+  const { selectedImage } = useSelectedLayers()
 
   const [domWidth]: number[] = domResolution.split('x').map(Number)
 
@@ -83,19 +83,20 @@ export function ResolutionButton({
               padding
             )
             setResolution(newResolution.toString())
-            setImages(
-              images.map((image, index) =>
-                index === selectedImage - 1
-                  ? {
-                      ...image,
-                      style: {
-                        ...image.style,
-                        imageSize: '0.75',
-                      },
-                    }
-                  : image
+            selectedImage &&
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          imageSize: '0.75',
+                        },
+                      }
+                    : image
+                )
               )
-            )
           }
         }}
         aria-label={name}
@@ -126,19 +127,20 @@ export function ResolutionButton({
               padding
             )
             setResolution(newResolution.toString())
-            setImages(
-              images.map((image, index) =>
-                index === selectedImage - 1
-                  ? {
-                      ...image,
-                      style: {
-                        ...image.style,
-                        imageSize: '0.75',
-                      },
-                    }
-                  : image
+            selectedImage &&
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          imageSize: '0.75',
+                        },
+                      }
+                    : image
+                )
               )
-            )
           }
         }}
         aria-label={name}

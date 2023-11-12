@@ -11,7 +11,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/Tooltip'
-import { useImageOptions } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
 import FontPicker from 'font-picker-react'
 import {
@@ -24,7 +24,8 @@ import {
 } from 'lucide-react'
 
 export default function FontSettings() {
-  const { setTexts, selectedText, texts } = useImageOptions()
+  const { setTexts, texts } = useImageOptions()
+   const { selectedText } = useSelectedLayers()
   const [activeFontFamily, setActiveFontFamily] = useState(
     texts[selectedText - 1]?.style.fontFamily ?? "DM Sans"
   ) 
