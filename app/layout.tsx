@@ -47,8 +47,6 @@ export const metadata: Metadata = {
     'Website screenshot generator',
     'SaaS marketing visuals',
   ],
-  metadataBase: new URL('https://prismify.vercel.app'),
-
 }
 
 export default function RootLayout({
