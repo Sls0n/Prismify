@@ -228,8 +228,7 @@ export default function Canvas() {
                 </p>
               </motion.div>
             </div>
-            <Noise />
-            {imageBackground && (
+             {imageBackground && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 draggable={false}
@@ -238,6 +237,7 @@ export default function Canvas() {
                 alt="background image"
               />
             )}
+            <Noise />
             {showControls && <MoveableComponent id={`${selectedImage}`} />}
             {showTextControls && !isEditable && (
               <TiptapMoveable id={`text-${selectedText}`} />

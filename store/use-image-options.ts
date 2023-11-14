@@ -177,7 +177,7 @@ export const useImageOptions = create(
         imageRoundness: 1,
         imageShadow: '0px 8px 55px 0px',
         shadowPreview: '0px 6px 30px 0px #000',
-        shadowOpacity: 0.5,
+        shadowOpacity: 0.42,
         shadowName: 'Large',
         shadowColor: '#000',
         borderSize: '0',
