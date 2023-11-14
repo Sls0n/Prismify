@@ -47,7 +47,7 @@
     "html-to-image": "^1.11.11",
     "just-throttle": "^4.2.0",
     "lucide-react": "^0.265.0",
-    "next": "14.0.2",
+    "next": "13.5.4",
     "next-auth": "^4.22.1",
     "next-themes": "^0.2.1",
     "postcss": "8.4.25",
