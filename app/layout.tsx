@@ -29,6 +29,25 @@ export const metadata: Metadata = {
   },
   applicationName: 'Prismify',
   creator: 'Slson',
+  twitter: {
+    creator: '@xSls0n_007',
+    title:
+      'Prismify - Effortlessly Create Beautiful SaaS/Product Shots & Graphics',
+    description:
+      'Easily make your SaaS/product shots & design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations.',
+    card: 'summary_large_image',
+    images: [
+      {
+        url: 'https://prismify.vercel.app/twitter-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Prismify - Effortlessly Create Beautiful SaaS/Product Shots & Graphics',
+      },
+    ],
+  },
+  alternates: {
+    canonical: 'https://prismify.vercel.app',
+  },
   keywords: [
     'SaaS product design',
     'Create beautiful screenshots',
