@@ -22,7 +22,11 @@ const MenuBar = ({ editor }: MenuBarProps) => {
     <>
       <BubbleMenu
         className="bubble-menu"
-        tippyOptions={{ duration: 100 }}
+        tippyOptions={{
+          duration: 100,
+          followCursor: true,
+          placement: 'auto-end',
+        }}
         editor={editor}
       >
         <button
@@ -124,7 +128,7 @@ export default function TipTap() {
               key={`text-${text.id}`}
               id={`text-${text.id}`}
               ref={text.id === selectedText ? textRef : null}
-              className={`text apply-font absolute z-[120] flex cursor-pointer items-center justify-center ${
+              className={`text apply-font absolute z-[120] flex-1 cursor-pointer  ${
                 text.content === '' ? 'pointer-events-none hidden' : 'image'
               }`}
               style={{
@@ -138,6 +142,7 @@ export default function TipTap() {
                   text.style.shadowColor,
                   text.style.shadowOpacity
                 )})`,
+                lineHeight: '1',
               }}
               onContextMenu={() => {
                 setShowTextControls(true)

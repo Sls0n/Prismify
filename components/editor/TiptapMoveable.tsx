@@ -2,7 +2,7 @@
 
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
-
+import { splitWidthHeight } from '@/utils/helperFns'
 import { useImageQualityStore } from '@/store/use-image-quality'
 import {
   Draggable,
@@ -23,9 +23,10 @@ const Moveable = makeMoveable<
 
 export default function TiptapMoveable({ id }: { id: string }) {
   const { quality } = useImageQualityStore()
-  const { domResolution, scaleFactor } = useResizeCanvas()
+  const { domResolution, scaleFactor, exactDomResolution } = useResizeCanvas()
   const { images, texts } = useImageOptions()
   const { selectedImage, selectedText } = useSelectedLayers()
+  const { width, height } = splitWidthHeight(exactDomResolution)
 
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
 
@@ -47,10 +48,19 @@ export default function TiptapMoveable({ id }: { id: string }) {
 
   return (
     <Moveable
-      target={typeof document !== 'undefined' ? document?.getElementById(id) : ''}
+      target={
+        typeof document !== 'undefined' ? document?.getElementById(id) : ''
+      }
       draggable={true}
       onDrag={(e) => {
         e.target.style.transform = e.transform
+        // const x = e.beforeTranslate[0]
+        // const y = e.beforeTranslate[1]
+        // // Calculate percentage values based on the parent dimensions
+        // const translateXPercent = (x / +width) * 100
+        // const translateYPercent = (y / +height) * 100
+        // // Apply the translate with percentage values
+        // e.target.style.transform = `translate(${translateXPercent}%, ${translateYPercent}%)`
       }}
       scalable={true}
       keepRatio={true}

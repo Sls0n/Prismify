@@ -213,7 +213,7 @@ export default function Canvas() {
             id="canvas-container"
             style={style}
           >
-            <div className="pointer-events-none absolute bottom-[3%] left-[2%] z-50">
+            {/* <div className="pointer-events-none absolute bottom-[3%] left-[2%] z-50">
               <motion.div
                 animate={{
                   opacity: showControls && isMultipleTargetSelected ? 1 : 0,
@@ -228,7 +228,7 @@ export default function Canvas() {
                   Press <span className="font-semibold">ESC</span> to deselect.
                 </p>
               </motion.div>
-            </div>
+            </div> */}
              {imageBackground && (
               // eslint-disable-next-line @next/next/no-img-element
               <img

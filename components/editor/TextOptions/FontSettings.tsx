@@ -25,10 +25,10 @@ import {
 
 export default function FontSettings() {
   const { setTexts, texts } = useImageOptions()
-   const { selectedText } = useSelectedLayers()
+  const { selectedText } = useSelectedLayers()
   const [activeFontFamily, setActiveFontFamily] = useState(
-    texts[selectedText - 1]?.style.fontFamily ?? "DM Sans"
-  ) 
+    texts[selectedText - 1]?.style.fontFamily ?? 'Inter'
+  )
   const { setShowTextControls } = useMoveable()
 
   const handleColorChange = (color: string) => {
