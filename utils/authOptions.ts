@@ -5,7 +5,7 @@ import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
 // import FacebookProvider from 'next-auth/providers/facebook'
 import prismadb from '@/libs/prismadb'
-// import bcrypt from 'bcrypt'
+import bcrypt from 'bcrypt'
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -54,12 +54,12 @@ export const authOptions: NextAuthOptions = {
           throw new Error("User doesn't exist")
         }
 
-        // const passwordMatch = await bcrypt.compare(
-        //   credentials.password,
-        //   user.hashedPassword
-        // )
+        const passwordMatch = await bcrypt.compare(
+          credentials.password,
+          user.hashedPassword
+        )
 
-        const passwordMatch = credentials.password === user.hashedPassword
+        // const passwordMatch = credentials.password === user.hashedPassword
 
         if (!passwordMatch) {
           throw new Error('Incorrect password')
