@@ -17,6 +17,8 @@ import {
 import { ImageIcon, Upload } from 'lucide-react'
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
 import Dropzone from 'react-dropzone'
+import { type Crop } from 'react-image-crop'
+import 'react-image-crop/dist/ReactCrop.css'
 import analyze from 'rgbaster'
 import { Button } from '../ui/Button'
 import BrowserFrame from './BrowserFrame'
@@ -24,8 +26,6 @@ import ContextMenuImage from './ContextMenuImage'
 
 const ImageUpload = () => {
   const targetRef = useRef<HTMLDivElement>(null)
-  const multipleTargetRef = useRef<HTMLDivElement>(null)
-
   const {
     images,
     setImages,
@@ -36,11 +36,8 @@ const ImageUpload = () => {
   const { selectedImage, setSelectedImage } = useSelectedLayers()
   const {
     setShowControls,
-    showControls,
-    setIsSelecting,
     isSelecting,
     isMultipleTargetSelected,
-    setIsMultipleTargetSelected,
   } = useMoveable()
   const { exactDomResolution } = useResizeCanvas()
   const { width: exactDomWidth, height: exactDomHeight } =
@@ -188,6 +185,7 @@ const ImageUpload = () => {
                     }}
                   >
                     <BrowserFrame />
+                   
                     <img
                       draggable={false}
                       className={`pointer-events-none h-full w-full shrink-0 ${

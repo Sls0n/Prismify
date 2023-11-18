@@ -237,6 +237,9 @@ interface SelectedLayerState {
 
   selectedText: number
   setSelectedText: (selectedText: number) => void
+
+  enableCrop: boolean
+  setEnableCrop: (enableCrop: boolean) => void
 }
 
 export const useSelectedLayers = create<SelectedLayerState>((set) => ({
@@ -245,4 +248,7 @@ export const useSelectedLayers = create<SelectedLayerState>((set) => ({
 
   selectedText: 1,
   setSelectedText: (selectedText) => set({ selectedText }),
+
+  enableCrop: false,
+  setEnableCrop: (enableCrop) => set({ enableCrop }),
 }))

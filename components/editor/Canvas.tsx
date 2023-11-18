@@ -53,7 +53,7 @@ export default function Canvas() {
     scale,
 
   } = useImageOptions()
-   const { selectedImage, selectedText, setSelectedImage } = useSelectedLayers()
+   const { selectedImage, selectedText, setSelectedImage, enableCrop } = useSelectedLayers()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
   const {
@@ -149,6 +149,7 @@ export default function Canvas() {
 
   const handleScroll = (e: React.WheelEvent<HTMLDivElement>) => {
     if (typeof window !== 'undefined' && window.innerWidth <= 700) return
+    if (enableCrop) return
     if (e.deltaY < 0) {
       // Scrolling up
       if (scrollScale === 1) return

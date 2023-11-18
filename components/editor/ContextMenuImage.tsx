@@ -12,20 +12,45 @@ import {
 import { useColorExtractor } from '@/store/use-color-extractor'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
-import { BringToFront, Crop, ImagePlus, SendToBack, Trash } from 'lucide-react'
-import React, { ChangeEvent } from 'react'
+import {
+  BringToFront,
+  Check,
+  CropIcon,
+  ImagePlus,
+  SendToBack,
+  Trash,
+} from 'lucide-react'
+import React, { ChangeEvent, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import analyze from 'rgbaster'
+import {
+  Dialog,
+  DialogContent,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/Dialog'
+import ReactCrop, { type Crop } from 'react-image-crop'
+import 'react-image-crop/dist/ReactCrop.css'
+import { Button } from '@/components/ui/Button'
 
 export default function ContextMenuImage({
   children,
 }: {
   children: React.ReactNode
 }) {
-  const { setImages, images } =
-    useImageOptions()
-     const { selectedImage, setSelectedImage } = useSelectedLayers()
+  const { setImages, images } = useImageOptions()
+  const { selectedImage, setSelectedImage, setEnableCrop, enableCrop } =
+    useSelectedLayers()
   const { showControls, setShowControls } = useMoveable()
+  const [crop, setCrop] = useState<Crop>({
+    unit: '%', // Can be 'px' or '%'
+    x: 25,
+    y: 25,
+    width: 50,
+    height: 50,
+  })
 
   const handleImageDelete = (id: number) => {
     // const newImages = images.filter((image) => image.id !== id)
@@ -62,63 +87,123 @@ export default function ContextMenuImage({
   })
 
   return (
-    <ContextMenu>
-      <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
-      <ContextMenuContent className="w-64">
-        <ContextMenuItem inset disabled>
-          Send back
-          <ContextMenuShortcut>
-            <BringToFront size={19} className="opacity-80" />
-          </ContextMenuShortcut>
-        </ContextMenuItem>
-        <ContextMenuItem inset disabled>
-          Bring forward
-          <ContextMenuShortcut>
-            <SendToBack size={19} className="opacity-80" />
-          </ContextMenuShortcut>
-        </ContextMenuItem>
+    <Dialog
+      open={enableCrop}
+      onOpenChange={(open) => {
+        if (open === false) setEnableCrop(false)
+        setEnableCrop(open)
+      }}
+    >
+      <ContextMenu>
+        <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
+        <ContextMenuContent className="w-64">
+          <ContextMenuItem inset disabled>
+            Send back
+            <ContextMenuShortcut>
+              <BringToFront size={19} className="opacity-80" />
+            </ContextMenuShortcut>
+          </ContextMenuItem>
+          <ContextMenuItem inset disabled>
+            Bring forward
+            <ContextMenuShortcut>
+              <SendToBack size={19} className="opacity-80" />
+            </ContextMenuShortcut>
+          </ContextMenuItem>
 
-        <ReplaceImage />
+          <ReplaceImage />
 
-        <ContextMenuSub>
-          <ContextMenuSubTrigger inset>More Tools</ContextMenuSubTrigger>
-          <ContextMenuSubContent className="w-48">
-            <ContextMenuItem>
-              Crop
-              <ContextMenuShortcut>
-                <Crop size={19} className="opacity-80" />
-              </ContextMenuShortcut>
-            </ContextMenuItem>
-            <ContextMenuItem>...</ContextMenuItem>
-            <ContextMenuItem>...</ContextMenuItem>
-            <ContextMenuSeparator />
-            <ContextMenuItem>...</ContextMenuItem>
-          </ContextMenuSubContent>
-        </ContextMenuSub>
+          <ContextMenuSub>
+            <ContextMenuSubTrigger inset>More Tools</ContextMenuSubTrigger>
+            <ContextMenuSubContent className="w-48">
+              <DialogTrigger asChild>
+                <ContextMenuItem
+                  onClick={() => {
+                    setEnableCrop(true)
+                  }}
+                >
+                  Crop
+                  <ContextMenuShortcut>
+                    <CropIcon size={19} className="opacity-80" />
+                  </ContextMenuShortcut>
+                </ContextMenuItem>
+              </DialogTrigger>
 
-        <ContextMenuSeparator />
-        <ContextMenuItem
-          inset
-          onClick={() => {
-            selectedImage && handleImageDelete(selectedImage)
-          }}
-          className="text-[#F46567]/70 focus:text-[#f46567]/80"
-        >
-          Delete
-          <ContextMenuShortcut>
-            <Trash size={19} className="text-[#F46567]/70 opacity-80" />
-          </ContextMenuShortcut>
-        </ContextMenuItem>
-      </ContextMenuContent>
-    </ContextMenu>
+              <ContextMenuItem>...</ContextMenuItem>
+              <ContextMenuItem>...</ContextMenuItem>
+              <ContextMenuSeparator />
+              <ContextMenuItem>...</ContextMenuItem>
+            </ContextMenuSubContent>
+          </ContextMenuSub>
+
+          <ContextMenuSeparator />
+          <ContextMenuItem
+            inset
+            onClick={() => {
+              selectedImage && handleImageDelete(selectedImage)
+            }}
+            className="text-[#F46567]/70 focus:text-[#f46567]/80"
+          >
+            Delete
+            <ContextMenuShortcut>
+              <Trash size={19} className="text-[#F46567]/70 opacity-80" />
+            </ContextMenuShortcut>
+          </ContextMenuItem>
+        </ContextMenuContent>
+      </ContextMenu>
+      <DialogContent className="flex h-fit max-h-[95vh]  w-1/2 flex-col gap-4">
+        <DialogHeader className="mb-4">
+          <DialogTitle>Crop image</DialogTitle>
+        </DialogHeader>
+
+        <div className="mb-4 h-full w-full flex-1 overflow-hidden overflow-y-auto">
+          {selectedImage && (
+            <ReactCrop
+              crop={crop}
+              onChange={(c) => setCrop(c)}
+              disabled={!enableCrop || !selectedImage}
+              onComplete={(c) => {
+                console.log(c)
+              }}
+            >
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img
+                src={images[selectedImage - 1].image}
+                alt="Crop selected image"
+                className="h-full w-full object-cover"
+              />
+            </ReactCrop>
+          )}
+        </div>
+
+        <DialogFooter className="mt-auto flex items-center gap-1.5">
+          <Button
+            variant="stylish"
+            onClick={() => {
+              setEnableCrop(false)
+            }}
+          >
+            Cancel
+          </Button>
+
+          <Button
+            onClick={() => {
+              setEnableCrop(false)
+            }}
+            className="flex-center gap-1.5"
+          >
+            <span>Done</span>
+            <CropIcon size={19} className="opacity-80" />
+          </Button>
+        </DialogFooter>
+      </DialogContent>
+    </Dialog>
   )
 }
 
 function ReplaceImage() {
-  const { setImages, images } =
-    useImageOptions()
-     const { selectedImage, setSelectedImage } = useSelectedLayers()
-  
+  const { setImages, images } = useImageOptions()
+  const { selectedImage, setSelectedImage } = useSelectedLayers()
+
   const { setImagesCheck, imagesCheck } = useColorExtractor()
 
   const onDrop = async (file: any) => {

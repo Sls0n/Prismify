@@ -155,6 +155,9 @@ dependencies:
   react-hotkeys-hook:
     specifier: ^4.4.1
     version: 4.4.1(react-dom@18.2.0)(react@18.2.0)
+  react-image-crop:
+    specifier: ^10.1.8
+    version: 10.1.8(react@18.2.0)
   react-joystick-component:
     specifier: ^6.2.1
     version: 6.2.1(react-dom@18.2.0)(react@18.2.0)
@@ -4582,6 +4585,14 @@ packages:
     dependencies:
       react: 18.2.0
       react-dom: 18.2.0(react@18.2.0)
+    dev: false
+
+  /react-image-crop@10.1.8(react@18.2.0):
+    resolution: {integrity: sha512-4rb8XtXNx7ZaOZarKKnckgz4xLMvds/YrU6mpJfGhGAsy2Mg4mIw1x+DCCGngVGq2soTBVVOxx2s/C6mTX9+pA==}
+    peerDependencies:
+      react: '>=16.13.1'
+    dependencies:
+      react: 18.2.0
     dev: false
 
   /react-is@16.13.1:
