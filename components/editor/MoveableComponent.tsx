@@ -120,11 +120,11 @@ export default function MoveableComponent({ id }: { id: string }) {
               ...image.style,
               translateX: updatedEvent.transformObject.translate[0],
               translateY: updatedEvent.transformObject.translate[1],
-              rotate: updatedEvent.transformObject.rotate,
+              // rotate: updatedEvent.transformObject.rotate,
               imageSize: `${updatedEvent.transformObject.scale[0]}`,
-              rotateX: updatedEvent.transformObject.rotateX,
-              rotateY: updatedEvent.transformObject.rotateY,
-              rotateZ: updatedEvent.transformObject.rotateZ,
+              // rotateX: updatedEvent.transformObject.rotateX,
+              // rotateY: updatedEvent.transformObject.rotateY,
+              // rotateZ: updatedEvent.transformObject.rotateZ,
             },
           }
         }
@@ -164,14 +164,14 @@ export default function MoveableComponent({ id }: { id: string }) {
           // // Apply the translate with percentage values
           // e.target.style.transform = `translate(${translateXPercent}%, ${translateYPercent}%)`
         }}
-        onDragEnd={handleDrag}
+        // onDragEnd={handleDrag}
         scalable={true}
         keepRatio={true}
         onScale={(e) => {
           e.target.style.transform = e.drag.transform
         }}
         onScaleEnd={handleScale}
-        rotatable={true}
+        rotatable={!isMultipleTargetSelected}
         rotationPosition={'top'}
         onRotate={(e) => {
           e.target.style.transform = e.drag.transform
