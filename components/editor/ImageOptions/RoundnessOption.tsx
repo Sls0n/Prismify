@@ -1,3 +1,5 @@
+'use client'
+
 import { Slider } from '@/components/ui/Slider'
 import { useFrameOptions } from '@/store/use-frame-options'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
@@ -6,7 +8,7 @@ import { useMoveable } from '@/store/use-moveable'
 export default function RoundnessOption() {
   const { images, setImages } = useImageOptions()
   const { browserFrame } = useFrameOptions()
-  const {setShowControls } = useMoveable()
+  const { setShowControls } = useMoveable()
   const { selectedImage } = useSelectedLayers()
 
   return (
@@ -46,10 +48,6 @@ export default function RoundnessOption() {
                     : image
                 )
               )
-            document?.documentElement.style.setProperty(
-              `--borderRoundness${selectedImage}`,
-              `${value.toString()}rem`
-            )
           }}
           value={
             images.length !== 0 && selectedImage

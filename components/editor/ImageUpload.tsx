@@ -34,11 +34,8 @@ const ImageUpload = () => {
     initialImageUploaded,
   } = useImageOptions()
   const { selectedImage, setSelectedImage } = useSelectedLayers()
-  const {
-    setShowControls,
-    isSelecting,
-    isMultipleTargetSelected,
-  } = useMoveable()
+  const { setShowControls, isSelecting, isMultipleTargetSelected } =
+    useMoveable()
   const { exactDomResolution } = useResizeCanvas()
   const { width: exactDomWidth, height: exactDomHeight } =
     splitWidthHeight(exactDomResolution)
@@ -71,7 +68,6 @@ const ImageUpload = () => {
 
       //  // Now, use the filtered colors to create a gradient
       //  const gradientColors = filteredColors.map((color) => color.color)
-
 
       setImages(
         images.map((image, index) =>
@@ -185,7 +181,7 @@ const ImageUpload = () => {
                     }}
                   >
                     <BrowserFrame />
-                   
+
                     <img
                       draggable={false}
                       className={`pointer-events-none h-full w-full shrink-0 ${
@@ -327,8 +323,9 @@ function LoadAImage() {
   )
 
   const loadDemoImage = () => {
+    if (typeof window === 'undefined') return
     setBackground('linear-gradient(var(--gradient-angle), #898aeb, #d8b9e3)')
-    document.documentElement.style.setProperty(
+    document?.documentElement.style.setProperty(
       '--gradient-bg',
       ' linear-gradient(var(--gradient-angle), #898aeb, #d8b9e3)'
     )
@@ -347,12 +344,6 @@ function LoadAImage() {
       },
     ])
     setImagesCheck([...imagesCheck, demoImage.src])
-    document?.documentElement.style.setProperty('--borderSize1', `15px`)
-    document?.documentElement.style.setProperty(
-      '--borderColor1',
-      defaultStyle.borderColor
-    )
-    document?.documentElement.style.setProperty('--borderRoundness1', '2rem')
     setResolution('1920x1080')
   }
 

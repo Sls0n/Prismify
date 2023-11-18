@@ -94,7 +94,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
         <div>
           <h1 className="text-center text-4xl font-semibold text-gray-800 dark:text-dark sm:font-bold">
             Sign up on{' '}
-            <span className="bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-transparent ">
+            <span className="bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-transparent">
               Prismify
             </span>
           </h1>

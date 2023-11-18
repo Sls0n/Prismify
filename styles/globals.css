@@ -2,6 +2,19 @@
 @tailwind components;
 @tailwind utilities;
 
+/* A reusable h-dynamic-screen which has a fallback of vh if dvh is not supported on the browser */
+@layer base {
+  .h-dynamic-screen {
+    height: 100vh;
+  }
+
+  @supports (height: 100dvh) {
+    .h-dynamic-screen {
+      height: 100dvh;
+    }
+  }
+}
+
 @layer base {
   :root {
     --background: 0 0% 100%;
@@ -45,9 +58,6 @@
     );
     --mesh-bg: '';
     --solid-bg: '';
-    --borderSize1: '0px';
-    --borderColor1: #ffffff50;
-    --borderRoundness1: '1rem';
   }
 
   .dark {

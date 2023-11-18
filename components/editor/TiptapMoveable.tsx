@@ -32,16 +32,22 @@ export default function TiptapMoveable({ id }: { id: string }) {
   const otherTexts = texts.filter((text) => text.id !== selectedText)
   const elementGuidelines = [
     ...images.map((image) => ({
-      element: document?.getElementById(`${image.id}`),
+      element:
+        typeof document !== 'undefined'
+          ? document?.getElementById(`${image.id}`)
+          : '',
     })),
     ...otherTexts.map((text) => ({
-      element: document?.getElementById(`text-${text.id}`),
+      element:
+        typeof document !== 'undefined'
+          ? document?.getElementById(`text-${text.id}`)
+          : '',
     })),
   ]
 
   return (
     <Moveable
-      target={document?.getElementById(id)}
+      target={typeof document !== 'undefined' ? document?.getElementById(id) : ''}
       draggable={true}
       onDrag={(e) => {
         e.target.style.transform = e.transform

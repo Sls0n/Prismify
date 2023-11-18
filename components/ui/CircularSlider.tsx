@@ -1,3 +1,5 @@
+'use client'
+
 import CircularSlider, {
   CircularSliderProps,
 } from '@fseehawer/react-circular-slider'
@@ -26,7 +28,8 @@ const CircularSliderComp: React.FC<CircularSliderProps> = () => {
       trackSize={9}
       valueFontSize="1rem"
       onChange={(value: number) => {
-        document.documentElement.style.setProperty(
+        if (typeof window === 'undefined') return
+        document?.documentElement.style.setProperty(
           '--gradient-angle',
           `${value.toString()}deg`
         )

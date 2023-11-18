@@ -32,7 +32,7 @@ export default function SaveOptions() {
         const scale = scaleFactor * quality
         const element =
           typeof window !== 'undefined' &&
-          document.getElementById('canvas-container')
+          document?.getElementById('canvas-container')
         if (!element) {
           throw new Error('Element not found.')
         }
@@ -115,7 +115,7 @@ export default function SaveOptions() {
         const scale = scaleFactor * quality
         const element =
           typeof window !== 'undefined' &&
-          document.getElementById('canvas-container')
+          document?.getElementById('canvas-container')
         if (!element) {
           throw new Error('Element not found.')
         }

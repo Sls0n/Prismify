@@ -139,7 +139,10 @@ export default function MoveableComponent({ id }: { id: string }) {
 
   const otherImages = images.filter((image) => image.id !== selectedImage)
   const elementGuidelines = otherImages.map((image) => ({
-    element: document?.getElementById(`${image.id}`),
+    element:
+      typeof document !== 'undefined'
+        ? document?.getElementById(`${image.id}`)
+        : '',
   }))
 
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
@@ -148,7 +151,11 @@ export default function MoveableComponent({ id }: { id: string }) {
       <Moveable
         ref={moveableRef as any}
         target={
-          isMultipleTargetSelected ? '.selected' : document?.getElementById(id)
+          isMultipleTargetSelected
+            ? '.selected'
+            : typeof document !== 'undefined'
+            ? document?.getElementById(id)
+            : ''
         }
         hideChildMoveableDefaultLines={true}
         draggable={true}
@@ -164,7 +171,7 @@ export default function MoveableComponent({ id }: { id: string }) {
           // // Apply the translate with percentage values
           // e.target.style.transform = `translate(${translateXPercent}%, ${translateYPercent}%)`
         }}
-        // onDragEnd={handleDrag}
+        onDragEnd={handleDrag}
         scalable={true}
         keepRatio={true}
         onScale={(e) => {

@@ -1,3 +1,5 @@
+'use client'
+
 import { Button } from '@/components/ui/Button'
 import {
   Popover,
@@ -24,6 +26,7 @@ export default function GradientOptions() {
 
   const handleGradientClick = useCallback(
     (gradient: Gradient, isMesh: boolean) => {
+      if (typeof window === 'undefined') return
       document?.documentElement.style.setProperty(
         '--gradient-bg',
         gradient.gradient
@@ -47,7 +50,7 @@ export default function GradientOptions() {
           <span>Gradients:</span>
         </h3>
 
-        <div className="mt-4 grid auto-rows-auto grid-cols-6 md:max-w-[18rem] md:grid-cols-8 gap-4">
+        <div className="mt-4 grid auto-rows-auto grid-cols-6 gap-4 md:max-w-[18rem] md:grid-cols-8">
           {gradients.map(({ gradient, background, type }: Gradient) => (
             <Button
               key={gradient}

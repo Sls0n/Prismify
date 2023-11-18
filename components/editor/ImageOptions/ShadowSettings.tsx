@@ -1,3 +1,5 @@
+'use client'
+
 import PopupColorPicker from '@/components/PopupColorPicker'
 import { Button } from '@/components/ui/Button'
 import {
@@ -81,11 +83,6 @@ export default function ShadowSettings() {
             : image
         )
       )
-
-    document.documentElement.style.setProperty(
-      `--shadowColor${selectedImage}`,
-      color
-    )
   }
 
   return (

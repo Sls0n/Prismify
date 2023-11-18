@@ -1,3 +1,5 @@
+'use client'
+
 import { useCallback } from 'react'
 import { solidColors } from '@/utils/config'
 import { Button } from '@/components/ui/Button'
@@ -16,7 +18,7 @@ export default function CustomOptions() {
   } = useBackgroundOptions()
 
   const updateRootStyles = useCallback((color: string) => {
-
+    if (typeof window === 'undefined') return
     document?.documentElement.style.setProperty('--solid-bg', color)
     document?.documentElement.style.setProperty('--gradient-bg', color)
     document?.documentElement.style.setProperty('--mesh-bg', color)
