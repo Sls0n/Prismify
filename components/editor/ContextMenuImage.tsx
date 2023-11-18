@@ -20,7 +20,7 @@ import {
   SendToBack,
   Trash,
 } from 'lucide-react'
-import React, { ChangeEvent, useState } from 'react'
+import React, { ChangeEvent, useRef, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import analyze from 'rgbaster'
 import {
@@ -41,6 +41,7 @@ export default function ContextMenuImage({
   children: React.ReactNode
 }) {
   const { setImages, images } = useImageOptions()
+  const imgRef = useRef<HTMLImageElement>(null)
   const { selectedImage, setSelectedImage, setEnableCrop, enableCrop } =
     useSelectedLayers()
   const { showControls, setShowControls } = useMoveable()
@@ -85,6 +86,48 @@ export default function ContextMenuImage({
         setSelectedImage(null)
       }
   })
+
+  const cropImageNow = () => {
+    const canvas = document.createElement('canvas')
+    const image = imgRef.current
+    if (!image) return
+    const scaleX = image.naturalWidth / image.width
+    const scaleY = image.naturalHeight / image.height
+    canvas.width = crop.width
+    canvas.height = crop.height
+    const ctx: any = canvas.getContext('2d')
+
+    const pixelRatio = window.devicePixelRatio
+    canvas.width = crop.width * pixelRatio * scaleX
+    canvas.height = crop.height * pixelRatio * scaleY
+    ctx.setTransform(pixelRatio, 0, 0, pixelRatio, 0, 0)
+    ctx.imageSmoothingQuality = 'high'
+
+    ctx.drawImage(
+      image,
+      crop.x * scaleX,
+      crop.y * scaleY,
+      crop.width * scaleX,
+      crop.height * scaleY,
+      0,
+      0,
+      crop.width * scaleX,
+      crop.height * scaleY
+    );
+
+    const base64Image = canvas.toDataURL('image/png')
+    selectedImage &&
+      setImages(
+        images.map((image, index) =>
+          index === selectedImage - 1
+            ? {
+                ...image,
+                image: base64Image,
+              }
+            : image
+        )
+      )
+  }
 
   return (
     <Dialog
@@ -167,6 +210,7 @@ export default function ContextMenuImage({
             >
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img
+                ref={imgRef}
                 src={images[selectedImage - 1].image}
                 alt="Crop selected image"
                 className="h-full w-full object-cover"
@@ -188,6 +232,7 @@ export default function ContextMenuImage({
           <Button
             onClick={() => {
               setEnableCrop(false)
+              cropImageNow()
             }}
             className="flex-center gap-1.5"
           >
