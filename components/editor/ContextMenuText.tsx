@@ -39,6 +39,27 @@ export default function ContextMenuText({
     )
   }
 
+  const bringToFrontOrBack = (direction: 'front' | 'back') => {
+    if (selectedText) {
+      setTexts(
+        texts.map((text, index) =>
+          index === selectedText - 1
+            ? {
+                ...text,
+                style: {
+                  ...text.style,
+                  zIndex:
+                    direction === 'front'
+                      ? text.style.zIndex + 1
+                      : text.style.zIndex - 1,
+                },
+              }
+            : text
+        )
+      )
+    }
+  }
+
   useHotkeys('Delete', () => {
     if (showTextControls && selectedText) {
       handleTextDelete(selectedText)
@@ -50,13 +71,30 @@ export default function ContextMenuText({
     <ContextMenu>
       <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
       <ContextMenuContent className="w-64">
-        <ContextMenuItem inset disabled>
+        <ContextMenuItem
+          inset
+          onClick={() => {
+            bringToFrontOrBack('back')
+          }}
+          disabled={!selectedText || texts[selectedText - 1].style.zIndex === 2}
+        >
           Send back
           <ContextMenuShortcut>
             <BringToFront size={19} className="opacity-80" />
           </ContextMenuShortcut>
         </ContextMenuItem>
-        <ContextMenuItem inset disabled>
+        <ContextMenuItem
+          inset
+          onClick={() => {
+            bringToFrontOrBack('front')
+          }}
+          // disabled={
+          // TODO:
+          //   // !selectedText ||
+          //   // texts[selectedText - 1].style.zIndex === texts.length
+          //   // do disbaled by adding length of both images and texts and check
+          // }
+        >
           Bring forward
           <ContextMenuShortcut>
             <SendToBack size={19} className="opacity-80" />

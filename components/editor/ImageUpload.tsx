@@ -168,6 +168,8 @@ const ImageUpload = () => {
 
                       border:
                         browserFrame === 'Arc' ? '1px solid #ffffff60' : '',
+
+                      zIndex: `${image.style.zIndex}`,
                     }}
                     id={`${image.id}`}
                     onClick={() => {

@@ -128,7 +128,7 @@ export default function TipTap() {
               key={`text-${text.id}`}
               id={`text-${text.id}`}
               ref={text.id === selectedText ? textRef : null}
-              className={`text apply-font absolute z-[120] flex-1 cursor-pointer  ${
+              className={`text apply-font absolute flex-1 cursor-pointer  ${
                 text.content === '' ? 'pointer-events-none hidden' : 'image'
               }`}
               style={{
@@ -143,6 +143,7 @@ export default function TipTap() {
                   text.style.shadowOpacity
                 )})`,
                 lineHeight: '1',
+                zIndex: `${text.style.zIndex}`,
               }}
               onContextMenu={() => {
                 setShowTextControls(true)

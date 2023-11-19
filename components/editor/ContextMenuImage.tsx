@@ -78,6 +78,27 @@ export default function ContextMenuImage({
     setSelectedImage(null)
   }
 
+  const bringToFrontOrBack = (direction: 'front' | 'back') => {
+    if (selectedImage) {
+      setImages(
+        images.map((image, index) =>
+          index === selectedImage - 1
+            ? {
+                ...image,
+                style: {
+                  ...image.style,
+                  zIndex:
+                    direction === 'front'
+                      ? image.style.zIndex + 1
+                      : image.style.zIndex - 1,
+                },
+              }
+            : image
+        )
+      )
+    }
+  }
+
   useHotkeys('Delete', () => {
     if (selectedImage)
       if (showControls) {
@@ -113,7 +134,7 @@ export default function ContextMenuImage({
       0,
       crop.width * scaleX,
       crop.height * scaleY
-    );
+    )
 
     const base64Image = canvas.toDataURL('image/png')
     selectedImage &&
@@ -140,18 +161,33 @@ export default function ContextMenuImage({
       <ContextMenu>
         <ContextMenuTrigger asChild>{children}</ContextMenuTrigger>
         <ContextMenuContent className="w-64">
-          <ContextMenuItem inset disabled>
+          <ContextMenuItem
+            inset
+            onClick={() => {
+              bringToFrontOrBack('back')
+            }}
+            disabled={
+              !selectedImage || images[selectedImage - 1].style.zIndex === 2
+            }
+          >
             Send back
             <ContextMenuShortcut>
               <BringToFront size={19} className="opacity-80" />
             </ContextMenuShortcut>
           </ContextMenuItem>
-          <ContextMenuItem inset disabled>
+          <ContextMenuItem
+            inset
+            onClick={() => {
+              bringToFrontOrBack('front')
+            }}
+          >
             Bring forward
             <ContextMenuShortcut>
               <SendToBack size={19} className="opacity-80" />
             </ContextMenuShortcut>
           </ContextMenuItem>
+
+          <ContextMenuSeparator />
 
           <ReplaceImage />
 

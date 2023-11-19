@@ -44,6 +44,7 @@ interface ImageOptionsState {
       translateX: number
       translateY: number
       hasFrame: boolean
+      zIndex: number
     }
   }[]
   setImages: (
@@ -71,6 +72,7 @@ interface ImageOptionsState {
         translateX: number
         translateY: number
         hasFrame: boolean
+        zIndex: number
       }
     }[]
   ) => void
@@ -92,6 +94,7 @@ interface ImageOptionsState {
       hasBackground: boolean
       backgroundColor: string
       padding: string
+      zIndex: number
     }
   }[]
   setTexts: (
@@ -112,6 +115,7 @@ interface ImageOptionsState {
         hasBackground: boolean
         backgroundColor: string
         padding: string
+        zIndex: number
       }
     }[]
   ) => void
@@ -136,6 +140,7 @@ interface ImageOptionsState {
     translateX: number
     translateY: number
     hasFrame: boolean
+    zIndex: number
   }
 
   defaultTextStyle: {
@@ -152,6 +157,7 @@ interface ImageOptionsState {
     hasBackground: boolean
     backgroundColor: string
     padding: string
+    zIndex: number
   }
 }
 
@@ -175,10 +181,10 @@ export const useImageOptions = create(
       defaultStyle: {
         imageSize: '0.8',
         imageRoundness: 1,
-        imageShadow: '0px 8px 55px 0px',
-        shadowPreview: '0px 6px 30px 0px #000',
+        imageShadow: '0 25px 50px -12px',
+        shadowPreview: '0 25px 50px -12px #000000',
         shadowOpacity: 0.42,
-        shadowName: 'Large',
+        shadowName: 'Bottom',
         shadowColor: '#000',
         borderSize: '0',
         borderColor: '#ffffff50',
@@ -192,6 +198,7 @@ export const useImageOptions = create(
         translateX: 0,
         translateY: 0,
         hasFrame: false,
+        zIndex: 2,
       },
 
       defaultTextStyle: {
@@ -208,6 +215,7 @@ export const useImageOptions = create(
         hasBackground: false,
         backgroundColor: '#ffffff50',
         padding: '0',
+        zIndex: 2,
       },
 
       images: [],
