@@ -166,9 +166,9 @@ export default function ContextMenuImage({
             onClick={() => {
               bringToFrontOrBack('back')
             }}
-            disabled={
-              !selectedImage || images[selectedImage - 1].style.zIndex === 2
-            }
+            // disabled={
+            //   !selectedImage || images[selectedImage - 1].style.zIndex === 2
+            // }
           >
             Send back
             <ContextMenuShortcut>

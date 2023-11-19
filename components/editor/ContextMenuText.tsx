@@ -76,7 +76,7 @@ export default function ContextMenuText({
           onClick={() => {
             bringToFrontOrBack('back')
           }}
-          disabled={!selectedText || texts[selectedText - 1].style.zIndex === 2}
+          // disabled={!selectedText || texts[selectedText - 1].style.zIndex === 2}
         >
           Send back
           <ContextMenuShortcut>
