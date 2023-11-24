@@ -79,7 +79,7 @@ export default function CanvasOptions() {
         <div className="flex-center">
           <h1 className="mr-1 text-[0.85rem]">Toggle auto resolution</h1>
           <TooltipProvider>
-            <Tooltip>
+            <Tooltip delayDuration={100}>
               <TooltipTrigger>
                 <Icon variant="duotone" name="info" color="none" />
               </TooltipTrigger>

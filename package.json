@@ -1,7 +1,16 @@
 {
   "name": "prismify",
-  "version": "0.1.0",
+  "version": "1.0",
   "private": true,
+  "author": {
+    "name": "Silson"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+"
+  },
+  "displayName": "Prismify",
+  "description": "Easily make your SaaS/product shots & design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations.",
   "scripts": {
     "dev": "next dev",
     "build": "prisma generate && next build",

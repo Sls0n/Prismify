@@ -132,8 +132,8 @@ const ImageUpload = () => {
                         : targetRef
                     }
                     style={{
-                      transition:
-                        'box-shadow 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
+                      // transition:
+                      //   'box-shadow 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
                       transformStyle: 'preserve-3d',
                       transformOrigin: `50% 50%`,
                       transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg) perspective(${image.style.perspective}px) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
@@ -143,14 +143,22 @@ const ImageUpload = () => {
                           ? `${image.style.imageShadow} ${convertHex(
                               image.style.shadowColor,
                               image.style.shadowOpacity
-                            )}`
+                            )}${
+                              browserFrame === 'Shadow'
+                                ? ',11px 11px rgba(0,0,0,0.85)'
+                                : ''
+                            }`
                           : `0px 18px 88px -4px ${convertHex(
                               image.style.shadowColor,
                               image.style.shadowOpacity
                             )}, 0px 8px 28px -6px ${convertHex(
                               image.style.shadowColor,
                               image.style.shadowOpacity
-                            )}`,
+                            )}${
+                              browserFrame === 'Shadow'
+                                ? ',11px 11px rgba(0,0,0,0.85)'
+                                : ''
+                            }`,
 
                       padding:
                         browserFrame !== 'None'

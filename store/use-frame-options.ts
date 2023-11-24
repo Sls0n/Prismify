@@ -1,6 +1,6 @@
 import { create } from 'zustand'
 
-export type FrameTypes = 'Arc' | 'MacOS Dark' | 'MacOS Light' | 'None'
+export type FrameTypes = 'Arc' | 'MacOS Dark' | 'MacOS Light' | 'Shadow' |'None'
 
 interface FrameOptionsState {
   browserFrame: FrameTypes

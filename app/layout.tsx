@@ -45,6 +45,27 @@ export const metadata: Metadata = {
       },
     ],
   },
+  openGraph: {
+    title:
+      'Prismify - Effortlessly Create Beautiful SaaS/Product Shots & Graphics',
+    description:
+      'Easily make your SaaS/product shots & design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations.',
+    siteName: 'Prismify',
+    url: 'https://prismify.vercel.app',
+    locale: 'en_US',
+    type: 'website',
+    images: [
+      {
+        url: 'https://prismify.vercel.app/opengraph-image.jpg',
+        width: 1200,
+        height: 630,
+        alt: 'Prismify - Effortlessly Create Beautiful SaaS/Product Shots & Graphics',
+      },
+    ],
+  },
+  colorScheme: 'dark',
+  category: 'Design',
+  themeColor: '#151515',
   alternates: {
     canonical: 'https://prismify.vercel.app',
   },
