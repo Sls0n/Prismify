@@ -4,8 +4,8 @@ interface ImageQualityState {
   quality: number
   setQuality: (quality: number) => void
 
-  fileType: 'PNG' | 'JPG' | 'SVG'
-  setFileType: (fileType: 'PNG' | 'JPG' | 'SVG') => void
+  fileType: 'PNG' | 'JPG' | 'SVG' | 'WEBP'
+  setFileType: (fileType: 'PNG' | 'JPG' | 'SVG' | 'WEBP') => void
 }
 
 export const useImageQualityStore = create<ImageQualityState>()((set) => ({

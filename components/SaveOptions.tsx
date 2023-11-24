@@ -87,6 +87,61 @@ export default function SaveOptions() {
               })
               reject(e)
             })
+        } else if (fileType === 'WEBP') {
+          htmlToImage
+            .toCanvas(element, {
+              height: element.offsetHeight * scale,
+              width: element.offsetWidth * scale,
+
+              style: {
+                transform: 'scale(' + scale + ')',
+                transformOrigin: 'top left',
+                width: element.offsetWidth + 'px',
+                height: element.offsetHeight + 'px',
+              },
+            })
+            .then(function (canvas) {
+              // Convert canvas to .webp format
+
+              return canvas.toDataURL('image/webp')
+            })
+            .then(function (webpDataUrl) {
+              // Save the .webp image
+              const a = document.createElement('a')
+              a.href = webpDataUrl
+              a.download = `prismify-render-${Date.now()}.webp`
+              document.body.appendChild(a)
+              a.click()
+              document.body.removeChild(a)
+            })
+            .catch(function (error) {
+              console.error('Error:', error)
+            })
+        } else if (fileType === 'SVG') {
+          htmlToImage
+            .toSvg(element, {
+              height: element.offsetHeight * scale,
+              width: element.offsetWidth * scale,
+
+              style: {
+                transform: 'scale(' + scale + ')',
+                transformOrigin: 'top left',
+                width: element.offsetWidth + 'px',
+                height: element.offsetHeight + 'px',
+              },
+            })
+            .then((dataURL) => {
+              const blob = dataURL as unknown as Blob
+              resolve(blob)
+            })
+            .catch((e: any) => {
+              toast({
+                title: 'Image not uploaded',
+                description: e.message,
+                variant: 'destructive',
+              })
+              reject(e)
+            })
         } else {
           throw new Error('Invalid fileType') // Handle unsupported fileType
         }
@@ -199,7 +254,7 @@ export default function SaveOptions() {
               .then(() => {
                 toast({
                   title: 'Copied to clipboard. 🥳',
-                  description: 'Command + V to paste/use it.'
+                  description: 'Command + V to paste/use it.',
                 })
               })
               .catch((err) => {
@@ -255,11 +310,13 @@ export default function SaveOptions() {
           </Button>
         </PopoverTrigger>
         <PopoverContent className="mb-4 flex w-fit flex-wrap gap-2.5 p-4">
-          {(['PNG', 'JPG', 'SVG'] as ('PNG' | 'JPG' | 'SVG')[]).map((file) => (
+          {(
+            ['PNG', 'JPG', 'WEBP', 'SVG'] as ('PNG' | 'JPG' | 'WEBP' | 'SVG')[]
+          ).map((file) => (
             <Button
               variant={file === fileType ? 'stylish' : 'outline'}
               key={file}
-              disabled={file === 'SVG'}
+              // disabled={file === 'SVG'}
               onClick={() => setFileType(file)}
             >
               {file}
@@ -291,7 +348,7 @@ export default function SaveOptions() {
         onClick={() => {
           snapshotCreator()
             .then((blob) => {
-              saveAs(blob, 'prismify-render')
+              saveAs(blob, `prismify-render-${Date.now()}`)
             })
             .catch((err) => {
               toast({
