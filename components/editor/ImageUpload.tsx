@@ -145,7 +145,7 @@ const ImageUpload = () => {
                               image.style.shadowOpacity
                             )}${
                               browserFrame === 'Shadow'
-                                ? ',11px 11px rgba(0,0,0,0.85)'
+                                ? ',11px 11px rgba(0,0,0,0.8)'
                                 : ''
                             }`
                           : `0px 18px 88px -4px ${convertHex(
@@ -156,7 +156,7 @@ const ImageUpload = () => {
                               image.style.shadowOpacity
                             )}${
                               browserFrame === 'Shadow'
-                                ? ',11px 11px rgba(0,0,0,0.85)'
+                                ? ',11px 11px rgba(0,0,0,0.8)'
                                 : ''
                             }`,
 
@@ -172,6 +172,8 @@ const ImageUpload = () => {
                           ? `${image?.style.insetColor}`
                           : browserFrame === 'Arc'
                           ? '#ffffff50'
+                          : browserFrame === 'Shadow'
+                          ? 'rgba(0,0,0,0.8)' 
                           : '',
 
                       border:
