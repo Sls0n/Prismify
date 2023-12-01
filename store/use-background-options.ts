@@ -4,6 +4,9 @@ interface BackgroundOptionsState {
   background: string
   setBackground: (background: string) => void
 
+  isBackgroundClicked: boolean
+  setIsBackgroundClicked: (isBackgroundClicked: boolean) => void
+
   backgroundType: 'mesh' | 'solid' | 'gradient' | 'pattern' | 'custom'
   setBackgroundType: (
     backgroundType: 'mesh' | 'solid' | 'gradient' | 'pattern' | 'custom'
@@ -56,4 +59,7 @@ export const useBackgroundOptions = create<BackgroundOptionsState>()((set) => ({
 
   noise: 0,
   setNoise: (noise) => set({ noise }),
+
+  isBackgroundClicked: false,
+  setIsBackgroundClicked: (isBackgroundClicked) => set({ isBackgroundClicked }),
 }))

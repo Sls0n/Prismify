@@ -174,10 +174,10 @@ const ImageUpload = () => {
                           ? '#ffffff50'
                           : browserFrame === 'Shadow'
                           ? 'rgba(0,0,0,0.8)' 
-                          : '',
+                          : 'transparent',
 
                       border:
-                        browserFrame === 'Arc' ? '1px solid #ffffff60' : '',
+                        browserFrame === 'Arc' ? '1px solid #ffffff60' : browserFrame === 'Shadow' ? '3px solid rgba(0,0,0,0.8)' : '',
 
                       zIndex: `${image.style.zIndex}`,
                     }}

@@ -4,9 +4,15 @@ import CustomOptions from './CustomOptions'
 import GradientOptions from './GradientOptions'
 import NoiseOptions from './NoiseOptions'
 import PatternOptions from './PatternOptions'
+import { useEffect } from 'react'
 
 export default function BackgroundOptions() {
-  const { backgroundType } = useBackgroundOptions()
+  const { backgroundType, setIsBackgroundClicked } = useBackgroundOptions()
+
+  useEffect(() => {
+    setIsBackgroundClicked(true)
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
 
   return (
     <>
@@ -23,7 +29,9 @@ export default function BackgroundOptions() {
         <TabsList className="mb-3">
           <TabsTrigger value="gradientsTab">Gradients</TabsTrigger>
           <TabsTrigger value="patternsTab">Patterns</TabsTrigger>
-          <TabsTrigger className='hidden sm:flex' value="customTab">Custom</TabsTrigger>
+          <TabsTrigger className="hidden sm:flex" value="customTab">
+            Custom
+          </TabsTrigger>
         </TabsList>
         <NoiseOptions />
         <TabsContent value="gradientsTab">
