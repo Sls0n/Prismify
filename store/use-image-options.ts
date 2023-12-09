@@ -180,7 +180,7 @@ export const useImageOptions = create(
 
       defaultStyle: {
         imageSize: '0.8',
-        imageRoundness: 1,
+        imageRoundness: 0.5,
         imageShadow: '',
         shadowPreview: '0 25px 50px -12px #000000',
         shadowOpacity: 0.22,
