@@ -1,23 +1,37 @@
 'use client'
 
+import { cn } from '@/utils/buttonUtils'
 import { Sparkles } from 'lucide-react'
 
 type Props = {
   text: string
+  onClick?: () => void
+  className?: string
+  disabled?: boolean
 }
 
-export default function SpotlightButton({ text }: Props) {
+export default function SpotlightButton({ text, onClick, className, disabled }: Props) {
   return (
-    <button className="group relative mx-auto inline-flex h-10 items-center overflow-hidden  rounded-xl bg-zinc-800 px-5 transition">
+    <button
+      disabled={disabled}
+      onClick={onClick}
+      className={cn(
+        'group relative mx-auto inline-flex h-10 items-center overflow-hidden rounded-xl bg-[#191919] px-5 hover:bg-[#333] transition disabled:opacity-50 disabled:cursor-not-allowed',
+        className
+      )}
+      style={{
+        transition: 'background 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
+      }}
+    >
       <div className="absolute inset-0 flex items-center [container-type:inline-size]">
         <div className="absolute h-[100cqw] w-[100cqw] animate-spin bg-[conic-gradient(from_0_at_50%_50%,rgba(255,255,255,0.5)_0deg,transparent_60deg,transparent_300deg,rgba(255,255,255,0.5)_360deg)] opacity-100 transition duration-300  [animation-duration:3s]"></div>
       </div>
 
-      <div className="absolute inset-0.5 rounded-xl bg-zinc-900"></div>
+      <div className="absolute inset-0.5 rounded-xl bg-[#121212]"></div>
 
-      <div className="absolute bottom-0 left-1/2  h-2/3 w-4/5 -translate-x-1/2 rounded-xl  bg-white/10 opacity-100 blur-md transition-all duration-500"></div>
+      <div className="absolute bottom-0 left-1/2  h-2/3 w-4/5 -translate-x-1/2 rounded-xl bg-white/10 opacity-100 blur-md transition-all duration-500"></div>
 
-      <span className="font-mona flex-center relative mt-px gap-2 bg-gradient-to-b from-white/25  to-white bg-clip-text font-medium text-transparent transition-all duration-200">
+      <span className="flex-center relative gap-2 bg-gradient-to-b from-white/25  to-white bg-clip-text font-semibold text-transparent transition-all text-[0.95rem] duration-200" >
         {text}
         {/* <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -39,7 +53,7 @@ export default function SpotlightButton({ text }: Props) {
           style={{
             transition: 'all 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
           }}
-          className=" fill-[#898aeb]/20 stroke-[1] text-purple group-hover:rotate-180 "
+          className="w-5 h-5 fill-[#898aeb]/20 stroke-[1] text-purple group-hover:rotate-180 "
         />
       </span>
     </button>

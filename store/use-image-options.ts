@@ -24,6 +24,10 @@ interface ImageOptionsState {
     id: number
     image: string
     extractedColors?: { color: string; count: number }[]
+    linearGradients?: string[]
+    radialGradients?: string[]
+    dominantColor?: string
+    pallettes?: string[]
     style: {
       imageSize: string
       imageRoundness: number
@@ -52,6 +56,10 @@ interface ImageOptionsState {
       id: number
       image: string
       extractedColors?: { color: string; count: number }[]
+      linearGradients?: string[]
+      radialGradients?: string[]
+    dominantColor?: string
+    pallettes?: string[]
       style: {
         imageSize: string
         imageRoundness: number

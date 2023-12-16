@@ -47,27 +47,12 @@ const ImageUpload = () => {
       return
     }
     setInitialImageUploaded(true)
-    console.log('is extracting colors')
     const extractColors = async () => {
       const result = await analyze(images[images.length - 1].image, {
         scale: 0.5,
       })
 
       const extractedColors = result.slice(0, 12)
-
-      //  const upperThreshold = [180, 180, 180]
-      //  const lowerThreshold = [50, 50, 50]
-
-      //  const filteredColors = result.slice(0, 50).filter((color) => {
-      //    const rgb = color.color.match(/\d+/g).map(Number) // Extract RGB values
-      //    return (
-      //      rgb.every((value, index) => value <= upperThreshold[index]) &&
-      //      rgb.every((value, index) => value >= lowerThreshold[index])
-      //    )
-      //  })
-
-      //  // Now, use the filtered colors to create a gradient
-      //  const gradientColors = filteredColors.map((color) => color.color)
 
       setImages(
         images.map((image, index) =>
@@ -173,11 +158,15 @@ const ImageUpload = () => {
                           : browserFrame === 'Arc'
                           ? '#ffffff50'
                           : browserFrame === 'Shadow'
-                          ? 'rgba(0,0,0,0.8)' 
+                          ? 'rgba(0,0,0,0.8)'
                           : 'transparent',
 
                       border:
-                        browserFrame === 'Arc' ? '1px solid #ffffff60' : browserFrame === 'Shadow' ? '3px solid rgba(0,0,0,0.8)' : '',
+                        browserFrame === 'Arc'
+                          ? '1px solid #ffffff60'
+                          : browserFrame === 'Shadow'
+                          ? '3px solid rgba(0,0,0,0.8)'
+                          : '',
 
                       zIndex: `${image.style.zIndex}`,
                     }}
@@ -199,6 +188,7 @@ const ImageUpload = () => {
                       className={`pointer-events-none h-full w-full shrink-0 ${
                         browserFrame === 'Arc' ? 'shadow-md' : ''
                       }`}
+                      id={`img-${image.id}`}
                       src={image.image}
                       alt="Uploaded image"
                       style={{

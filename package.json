@@ -50,6 +50,7 @@
     "bcrypt": "^5.1.1",
     "class-variance-authority": "^0.6.1",
     "clsx": "^1.2.1",
+    "colorthief": "^2.4.0",
     "eslint": "8.44.0",
     "eslint-config-next": "13.4.9",
     "file-saver": "^2.0.5",
