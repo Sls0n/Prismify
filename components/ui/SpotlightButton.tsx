@@ -8,15 +8,26 @@ type Props = {
   onClick?: () => void
   className?: string
   disabled?: boolean
+  as?: 'button' | 'div'
 }
 
-export default function SpotlightButton({ text, onClick, className, disabled }: Props) {
+export default function SpotlightButton({
+  text,
+  onClick,
+  className,
+  disabled,
+  as = 'button',
+}: Props) {
+  const As = as
+
   return (
-    <button
+    <As
       disabled={disabled}
       onClick={onClick}
       className={cn(
-        'group relative mx-auto inline-flex h-10 items-center overflow-hidden rounded-xl bg-[#191919] px-5 hover:bg-[#333] transition disabled:opacity-50 disabled:cursor-not-allowed',
+        `group relative mx-auto inline-flex h-10 items-center overflow-hidden rounded-xl bg-[#191919] px-5 transition hover:bg-[#333] disabled:cursor-not-allowed disabled:opacity-50 ${
+          as === 'div' ? 'opacity-50 cursor-not-allowed' : ''
+        }`,
         className
       )}
       style={{
@@ -31,7 +42,7 @@ export default function SpotlightButton({ text, onClick, className, disabled }: 
 
       <div className="absolute bottom-0 left-1/2  h-2/3 w-4/5 -translate-x-1/2 rounded-xl bg-white/10 opacity-100 blur-md transition-all duration-500"></div>
 
-      <span className="flex-center relative gap-2 bg-gradient-to-b from-white/25  to-white bg-clip-text font-semibold text-transparent transition-all text-[0.95rem] duration-200" >
+      <span className="flex-center relative gap-2 bg-gradient-to-b from-white/25  to-white bg-clip-text text-[0.95rem] font-semibold text-transparent transition-all duration-200">
         {text}
         {/* <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -53,9 +64,9 @@ export default function SpotlightButton({ text, onClick, className, disabled }: 
           style={{
             transition: 'all 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
           }}
-          className="w-5 h-5 fill-[#898aeb]/20 stroke-[1] text-purple group-hover:rotate-180 "
+          className="h-5 w-5 fill-[#898aeb]/20 stroke-[1] text-purple group-hover:rotate-180 "
         />
       </span>
-    </button>
+    </As>
   )
 }

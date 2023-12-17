@@ -16,16 +16,21 @@ import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useImageQualityStore } from '@/store/use-image-quality'
 import { useMoveable } from '@/store/use-moveable'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
-import { motion } from 'framer-motion'
 import React, { CSSProperties, useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { ScrollArea } from '../ui/ScrollArea'
 import ImageUpload from './ImageUpload'
-import MoveableComponent from './MoveableComponent'
+// import MoveableComponent from './MoveableComponent'
 import Noise from './Noise'
 import SelectoComponent from './SelectoComponent'
 import TipTap from './Tiptap'
 import TiptapMoveable from './TiptapMoveable'
+import dynamic from 'next/dynamic'
+
+const MoveableComponent = dynamic(
+  () => import('./MoveableComponent').then((mod) => mod.default),
+  { ssr: false }
+)
 
 export default function Canvas() {
   const activeIndex = useStore(
@@ -49,11 +54,11 @@ export default function Canvas() {
   const {
     images,
     initialImageUploaded,
-   
-    scale,
 
+    scale,
   } = useImageOptions()
-   const { selectedImage, selectedText, setSelectedImage, enableCrop } = useSelectedLayers()
+  const { selectedImage, selectedText, setSelectedImage, enableCrop } =
+    useSelectedLayers()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
   const {
@@ -229,7 +234,7 @@ export default function Canvas() {
                 </p>
               </motion.div>
             </div> */}
-             {imageBackground && (
+            {imageBackground && (
               // eslint-disable-next-line @next/next/no-img-element
               <img
                 draggable={false}

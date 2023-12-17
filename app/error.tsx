@@ -43,7 +43,7 @@ export default function Error({
           )}
         >
           <MailWarning className="mr-2 h-5 w-5 text-foreground/80" />
-          Fuck it we report 🥱
+          Report 🥱
         </a>
       </div>
     </div>

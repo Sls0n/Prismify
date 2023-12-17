@@ -166,6 +166,7 @@ export default function GradientOptions() {
             <Tooltip delayDuration={100}>
               <TooltipTrigger>
                 <SpotlightButton
+                  as={!selectedImage ? 'div' : 'button'}
                   onClick={extractDominantColor}
                   text="Generate"
                   disabled={!selectedImage}

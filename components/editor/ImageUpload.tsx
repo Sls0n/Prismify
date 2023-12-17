@@ -17,9 +17,6 @@ import {
 import { ImageIcon, Upload } from 'lucide-react'
 import { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react'
 import Dropzone from 'react-dropzone'
-import { type Crop } from 'react-image-crop'
-import 'react-image-crop/dist/ReactCrop.css'
-import analyze from 'rgbaster'
 import { Button } from '../ui/Button'
 import BrowserFrame from './BrowserFrame'
 import ContextMenuImage from './ContextMenuImage'
@@ -47,7 +44,10 @@ const ImageUpload = () => {
       return
     }
     setInitialImageUploaded(true)
+
     const extractColors = async () => {
+      const analyze = (await (import('rgbaster'))).default
+
       const result = await analyze(images[images.length - 1].image, {
         scale: 0.5,
       })

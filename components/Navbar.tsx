@@ -3,7 +3,6 @@
 import Link from 'next/link'
 import { cn } from '@/utils/buttonUtils'
 import { Button, buttonVariants } from '@/components/ui/Button'
-import ThemeButtonIcon from './ui/ThemeButtonIcon'
 import { saveAs } from 'file-saver'
 import * as htmlToImage from 'html-to-image'
 import Image from 'next/image'

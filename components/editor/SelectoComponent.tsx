@@ -1,7 +1,14 @@
+import React from 'react'
 import { useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
-import React from 'react'
-import Selecto from 'react-selecto'
+import dynamic from 'next/dynamic'
+
+const Selecto = dynamic(
+  () => import('react-selecto').then((mod) => mod.default),
+  {
+    ssr: false,
+  }
+)
 
 export default function SelectoComponent() {
   const {
@@ -14,12 +21,10 @@ export default function SelectoComponent() {
     setIsEditable,
   } = useMoveable()
   const { setSelectedImage, setSelectedText } = useSelectedLayers()
-  const selectoRef = React.useRef<Selecto>(null)
 
   if (showControls) return
   return (
     <Selecto
-      ref={selectoRef}
       dragContainer={'.canvas-container'}
       selectableTargets={['.image']}
       selectByClick={false}

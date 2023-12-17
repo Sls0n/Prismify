@@ -22,7 +22,6 @@ import {
 } from 'lucide-react'
 import React, { ChangeEvent, useRef, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
-import analyze from 'rgbaster'
 import {
   Dialog,
   DialogContent,
@@ -31,9 +30,14 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/Dialog'
-import ReactCrop, { type Crop } from 'react-image-crop'
+import { type Crop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
 import { Button } from '@/components/ui/Button'
+import dynamic from 'next/dynamic'
+
+const DynamicCropComponent = dynamic(() =>
+  import('react-image-crop').then((mod) => mod.ReactCrop)
+)
 
 export default function ContextMenuImage({
   children,
@@ -236,7 +240,7 @@ export default function ContextMenuImage({
 
         <div className="mb-4 h-full w-full flex-1 overflow-hidden overflow-y-auto">
           {selectedImage && (
-            <ReactCrop
+            <DynamicCropComponent
               crop={crop}
               onChange={(c) => setCrop(c)}
               disabled={!enableCrop || !selectedImage}
@@ -251,7 +255,7 @@ export default function ContextMenuImage({
                 alt="Crop selected image"
                 className="h-full w-full object-cover"
               />
-            </ReactCrop>
+            </DynamicCropComponent>
           )}
         </div>
 
@@ -288,6 +292,7 @@ function ReplaceImage() {
   const { setImagesCheck, imagesCheck } = useColorExtractor()
 
   const onDrop = async (file: any) => {
+    const analyze = (await import('rgbaster')).default
     if (file) {
       const imageUrl = URL.createObjectURL(file)
 
