@@ -19,6 +19,8 @@ type SignInProps = {
 export default function SignIn({ authenticated }: SignInProps) {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const [isGoogleLoading, setIsGoogleLoading] = useState(false)
+  const [isGithubLoading, setIsGithubLoading] = useState(false)
 
   const router = useRouter()
 
@@ -57,6 +59,30 @@ export default function SignIn({ authenticated }: SignInProps) {
         })
       }
     })
+  }
+
+  const signInWithProvider = (provider: "google" | "github") => {
+    provider === "google"
+      ? setIsGoogleLoading(true)
+      : setIsGithubLoading(true)
+    signIn(provider, {
+      callbackUrl: "/",
+    })
+      .then((data) => {
+        console.log(data)
+      })
+      .catch((err) => {
+        console.error(err)
+        toast({
+          variant: 'destructive',
+          title: 'Trouble signing in!',
+          description: err.message ?? "Something went wrong",
+        })
+      })
+      .finally(() => {
+        setIsGoogleLoading(false)
+        setIsGithubLoading(false)
+      })
   }
 
   if (authenticated) return null
@@ -173,7 +199,7 @@ export default function SignIn({ authenticated }: SignInProps) {
           </div>
 
           {/* Provider buttons */}
-          <div className="mt-6 grid grid-cols-3 gap-3">
+          {/* <div className="mt-6 grid grid-cols-3 gap-3">
             <div>
               <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-formDark dark:ring-[#22262b]">
                 <span className="sr-only">Sign in with Facebook</span>
@@ -218,7 +244,45 @@ export default function SignIn({ authenticated }: SignInProps) {
                 />
               </button>
             </div>
-          </div>
+          </div> */}
+          <div className="mt-6 grid grid-cols-2 gap-3">
+              <Button
+                variant="outline"
+                className="rounded-md bg-formDark px-4 py-2 shadow-sm"
+                type="button"
+                onClick={() => {
+                  signInWithProvider("google")
+                }}
+                disabled={isGoogleLoading}
+              >
+                <span className="sr-only">Sign in with Google</span>
+                <img
+                  className="h-5 w-5"
+                  src="https://img.icons8.com/color/48/000000/google-logo.png"
+                  alt="Google logo"
+                  loading="lazy"
+                />
+              </Button>
+
+              <Button
+                variant="outline"
+                className={`rounded-md bg-formDark px-4 py-2 shadow-sm `}
+                type="button"
+                onClick={() => {
+                  signInWithProvider("github")
+                }}
+                disabled={isGithubLoading}
+              >
+                <span className="sr-only">Sign in with Github</span>
+                <img
+                  className={`h-5 w-5 `}
+                  src="https://img.icons8.com/fluency/48/000000/github.png"
+                  alt="Github logo"
+                  loading="lazy"
+                />
+              </Button>
+            </div>
+
           <p className="mt-3 text-center text-sm text-gray-600 dark:text-dark/80">
             Dont have an account?{' '}
             <Link
