@@ -199,52 +199,6 @@ export default function SignIn({ authenticated }: SignInProps) {
           </div>
 
           {/* Provider buttons */}
-          {/* <div className="mt-6 grid grid-cols-3 gap-3">
-            <div>
-              <button className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-formDark dark:ring-[#22262b]">
-                <span className="sr-only">Sign in with Facebook</span>
-                <img
-                  className="h-5 w-5"
-                  src="https://img.icons8.com/color/48/000000/facebook-new.png"
-                  alt="Facebook logo"
-                />
-              </button>
-            </div>
-
-            <div>
-              <button
-                onClick={(e) => {
-                  e.preventDefault()
-                  signIn('google')
-                }}
-                className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-formDark dark:ring-[#22262b]"
-              >
-                <span className="sr-only">Sign in with Google</span>
-                <img
-                  className="h-5 w-5"
-                  src="https://img.icons8.com/color/48/000000/google-logo.png"
-                  alt="github"
-                />
-              </button>
-            </div>
-
-            <div>
-              <button
-                onClick={(e) => {
-                  e.preventDefault()
-                  signIn('github')
-                }}
-                className="inline-flex w-full justify-center rounded-md bg-white px-4 py-2 text-gray-500 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 focus:outline-offset-0 dark:bg-formDark dark:ring-[#22262b]"
-              >
-                <span className="sr-only">Sign in with GitHub</span>
-                <img
-                  className="h-5 w-5"
-                  src="https://img.icons8.com/fluency/48/000000/github.png"
-                  alt="github"
-                />
-              </button>
-            </div>
-          </div> */}
           <div className="mt-6 grid grid-cols-2 gap-3">
               <Button
                 variant="outline"
