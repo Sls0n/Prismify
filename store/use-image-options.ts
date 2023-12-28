@@ -25,6 +25,7 @@ interface ImageOptionsState {
     image: string
     extractedColors?: { color: string; count: number }[]
     linearGradients?: string[]
+    meshGradients?: string[]
     radialGradients?: string[]
     dominantColor?: string
     pallettes?: string[]
@@ -57,6 +58,7 @@ interface ImageOptionsState {
       image: string
       extractedColors?: { color: string; count: number }[]
       linearGradients?: string[]
+      meshGradients?: string[]
       radialGradients?: string[]
     dominantColor?: string
     pallettes?: string[]

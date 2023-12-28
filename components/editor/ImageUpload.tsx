@@ -36,7 +36,8 @@ const ImageUpload = () => {
   const { exactDomResolution } = useResizeCanvas()
   const { width: exactDomWidth, height: exactDomHeight } =
     splitWidthHeight(exactDomResolution)
-  const { browserFrame } = useFrameOptions()
+  const { browserFrame, frameHeight, showStroke, arcDarkMode } =
+    useFrameOptions()
   const { imagesCheck } = useColorExtractor()
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const ImageUpload = () => {
     setInitialImageUploaded(true)
 
     const extractColors = async () => {
-      const analyze = (await (import('rgbaster'))).default
+      const analyze = (await import('rgbaster')).default
 
       const result = await analyze(images[images.length - 1].image, {
         scale: 0.5,
@@ -121,6 +122,8 @@ const ImageUpload = () => {
                       //   'box-shadow 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
                       transformStyle: 'preserve-3d',
                       transformOrigin: `50% 50%`,
+                      // rotate: `${image.style.rotate}deg`,
+                      // transform: `scale(${image.style.imageSize}) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg) `,
                       transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg) perspective(${image.style.perspective}px) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
                       borderRadius: `${image.style.imageRoundness}rem`,
                       boxShadow:
@@ -148,7 +151,11 @@ const ImageUpload = () => {
                       padding:
                         browserFrame !== 'None'
                           ? browserFrame === 'Arc'
-                            ? '15px'
+                            ? frameHeight === 'small'
+                              ? '10px'
+                              : frameHeight === 'medium'
+                              ? '13px'
+                              : '15px'
                             : ''
                           : `${image.style.insetSize}px`,
 
@@ -156,16 +163,22 @@ const ImageUpload = () => {
                         image.style.insetSize !== '0' && browserFrame === 'None'
                           ? `${image?.style.insetColor}`
                           : browserFrame === 'Arc'
-                          ? '#ffffff50'
+                          ? arcDarkMode
+                            ? '#00000050'
+                            : '#ffffff50'
                           : browserFrame === 'Shadow'
                           ? 'rgba(0,0,0,0.8)'
                           : 'transparent',
 
                       border:
                         browserFrame === 'Arc'
-                          ? '1px solid #ffffff60'
+                          ? arcDarkMode
+                            ? '1px solid #00000020'
+                            : '1px solid #ffffff60'
                           : browserFrame === 'Shadow'
-                          ? '3px solid rgba(0,0,0,0.8)'
+                          ? showStroke
+                            ? '3px solid rgba(0,0,0,0.8)'
+                            : ''
                           : '',
 
                       zIndex: `${image.style.zIndex}`,
@@ -339,7 +352,7 @@ function LoadAImage() {
         style: {
           ...defaultStyle,
           borderSize: '15',
-          imageRoundness: 2,
+          imageRoundness: 0.7,
           imageSize: '0.78',
           insetSize: '10',
         },

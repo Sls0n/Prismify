@@ -148,29 +148,8 @@ export default function Navbar({
               <>
                 {mode === 'default' && (
                   <>
-                    {shouldFloat && <SaveOptions />}
-                    <Button
-                      variant="stylish"
-                      className="mr-1 rounded-xl md:hidden"
-                      onClick={() => {
-                        snapshotCreator()
-                          .then((blob) => {
-                            saveAs(blob, 'prismify-render')
-                          })
-                          .catch((err) => {
-                            toast({
-                              variant: 'destructive',
-                              title: 'Error!',
-                              description: err.message,
-                            })
-                          })
-                      }}
-                    >
-                      <Download
-                        size={20}
-                        className="inline-block align-middle md:ml-2"
-                      />
-                    </Button>
+                    <SaveOptions />
+                    
                     <div className="dark:bg-border-dark mx-3 h-7 w-[2px] bg-border" />
 
                     <Dialog>
@@ -238,13 +217,7 @@ export default function Navbar({
 
             {authenticated && (
               <>
-                <Button variant="stylish" className="mr-1 rounded-xl">
-                  Save image
-                  <Download
-                    size={20}
-                    className="ml-2 inline-block align-middle"
-                  />
-                </Button>
+                
                 <DropdownMenu>
                   <DropdownMenuTrigger asChild>
                     <Button

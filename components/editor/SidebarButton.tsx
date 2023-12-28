@@ -22,7 +22,7 @@ export default function SidebarButton({
     >
       <Button
         className={`md:h-12 rounded-xl md:px-4 md:py-3 h-11 px-3 py-2`}
-        variant={activeIndex === index ? 'activeIcon' : 'icon'}
+        variant={activeIndex === index ? 'stylish' : 'icon'}
         aria-label={`${text} options`}
       >
         {icon}
@@ -30,7 +30,7 @@ export default function SidebarButton({
       {text && (
         <span
           className={`hidden md:inline max-w-[3.25rem] truncate text-xs ${
-            activeIndex === index ? 'text-[#cfcfcf]' : 'text-[#ababb1]'
+            activeIndex === index ? 'text-purple' : 'text-[#ababb1]'
           }`}
         >
           {text}

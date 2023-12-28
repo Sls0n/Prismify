@@ -366,6 +366,10 @@ export const gradients: Gradient[] = [
     gradient: 'linear-gradient(var(--gradient-angle), #19335a, #8fc8ea 100%)',
   },
   {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), rgb(40,39,42), rgb(40,39,41),rgb(116,164,212),rgb(238,238,238),rgb(134,107,127))',
+  },
+  {
     type: 'Mesh',
     gradient: 'conic-gradient(at bottom left,#fbcfe8, #4f46e5,#6ee7b7)',
   },

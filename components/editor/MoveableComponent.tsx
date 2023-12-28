@@ -159,22 +159,44 @@ export default function MoveableComponent({ id }: { id: string }) {
         }
         hideChildMoveableDefaultLines={true}
         draggable={true}
+        // onRender={(e) => {
+        //   console.log(e)
+        //   const translateX = e.transformObject.translate[0]
+        //   const translateY = e.transformObject.translate[1]
+        //   const scaleX = e.transformObject.scale[0]
+        //   const rotate = e.transformObject.rotate
+        //   // const rotateX = e.transformObject.rotateX
+        //   // const rotateY = e.transformObject.rotateY
+        //   // const rotateZ = e.transformObject.rotateZ
+        //   const translateXPercent = (translateX / +width) * 100
+        //   const translateYPercent = (translateY / +height) * 100
+
+        //   // Apply the translate with percentage values
+        //   e.target.style.transform = `translate(${translateXPercent}%, ${translateYPercent}%) scale(${scaleX}) rotate(${rotate}deg)`
+        // }}
+
         onDrag={(e) => {
+          console.log(e)
           e.target.style.transform = e.transform
           // const x = e.beforeTranslate[0]
           // const y = e.beforeTranslate[1]
+          // const scale = e.transform.split('scale(')[1].split(')')[0]
+          // const rotateX = e.transform.split('rotateX(')[1].split(')')[0]
+          // const rotateY = e.transform.split('rotateY(')[1].split(')')[0]
+          // const rotateZ = e.transform.split('rotateZ(')[1].split(')')[0]
 
           // // Calculate percentage values based on the parent dimensions
           // const translateXPercent = (x / +width) * 100
           // const translateYPercent = (y / +height) * 100
 
-          // // Apply the translate with percentage values
-          // e.target.style.transform = `translate(${translateXPercent}%, ${translateYPercent}%)`
+          // e.target.style.transform = `translate(${translateXPercent}%, ${translateYPercent}%) scale(${scale}) rotateX(${rotateX}) rotateY(${rotateY}) rotateZ(${rotateZ}) `
         }}
         onDragEnd={handleDrag}
         scalable={true}
         keepRatio={true}
         onScale={(e) => {
+          console.log(e)
+
           e.target.style.transform = e.drag.transform
         }}
         onScaleEnd={handleScale}
@@ -182,6 +204,20 @@ export default function MoveableComponent({ id }: { id: string }) {
         rotationPosition={'top'}
         onRotate={(e) => {
           e.target.style.transform = e.drag.transform
+          // selectedImage &&
+          //   setImages(
+          //     images.map((image, index) =>
+          //       index === selectedImage - 1
+          //         ? {
+          //             ...image,
+          //             style: {
+          //               ...image.style,
+          //               rotate: `${e?.beforeRotation}`,
+          //             },
+          //           }
+          //         : image
+          //     )
+          //   )
         }}
         onRotateEnd={handleRotate}
         snapRotationThreshold={5}

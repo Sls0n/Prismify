@@ -33,7 +33,7 @@ export default function ImagePreview({}: ImagePreviewProps) {
               ? defaultStyle
               : {
                   ...defaultStyle,
-                  imageSize: '0.35',
+                  imageSize: '0.5',
                 },
         },
       ])

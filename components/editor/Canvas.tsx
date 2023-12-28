@@ -99,12 +99,12 @@ export default function Canvas() {
   if (aspectRatio < 1) {
     style = { ...style, width: 'auto', height: '100%' }
   } else if (aspectRatio >= 0.95 && aspectRatio <= 1.1) {
-    const containerSize = '86vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 84vmin (it just makes it a bit smaller)
+    const containerSize = '100vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 84vmin (it just makes it a bit smaller)
     style = {
       ...style,
       width: containerSize,
     }
-  } else if (aspectRatio >= 0.9 && aspectRatio <= 1.4) {
+  } else if (aspectRatio >= 0.9 && aspectRatio <= 1.6) {
     const containerSize = '100vmin'
     // const containerSize = '100vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio
     style = {
@@ -200,7 +200,7 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        className="relative flex h-full flex-1 items-start justify-center overflow-hidden bg-[#111] px-6 py-4 pt-5"
+        className="relative flex h-full flex-1 items-start justify-center overflow-hidden bg-[#111] px-4 py-4 md:px-16 md:py-16"
       >
         {/* <div className="flex h-14 w-full items-center border border-border">
           TODO: ADD UPPER SETTINGS
@@ -212,7 +212,7 @@ export default function Canvas() {
         >
           <div
             className={
-              'canvas-container relative flex w-full items-center justify-center overflow-hidden md:max-h-full '
+              'canvas-container relative flex w-full items-center justify-center overflow-hidden '
             }
             ref={screenshotRef}
             id="canvas-container"
@@ -272,7 +272,7 @@ export default function Canvas() {
           </ScrollArea>
         </div>
         <SelectoComponent />
-        <FloatingOptions />
+        {/* <FloatingOptions /> */}
       </section>
 
       {attribution.name !== null && (

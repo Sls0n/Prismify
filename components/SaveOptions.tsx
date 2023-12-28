@@ -279,7 +279,7 @@ export default function SaveOptions() {
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            className="text-[0.85rem] font-medium"
+            className="text-[0.8rem] font-medium"
             variant="icon"
             size="sm"
           >
@@ -302,7 +302,7 @@ export default function SaveOptions() {
       <Popover>
         <PopoverTrigger asChild>
           <Button
-            className="text-[0.85rem] font-medium"
+            className="text-[0.8rem] font-medium"
             variant="icon"
             size="sm"
           >
@@ -334,8 +334,8 @@ export default function SaveOptions() {
         <p>Preview</p>
       </Button> */}
       <Button
-        className="w-fit text-[0.85rem] font-medium"
-        variant="stylish"
+        className="w-fit text-[0.8rem] font-medium"
+        variant="icon"
         size="sm"
         onClick={copyImageToClipBoardOtherBrowsers}
       >
@@ -358,8 +358,8 @@ export default function SaveOptions() {
               })
             })
         }}
-        className="text-[0.85rem]"
-        variant="default"
+        className="text-[0.8rem] font-medium"
+        variant="stylish"
         size="sm"
       >
         <Download size={18} className="mr-0 sm:mr-2" />

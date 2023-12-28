@@ -114,26 +114,28 @@ export default function FramePicker() {
         </FrameContainer>
       </div>
 
-      <div
-        className={`mt-8 flex flex-col gap-3 px-1 md:max-w-[70%] ${
-          selectedImage ? '' : 'pointer-events-none opacity-40'
-        }`}
-      >
-        <h1 className="text-[0.85rem]">Frame size</h1>
-        <Select
-          defaultValue={frameHeight}
-          onValueChange={(value) => setFrameHeight(value)}
+      {browserFrame !== 'Shadow' && (
+        <div
+          className={`mt-8 flex flex-col gap-3 px-1 md:max-w-[70%] ${
+            selectedImage ? '' : 'pointer-events-none opacity-40'
+          }`}
         >
-          <SelectTrigger className="w-[7rem]">
-            <SelectValue placeholder="Medium" />
-          </SelectTrigger>
-          <SelectContent className="w-[7rem]">
-            <SelectItem value="small">Small</SelectItem>
-            <SelectItem value="medium">Medium</SelectItem>
-            <SelectItem value="large">Large</SelectItem>
-          </SelectContent>
-        </Select>
-      </div>
+          <h1 className="text-[0.85rem]">Frame size</h1>
+          <Select
+            defaultValue={frameHeight}
+            onValueChange={(value) => setFrameHeight(value)}
+          >
+            <SelectTrigger className="w-[7rem]">
+              <SelectValue placeholder="Medium" />
+            </SelectTrigger>
+            <SelectContent className="w-[7rem]">
+              <SelectItem value="small">Small</SelectItem>
+              <SelectItem value="medium">Medium</SelectItem>
+              <SelectItem value="large">Large</SelectItem>
+            </SelectContent>
+          </Select>
+        </div>
+      )}
     </>
   )
 }

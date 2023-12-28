@@ -22,6 +22,7 @@ import {
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/Tooltip'
+import ColorThief from 'colorthief'
 
 type Color = string
 
@@ -60,7 +61,6 @@ export default function GradientOptions() {
   )
 
   const extractDominantColor = async () => {
-    const ColorThief = (await import('colorthief')).default
     const colorThief = new ColorThief()
     const image = new Image()
     image.crossOrigin = 'Anonymous'
@@ -91,27 +91,44 @@ export default function GradientOptions() {
           return `linear-gradient(var(--gradient-angle), ${startColor}, ${endColor})`
         }
 
+        // const generateLinear gradient by randomly selecting colors from palletes some 2 colors combination some 3 colors combination max 4 colors combination
+        const generateRandomLinearGradient = (): string => {
+          const randomColors: Color[] = getRandomColors(
+            Math.floor(Math.random() * 3) + 2
+          )
+          const gradient = generateLinearGradient(
+            dominantColor,
+            randomColors.join(',')
+          )
+          return gradient
+        }
+
         const generateRadialGradient = (
           startColor: Color,
           endColor: Color
         ): string => {
-          return `radial-gradient(circle, ${startColor}, ${endColor})`
+          return `linear-gradient(var(--gradient-angle), ${startColor}, ${endColor})`
         }
 
         const linearGradients: string[] = colors.map((color: Color) => {
           const gradient = generateLinearGradient(dominantColor, color)
+          const randomLinearGradient = generateRandomLinearGradient()
+
           return gradient
         })
 
-        const radialGradients: string[] = []
-        for (let i = 0; i < 5; i++) {
-          const randomColors: Color[] = getRandomColors(3)
-          const gradient = generateRadialGradient(
-            dominantColor,
-            randomColors.join(',')
-          )
-          radialGradients.push(gradient)
-        }
+        const meshGradients: string[] = colors.map((color: Color) => {
+          const gradient = generateRandomLinearGradient()
+          return gradient
+        })
+
+        // select two different colors from palletes dont select dominant color
+        const randomColors: Color[] = getRandomColors(2)
+
+        const radialGradients: string[] = colors.map((color: Color) => {
+          const gradient = generateRadialGradient(randomColors[0], color)
+          return gradient
+        })
 
         setImages(
           images.map((image, index) =>
@@ -121,6 +138,7 @@ export default function GradientOptions() {
                   dominantColor,
                   palletes,
                   linearGradients,
+                  meshGradients,
                   radialGradients,
                 }
               : image
@@ -235,50 +253,95 @@ export default function GradientOptions() {
               )
             )}
 
-            {/* {images[images.length - 1]?.radialGradients?.map(
-            (gradient: string) => (
-              <Button
-                key={gradient}
-                variant="secondary"
-                className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
-                  gradient === backgroundInStore &&
-                  !imageBackground &&
-                  'outline-none ring-2 ring-ring ring-offset-1'
-                }`}
-                onClick={() =>
-                  handleGradientClick(
-                    {
-                      gradient,
-                      background: gradient,
-                      type: 'Mesh',
-                    },
-                    false
-                  )
-                }
-                style={{ background: gradient }}
-              >
-                {gradient === backgroundInStore &&
-                  !imageBackground &&
-                  backgroundType !== 'mesh' && (
-                    <Popover>
-                      <PopoverTrigger asChild>
-                        <Settings2
-                          className="flex-center"
-                          color="#333"
-                          size={20}
-                        />
-                      </PopoverTrigger>
-                      <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
-                        <h1 className="text-[0.85rem]">Gradient angle</h1>
-                        <div className={`circular-slider`}>
-                          <CircularSliderComp />
-                        </div>
-                      </PopoverContent>
-                    </Popover>
-                  )}
-              </Button>
-            )
-          )} */}
+            {images[images.length - 1]?.radialGradients?.map(
+              (gradient: string) => (
+                <Button
+                  key={gradient}
+                  variant="secondary"
+                  className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
+                    gradient === backgroundInStore &&
+                    !imageBackground &&
+                    'outline-none ring-2 ring-ring ring-offset-1'
+                  }`}
+                  onClick={() =>
+                    handleGradientClick(
+                      {
+                        gradient,
+                        background: gradient,
+                        type: 'Mesh',
+                      },
+                      false
+                    )
+                  }
+                  style={{ background: gradient }}
+                >
+                  {gradient === backgroundInStore &&
+                    !imageBackground &&
+                    backgroundType !== 'mesh' && (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Settings2
+                            className="flex-center"
+                            color="#333"
+                            size={20}
+                          />
+                        </PopoverTrigger>
+                        <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
+                          <h1 className="text-[0.85rem]">Gradient angle</h1>
+                          <div className={`circular-slider`}>
+                            <CircularSliderComp />
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    )}
+                </Button>
+              )
+            )}
+
+            {images[images.length - 1]?.meshGradients?.map(
+              (gradient: string) => (
+                <Button
+                  key={gradient}
+                  variant="secondary"
+                  className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
+                    gradient === backgroundInStore &&
+                    !imageBackground &&
+                    'outline-none ring-2 ring-ring ring-offset-1'
+                  }`}
+                  onClick={() =>
+                    handleGradientClick(
+                      {
+                        gradient,
+                        background: gradient,
+                        type: 'Mesh',
+                      },
+                      false
+                    )
+                  }
+                  style={{ background: gradient }}
+                >
+                  {gradient === backgroundInStore &&
+                    !imageBackground &&
+                    backgroundType !== 'mesh' && (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Settings2
+                            className="flex-center"
+                            color="#333"
+                            size={20}
+                          />
+                        </PopoverTrigger>
+                        <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
+                          <h1 className="text-[0.85rem]">Gradient angle</h1>
+                          <div className={`circular-slider`}>
+                            <CircularSliderComp />
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    )}
+                </Button>
+              )
+            )}
           </div>
         )}
 
