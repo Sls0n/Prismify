@@ -234,6 +234,10 @@ export const gradients: Gradient[] = [
   },
   {
     type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), rgb(116,126,175),rgb(190,141,141))',
+  },
+  {
+    type: 'Normal',
     gradient:
       'linear-gradient(var(--gradient-angle), rgb(204, 228, 247) 11.2%, rgb(237, 246, 250) 100.2%)',
   },
@@ -368,6 +372,14 @@ export const gradients: Gradient[] = [
   {
     type: 'Normal',
     gradient: 'linear-gradient(var(--gradient-angle), rgb(40,39,42), rgb(40,39,41),rgb(116,164,212),rgb(238,238,238),rgb(134,107,127))',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), rgb(40,39,42), rgb(40,39,41),rgb(116,164,212))',
+  },
+  {
+    type: 'Normal',
+    gradient: 'linear-gradient(var(--gradient-angle), rgb(40,39,42), rgb(116,126,175),rgb(190,141,141))',
   },
   {
     type: 'Mesh',

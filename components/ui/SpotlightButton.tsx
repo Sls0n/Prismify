@@ -1,7 +1,7 @@
 'use client'
 
 import { cn } from '@/utils/buttonUtils'
-import { Sparkles } from 'lucide-react'
+import { Sparkles, Wand, Wand2 } from 'lucide-react'
 
 type Props = {
   text: string
@@ -60,7 +60,7 @@ export default function SpotlightButton({
             className="fill-yellow-400/50 stroke-[1] text-yellow-400"
           />
         </svg> */}
-        <Sparkles
+        <Wand2
           style={{
             transition: 'all 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
           }}

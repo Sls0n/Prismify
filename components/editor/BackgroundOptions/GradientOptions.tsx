@@ -35,6 +35,7 @@ export default function GradientOptions() {
     setImageBackground,
     imageBackground,
     setAttribution,
+    setNoise
   } = useBackgroundOptions()
 
   const { images, setImages } = useImageOptions()
@@ -207,142 +208,153 @@ export default function GradientOptions() {
         </div>
 
         {selectedImage && images[selectedImage - 1]?.linearGradients && (
-          <div className="mt-4 grid auto-rows-auto grid-cols-6 gap-4 md:max-w-[18rem] md:grid-cols-8">
-            {images[selectedImage - 1]?.linearGradients?.map(
-              (gradient: string) => (
-                <Button
-                  key={gradient}
-                  variant="secondary"
-                  className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
-                    gradient === backgroundInStore &&
-                    !imageBackground &&
-                    'outline-none ring-2 ring-ring ring-offset-1'
-                  }`}
-                  onClick={() =>
-                    handleGradientClick(
-                      {
-                        gradient,
-                        background: gradient,
-                        type: 'Normal',
-                      },
-                      false
-                    )
-                  }
-                  style={{ background: gradient }}
-                >
-                  {gradient === backgroundInStore &&
-                    !imageBackground &&
-                    backgroundType !== 'mesh' && (
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Settings2
-                            className="flex-center"
-                            color="#333"
-                            size={20}
-                          />
-                        </PopoverTrigger>
-                        <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
-                          <h1 className="text-[0.85rem]">Gradient angle</h1>
-                          <div className={`circular-slider`}>
-                            <CircularSliderComp />
-                          </div>
-                        </PopoverContent>
-                      </Popover>
-                    )}
-                </Button>
-              )
-            )}
+          <>
+            <div className="mt-4 grid auto-rows-auto grid-cols-6 gap-4 md:max-w-[18rem] md:grid-cols-8">
+              {images[selectedImage - 1]?.linearGradients?.map(
+                (gradient: string) => (
+                  <Button
+                    key={gradient}
+                    variant="secondary"
+                    className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
+                      gradient === backgroundInStore &&
+                      !imageBackground &&
+                      'outline-none ring-2 ring-ring ring-offset-1'
+                    }`}
+                    onClick={() =>
+                      handleGradientClick(
+                        {
+                          gradient,
+                          background: gradient,
+                          type: 'Normal',
+                        },
+                        false
+                      )
+                    }
+                    style={{ background: gradient }}
+                  >
+                    {gradient === backgroundInStore &&
+                      !imageBackground &&
+                      backgroundType !== 'mesh' && (
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Settings2
+                              className="flex-center"
+                              color="#333"
+                              size={20}
+                            />
+                          </PopoverTrigger>
+                          <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
+                            <h1 className="text-[0.85rem]">Gradient angle</h1>
+                            <div className={`circular-slider`}>
+                              <CircularSliderComp />
+                            </div>
+                          </PopoverContent>
+                        </Popover>
+                      )}
+                  </Button>
+                )
+              )}
 
-            {images[images.length - 1]?.radialGradients?.map(
-              (gradient: string) => (
-                <Button
-                  key={gradient}
-                  variant="secondary"
-                  className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
-                    gradient === backgroundInStore &&
-                    !imageBackground &&
-                    'outline-none ring-2 ring-ring ring-offset-1'
-                  }`}
-                  onClick={() =>
-                    handleGradientClick(
-                      {
-                        gradient,
-                        background: gradient,
-                        type: 'Mesh',
-                      },
-                      false
-                    )
-                  }
-                  style={{ background: gradient }}
-                >
-                  {gradient === backgroundInStore &&
-                    !imageBackground &&
-                    backgroundType !== 'mesh' && (
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Settings2
-                            className="flex-center"
-                            color="#333"
-                            size={20}
-                          />
-                        </PopoverTrigger>
-                        <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
-                          <h1 className="text-[0.85rem]">Gradient angle</h1>
-                          <div className={`circular-slider`}>
-                            <CircularSliderComp />
-                          </div>
-                        </PopoverContent>
-                      </Popover>
-                    )}
-                </Button>
-              )
-            )}
+              {images[images.length - 1]?.radialGradients?.map(
+                (gradient: string) => (
+                  <Button
+                    key={gradient}
+                    variant="secondary"
+                    className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
+                      gradient === backgroundInStore &&
+                      !imageBackground &&
+                      'outline-none ring-2 ring-ring ring-offset-1'
+                    }`}
+                    onClick={() =>
+                      handleGradientClick(
+                        {
+                          gradient,
+                          background: gradient,
+                          type: 'Mesh',
+                        },
+                        false
+                      )
+                    }
+                    style={{ background: gradient }}
+                  >
+                    {gradient === backgroundInStore &&
+                      !imageBackground &&
+                      backgroundType !== 'mesh' && (
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Settings2
+                              className="flex-center"
+                              color="#333"
+                              size={20}
+                            />
+                          </PopoverTrigger>
+                          <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
+                            <h1 className="text-[0.85rem]">Gradient angle</h1>
+                            <div className={`circular-slider`}>
+                              <CircularSliderComp />
+                            </div>
+                          </PopoverContent>
+                        </Popover>
+                      )}
+                  </Button>
+                )
+              )}
 
-            {images[images.length - 1]?.meshGradients?.map(
-              (gradient: string) => (
-                <Button
-                  key={gradient}
-                  variant="secondary"
-                  className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
-                    gradient === backgroundInStore &&
-                    !imageBackground &&
-                    'outline-none ring-2 ring-ring ring-offset-1'
-                  }`}
-                  onClick={() =>
-                    handleGradientClick(
-                      {
-                        gradient,
-                        background: gradient,
-                        type: 'Mesh',
-                      },
-                      false
-                    )
-                  }
-                  style={{ background: gradient }}
-                >
-                  {gradient === backgroundInStore &&
-                    !imageBackground &&
-                    backgroundType !== 'mesh' && (
-                      <Popover>
-                        <PopoverTrigger asChild>
-                          <Settings2
-                            className="flex-center"
-                            color="#333"
-                            size={20}
-                          />
-                        </PopoverTrigger>
-                        <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
-                          <h1 className="text-[0.85rem]">Gradient angle</h1>
-                          <div className={`circular-slider`}>
-                            <CircularSliderComp />
-                          </div>
-                        </PopoverContent>
-                      </Popover>
-                    )}
-                </Button>
-              )
-            )}
-          </div>
+              {images[images.length - 1]?.meshGradients?.map(
+                (gradient: string) => (
+                  <Button
+                    key={gradient}
+                    variant="secondary"
+                    className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
+                      gradient === backgroundInStore &&
+                      !imageBackground &&
+                      'outline-none ring-2 ring-ring ring-offset-1'
+                    }`}
+                    onClick={() =>
+                      handleGradientClick(
+                        {
+                          gradient,
+                          background: gradient,
+                          type: 'Mesh',
+                        },
+                        false
+                      )
+                    }
+                    style={{ background: gradient }}
+                  >
+                    {gradient === backgroundInStore &&
+                      !imageBackground &&
+                      backgroundType !== 'mesh' && (
+                        <Popover>
+                          <PopoverTrigger asChild>
+                            <Settings2
+                              className="flex-center"
+                              color="#333"
+                              size={20}
+                            />
+                          </PopoverTrigger>
+                          <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
+                            <h1 className="text-[0.85rem]">Gradient angle</h1>
+                            <div className={`circular-slider`}>
+                              <CircularSliderComp />
+                            </div>
+                          </PopoverContent>
+                        </Popover>
+                      )}
+                  </Button>
+                )
+              )}
+            </div>
+
+            <button
+              onClick={() => setNoise(0.25)}
+            >
+              <p className="mt-4 text-sm text-dark/50">
+                <span className="font-bold opacity-80">TIP</span> &mdash; Use
+                these with about 25% of noise.
+              </p>
+            </button>
+          </>
         )}
 
         <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
