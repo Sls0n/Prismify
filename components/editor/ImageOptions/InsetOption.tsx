@@ -13,11 +13,11 @@ import { Button } from '@/components/ui/Button'
 export default function InsetOption() {
   const { images, setImages } = useImageOptions()
   const { setShowControls, showControls } = useMoveable()
-  const {selectedImage} = useSelectedLayers()
+  const { selectedImage } = useSelectedLayers()
 
   return (
     <div className={`${selectedImage ? '' : 'pointer-events-none opacity-40'}`}>
-      <div className="mb-3 mt-6 flex items-center px-1 md:max-w-[70%]">
+      <div className="mb-3 mt-6 flex items-center px-1 md:max-w-full">
         <h1 className="text-[0.85rem]">Inset</h1>
         {images.length !== 0 && (
           <Popover>
@@ -80,7 +80,7 @@ export default function InsetOption() {
         )}
       </div>
 
-      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
+      <div className="flex gap-4 px-1 text-[0.85rem] md:max-w-full">
         <Slider
           defaultValue={[0]}
           max={150}
@@ -109,6 +109,46 @@ export default function InsetOption() {
               : [10]
           }
           onValueCommit={() => setShowControls(true)}
+          onIncrement={() => {
+            setShowControls(false)
+            selectedImage &&
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          insetSize:
+                            +image.style.insetSize <= 149
+                              ? (+image.style.insetSize + 4).toString()
+                              : '150',
+                        },
+                      }
+                    : image
+                )
+              )
+          }}
+          onDecrement={() => {
+            setShowControls(false)
+            selectedImage &&
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          insetSize:
+                            +image.style.insetSize >= 0
+                              ? (+image.style.insetSize - 4).toString()
+                              : '0',
+                        },
+                      }
+                    : image
+                )
+              )
+          }}
         />
       </div>
     </div>

@@ -48,47 +48,47 @@ export default function loading() {
                 <div className="flex w-full flex-col ">
                   <div className="[&:*]:animate-pulse mb-8 flex flex-col gap-3">
                     <div className="flex h-[1.2rem] w-28 rounded-md bg-[#191919]" />
-                    <div className="flex h-[1.2rem] w-full max-w-[70%] rounded-md bg-[#191919]" />
+                    <div className="flex h-[1.2rem] w-full max-w-full rounded-md bg-[#191919]" />
                   </div>
 
                   <div className="mb-8 flex flex-col gap-3 ">
                     <div className="flex h-[1.2rem] w-28 rounded-md bg-[#191919]" />
-                    <div className="flex h-[1.2rem] w-full max-w-[70%] rounded-md bg-[#191919]" />
+                    <div className="flex h-[1.2rem] w-full max-w-full rounded-md bg-[#191919]" />
                   </div>
 
                   <div className="mb-8 flex flex-col gap-3">
                     <div className="flex h-[1.2rem] w-28 animate-pulse rounded-md bg-[#191919]" />
-                    <div className="flex h-[1.2rem] w-full max-w-[70%] animate-pulse rounded-md bg-[#191919]" />
+                    <div className="flex h-[1.2rem] w-full max-w-full animate-pulse rounded-md bg-[#191919]" />
                   </div>
 
                   <div className="mb-8 flex flex-col gap-3">
                     <div className="flex h-[1.2rem] w-28 animate-pulse rounded-md bg-[#191919]" />
-                    <div className="flex h-[1.2rem] w-full max-w-[70%] animate-pulse rounded-md bg-[#191919]" />
+                    <div className="flex h-[1.2rem] w-full max-w-full animate-pulse rounded-md bg-[#191919]" />
                   </div>
 
                   <div className="mb-8 flex flex-col gap-3">
                     <div className="flex h-[1.2rem] w-28 animate-pulse rounded-md bg-[#191919]" />
-                    <div className="flex h-[1.2rem] w-full max-w-[70%] animate-pulse rounded-md bg-[#191919]" />
+                    <div className="flex h-[1.2rem] w-full max-w-full animate-pulse rounded-md bg-[#191919]" />
                   </div>
 
                   <div className="mb-8 flex flex-col gap-3">
                     <div className="flex h-[1.2rem] w-28 animate-pulse rounded-md bg-[#191919]" />
-                    <div className="flex h-[1.2rem] w-full max-w-[70%] animate-pulse rounded-md bg-[#191919]" />
+                    <div className="flex h-[1.2rem] w-full max-w-full animate-pulse rounded-md bg-[#191919]" />
                   </div>
 
                   <div className="mb-8 flex flex-col gap-3">
                     <div className="flex h-[1.2rem] w-28 animate-pulse rounded-md bg-[#191919]" />
-                    <div className="flex h-[1.2rem] w-full max-w-[70%] animate-pulse rounded-md bg-[#191919]" />
+                    <div className="flex h-[1.2rem] w-full max-w-full animate-pulse rounded-md bg-[#191919]" />
                   </div>
 
                   <div className="mb-8 flex flex-col gap-3">
                     <div className="flex h-[1.2rem] w-28 animate-pulse rounded-md bg-[#191919]" />
-                    <div className="flex h-[1.2rem] w-full max-w-[70%] animate-pulse rounded-md bg-[#191919]" />
+                    <div className="flex h-[1.2rem] w-full max-w-full animate-pulse rounded-md bg-[#191919]" />
                   </div>
 
                   <div className="mb-8 flex flex-col gap-3">
                     <div className="flex h-[1.2rem] w-28 animate-pulse rounded-md bg-[#191919]" />
-                    <div className="flex h-[1.2rem] w-full max-w-[70%] animate-pulse rounded-md bg-[#191919]" />
+                    <div className="flex h-[1.2rem] w-full max-w-full animate-pulse rounded-md bg-[#191919]" />
                   </div>
                 </div>
               </div>

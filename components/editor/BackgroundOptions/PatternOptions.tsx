@@ -96,7 +96,7 @@ export default function PatternOptions() {
         </Popover>
       </h3>
 
-      <ul className="mt-4 grid md:max-w-[18rem] auto-rows-auto grid-cols-4 md:grid-cols-5 gap-4">
+      <ul className="mt-4 w-full h-full flex flex-wrap gap-3">
         {unsplashData.map(
           (data: {
             user: any

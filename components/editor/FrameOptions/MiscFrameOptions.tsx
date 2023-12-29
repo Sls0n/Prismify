@@ -34,7 +34,7 @@ export default function MiscFrameOptions() {
         </h3>
 
         {(browserFrame === 'MacOS Dark' || browserFrame === 'MacOS Light') && (
-          <div className="mb-6 flex items-center justify-between gap-4 px-1 md:max-w-[65%]">
+          <div className="mb-6 flex items-center justify-between gap-4 px-1">
             <h1 className="text-[0.85rem]">Show searchbar :</h1>
             <Switch
               defaultChecked={false}
@@ -46,7 +46,7 @@ export default function MiscFrameOptions() {
         )}
 
         {(browserFrame === 'MacOS Dark' || browserFrame === 'MacOS Light') && (
-          <div className="mb-6 flex items-center justify-between gap-4 px-1 md:max-w-[65%]">
+          <div className="mb-6 flex items-center justify-between gap-4 px-1">
             <h1 className="text-[0.85rem]">Colorful buttons :</h1>
             <Switch
               defaultChecked={true}
@@ -59,7 +59,7 @@ export default function MiscFrameOptions() {
         )}
 
         {(browserFrame === 'MacOS Dark' || browserFrame === 'MacOS Light') && (
-          <div className="mb-6 flex items-center justify-between gap-4 px-1 md:max-w-[65%]">
+          <div className="mb-6 flex items-center justify-between gap-4 px-1">
             <h1 className="text-[0.85rem]">Hide buttons :</h1>
             <Switch
               defaultChecked={false}
@@ -72,7 +72,7 @@ export default function MiscFrameOptions() {
         )}
 
         {(browserFrame === 'MacOS Dark' || browserFrame === 'MacOS Light') && (
-          <div className="mb-6 flex items-center justify-between gap-4 px-1 md:max-w-[65%]">
+          <div className="mb-6 flex items-center justify-between gap-4 px-1">
             <h1 className="text-[0.85rem]">Frame color :</h1>
             <PopupColorPicker
               shouldShowDropdown={false}
@@ -92,7 +92,7 @@ export default function MiscFrameOptions() {
         )}
 
         {browserFrame === 'Shadow' && (
-          <div className="mb-6 flex items-center gap-4 px-1 md:max-w-[70%]">
+          <div className="mb-6 flex items-center gap-4 px-1 md:max-w-full">
             <h1 className="text-[0.85rem]">Show outline :</h1>
             <Switch
               defaultChecked={true}
@@ -105,7 +105,7 @@ export default function MiscFrameOptions() {
         )}
 
         {browserFrame === 'Arc' && (
-          <div className="mb-6 flex items-center gap-4 px-1 md:max-w-[70%]">
+          <div className="mb-6 flex items-center gap-4 px-1 md:max-w-full">
             <h1 className="text-[0.85rem]">Dark mode :</h1>
             <Switch
               defaultChecked={false}

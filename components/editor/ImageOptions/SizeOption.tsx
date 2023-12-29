@@ -13,14 +13,14 @@ export default function SizeOption({ text = 'Scale' }: SizeOptionProps) {
 
   return (
     <>
-      <div className="mb-3 mt-2 flex items-center px-1 md:md:max-w-[70%]">
+      <div className="mb-3 mt-2 flex items-center px-1 md:md:max-w-full">
         <h1 className="text-[0.85rem]">{text}</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {Math.round(scale * 100)}%
         </p>
       </div>
 
-      <div className="flex gap-4 text-[0.85rem] md:md:max-w-[70%]">
+      <div className="flex px-1 gap-4 text-[0.85rem] md:md:max-w-full">
         <Slider
           defaultValue={[1]}
           max={3}
@@ -32,6 +32,14 @@ export default function SizeOption({ text = 'Scale' }: SizeOptionProps) {
           }}
           onValueCommit={() => setShowControls(true)}
           value={[scale] || [1]}
+          onIncrement={() => {
+            if (scale >= 3) return
+            setScale(scale + 0.05)
+          }}
+          onDecrement={() => {
+            if (scale <= 0.25) return
+            setScale(scale - 0.05)
+          }}
         />
       </div>
     </>

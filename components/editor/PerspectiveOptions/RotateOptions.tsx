@@ -6,14 +6,14 @@ import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 
 export default function RotateOptions() {
   const { images, setImages } = useImageOptions()
-   const { selectedImage } = useSelectedLayers()
+  const { selectedImage } = useSelectedLayers()
   const { setShowControls } = useMoveable()
 
   return (
     <>
       {/* Perspective */}
       <div
-        className={`mb-3 mt-8 flex items-center px-1 md:max-w-[70%] ${
+        className={`mb-3 mt-8 flex items-center px-1 md:max-w-full ${
           selectedImage ? '' : 'pointer-events-none opacity-40'
         }`}
       >
@@ -49,7 +49,7 @@ export default function RotateOptions() {
         </Button>
       </div>
 
-      <div className="mb-3 flex gap-4 text-[0.85rem] md:max-w-[70%]">
+      <div className="mb-3 flex gap-4 text-[0.85rem] md:max-w-full">
         <Slider
           defaultValue={[0]}
           max={6500}
@@ -78,13 +78,51 @@ export default function RotateOptions() {
             setShowControls(false)
           }}
           onValueCommit={() => setShowControls(true)}
+          onIncrement={() => {
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.perspective >= 6500) return
+
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          perspective: Number(image.style.perspective) + 500,
+                        },
+                      }
+                    : image
+                )
+              )
+            }
+          }}
+          onDecrement={() => {
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.perspective <= 0) return
+
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          perspective: Number(image.style.perspective) - 500,
+                        },
+                      }
+                    : image
+                )
+              )
+            }
+          }}
         />
       </div>
 
       <hr className="my-6" />
 
       {/* RotateX */}
-      <div className="mb-3 flex items-center px-1 md:max-w-[70%]">
+      <div className="mb-3 flex items-center px-1 md:max-w-full">
         <h1 className="text-[0.85rem]">Rotate X</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(
@@ -117,7 +155,7 @@ export default function RotateOptions() {
         </Button>
       </div>
 
-      <div className="mb-3 flex gap-4 text-[0.85rem] md:max-w-[70%]">
+      <div className="mb-3 flex gap-4 text-[0.85rem] md:max-w-full">
         <Slider
           defaultValue={[0]}
           max={180}
@@ -144,11 +182,49 @@ export default function RotateOptions() {
             setShowControls(false)
           }}
           onValueCommit={() => setShowControls(true)}
+          onIncrement={() => {
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.rotateX >= 180) return
+
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          rotateX: Number(image.style.rotateX) + 1,
+                        },
+                      }
+                    : image
+                )
+              )
+            }
+          }}
+          onDecrement={() => {
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.rotateX <= -180) return
+
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          rotateX: Number(image.style.rotateX) - 1,
+                        },
+                      }
+                    : image
+                )
+              )
+            }
+          }}
         />
       </div>
 
       {/* RotateY */}
-      <div className="mb-3 mt-3 flex items-center px-1 md:max-w-[70%]">
+      <div className="mb-3 mt-3 flex items-center px-1 md:max-w-full">
         <h1 className="text-[0.85rem]">Rotate Y</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(
@@ -181,7 +257,7 @@ export default function RotateOptions() {
         </Button>
       </div>
 
-      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
+      <div className="flex gap-4 text-[0.85rem] md:max-w-full">
         <Slider
           defaultValue={[0]}
           max={180}
@@ -208,11 +284,49 @@ export default function RotateOptions() {
             setShowControls(false)
           }}
           onValueCommit={() => setShowControls(true)}
+          onIncrement={() => {
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.rotateY >= 180) return
+
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          rotateY: Number(image.style.rotateY) + 1,
+                        },
+                      }
+                    : image
+                )
+              )
+            }
+          }}
+          onDecrement={() => {
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.rotateY <= -180) return
+
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          rotateY: Number(image.style.rotateY) - 1,
+                        },
+                      }
+                    : image
+                )
+              )
+            }
+          }}
         />
       </div>
 
       {/* RotateZ */}
-      <div className="mb-3 mt-3 flex items-center px-1 md:max-w-[70%]">
+      <div className="mb-3 mt-3 flex items-center px-1 md:max-w-full">
         <h1 className="text-[0.85rem]">Rotate Z</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(
@@ -245,7 +359,7 @@ export default function RotateOptions() {
         </Button>
       </div>
 
-      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
+      <div className="flex gap-4 text-[0.85rem] md:max-w-full">
         <Slider
           defaultValue={[0]}
           max={180}
@@ -272,6 +386,44 @@ export default function RotateOptions() {
             setShowControls(false)
           }}
           onValueCommit={() => setShowControls(true)}
+          onIncrement={() => {
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.rotateZ >= 180) return
+
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          rotateZ: Number(image.style.rotateZ) + 1,
+                        },
+                      }
+                    : image
+                )
+              )
+            }
+          }}
+          onDecrement={() => {
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.rotateZ <= -180) return
+
+              setImages(
+                images.map((image, index) =>
+                  index === selectedImage - 1
+                    ? {
+                        ...image,
+                        style: {
+                          ...image.style,
+                          rotateZ: Number(image.style.rotateZ) - 1,
+                        },
+                      }
+                    : image
+                )
+              )
+            }
+          }}
         />
       </div>
     </>

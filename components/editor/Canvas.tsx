@@ -200,7 +200,7 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        className="relative flex h-full flex-1 items-start justify-center overflow-hidden bg-[#111] px-4 py-4 md:px-16 md:py-16"
+        className="relative w-full flex h-full flex-1 bg-[#111] px-4 py-4 md:px-8 md:py-8 lg:px-12 lg:py-12 overflow-x-auto"
       >
         {/* <div className="flex h-14 w-full items-center border border-border">
           TODO: ADD UPPER SETTINGS
@@ -208,11 +208,11 @@ export default function Canvas() {
         <div
           onWheel={handleScroll}
           style={parentScaleStyle}
-          className="relative flex h-full w-full flex-col items-center justify-start overflow-hidden"
+          className="relative flex h-full w-full flex-col items-center justify-start overflow-x-auto"
         >
           <div
             className={
-              'canvas-container relative flex w-full items-center justify-center overflow-hidden '
+              'canvas-container relative flex items-center justify-center overflow-hidden'
             }
             ref={screenshotRef}
             id="canvas-container"

@@ -13,7 +13,7 @@ export default function RoundnessOption() {
 
   return (
     <div className={`${selectedImage ? '' : 'pointer-events-none opacity-40'}`}>
-      <div className="mb-3 mt-6 flex items-center px-1 md:max-w-[70%]">
+      <div className="mb-3 mt-6 flex items-center px-1 md:max-w-full">
         <h1 className="text-[0.85rem]">Roundness</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
           {`${Math.round(
@@ -26,7 +26,7 @@ export default function RoundnessOption() {
         </p>
       </div>
 
-      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
+      <div className="flex gap-4 px-1 text-[0.85rem] md:max-w-full">
         <Slider
           defaultValue={[0.7]}
           max={browserFrame !== 'None' && browserFrame !== 'Arc' ? 1.6 : 5}
@@ -55,6 +55,46 @@ export default function RoundnessOption() {
               : [1]
           }
           onValueCommit={() => setShowControls(true)}
+          onIncrement={() => {
+            if (images.length === 0 || !selectedImage) return
+            if (Number(images[selectedImage - 1]?.style.imageRoundness) >= 1.6)
+              return
+            setShowControls(false)
+            setImages(
+              images.map((image, index) =>
+                index === selectedImage - 1
+                  ? {
+                      ...image,
+                      style: {
+                        ...image.style,
+                        imageRoundness:
+                          Number(image.style.imageRoundness) + 0.1,
+                      },
+                    }
+                  : image
+              )
+            )
+          }}
+          onDecrement={() => {
+            if (images.length === 0 || !selectedImage) return
+            if (Number(images[selectedImage - 1]?.style.imageRoundness) <= 0)
+              return
+            setShowControls(false)
+            setImages(
+              images.map((image, index) =>
+                index === selectedImage - 1
+                  ? {
+                      ...image,
+                      style: {
+                        ...image.style,
+                        imageRoundness:
+                          Number(image.style.imageRoundness) - 0.1,
+                      },
+                    }
+                  : image
+              )
+            )
+          }}
         />
       </div>
     </div>

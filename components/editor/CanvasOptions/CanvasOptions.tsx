@@ -75,9 +75,9 @@ export default function CanvasOptions() {
 
   return (
     <>
-      <div className="mt-4 flex w-full max-w-[85%] justify-between px-1">
+      <div className="mt-4 flex w-full justify-between px-1">
         <div className="flex-center">
-          <h1 className="mr-1 text-[0.85rem]">Toggle auto resolution</h1>
+          <h1 className="mr-1 text-[0.85rem]">Auto resolution</h1>
           <TooltipProvider>
             <Tooltip delayDuration={100}>
               <TooltipTrigger>
@@ -134,12 +134,12 @@ export default function CanvasOptions() {
             })
           }}
         />
-        <Button type="submit" variant="outline" className="rounded-lg text-sm">
+        <Button type="submit" variant="outline" className="rounded-lg px-3 text-sm">
           <ArrowRight size={18} />
         </Button>
       </form>
 
-      <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Canvas size</h1>
+      <h1 className="mb-3 mt-8 px-1 text-[0.85rem]">Resolutions</h1>
       <div className="flex flex-wrap gap-3">
         {resolutions.map((res, index) => (
           <ResolutionButton

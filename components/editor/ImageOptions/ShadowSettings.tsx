@@ -88,7 +88,7 @@ export default function ShadowSettings() {
   return (
     <div className={`${selectedImage ? '' : 'pointer-events-none opacity-40'}`}>
       <Popover>
-        <PopoverTrigger className="relative mt-2 flex h-14 w-[70%] items-center overflow-hidden rounded-lg border border-border bg-formDark">
+        <PopoverTrigger className="relative mt-2 flex h-14 w-full items-center overflow-hidden rounded-lg border border-border/80 bg-[#898beb05]">
           <div
             style={backgroundStyle}
             className="flex-center h-full basis-[25%]"
@@ -105,7 +105,7 @@ export default function ShadowSettings() {
                   ? images[selectedImage - 1]?.style.shadowName
                   : 'None'}
               </p>
-              <p className="text-[0.7rem] font-semibold text-primary/50 dark:text-dark/50">
+              <p className="text-[0.7rem] font-bold text-primary/50 dark:text-dark/50">
                 {selectedImage
                   ? images[selectedImage - 1]?.style.shadowColor.slice(0, 7)
                   : '#000'}
@@ -162,7 +162,7 @@ export default function ShadowSettings() {
         </p>
       </div>
 
-      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
+      <div className="flex gap-4 px-1 text-[0.85rem] md:max-w-full">
         <Slider
           defaultValue={[0.5]}
           min={0}
@@ -189,6 +189,42 @@ export default function ShadowSettings() {
               ? [+images[selectedImage - 1]?.style.shadowOpacity]
               : [1]
           }
+          onIncrement={() => {
+            if (images.length === 0 || !selectedImage) return
+            if (Number(images[selectedImage - 1]?.style.shadowOpacity) >= 1)
+              return
+            setImages(
+              images.map((image, index) =>
+                index === selectedImage - 1
+                  ? {
+                      ...image,
+                      style: {
+                        ...image.style,
+                        shadowOpacity: Number(image.style.shadowOpacity) + 0.01,
+                      },
+                    }
+                  : image
+              )
+            )
+          }}
+          onDecrement={() => {
+            if (images.length === 0 || !selectedImage) return
+            if (Number(images[selectedImage - 1]?.style.shadowOpacity) <= 0)
+              return
+            setImages(
+              images.map((image, index) =>
+                index === selectedImage - 1
+                  ? {
+                      ...image,
+                      style: {
+                        ...image.style,
+                        shadowOpacity: Number(image.style.shadowOpacity) - 0.01,
+                      },
+                    }
+                  : image
+              )
+            )
+          }}
         />
       </div>
 

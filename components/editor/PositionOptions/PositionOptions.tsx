@@ -8,7 +8,7 @@ export default function PositionOptions() {
   return (
     <>
       <div className="mb-8">
-        <div className="mb-4 mt-4 flex items-center px-1 md:max-w-[70%]">
+        <div className="mb-4 mt-4 flex items-center px-1 md:max-w-full">
           <h1 className="text-[0.85rem]">Position:</h1>
         </div>
 

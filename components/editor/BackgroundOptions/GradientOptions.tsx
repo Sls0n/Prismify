@@ -35,7 +35,7 @@ export default function GradientOptions() {
     setImageBackground,
     imageBackground,
     setAttribution,
-    setNoise
+    setNoise,
   } = useBackgroundOptions()
 
   const { images, setImages } = useImageOptions()
@@ -164,254 +164,246 @@ export default function GradientOptions() {
   console.log(dominantColor)
 
   return (
-    <>
-      <div>
-        <h3 className="mt-8 flex items-center gap-1.5 text-xs font-medium uppercase text-dark/70">
-          <p>Adaptive</p>
-          <span className="inline-flex items-center rounded-md bg-indigo-500/10 px-2 py-1 text-xs font-medium capitalize text-purple shadow-sm ring-1 ring-inset ring-indigo-500/20 dark:bg-indigo-500/10">
-            Beta
-          </span>
-          :
-        </h3>
+    <div>
+      <h3 className="mt-8 flex items-center gap-1.5 text-xs font-medium uppercase text-dark/70">
+        <p>Adaptive</p>
+        <span className="inline-flex items-center rounded-md bg-indigo-500/10 px-2 py-1 text-xs font-medium capitalize text-purple shadow-sm ring-1 ring-inset ring-indigo-500/20 dark:bg-indigo-500/10">
+          Beta
+        </span>
+        :
+      </h3>
 
-        <div
-          className="mt-4 md:max-w-[18rem]"
-          style={{
-            // @ts-ignore
-            display: !images[selectedImage - 1]?.linearGradients ? '' : 'none',
-          }}
-        >
-          <TooltipProvider>
-            <Tooltip delayDuration={100}>
-              <TooltipTrigger>
-                <SpotlightButton
-                  as={!selectedImage ? 'div' : 'button'}
-                  onClick={extractDominantColor}
-                  text="Generate"
-                  disabled={!selectedImage}
-                />
-              </TooltipTrigger>
-              <TooltipContent
-                side="right"
-                sideOffset={10}
-                align="center"
-                className="max-w-[15rem]"
-                style={{
-                  display: selectedImage ? 'none' : 'block',
-                }}
-              >
-                You need to select/load an image first to generate adaptive
-                backgrounds based on it.
-              </TooltipContent>
-            </Tooltip>
-          </TooltipProvider>
-        </div>
-
-        {selectedImage && images[selectedImage - 1]?.linearGradients && (
-          <>
-            <div className="mt-4 grid auto-rows-auto grid-cols-6 gap-4 md:max-w-[18rem] md:grid-cols-8">
-              {images[selectedImage - 1]?.linearGradients?.map(
-                (gradient: string) => (
-                  <Button
-                    key={gradient}
-                    variant="secondary"
-                    className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
-                      gradient === backgroundInStore &&
-                      !imageBackground &&
-                      'outline-none ring-2 ring-ring ring-offset-1'
-                    }`}
-                    onClick={() =>
-                      handleGradientClick(
-                        {
-                          gradient,
-                          background: gradient,
-                          type: 'Normal',
-                        },
-                        false
-                      )
-                    }
-                    style={{ background: gradient }}
-                  >
-                    {gradient === backgroundInStore &&
-                      !imageBackground &&
-                      backgroundType !== 'mesh' && (
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Settings2
-                              className="flex-center"
-                              color="#333"
-                              size={20}
-                            />
-                          </PopoverTrigger>
-                          <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
-                            <h1 className="text-[0.85rem]">Gradient angle</h1>
-                            <div className={`circular-slider`}>
-                              <CircularSliderComp />
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      )}
-                  </Button>
-                )
-              )}
-
-              {images[images.length - 1]?.radialGradients?.map(
-                (gradient: string) => (
-                  <Button
-                    key={gradient}
-                    variant="secondary"
-                    className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
-                      gradient === backgroundInStore &&
-                      !imageBackground &&
-                      'outline-none ring-2 ring-ring ring-offset-1'
-                    }`}
-                    onClick={() =>
-                      handleGradientClick(
-                        {
-                          gradient,
-                          background: gradient,
-                          type: 'Mesh',
-                        },
-                        false
-                      )
-                    }
-                    style={{ background: gradient }}
-                  >
-                    {gradient === backgroundInStore &&
-                      !imageBackground &&
-                      backgroundType !== 'mesh' && (
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Settings2
-                              className="flex-center"
-                              color="#333"
-                              size={20}
-                            />
-                          </PopoverTrigger>
-                          <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
-                            <h1 className="text-[0.85rem]">Gradient angle</h1>
-                            <div className={`circular-slider`}>
-                              <CircularSliderComp />
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      )}
-                  </Button>
-                )
-              )}
-
-              {images[images.length - 1]?.meshGradients?.map(
-                (gradient: string) => (
-                  <Button
-                    key={gradient}
-                    variant="secondary"
-                    className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
-                      gradient === backgroundInStore &&
-                      !imageBackground &&
-                      'outline-none ring-2 ring-ring ring-offset-1'
-                    }`}
-                    onClick={() =>
-                      handleGradientClick(
-                        {
-                          gradient,
-                          background: gradient,
-                          type: 'Mesh',
-                        },
-                        false
-                      )
-                    }
-                    style={{ background: gradient }}
-                  >
-                    {gradient === backgroundInStore &&
-                      !imageBackground &&
-                      backgroundType !== 'mesh' && (
-                        <Popover>
-                          <PopoverTrigger asChild>
-                            <Settings2
-                              className="flex-center"
-                              color="#333"
-                              size={20}
-                            />
-                          </PopoverTrigger>
-                          <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
-                            <h1 className="text-[0.85rem]">Gradient angle</h1>
-                            <div className={`circular-slider`}>
-                              <CircularSliderComp />
-                            </div>
-                          </PopoverContent>
-                        </Popover>
-                      )}
-                  </Button>
-                )
-              )}
-            </div>
-
-            <button
-              onClick={() => setNoise(0.25)}
+      <div
+        className="mt-4 "
+        style={{
+          // @ts-ignore
+          display: !images[selectedImage - 1]?.linearGradients ? '' : 'none',
+        }}
+      >
+        <TooltipProvider>
+          <Tooltip delayDuration={100}>
+            <TooltipTrigger>
+              <SpotlightButton
+                as={!selectedImage ? 'div' : 'button'}
+                onClick={extractDominantColor}
+                text="Generate"
+                disabled={!selectedImage}
+              />
+            </TooltipTrigger>
+            <TooltipContent
+              side="right"
+              sideOffset={10}
+              align="center"
+              className="max-w-[15rem]"
+              style={{
+                display: selectedImage ? 'none' : 'block',
+              }}
             >
-              <p className="mt-4 text-sm text-dark/50">
-                <span className="font-bold opacity-80">TIP</span> &mdash; Use
-                these with about 25% of noise.
-              </p>
-            </button>
-          </>
-        )}
-
-        <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
-          <span>Gradients:</span>
-        </h3>
-
-        <div className="mt-4 grid auto-rows-auto grid-cols-6 gap-4 md:max-w-[18rem] md:grid-cols-8">
-          {gradients.map(({ gradient, background, type }: Gradient) => (
-            <Button
-              key={gradient}
-              variant="secondary"
-              className={`aspect-square h-8 w-8 overflow-hidden rounded-md p-[1px] ${
-                gradient === backgroundInStore &&
-                !imageBackground &&
-                'outline-none ring-2 ring-ring ring-offset-1'
-              }`}
-              onClick={() =>
-                handleGradientClick(
-                  {
-                    gradient,
-                    background,
-                    type: 'Normal',
-                  },
-                  type === 'Mesh' // will be true if its of type Mesh
-                )
-              }
-              style={
-                type === 'Normal'
-                  ? { background: gradient }
-                  : { backgroundColor: background, backgroundImage: gradient }
-              }
-            >
-              {gradient === backgroundInStore &&
-                !imageBackground &&
-                backgroundType !== 'mesh' && (
-                  <Popover>
-                    <PopoverTrigger asChild>
-                      <Settings2
-                        className="flex-center"
-                        color="#333"
-                        size={20}
-                      />
-                    </PopoverTrigger>
-                    <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
-                      <h1 className="text-[0.85rem]">Gradient angle</h1>
-                      <div className={`circular-slider`}>
-                        <CircularSliderComp />
-                      </div>
-                    </PopoverContent>
-                  </Popover>
-                )}
-            </Button>
-          ))}
-        </div>
-
-        <ImageGradients />
+              You need to select/load an image first to generate adaptive
+              backgrounds based on it.
+            </TooltipContent>
+          </Tooltip>
+        </TooltipProvider>
       </div>
-    </>
+
+      {selectedImage && images[selectedImage - 1]?.linearGradients && (
+        <>
+          <div className="mt-4 flex md:grid grid-cols-7 flex-wrap gap-[0.5rem]">
+            {images[selectedImage - 1]?.linearGradients?.map(
+              (gradient: string) => (
+                <Button
+                  key={gradient}
+                  variant="secondary"
+                  className={`aspect-square h-[1.85rem] w-[1.85rem] overflow-hidden rounded-md p-[1px] ${
+                    gradient === backgroundInStore &&
+                    !imageBackground &&
+                    'outline-none ring-2 ring-ring ring-offset-2'
+                  }`}
+                  onClick={() =>
+                    handleGradientClick(
+                      {
+                        gradient,
+                        background: gradient,
+                        type: 'Normal',
+                      },
+                      false
+                    )
+                  }
+                  style={{ background: gradient }}
+                >
+                  {gradient === backgroundInStore &&
+                    !imageBackground &&
+                    backgroundType !== 'mesh' && (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Settings2
+                            className="flex-center"
+                            color="#333"
+                            size={20}
+                          />
+                        </PopoverTrigger>
+                        <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
+                          <h1 className="text-[0.85rem]">Gradient angle</h1>
+                          <div className={`circular-slider`}>
+                            <CircularSliderComp />
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    )}
+                </Button>
+              )
+            )}
+
+            {images[images.length - 1]?.radialGradients?.map(
+              (gradient: string) => (
+                <Button
+                  key={gradient}
+                  variant="secondary"
+                  className={`aspect-square h-[1.85rem] w-[1.85rem] overflow-hidden rounded-md p-[1px] ${
+                    gradient === backgroundInStore &&
+                    !imageBackground &&
+                    'outline-none ring-2 ring-ring ring-offset-2'
+                  }`}
+                  onClick={() =>
+                    handleGradientClick(
+                      {
+                        gradient,
+                        background: gradient,
+                        type: 'Mesh',
+                      },
+                      false
+                    )
+                  }
+                  style={{ background: gradient }}
+                >
+                  {gradient === backgroundInStore &&
+                    !imageBackground &&
+                    backgroundType !== 'mesh' && (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Settings2
+                            className="flex-center"
+                            color="#333"
+                            size={20}
+                          />
+                        </PopoverTrigger>
+                        <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
+                          <h1 className="text-[0.85rem]">Gradient angle</h1>
+                          <div className={`circular-slider`}>
+                            <CircularSliderComp />
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    )}
+                </Button>
+              )
+            )}
+
+            {images[images.length - 1]?.meshGradients?.map(
+              (gradient: string) => (
+                <Button
+                  key={gradient}
+                  variant="secondary"
+                  className={`aspect-square h-[1.85rem] w-[1.85rem] overflow-hidden rounded-md p-[1px] ${
+                    gradient === backgroundInStore &&
+                    !imageBackground &&
+                    'outline-none ring-2 ring-ring ring-offset-2'
+                  }`}
+                  onClick={() =>
+                    handleGradientClick(
+                      {
+                        gradient,
+                        background: gradient,
+                        type: 'Mesh',
+                      },
+                      false
+                    )
+                  }
+                  style={{ background: gradient }}
+                >
+                  {gradient === backgroundInStore &&
+                    !imageBackground &&
+                    backgroundType !== 'mesh' && (
+                      <Popover>
+                        <PopoverTrigger asChild>
+                          <Settings2
+                            className="flex-center"
+                            color="#333"
+                            size={20}
+                          />
+                        </PopoverTrigger>
+                        <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
+                          <h1 className="text-[0.85rem]">Gradient angle</h1>
+                          <div className={`circular-slider`}>
+                            <CircularSliderComp />
+                          </div>
+                        </PopoverContent>
+                      </Popover>
+                    )}
+                </Button>
+              )
+            )}
+          </div>
+
+          <button onClick={() => setNoise(0.25)}>
+            <p className="mt-4 text-sm text-start text-dark/50">
+              <span className="font-bold opacity-80">TIP</span> &mdash; Use
+              these with about 25% of noise.
+            </p>
+          </button>
+        </>
+      )}
+
+      <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
+        <span>Gradients:</span>
+      </h3>
+
+      <div className="mt-4 flex md:grid grid-cols-7 flex-wrap gap-[0.5rem]">
+        {gradients.map(({ gradient, background, type }: Gradient) => (
+          <Button
+            key={gradient}
+            variant="secondary"
+            className={`h-[1.85rem] w-[1.85rem] overflow-hidden rounded-md p-[1px] ${
+              gradient === backgroundInStore &&
+              !imageBackground &&
+              'outline-none ring-2 ring-ring ring-offset-2'
+            }`}
+            onClick={() =>
+              handleGradientClick(
+                {
+                  gradient,
+                  background,
+                  type: 'Normal',
+                },
+                type === 'Mesh' // will be true if its of type Mesh
+              )
+            }
+            style={
+              type === 'Normal'
+                ? { background: gradient }
+                : { backgroundColor: background, backgroundImage: gradient }
+            }
+          >
+            {gradient === backgroundInStore &&
+              !imageBackground &&
+              backgroundType !== 'mesh' && (
+                <Popover>
+                  <PopoverTrigger asChild>
+                    <Settings2 className="flex-center" color="#333" size={20} />
+                  </PopoverTrigger>
+                  <PopoverContent className="flex w-[12rem] flex-col items-center gap-3">
+                    <h1 className="text-[0.85rem]">Gradient angle</h1>
+                    <div className={`circular-slider`}>
+                      <CircularSliderComp />
+                    </div>
+                  </PopoverContent>
+                </Popover>
+              )}
+          </Button>
+        ))}
+      </div>
+
+      <ImageGradients />
+    </div>
   )
 }

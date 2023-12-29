@@ -66,6 +66,7 @@ export function ResolutionButton({
     return (
       <Button
         name="Fit"
+        size='sm'
         className={cn('flex items-center gap-2 rounded-lg', className)}
         variant={variant}
         onClick={() => {
@@ -110,6 +111,7 @@ export function ResolutionButton({
     return (
       <Button
         name="Equal padding"
+        size='sm'
         className={cn('flex items-center gap-2 rounded-lg', className)}
         variant={variant}
         onClick={() => {
@@ -166,9 +168,10 @@ export function ResolutionButton({
             borderColor: isHovering ? `${color}33` : '',
           }}
           variant={variant}
+          size='sm'
         >
           {icon && <div>{icon}</div>}
-          <div>{name}</div>
+          <div className='sr-only'>{name}</div>
           <ChevronDown size={18} className="translate-y-[1.5px] text-inherit" />
         </Button>
       </PopoverTrigger>

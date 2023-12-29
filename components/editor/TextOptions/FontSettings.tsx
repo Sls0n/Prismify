@@ -97,7 +97,7 @@ export default function FontSettings() {
 
   return (
     <div className="relative h-full w-full">
-      <div className="mb-3 mt-2 flex items-center px-1 md:max-w-[70%]">
+      <div className="mb-3 mt-2 flex items-center px-1 md:max-w-full">
         <h1 className="text-[0.85rem]">Font family</h1>
       </div>
       <FontPicker
@@ -171,7 +171,7 @@ export default function FontSettings() {
         />
       </div>
 
-      <div className={`mt-8 flex flex-col gap-3 px-1 md:max-w-[70%]`}>
+      <div className={`mt-8 flex flex-col gap-3 px-1 md:max-w-full`}>
         <h1 className="text-[0.85rem]">Letter spacing</h1>
         <Slider
           defaultValue={[0]}
@@ -200,6 +200,46 @@ export default function FontSettings() {
             )
           }}
           onValueCommit={() => setShowTextControls(true)}
+          onIncrement={() => {
+            if (
+              Number(texts[selectedText - 1]?.style.letterSpacing) >= 0.2 ||
+              texts.length === 0
+            )
+              return
+            setTexts(
+              texts.map((text, index) =>
+                index === selectedText - 1
+                  ? {
+                      ...text,
+                      style: {
+                        ...text.style,
+                        letterSpacing: Number(text.style.letterSpacing) + 0.001,
+                      },
+                    }
+                  : text
+              )
+            )
+          }}
+          onDecrement={() => {
+            if (
+              Number(texts[selectedText - 1]?.style.letterSpacing) <= -0.05 ||
+              texts.length === 0
+            )
+              return
+            setTexts(
+              texts.map((text, index) =>
+                index === selectedText - 1
+                  ? {
+                      ...text,
+                      style: {
+                        ...text.style,
+                        letterSpacing: Number(text.style.letterSpacing) - 0.001,
+                      },
+                    }
+                  : text
+              )
+            )
+          }}
         />
       </div>
 
@@ -279,7 +319,7 @@ export default function FontSettings() {
         </p>
       </div>
 
-      <div className="flex gap-4 text-[0.85rem] md:max-w-[70%]">
+      <div className="flex gap-4 text-[0.85rem] md:max-w-full">
         <Slider
           defaultValue={[0.1]}
           min={0}
@@ -305,6 +345,46 @@ export default function FontSettings() {
               ? [texts[selectedText - 1]?.style.shadowOpacity]
               : [0.1]
           }
+          onIncrement={() => {
+            if (
+              Number(texts[selectedText - 1]?.style.shadowOpacity) >= 1 ||
+              texts.length === 0
+            )
+              return
+            setTexts(
+              texts.map((text, index) =>
+                index === selectedText - 1
+                  ? {
+                      ...text,
+                      style: {
+                        ...text.style,
+                        shadowOpacity: Number(text.style.shadowOpacity) + 0.01,
+                      },
+                    }
+                  : text
+              )
+            )
+          }}
+          onDecrement={() => {
+            if (
+              Number(texts[selectedText - 1]?.style.shadowOpacity) <= 0 ||
+              texts.length === 0
+            )
+              return
+            setTexts(
+              texts.map((text, index) =>
+                index === selectedText - 1
+                  ? {
+                      ...text,
+                      style: {
+                        ...text.style,
+                        shadowOpacity: Number(text.style.shadowOpacity) - 0.01,
+                      },
+                    }
+                  : text
+              )
+            )
+          }}
         />
       </div>
 

@@ -15,35 +15,33 @@ export default function BackgroundOptions() {
   }, [])
 
   return (
-    <>
-      <Tabs
-        className="mt-4"
-        defaultValue={
-          backgroundType === 'solid'
-            ? 'customTab'
-            : backgroundType === 'pattern'
-            ? 'patternsTab'
-            : 'gradientsTab'
-        }
-      >
-        <TabsList className="mb-3">
-          <TabsTrigger value="gradientsTab">Gradients</TabsTrigger>
-          <TabsTrigger value="patternsTab">Patterns</TabsTrigger>
-          <TabsTrigger className="hidden sm:flex" value="customTab">
-            Custom
-          </TabsTrigger>
-        </TabsList>
-        <NoiseOptions />
-        <TabsContent value="gradientsTab">
-          <GradientOptions />
-        </TabsContent>
-        <TabsContent value="patternsTab">
-          <PatternOptions />
-        </TabsContent>
-        <TabsContent value="customTab">
-          <CustomOptions />
-        </TabsContent>
-      </Tabs>
-    </>
+    <Tabs
+      className="mt-4"
+      defaultValue={
+        backgroundType === 'solid'
+          ? 'customTab'
+          : backgroundType === 'pattern'
+          ? 'patternsTab'
+          : 'gradientsTab'
+      }
+    >
+      <TabsList className="mb-4 bg-[#191919] [&>*]:px-[1rem]">
+        <TabsTrigger value="gradientsTab">Gradient</TabsTrigger>
+        <TabsTrigger value="patternsTab">Pattern</TabsTrigger>
+        <TabsTrigger className="hidden sm:flex" value="customTab">
+          Pick
+        </TabsTrigger>
+      </TabsList>
+      <NoiseOptions />
+      <TabsContent value="gradientsTab">
+        <GradientOptions />
+      </TabsContent>
+      <TabsContent value="patternsTab">
+        <PatternOptions />
+      </TabsContent>
+      <TabsContent value="customTab">
+        <CustomOptions />
+      </TabsContent>
+    </Tabs>
   )
 }

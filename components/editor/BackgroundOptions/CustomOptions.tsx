@@ -55,7 +55,7 @@ export default function CustomOptions() {
           <span>Solid Colors:</span>
         </h3>
 
-        <div className="mt-4 grid max-w-[18rem] auto-rows-auto grid-cols-6 gap-4">
+        <div className="mt-4 flex flex-wrap gap-3 w-full">
           {solidColors.slice(0, 1).map(({ background: solidBackground }) => {
             return (
               <Button

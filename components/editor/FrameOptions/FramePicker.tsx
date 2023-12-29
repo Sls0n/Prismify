@@ -35,14 +35,14 @@ export default function FramePicker() {
   return (
     <>
       <div
-        className={`mb-3 mt-4 flex items-center px-1 md:max-w-[70%] 
+        className={`mb-3 mt-4 flex items-center px-1 md:max-w-full 
         ${selectedImage ? '' : 'pointer-events-none opacity-40'}
       `}
       >
         <h1 className="text-[0.85rem]">Browser frames:</h1>
       </div>
 
-      <div className="row-auto mt-2 grid grid-cols-3 gap-x-2 gap-y-6 px-1 md:max-w-[95%]">
+      <div className="w-full mt-2 grid grid-cols-3 flex-wrap gap-x-2.5 gap-y-6">
         <FrameContainer
           text="None"
           onClick={() => {
@@ -116,7 +116,7 @@ export default function FramePicker() {
 
       {browserFrame !== 'Shadow' && (
         <div
-          className={`mt-8 flex flex-col gap-3 px-1 md:max-w-[70%] ${
+          className={`mt-8 flex flex-col gap-3 px-1 md:max-w-full ${
             selectedImage ? '' : 'pointer-events-none opacity-40'
           }`}
         >
@@ -158,7 +158,7 @@ export function FrameContainer({
     <div className={`${selectedImage ? '' : 'pointer-events-none opacity-40'}`}>
       <button
         onClick={onClick}
-        className={`relative h-16 w-[5.5rem] overflow-hidden whitespace-nowrap rounded-lg border border-border/80 bg-gray-300 ring-offset-background transition-colors focus:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
+        className={`relative h-[3.55rem] w-[4.6rem] overflow-hidden whitespace-nowrap rounded-lg border border-border/80 bg-gray-300 ring-offset-background transition-colors focus:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
           browserFrame === text ? 'ring-2 ring-ring ring-offset-2' : ''
         }`}
       >
@@ -177,7 +177,9 @@ export function FrameContainer({
         </div>
       </button>
 
-      <p className="mt-2 text-center text-xs font-medium text-dark">{text}</p>
+      <p className="mt-2 text-center text-[0.75rem] font-medium text-dark">
+        {text.replace('MacOS', 'Mac')}
+      </p>
     </div>
   )
 }

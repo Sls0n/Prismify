@@ -7,14 +7,14 @@ export default function NoiseOptions() {
 
   return (
     <div>
-      <div className="mb-3 mt-4 flex items-center px-1 md:max-w-[70%]">
+      <div className="mb-3 mt-4 flex items-center px-1">
         <h3 className="mb-3 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
           <Grip size={18} />
           <span>Noise</span>
         </h3>
       </div>
 
-      <div className="mb-3 flex gap-4 text-[0.85rem] md:max-w-[70%]">
+      <div className="mb-3 flex gap-4 text-[0.85rem]">
         <Slider
           defaultValue={[0]}
           max={0.8}
@@ -23,6 +23,14 @@ export default function NoiseOptions() {
           value={[noise]}
           onValueChange={(value: number[]) => {
             setNoise(value[0])
+          }}
+          onIncrement={() => {
+            if (noise >= 0.8) return
+            setNoise(noise + 0.05)
+          }}
+          onDecrement={() => {
+            if (noise <= 0) return
+            setNoise(noise - 0.05)
           }}
         />
       </div>

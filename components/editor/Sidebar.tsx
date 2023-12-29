@@ -82,8 +82,8 @@ export default function Sidebar() {
   )
 
   return (
-    <aside className="flex w-[5rem] overflow-x-hidden border-r border-border  md:w-[30rem]">
-      <ul className="relative flex basis-[100%] flex-col items-center gap-6 overflow-y-auto overflow-x-hidden border-border bg-secondaryLight px-4 py-8 dark:border-[#22262b]/60 dark:bg-[#131313] md:max-w-[25%] md:basis-[25%] md:border-r">
+    <aside className="flex w-[5rem] overflow-x-hidden border-r border-border md:w-[25rem]">
+      <ul className="relative flex basis-[100%] flex-col items-center gap-6 overflow-y-auto overflow-x-hidden border-border bg-secondaryLight px-4 py-8 dark:border-[#22262b]/60 dark:bg-[#131313] md:max-w-[28%] md:basis-[28%] md:border-r">
         {sidebarButtons.map((button, index) => (
           <SidebarButton
             key={index}
@@ -93,7 +93,7 @@ export default function Sidebar() {
           />
         ))}
       </ul>
-      <div className="relative hidden h-full w-full flex-col overflow-hidden md:flex dark:bg-[#151515]">
+      <div className="relative hidden h-full w-full flex-col overflow-hidden dark:bg-[#151515] md:flex">
         <SidebarImageSettings />
       </div>
     </aside>
@@ -139,21 +139,21 @@ export function SidebarImageSettings() {
     (state) => state
   )
   return (
-    <ScrollArea type="hover">
-      <div className="flex flex-col px-7 ">
+    <ScrollArea type="scroll">
+      <div className="flex flex-col px-[1.6rem]">
         <div className="flex w-full flex-col py-10">
           <h3 className="mb-8 flex items-center gap-2 text-xs font-semibold uppercase text-primary/70 dark:text-dark/70">
             {sidebarButtons[activeIndex ?? 1].icon}
             <div className="">
               {sidebarButtons[activeIndex ?? 1].text}
 
-              <span className="ml-1 text-[#646464]">/ &nbsp;Layers</span>
+              {/* <span className="ml-1 text-[#646464]">/ &nbsp;Layers</span> */}
             </div>
             <div className="ml-auto flex">
               <Button
                 variant="outline"
                 aria-label="undo"
-                className="ml-auto scale-75 rounded-md px-3 py-1"
+                className="scale-75 rounded-md px-3 py-1"
                 disabled={pastStates.length === 0}
                 onClick={() => undo()}
               >
@@ -163,7 +163,7 @@ export function SidebarImageSettings() {
               <Button
                 variant="outline"
                 aria-label="redo"
-                className="ml-auto scale-75 rounded-md px-3 py-1"
+                className="scale-75 rounded-md px-3 py-1"
                 disabled={futureStates.length === 0}
                 onClick={() => redo()}
               >

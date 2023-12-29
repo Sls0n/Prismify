@@ -16,7 +16,7 @@ import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 
 export default function PositionControl() {
   const { images, setImages } = useImageOptions()
-   const { selectedImage } = useSelectedLayers()
+  const { selectedImage } = useSelectedLayers()
 
   const move = useCallback(
     (deltaX: number, deltaY: number) => {
@@ -87,7 +87,7 @@ export default function PositionControl() {
 
   return (
     <div
-      className={`relative grid h-40 border-spacing-8 grid-cols-3 overflow-hidden rounded-lg border border-border bg-formDark p-1 md:max-w-[70%] [&>*]:cursor-pointer [&>*]:border-dashed [&>*]:border-border [&>*]:transition-colors ${
+      className={`relative grid h-40 border-spacing-8 grid-cols-3 overflow-hidden rounded-lg border border-border bg-formDark p-1 md:max-w-full [&>*]:cursor-pointer [&>*]:border-dashed [&>*]:border-border [&>*]:transition-colors ${
         selectedImage ? '' : 'pointer-events-none opacity-40'
       }`}
     >
