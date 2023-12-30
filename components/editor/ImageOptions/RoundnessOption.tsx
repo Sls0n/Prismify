@@ -57,7 +57,7 @@ export default function RoundnessOption() {
           onValueCommit={() => setShowControls(true)}
           onIncrement={() => {
             if (images.length === 0 || !selectedImage) return
-            if (Number(images[selectedImage - 1]?.style.imageRoundness) >= 1.6)
+            if (Number(images[selectedImage - 1]?.style.imageRoundness) >=5)
               return
             setShowControls(false)
             setImages(

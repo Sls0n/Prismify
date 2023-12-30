@@ -30,11 +30,10 @@ export interface Gradient {
 }
 
 export const qualities = [
-  { quality: '0.5x', value: 0.5 },
-  { quality: '1x', value: 1 },
-  { quality: '1.5x', value: 1.5 },
-  { quality: '2x', value: 2 },
-  { quality: '4x', value: 4 },
+  { quality: '0.5x Low', value: 0.5 },
+  { quality: '1x Default', value: 1 },
+  { quality: '2x QHD', value: 2 },
+  { quality: '4x UHD', value: 4 },
 ]
 
 export const resolutions: Resolution[] = [
@@ -382,25 +381,9 @@ export const gradients: Gradient[] = [
     gradient: 'linear-gradient(var(--gradient-angle), rgb(40,39,42), rgb(116,126,175),rgb(190,141,141))',
   },
   {
-    type: 'Mesh',
-    gradient: 'conic-gradient(at bottom left,#fbcfe8, #4f46e5,#6ee7b7)',
-  },
-  {
     type: 'Normal',
     gradient:
       'linear-gradient(var(--gradient-angle), rgb(142, 211, 217) 15%, rgb(238, 67, 244) 50%, rgb(76, 83, 167) 85%)',
-  },
-  {
-    type: 'Mesh',
-    background: 'rgb(249, 168, 212)',
-    gradient:
-      'radial-gradient(at 95% 85%, rgb(217, 249, 157) 0, transparent 0%), radial-gradient(at 49% 91%, rgb(255, 228, 230) 0, transparent 86%), radial-gradient(at 44% 80%, rgb(126, 34, 206) 0, transparent 25%), radial-gradient(at 62% 12%, rgb(99, 102, 241) 0, transparent 44%), radial-gradient(at 100% 100%, rgb(99, 102, 241) 0, transparent 100%), radial-gradient(at 42% 66%, rgb(253, 164, 175) 0, transparent 66%)',
-  },
-  {
-    type: 'Mesh',
-    background: 'rgb(153, 189, 255)',
-    gradient:
-      'radial-gradient(at 9% 7%, rgb(115, 237, 210) 0px, transparent 50%), radial-gradient(at 41% 63%, rgb(250, 153, 235) 0px, transparent 50%), radial-gradient(at 40% 79%, rgb(242, 74, 183) 0px, transparent 50%), radial-gradient(at 80% 86%, rgb(250, 142, 232) 0px, transparent 50%), radial-gradient(at 28% 23%, rgb(211, 123, 224) 0px, transparent 50%), radial-gradient(at 82% 83%, rgb(219, 231, 116) 0px, transparent 50%), radial-gradient(at 64% 38%, rgb(146, 114, 233) 0px, transparent 50%)',
   },
   {
     type: 'Mesh',

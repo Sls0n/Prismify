@@ -99,13 +99,13 @@ export default function Canvas() {
   if (aspectRatio < 1) {
     style = { ...style, width: 'auto', height: '100%' }
   } else if (aspectRatio >= 0.95 && aspectRatio <= 1.1) {
-    const containerSize = '100vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 84vmin (it just makes it a bit smaller)
+    const containerSize = '84vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 84vmin (it just makes it a bit smaller)
     style = {
       ...style,
       width: containerSize,
     }
   } else if (aspectRatio >= 0.9 && aspectRatio <= 1.6) {
-    const containerSize = '100vmin'
+    const containerSize = '90vmin'
     // const containerSize = '100vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio
     style = {
       ...style,
@@ -208,7 +208,7 @@ export default function Canvas() {
         <div
           onWheel={handleScroll}
           style={parentScaleStyle}
-          className="relative flex h-full w-full flex-col items-center justify-start overflow-x-auto"
+          className="relative flex h-full w-full flex-col items-center justify-center overflow-x-auto"
         >
           <div
             className={
@@ -259,7 +259,7 @@ export default function Canvas() {
               <TipTap />
             </div>
           </div>
-          <ScrollArea className="mt-6 w-full" type="auto">
+          <ScrollArea className="md:hidden mt-6 w-full" type="auto">
             <div className="w-full max-w-[90%] md:hidden">
               {activeIndex === 0 && <CanvasOptions />}
               {activeIndex === 1 && <ImageOptions />}

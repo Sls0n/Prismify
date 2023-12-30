@@ -42,7 +42,7 @@ export default function FramePicker() {
         <h1 className="text-[0.85rem]">Browser frames:</h1>
       </div>
 
-      <div className="w-full mt-2 grid grid-cols-3 flex-wrap gap-x-2.5 gap-y-6">
+      <div className="mt-2 grid w-full grid-cols-3 flex-wrap gap-x-2.5 gap-y-6">
         <FrameContainer
           text="None"
           onClick={() => {
@@ -114,7 +114,7 @@ export default function FramePicker() {
         </FrameContainer>
       </div>
 
-      {browserFrame !== 'Shadow' && (
+      {browserFrame !== 'Shadow' && browserFrame !== 'None' && (
         <div
           className={`mt-8 flex flex-col gap-3 px-1 md:max-w-full ${
             selectedImage ? '' : 'pointer-events-none opacity-40'

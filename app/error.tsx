@@ -1,12 +1,10 @@
 'use client'
 
 /* eslint-disable react/no-unescaped-entities */
-import { Button } from '@/components/ui/Button'
+import { Button, buttonVariants } from '@/components/ui/Button'
+import { cn } from '@/utils/buttonUtils'
 import { MailWarning, RotateCcw } from 'lucide-react'
 import { useEffect } from 'react'
-import { buttonVariants } from '@/components/ui/Button'
-import { cn } from '@/utils/buttonUtils'
-import { MoveLeft } from 'lucide-react'
 
 export default function Error({
   error,

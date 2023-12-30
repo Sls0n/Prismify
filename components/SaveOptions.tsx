@@ -1,4 +1,4 @@
-import { Clipboard, Download, Eye } from 'lucide-react'
+import { ChevronDown, Clipboard, Download, Eye } from 'lucide-react'
 import { Button } from './ui/Button'
 import { saveAs } from 'file-saver'
 import { useImageQualityStore } from '@/store/use-image-quality'
@@ -274,9 +274,10 @@ export default function SaveOptions() {
       })
     }
   }
+
   return (
     <>
-      <Popover>
+      {/* <Popover>
         <PopoverTrigger asChild>
           <Button
             className="text-[0.8rem] font-medium"
@@ -323,7 +324,7 @@ export default function SaveOptions() {
             </Button>
           ))}
         </PopoverContent>
-      </Popover>
+      </Popover> */}
 
       {/* <Button
         className="hidden text-[0.85rem] font-medium xl:inline-flex"
@@ -339,34 +340,105 @@ export default function SaveOptions() {
         size="sm"
         onClick={copyImageToClipBoardOtherBrowsers}
       >
-        <Clipboard size={18} className="mr-0 sm:mr-2" />
-        <p className="hidden sm:block">
-          Copy <span className="hidden lg:inline-block">as PNG</span>
-        </p>
+        <Clipboard size={18} className="mr-0 text-dark/80 sm:mr-2" />
+        <p className="hidden text-dark/80 sm:block">Copy</p>
       </Button>
-      <Button
-        onClick={() => {
-          snapshotCreator()
-            .then((blob) => {
-              saveAs(blob, `prismify-render-${Date.now()}`)
-            })
-            .catch((err) => {
-              toast({
-                variant: 'destructive',
-                title: 'Error!',
-                description: err.message,
+      <div className="z-50 flex h-fit overflow-hidden rounded-xl border border-[rgba(99,102,241,0.15)]">
+        <Button
+          onClick={() => {
+            snapshotCreator()
+              .then((blob) => {
+                saveAs(blob, `prismify-render-${Date.now()}`)
               })
-            })
-        }}
-        className="text-[0.8rem] font-medium"
-        variant="stylish"
-        size="sm"
-      >
-        <Download size={18} className="mr-0 sm:mr-2" />
-        <p className="hidden sm:block">
-          Save <span className="hidden lg:inline-block">image</span>
-        </p>
-      </Button>
+              .catch((err) => {
+                toast({
+                  variant: 'destructive',
+                  title: 'Error!',
+                  description: err.message,
+                })
+              })
+          }}
+          className="rounded-none border-b-0 border-l-0 border-r-[1.5px] border-t-0 border-[rgba(99,102,241,0.15)] px-2 text-[0.8rem] font-medium"
+          variant="stylish"
+          size="sm"
+        >
+          <Download size={18} className="mr-0 sm:mr-2" />
+          <p className="hidden font-medium sm:block">Save</p>
+        </Button>
+
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              className="rounded-none border-b-0 border-l-0 border-r-[1.5px] border-t-0 border-[rgba(99,102,241,0.15)] px-2.5 text-[0.8rem] font-medium"
+              variant="stylish"
+              size="sm"
+            >
+              {quality}x
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            align="end"
+            className="mb-4 flex w-full min-w-[15rem] max-w-[15rem] flex-col gap-4 rounded-lg border border-border/60 dark:bg-[#151515]"
+          >
+            <p className="text-sm font-medium text-dark/90">Quality</p>
+            <div className="grid w-full grid-cols-2 gap-2.5">
+              {qualities.map((q) => (
+                <Button
+                  variant={q.value === quality ? 'stylish' : 'outline'}
+                  key={q.quality}
+                  onClick={() => setQuality(q.value)}
+                  className="rounded-lg border border-border/80 text-[0.8rem] font-medium"
+                >
+                  {q.quality.split('x')[0]}x &mdash;{' '}
+                  <span
+                    className={`${q.value === quality ? '' : 'text-dark/60'}`}
+                  >
+                    {q.quality.split('x')[1]}
+                  </span>
+                </Button>
+              ))}
+            </div>
+          </PopoverContent>
+        </Popover>
+
+        <Popover>
+          <PopoverTrigger asChild>
+            <Button
+              className="flex items-center justify-center rounded-none border-none px-2 text-[0.8rem] font-medium"
+              variant="stylish"
+              size="sm"
+            >
+              <ChevronDown size={18} className="mr-0" />
+            </Button>
+          </PopoverTrigger>
+          <PopoverContent
+            align="end"
+            className="mb-4 flex w-full min-w-[15rem] max-w-[15rem] flex-col gap-4 rounded-lg border border-border/60 dark:bg-[#151515]"
+          >
+            <p className="text-sm font-medium text-dark/90">Image formats</p>
+            <div className="grid w-full grid-cols-2 gap-2.5">
+              {(
+                ['PNG', 'JPG', 'WEBP', 'SVG'] as (
+                  | 'PNG'
+                  | 'JPG'
+                  | 'WEBP'
+                  | 'SVG'
+                )[]
+              ).map((file) => (
+                <Button
+                  variant={file === fileType ? 'stylish' : 'outline'}
+                  key={file}
+                  // disabled={file === 'SVG'}
+                  onClick={() => setFileType(file)}
+                  className="rounded-lg border border-border/80 text-[0.8rem] font-medium"
+                >
+                  .{file}
+                </Button>
+              ))}
+            </div>
+          </PopoverContent>
+        </Popover>
+      </div>
     </>
   )
 }

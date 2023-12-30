@@ -30,6 +30,7 @@ import SaveOptions from './SaveOptions'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import SpotlightButton from './ui/SpotlightButton'
 import { useImageOptions } from '@/store/use-image-options'
+import ThemeButtonIcon from './ui/ThemeButtonIcon'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -102,13 +103,13 @@ export default function Navbar({
   return (
     <header className="fixed inset-x-0 top-0 z-[10] flex h-[4.5rem] items-center border-b border-border bg-[#131313] px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-between">
-        <div className="flex items-center gap-8">
+        <nav className="flex items-center gap-8">
           {/* Can add hamburger or something here */}
           <Link
             href="/"
             className={cn(
-              buttonVariants({ variant: 'ghost' }),
-              'inline-flex items-center space-x-3'
+              buttonVariants({ variant: 'noHoverGhost' }),
+              ' inline-flex items-center gap-3 px-0'
             )}
           >
             <Image
@@ -119,28 +120,29 @@ export default function Navbar({
               alt="prismify logo"
               priority
             />
-            <span className="hidden text-lg font-medium -tracking-wide text-primary dark:font-normal dark:text-dark sm:font-semibold md:block">
+            <p className="hidden bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-lg mr-3 font-semibold tracking-tight text-transparent md:block ">
               Prismify
-              <span className="ml-2 inline-flex items-center rounded-md bg-indigo-500/10 px-2 py-1 text-xs font-medium text-purple shadow-sm ring-1 ring-inset ring-indigo-500/20 dark:bg-indigo-500/10">
+              {/* <span className="ml-2 inline-flex items-center rounded-md bg-indigo-500/10 px-2 py-1 text-xs font-medium text-purple shadow-sm ring-1 ring-inset ring-indigo-500/20 dark:bg-indigo-500/10">
                 Beta
-              </span>
-            </span>
+              </span> */}
+            </p>
+
+            <div className="dark:bg-border-dark h-6 w-[2px] bg-border" />
           </Link>
-        </div>
+
+          <Link href="/templates">
+            <p className="text-sm font-medium text-dark/70">Templates</p>
+          </Link>
+
+          <Link href="/blogs">
+            <p className="text-sm font-medium text-dark/70">Articles</p>
+          </Link>
+        </nav>
         {/* add a vertical separator */}
-        <nav className="flex items-center gap-10 ">
-          <div className="flex">
-            {/* <ThemeButtonIcon /> */}
-            {/* <a
-              href="https://www.github.com/Sls0n/prismify"
-              target="_blank"
-              rel="noopener noreferrer"
-              className={cn(buttonVariants({ variant: 'ghost' }), 'px-3 py-2')}
-            >
-              <Github className="h-[1.2rem] w-[1.2rem] text-dark/80 " />
-              <span className="sr-only">Go to Github repository</span>
-            </a> */}
-          </div>
+        <div className="flex items-center gap-10 ">
+          {/* <div className="flex">
+            <ThemeButtonIcon />
+          </div> */}
 
           {/* <div className="dark:bg-border-dark h-7 w-[2px] bg-border" /> */}
           <div className="flex items-center gap-2">
@@ -159,7 +161,7 @@ export default function Navbar({
                           size="sm"
                           variant="default"
                         >
-                          <p>Sign In</p>
+                          <p>Login</p>
                           <LogIn size={18} className="flex-center ml-2" />
                         </Button>
                       </DialogTrigger>
@@ -302,7 +304,7 @@ export default function Navbar({
               </>
             )}
           </div>
-        </nav>
+        </div>
       </div>
     </header>
   )

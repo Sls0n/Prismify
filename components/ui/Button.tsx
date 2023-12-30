@@ -5,26 +5,28 @@ import { ButtonHTMLAttributes } from 'react'
 import { forwardRef } from 'react'
 
 const buttonVariants = cva(
-  'inline-flex items-center justify-center rounded-lg text-sm font-medium ring-offset-background transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 focus:z-10',
+  'inline-flex items-center justify-center rounded-xl text-sm font-medium ring-offset-background transition-colors whitespace-nowrap focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 focus:z-10',
 
   {
     variants: {
       variant: {
         default:
-          'bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#8e8ece] text-white h-10 px-5 py-3 rounded-lg font-medium',
+          'bg-gradient-to-br from-[#898AEB]/80 via-[#898dd9]/80 to-[#8e8ece]/80 text-white h-10 px-5 py-3  font-medium',
         secondary:
-          'text-primary dark:text-dark h-10 px-4 py-2 rounded-lg font-medium',
+          'text-primary dark:text-dark h-10 px-4 py-2  font-medium',
         outline:
-          'text-primary border border-border/80 dark:text-[#c2c3c9] h-10 px-4 py-2 rounded-lg bg-formDark font-normal',
+          'text-primary border border-border/80 dark:text-[#c2c3c9] h-10 px-4 py-2  bg-formDark font-normal',
         ghost:
-          'text-primary dark:text-dark hover:bg-[#f5f7fa] dark:hover:bg-formDark h-10 px-4 py-2 rounded-lg font-medium',
+          'text-primary dark:text-dark hover:bg-[#f5f7fa] dark:hover:bg-formDark h-10 px-4 py-2 rounded-none font-medium',
+        noHoverGhost:
+          'text-primary dark:text-dark h-10 px-4 py-2 rounded-none font-medium',
         stylish:
-          'rounded-lg bg-indigo-500/10 px-3 py-1 text-sm font-normal leading-6 text-purple border border-indigo-500/10', // ring-1 ring-inset ring-indigo-500/20
+          ' bg-indigo-500/10 px-3 py-1 text-sm font-normal leading-6 text-purple border border-indigo-500/10', // ring-1 ring-inset ring-indigo-500/20
         destructive:
-          'rounded-lg px-3 py-1 text-sm font-medium leading-6 bg-red-500/10 text-red-500 ring-1 ring-red-500/10',
-        icon: 'text-primary bg-[#E0E0EC] dark:bg-formDark border border-border dark:text-dark h-12 px-5 py-2.5 rounded-lg',
+          ' px-3 py-1 text-sm font-medium leading-6 bg-red-500/10 text-red-500 ring-1 ring-red-500/10',
+        icon: 'text-primary bg-[#E0E0EC] dark:bg-formDark border border-border dark:text-dark h-12 px-5 py-2.5 ',
         activeIcon:
-          'text-white bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#7d75d0] h-12 px-5 py-2.5 rounded-lg font-medium border-0 border-border dark:text-[#F2F3F9] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+          'text-white bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#7d75d0] h-12 px-5 py-2.5  font-medium border-0 border-border dark:text-[#F2F3F9] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
       },
       size: {
         'x-lg': 'h-13 py-[0.8rem] px-[1.1rem]',
