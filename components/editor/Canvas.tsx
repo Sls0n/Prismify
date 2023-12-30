@@ -74,11 +74,12 @@ export default function Canvas() {
   const [width, height]: number[] = resolution.split('x').map(Number)
 
   const aspectRatio = width / height
+
   console.log(`Current DOM resoltion: ${exactDomResolution}`)
+
   let style: CSSProperties = {
     aspectRatio,
     backgroundImage: `var(--gradient-bg)`,
-
     borderRadius: `${canvasRoundness}rem`,
   }
 
@@ -96,21 +97,10 @@ export default function Canvas() {
     }
   }
 
-  if (aspectRatio < 1) {
+  if (aspectRatio <= 1) {
+    // After the screen width is less than 1100px then width to 100% and height to auto
     style = { ...style, width: 'auto', height: '100%' }
-  } else if (aspectRatio >= 0.95 && aspectRatio <= 1.1) {
-    const containerSize = '85vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 84vmin (it just makes it a bit smaller)
-    style = {
-      ...style,
-      width: containerSize,
-    }
-  } else if (aspectRatio >= 0.9 && aspectRatio <= 1.6) {
-    const containerSize = '95vmin'
-    style = {
-      ...style,
-      width: containerSize,
-    }
-  } else if (aspectRatio > 1) {
+  } else {
     style = { ...style, width: '100%', height: 'auto' }
   }
 
@@ -129,11 +119,6 @@ export default function Canvas() {
               domHeight * dynamicScaleFactor * quality
             }`
           )
-          // if (aspectRatio >= 0 && aspectRatio <= 1.75) {
-          //   setShouldFloat(true)
-          // } else {
-          //   setShouldFloat(false)
-          // }
           if (aspectRatio <= 1.1) {
             setShouldFloat(true)
           } else {
@@ -199,83 +184,61 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        className="relative flex h-full w-full flex-1 overflow-hidden bg-[#111] px-4 py-4 md:px-8 md:py-8 lg:px-12 lg:py-12"
+        className="relative grid h-full w-full place-items-center overflow-hidden bg-[#111] p-14"
+        style={parentScaleStyle}
+        onWheel={handleScroll}
       >
-        {/* <div className="flex h-14 w-full items-center border border-border">
-          TODO: ADD UPPER SETTINGS
-        </div> */}
         <div
-          onWheel={handleScroll}
-          style={parentScaleStyle}
-          className="relative flex h-full w-full flex-col items-center justify-start lg:justify-center"
+          className={
+            'canvas-container relative flex items-center justify-center overflow-hidden'
+          }
+          ref={screenshotRef}
+          id="canvas-container"
+          style={style}
         >
-          <div
-            className={
-              'canvas-container relative flex items-center justify-center overflow-hidden'
-            }
-            ref={screenshotRef}
-            id="canvas-container"
-            style={style}
-          >
-            {/* <div className="pointer-events-none absolute bottom-[3%] left-[2%] z-50">
-              <motion.div
-                animate={{
-                  opacity: showControls && isMultipleTargetSelected ? 1 : 0,
-                  y: showControls && isMultipleTargetSelected ? 0 : 20,
-                }}
-                transition={{
-                  duration: 0.2,
-                }}
-                className="rounded-lg bg-sidebar/80 p-2 text-center text-xs text-dark backdrop-blur-md md:text-sm "
-              >
-                <p>
-                  Press <span className="font-semibold">ESC</span> to deselect.
-                </p>
-              </motion.div>
-            </div> */}
-            {imageBackground && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                draggable={false}
-                className={`pointer-events-none absolute z-[0] h-full w-full object-cover`}
-                src={imageBackground}
-                alt="background image"
-              />
-            )}
-            <Noise />
-            {showControls && <MoveableComponent id={`${selectedImage}`} />}
-            {showTextControls && !isEditable && (
-              <TiptapMoveable id={`text-${selectedText}`} />
-            )}
+          {imageBackground && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              draggable={false}
+              className={`pointer-events-none absolute z-[0] h-full w-full object-cover`}
+              src={imageBackground}
+              alt="background image"
+            />
+          )}
+          <Noise />
+          {showControls && <MoveableComponent id={`${selectedImage}`} />}
+          {showTextControls && !isEditable && (
+            <TiptapMoveable id={`text-${selectedText}`} />
+          )}
 
-            <div
-              className="selecto-area relative flex h-full min-h-[15rem] w-full place-items-center items-center justify-center"
-              style={{
-                scale,
-              }}
-            >
-              <ImageUpload />
-              <TipTap />
-            </div>
+          <div
+            className="selecto-area relative flex h-full min-h-[15rem] w-full place-items-center items-center justify-center"
+            style={{
+              scale,
+            }}
+          >
+            <ImageUpload />
+            <TipTap />
           </div>
-          <ScrollArea className="mt-6 w-full md:hidden" type="auto">
-            <div className="w-full max-w-[90%] md:hidden">
-              {activeIndex === 0 && <CanvasOptions />}
-              {activeIndex === 1 && <ImageOptions />}
-              {activeIndex === 2 && <BackgroundOptions />}
-              {activeIndex === 3 && <FrameOptions />}
-              {activeIndex === 4 && <TextOptions />}
-              {activeIndex === 5 && <PerspectiveOptions />}
-              {activeIndex === 6 && <PositionOptions />}
-            </div>
-          </ScrollArea>
         </div>
-        <SelectoComponent />
+        <ScrollArea className="mt-6 w-full md:hidden" type="auto">
+          <div className="w-full max-w-[90%] md:hidden">
+            {activeIndex === 0 && <CanvasOptions />}
+            {activeIndex === 1 && <ImageOptions />}
+            {activeIndex === 2 && <BackgroundOptions />}
+            {activeIndex === 3 && <FrameOptions />}
+            {activeIndex === 4 && <TextOptions />}
+            {activeIndex === 5 && <PerspectiveOptions />}
+            {activeIndex === 6 && <PositionOptions />}
+          </div>
+        </ScrollArea>
         {/* <FloatingOptions /> */}
       </section>
 
+      <SelectoComponent />
+
       {attribution.name !== null && (
-        <div className="absolute bottom-2 right-4 rounded-md bg-sidebar/80 p-2 text-[0.85rem] text-dark/70 backdrop-blur-md">
+        <div className="absolute bottom-2 right-4 rounded-md bg-[#151515] p-2 text-[0.85rem] text-dark/70 backdrop-blur-md ">
           Img by{' '}
           <a
             className="text-blue-500"
