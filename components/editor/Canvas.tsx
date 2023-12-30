@@ -99,14 +99,13 @@ export default function Canvas() {
   if (aspectRatio < 1) {
     style = { ...style, width: 'auto', height: '100%' }
   } else if (aspectRatio >= 0.95 && aspectRatio <= 1.1) {
-    const containerSize = '84vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 84vmin (it just makes it a bit smaller)
+    const containerSize = '85vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 84vmin (it just makes it a bit smaller)
     style = {
       ...style,
       width: containerSize,
     }
   } else if (aspectRatio >= 0.9 && aspectRatio <= 1.6) {
-    const containerSize = '90vmin'
-    // const containerSize = '100vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio
+    const containerSize = '95vmin'
     style = {
       ...style,
       width: containerSize,
@@ -200,7 +199,7 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        className="relative w-full flex h-full flex-1 bg-[#111] px-4 py-4 md:px-8 md:py-8 lg:px-12 lg:py-12 overflow-x-auto"
+        className="relative flex h-full w-full flex-1 overflow-hidden bg-[#111] px-4 py-4 md:px-8 md:py-8 lg:px-12 lg:py-12"
       >
         {/* <div className="flex h-14 w-full items-center border border-border">
           TODO: ADD UPPER SETTINGS
@@ -208,7 +207,7 @@ export default function Canvas() {
         <div
           onWheel={handleScroll}
           style={parentScaleStyle}
-          className="relative flex h-full w-full flex-col items-center justify-center overflow-x-auto"
+          className="relative flex h-full w-full flex-col items-center justify-start lg:justify-center"
         >
           <div
             className={
@@ -259,7 +258,7 @@ export default function Canvas() {
               <TipTap />
             </div>
           </div>
-          <ScrollArea className="md:hidden mt-6 w-full" type="auto">
+          <ScrollArea className="mt-6 w-full md:hidden" type="auto">
             <div className="w-full max-w-[90%] md:hidden">
               {activeIndex === 0 && <CanvasOptions />}
               {activeIndex === 1 && <ImageOptions />}
