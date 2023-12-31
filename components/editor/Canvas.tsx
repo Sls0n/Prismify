@@ -16,7 +16,7 @@ import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useImageQualityStore } from '@/store/use-image-quality'
 import { useMoveable } from '@/store/use-moveable'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
-import React, { CSSProperties, useEffect, useRef } from 'react'
+import React, { CSSProperties, useEffect, useRef, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { ScrollArea } from '../ui/ScrollArea'
 import ImageUpload from './ImageUpload'
@@ -26,6 +26,7 @@ import SelectoComponent from './SelectoComponent'
 import TipTap from './Tiptap'
 import TiptapMoveable from './TiptapMoveable'
 import dynamic from 'next/dynamic'
+import { useColorExtractor } from '@/store/use-color-extractor'
 
 const MoveableComponent = dynamic(
   () => import('./MoveableComponent').then((mod) => mod.default),
@@ -33,6 +34,7 @@ const MoveableComponent = dynamic(
 )
 
 export default function Canvas() {
+  const [isOverflowing, setIsOverflowing] = useState<boolean>(false)
   const activeIndex = useStore(
     useActiveIndexStore,
     (state) => state.activeIndex
@@ -59,6 +61,7 @@ export default function Canvas() {
   } = useImageOptions()
   const { selectedImage, selectedText, setSelectedImage, enableCrop } =
     useSelectedLayers()
+  const { imagesCheck } = useColorExtractor()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
   const {
@@ -97,12 +100,12 @@ export default function Canvas() {
     }
   }
 
-  if (aspectRatio <= 1) {
-    // After the screen width is less than 1100px then width to 100% and height to auto
-    style = { ...style, width: 'auto', height: '100%' }
-  } else {
-    style = { ...style, width: '100%', height: 'auto' }
-  }
+  // if (aspectRatio <= 1) {
+  //   // After the screen width is less than 1100px then width to 100% and height to auto
+  //   style = { ...style, width: 'auto', height: '100%' }
+  // } else {
+  //   style = { ...style, width: '100%', height: 'auto' }
+  // }
 
   useEffect(() => {
     const element = screenshotRef.current
@@ -119,11 +122,6 @@ export default function Canvas() {
               domHeight * dynamicScaleFactor * quality
             }`
           )
-          if (aspectRatio <= 1.1) {
-            setShouldFloat(true)
-          } else {
-            setShouldFloat(false)
-          }
         }
       })
 
@@ -136,8 +134,91 @@ export default function Canvas() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolution, quality])
 
+  useEffect(
+    () => {
+      const parentEl = parentRef.current
+      const childEl = screenshotRef.current
+
+      if (parentEl && childEl) {
+        if (parentEl && childEl) {
+          if (
+            parentEl.clientWidth <= childEl.clientWidth ||
+            parentEl.clientHeight <= childEl.clientHeight
+          ) {
+            console.log('is overflowing')
+
+            if (
+              childEl.classList.contains('w-auto') &&
+              childEl.classList.contains('h-full')
+            ) {
+              childEl.classList.remove('w-auto')
+              childEl.classList.add('w-full')
+              childEl.classList.add('h-auto')
+              childEl.classList.remove('h-full')
+            } else if (
+              childEl.classList.contains('w-full') &&
+              childEl.classList.contains('h-auto')
+            ) {
+              childEl.classList.remove('w-full')
+              childEl.classList.add('w-auto')
+              childEl.classList.add('h-full')
+              childEl.classList.remove('h-auto')
+            }
+          }
+        }
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [resolution, quality, imagesCheck]
+  )
+
+  // if the screen width is less than 768px then set the scrollScale to 1
+  useEffect(() => {
+    const handleResize = () => {
+      setScrollScale(1)
+
+      const parentEl = parentRef.current
+      const childEl = screenshotRef.current
+
+      if (parentEl && childEl) {
+        if (
+          parentEl.clientWidth <= childEl.clientWidth ||
+          parentEl.clientHeight <= childEl.clientHeight
+        ) {
+          console.log('is overflowing')
+
+          if (
+            childEl.classList.contains('w-auto') &&
+            childEl.classList.contains('h-full')
+          ) {
+            childEl.classList.remove('w-auto')
+            childEl.classList.add('w-full')
+            childEl.classList.add('h-auto')
+            childEl.classList.remove('h-full')
+          } else if (
+            childEl.classList.contains('w-full') &&
+            childEl.classList.contains('h-auto')
+          ) {
+            childEl.classList.remove('w-full')
+            childEl.classList.add('w-auto')
+            childEl.classList.add('h-full')
+            childEl.classList.remove('h-auto')
+          }
+        }
+      }
+    }
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleScroll = (e: React.WheelEvent<HTMLDivElement>) => {
-    if (typeof window !== 'undefined' && window.innerWidth <= 700) return
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      return
+    }
     if (enableCrop) return
     if (e.deltaY < 0) {
       // Scrolling up
@@ -184,14 +265,19 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        className="relative grid h-full w-full place-items-center overflow-hidden bg-[#111] p-14"
+        className={`relative grid h-full w-full place-items-center overflow-hidden bg-[#111] ${
+          aspectRatio <= 1 ? 'p-12' : 'p-12'
+        }
+        `}
         style={parentScaleStyle}
         onWheel={handleScroll}
       >
         <div
-          className={
-            'canvas-container relative flex items-center justify-center overflow-hidden'
-          }
+          className={`canvas-container relative flex items-center justify-center overflow-hidden ${
+            aspectRatio <= 1
+              ? 'h-auto w-full lg:h-full lg:w-auto'
+              : 'h-auto w-full'
+          }`}
           ref={screenshotRef}
           id="canvas-container"
           style={style}

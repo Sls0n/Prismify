@@ -8,12 +8,11 @@ module.exports = {
     container: {
       center: true,
       padding: '2rem',
-      screens: {
-        'xlg': '1150px',
-        '2xl': '1400px',
-      },
     },
     extend: {
+      screens: {
+        xlg: '1100px'
+      },
       backgroundColor: {
         primary: '#FBFBFA',
         secondaryLight: '#F1F4F4',

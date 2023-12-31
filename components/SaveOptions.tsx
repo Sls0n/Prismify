@@ -277,71 +277,14 @@ export default function SaveOptions() {
 
   return (
     <>
-      {/* <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            className="text-[0.8rem] font-medium"
-            variant="icon"
-            size="sm"
-          >
-            {quality}x
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="mb-4 flex w-fit flex-wrap gap-2.5 p-4">
-          {qualities.map((q) => (
-            <Button
-              variant={q.value === quality ? 'stylish' : 'outline'}
-              key={q.quality}
-              onClick={() => setQuality(q.value)}
-            >
-              {q.quality}
-            </Button>
-          ))}
-        </PopoverContent>
-      </Popover>
-
-      <Popover>
-        <PopoverTrigger asChild>
-          <Button
-            className="text-[0.8rem] font-medium"
-            variant="icon"
-            size="sm"
-          >
-            {fileType}
-          </Button>
-        </PopoverTrigger>
-        <PopoverContent className="mb-4 flex w-fit flex-wrap gap-2.5 p-4">
-          {(
-            ['PNG', 'JPG', 'WEBP', 'SVG'] as ('PNG' | 'JPG' | 'WEBP' | 'SVG')[]
-          ).map((file) => (
-            <Button
-              variant={file === fileType ? 'stylish' : 'outline'}
-              key={file}
-              // disabled={file === 'SVG'}
-              onClick={() => setFileType(file)}
-            >
-              {file}
-            </Button>
-          ))}
-        </PopoverContent>
-      </Popover> */}
-
-      {/* <Button
-        className="hidden text-[0.85rem] font-medium xl:inline-flex"
-        variant="icon"
-        size="sm"
-      >
-        <Eye size={18} className="mr-2" />
-        <p>Preview</p>
-      </Button> */}
       <Button
         className="w-fit text-[0.8rem] font-medium"
         variant="icon"
         size="sm"
         onClick={copyImageToClipBoardOtherBrowsers}
       >
-        <Clipboard size={18} className="mr-0 text-dark/80 sm:mr-2" />
-        <p className="hidden text-dark/80 sm:block">Copy</p>
+        <Clipboard size={18} className="mr-0 text-dark/80 lg:mr-2" />
+        <p className="hidden text-dark/80 lg:block">Copy</p>
       </Button>
       <div className="z-50 flex h-fit overflow-hidden rounded-xl border border-[rgba(99,102,241,0.15)]">
         <Button
@@ -362,8 +305,8 @@ export default function SaveOptions() {
           variant="stylish"
           size="sm"
         >
-          <Download size={18} className="mr-0 sm:mr-2" />
-          <p className="hidden font-medium sm:block">Save</p>
+          <Download size={18} className="mr-0 lg:mr-2" />
+          <p className="hidden font-medium lg:block">Save</p>
         </Button>
 
         <Popover>

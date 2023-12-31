@@ -120,21 +120,21 @@ export default function Navbar({
               alt="prismify logo"
               priority
             />
-            <p className="hidden bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-lg mr-3 font-semibold tracking-tight text-transparent md:block ">
+            <p className="mr-3 hidden bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-lg font-semibold tracking-tight text-transparent md:block ">
               Prismify
               {/* <span className="ml-2 inline-flex items-center rounded-md bg-indigo-500/10 px-2 py-1 text-xs font-medium text-purple shadow-sm ring-1 ring-inset ring-indigo-500/20 dark:bg-indigo-500/10">
                 Beta
               </span> */}
             </p>
 
-            <div className="dark:bg-border-dark h-6 w-[2px] bg-border" />
+            <div className="dark:bg-border-dark hidden h-6 w-[2px] bg-border md:block" />
           </Link>
 
-          <Link href="/templates">
+          <Link className="hidden md:flex" href="/templates">
             <p className="text-sm font-medium text-dark/70">Templates</p>
           </Link>
 
-          <Link href="/blogs">
+          <Link className="hidden md:flex" href="/blogs">
             <p className="text-sm font-medium text-dark/70">Articles</p>
           </Link>
         </nav>
@@ -161,8 +161,8 @@ export default function Navbar({
                           size="sm"
                           variant="default"
                         >
-                          <p>Login</p>
-                          <LogIn size={18} className="flex-center ml-2" />
+                          <p className="hidden md:block">Login</p>
+                          <LogIn size={18} className="flex-center md:ml-2" />
                         </Button>
                       </DialogTrigger>
 
@@ -240,7 +240,7 @@ export default function Navbar({
 
                       <div className="flex translate-y-[-1px] items-center justify-center gap-1.5  truncate font-medium capitalize text-primary/70 dark:text-dark/80 md:text-base">
                         <span className="sr-only">Logged in as</span>
-                        <span className="text-sm">
+                        <span className="hidden text-sm md:inline">
                           {username?.split(' ')[0]}
                         </span>
 
