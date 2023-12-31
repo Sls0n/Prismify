@@ -278,7 +278,7 @@ export default function Canvas() {
       <section
         ref={parentRef}
         className={`relative flex h-full w-full flex-col overflow-hidden bg-[#111] md:grid md:place-items-center ${
-          aspectRatio <= 1 ? 'p-8 md:p-16' : 'p-8 md:p-16'
+          aspectRatio <= 1 ? 'p-4 md:p-8' : 'p-4 md:p-8'
         }
         `}
         style={parentScaleStyle}
