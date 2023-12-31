@@ -1,12 +1,11 @@
 import PopupColorPicker from '@/components/PopupColorPicker'
 import { Switch } from '@/components/ui/Switch'
 import { useFrameOptions } from '@/store/use-frame-options'
-import { useSelectedLayers } from '@/store/use-image-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { Settings2 } from 'lucide-react'
 
 export default function MiscFrameOptions() {
   const {
-    browserFrame,
     setShowSearchBar,
     setShowStroke,
     macOsDarkColor,
@@ -22,6 +21,9 @@ export default function MiscFrameOptions() {
     setHasButtonColor,
   } = useFrameOptions()
   const { selectedImage } = useSelectedLayers()
+  const { images } = useImageOptions()
+
+  const browserFrame = selectedImage ? images[selectedImage - 1]?.frame : 'None'
 
   if (browserFrame !== 'None')
     return (

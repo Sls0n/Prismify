@@ -36,8 +36,7 @@ const ImageUpload = () => {
   const { exactDomResolution } = useResizeCanvas()
   const { width: exactDomWidth, height: exactDomHeight } =
     splitWidthHeight(exactDomResolution)
-  const { browserFrame, frameHeight, showStroke, arcDarkMode } =
-    useFrameOptions()
+  const { frameHeight, showStroke, arcDarkMode } = useFrameOptions()
   const { imagesCheck } = useColorExtractor()
 
   useEffect(() => {
@@ -132,7 +131,7 @@ const ImageUpload = () => {
                               image.style.shadowColor,
                               image.style.shadowOpacity
                             )}${
-                              browserFrame === 'Shadow'
+                              image.frame === 'Shadow'
                                 ? ',11px 11px rgba(0,0,0,0.8)'
                                 : ''
                             }`
@@ -143,14 +142,14 @@ const ImageUpload = () => {
                               image.style.shadowColor,
                               image.style.shadowOpacity
                             )}${
-                              browserFrame === 'Shadow'
+                              image.frame === 'Shadow'
                                 ? ',11px 11px rgba(0,0,0,0.8)'
                                 : ''
                             }`,
 
                       padding:
-                        browserFrame !== 'None'
-                          ? browserFrame === 'Arc'
+                        image.frame !== 'None'
+                          ? image.frame === 'Arc'
                             ? frameHeight === 'small'
                               ? '10px'
                               : frameHeight === 'medium'
@@ -160,22 +159,22 @@ const ImageUpload = () => {
                           : `${image.style.insetSize}px`,
 
                       backgroundColor:
-                        image.style.insetSize !== '0' && browserFrame === 'None'
+                        image.style.insetSize !== '0' && image.frame === 'None'
                           ? `${image?.style.insetColor}`
-                          : browserFrame === 'Arc'
+                          : image.frame === 'Arc'
                           ? arcDarkMode
                             ? '#00000050'
                             : '#ffffff50'
-                          : browserFrame === 'Shadow'
+                          : image.frame === 'Shadow'
                           ? 'rgba(0,0,0,0.8)'
                           : 'transparent',
 
                       border:
-                        browserFrame === 'Arc'
+                        image.frame === 'Arc'
                           ? arcDarkMode
                             ? '1px solid #00000020'
                             : '1px solid #ffffff60'
-                          : browserFrame === 'Shadow'
+                          : image.frame === 'Shadow'
                           ? showStroke
                             ? '3px solid rgba(0,0,0,0.8)'
                             : ''
@@ -194,32 +193,32 @@ const ImageUpload = () => {
                       setSelectedImage(image.id)
                     }}
                   >
-                    <BrowserFrame />
+                    <BrowserFrame frame={image.frame || 'None'} />
 
                     <img
                       draggable={false}
                       className={`pointer-events-none h-full w-full shrink-0 ${
-                        browserFrame === 'Arc' ? 'shadow-md' : ''
+                        image.frame === 'Arc' ? 'shadow-md' : ''
                       }`}
                       id={`img-${image.id}`}
                       src={image.image}
                       alt="Uploaded image"
                       style={{
                         borderRadius:
-                          browserFrame !== 'None'
-                            ? browserFrame === 'Arc'
+                          image.frame !== 'None'
+                            ? image.frame === 'Arc'
                               ? `calc(${image.style.imageRoundness}rem - 9px)`
                               : ''
                             : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
 
                         padding:
-                          browserFrame === 'None'
+                          image.frame === 'None'
                             ? ''
                             : `${image.style.insetSize}px`,
 
                         backgroundColor:
                           image.style.insetSize !== '0' &&
-                          browserFrame !== 'None'
+                          image.frame !== 'None'
                             ? `${image?.style.insetColor}`
                             : '',
                       }}

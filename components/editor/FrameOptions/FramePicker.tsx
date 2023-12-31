@@ -8,27 +8,31 @@ import {
 import { FrameTypes, useFrameOptions } from '@/store/use-frame-options'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
-import BrowserFrame from '../BrowserFrame'
 import { cn } from '@/utils/buttonUtils'
 
 export default function FramePicker() {
-  const { browserFrame, setFrameHeight, frameHeight } = useFrameOptions()
+  const { setFrameHeight, frameHeight } = useFrameOptions()
   const { selectedImage } = useSelectedLayers()
-  const { setBrowserFrame } = useFrameOptions()
   const { setImages, images } = useImageOptions()
   const { setShowControls } = useMoveable()
 
   const frameChangeHandler = (frame: FrameTypes) => {
-    setBrowserFrame(frame)
-    setImages(
-      images.map((image) => ({
-        ...image,
-        style: {
-          ...image.style,
-          imageRoundness: frame === 'None' ? 0.4 : frame === 'Arc' ? 1.5 : 0.7,
-        },
-      }))
-    )
+    selectedImage &&
+      setImages(
+        images.map((image, index) =>
+          index === selectedImage - 1
+            ? {
+                ...image,
+                frame,
+                style: {
+                  ...image.style,
+                  imageRoundness:
+                    frame === 'None' ? 0.4 : frame === 'Arc' ? 1.5 : 0.7,
+                },
+              }
+            : image
+        )
+      )
     setShowControls(false)
   }
 
@@ -114,28 +118,30 @@ export default function FramePicker() {
         </FrameContainer>
       </div>
 
-      {browserFrame !== 'Shadow' && browserFrame !== 'None' && (
-        <div
-          className={`mt-8 flex flex-col gap-3 px-1 md:max-w-full ${
-            selectedImage ? '' : 'pointer-events-none opacity-40'
-          }`}
-        >
-          <h1 className="text-[0.85rem]">Frame size</h1>
-          <Select
-            defaultValue={frameHeight}
-            onValueChange={(value) => setFrameHeight(value)}
+      {selectedImage &&
+        images[selectedImage - 1].frame !== 'Shadow' &&
+        images[selectedImage - 1].frame !== 'None' && (
+          <div
+            className={`mt-8 flex flex-col gap-3 px-1 md:max-w-full ${
+              selectedImage ? '' : 'pointer-events-none opacity-40'
+            }`}
           >
-            <SelectTrigger className="w-[7rem]">
-              <SelectValue placeholder="Medium" />
-            </SelectTrigger>
-            <SelectContent className="w-[7rem]">
-              <SelectItem value="small">Small</SelectItem>
-              <SelectItem value="medium">Medium</SelectItem>
-              <SelectItem value="large">Large</SelectItem>
-            </SelectContent>
-          </Select>
-        </div>
-      )}
+            <h1 className="text-[0.85rem]">Frame size</h1>
+            <Select
+              defaultValue={frameHeight}
+              onValueChange={(value) => setFrameHeight(value)}
+            >
+              <SelectTrigger className="w-[7rem]">
+                <SelectValue placeholder="Medium" />
+              </SelectTrigger>
+              <SelectContent className="w-[7rem]">
+                <SelectItem value="small">Small</SelectItem>
+                <SelectItem value="medium">Medium</SelectItem>
+                <SelectItem value="large">Large</SelectItem>
+              </SelectContent>
+            </Select>
+          </div>
+        )}
     </>
   )
 }
@@ -151,15 +157,17 @@ export function FrameContainer({
   onClick?: () => void
   className?: string
 }) {
-  const { browserFrame } = useFrameOptions()
   const { selectedImage } = useSelectedLayers()
+  const { images } = useImageOptions()
 
   return (
     <div className={`${selectedImage ? '' : 'pointer-events-none opacity-40'}`}>
       <button
         onClick={onClick}
         className={`relative h-[3.55rem] w-[4.6rem] overflow-hidden whitespace-nowrap rounded-lg border border-border/80 bg-gray-300 ring-offset-background transition-colors focus:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
-          browserFrame === text ? 'ring-2 ring-ring ring-offset-2' : ''
+          selectedImage && images[selectedImage - 1].frame === text
+            ? 'ring-2 ring-ring ring-offset-2'
+            : ''
         }`}
       >
         <div

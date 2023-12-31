@@ -1,6 +1,7 @@
 import { create, useStore } from 'zustand'
 import { temporal, TemporalState } from 'zundo'
 import throttle from 'just-throttle'
+import { FrameTypes } from './use-frame-options'
 
 interface ImageOptionsState {
   scale: number
@@ -48,9 +49,9 @@ interface ImageOptionsState {
       perspective: number
       translateX: number
       translateY: number
-      hasFrame: boolean
       zIndex: number
     }
+    frame?: FrameTypes
   }[]
   setImages: (
     images: {
@@ -60,8 +61,8 @@ interface ImageOptionsState {
       linearGradients?: string[]
       meshGradients?: string[]
       radialGradients?: string[]
-    dominantColor?: string
-    pallettes?: string[]
+      dominantColor?: string
+      pallettes?: string[]
       style: {
         imageSize: string
         imageRoundness: number
@@ -81,9 +82,9 @@ interface ImageOptionsState {
         perspective: number
         translateX: number
         translateY: number
-        hasFrame: boolean
         zIndex: number
       }
+      frame?: FrameTypes
     }[]
   ) => void
 
@@ -149,7 +150,6 @@ interface ImageOptionsState {
     perspective: number
     translateX: number
     translateY: number
-    hasFrame: boolean
     zIndex: number
   }
 

@@ -8,9 +8,6 @@ export type FrameTypes =
   | 'None'
 
 interface FrameOptionsState {
-  browserFrame: FrameTypes
-  setBrowserFrame: (browserFrame: FrameTypes) => void
-
   frameHeight: 'small' | 'medium' | 'large' | string
   setFrameHeight: (height: string) => void
 
@@ -37,9 +34,6 @@ interface FrameOptionsState {
 }
 
 export const useFrameOptions = create<FrameOptionsState>()((set) => ({
-  browserFrame: 'None',
-  setBrowserFrame: (browserFrame) => set({ browserFrame }),
-
   frameHeight: 'small',
   setFrameHeight: (frameHeight) => set({ frameHeight }),
 

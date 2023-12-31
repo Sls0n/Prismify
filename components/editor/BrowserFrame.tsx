@@ -1,8 +1,7 @@
-import { useFrameOptions } from '@/store/use-frame-options'
+import { FrameTypes, useFrameOptions } from '@/store/use-frame-options'
 
-export default function BrowserFrame() {
+export default function BrowserFrame({ frame }: { frame: FrameTypes }) {
   const {
-    browserFrame,
     frameHeight,
     showSearchBar,
     macOsDarkColor,
@@ -11,9 +10,9 @@ export default function BrowserFrame() {
     hasButtonColor,
   } = useFrameOptions()
 
-  if (browserFrame === 'None') return
+  if (frame === 'None') return
 
-  if (browserFrame === 'MacOS Dark')
+  if (frame === 'MacOS Dark')
     return (
       <div
         style={{
@@ -60,7 +59,7 @@ export default function BrowserFrame() {
       </div>
     )
 
-  if (browserFrame === 'MacOS Light')
+  if (frame === 'MacOS Light')
     return (
       <div
         style={{
@@ -107,5 +106,5 @@ export default function BrowserFrame() {
       </div>
     )
 
-  if (browserFrame === 'Arc') return null
+  if (frame === 'Arc') return null
 }

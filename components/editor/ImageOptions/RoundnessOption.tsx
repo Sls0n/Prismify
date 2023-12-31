@@ -1,15 +1,15 @@
 'use client'
 
 import { Slider } from '@/components/ui/Slider'
-import { useFrameOptions } from '@/store/use-frame-options'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
 
 export default function RoundnessOption() {
   const { images, setImages } = useImageOptions()
-  const { browserFrame } = useFrameOptions()
   const { setShowControls } = useMoveable()
   const { selectedImage } = useSelectedLayers()
+
+  const browserFrame = selectedImage ? images[selectedImage - 1]?.frame : 'None'
 
   return (
     <div className={`${selectedImage ? '' : 'pointer-events-none opacity-40'}`}>

@@ -1,27 +1,19 @@
 'use client'
 
-import { BoxSelect, Focus, GalleryVerticalEnd, Info } from 'lucide-react'
+import { Focus, GalleryVerticalEnd } from 'lucide-react'
 
-import ImagePreview from './ImagePreview'
-import AppearenceSettings from './AppearenceSettings'
-import ShadowSettings from './ShadowSettings'
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from '@/components/ui/Popover'
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/Accordion'
-import Balancer from 'react-wrap-balancer'
-import { useFrameOptions } from '@/store/use-frame-options'
 import { useImageOptions } from '@/store/use-image-options'
+import AppearenceSettings from './AppearenceSettings'
+import ImagePreview from './ImagePreview'
+import ShadowSettings from './ShadowSettings'
 
 export default function ImageOptions() {
-  const { browserFrame } = useFrameOptions()
   const { accordionOpen, setAccordionOpen } = useImageOptions()
 
   return (
