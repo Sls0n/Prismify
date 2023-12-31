@@ -16,7 +16,7 @@ import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useImageQualityStore } from '@/store/use-image-quality'
 import { useMoveable } from '@/store/use-moveable'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
-import React, { CSSProperties, useEffect, useRef } from 'react'
+import React, { CSSProperties, useEffect, useRef, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { ScrollArea } from '../ui/ScrollArea'
 import ImageUpload from './ImageUpload'
@@ -26,6 +26,8 @@ import SelectoComponent from './SelectoComponent'
 import TipTap from './Tiptap'
 import TiptapMoveable from './TiptapMoveable'
 import dynamic from 'next/dynamic'
+import { useColorExtractor } from '@/store/use-color-extractor'
+import { toast } from '@/hooks/use-toast'
 
 const MoveableComponent = dynamic(
   () => import('./MoveableComponent').then((mod) => mod.default),
@@ -33,6 +35,7 @@ const MoveableComponent = dynamic(
 )
 
 export default function Canvas() {
+  const [isOverflowing, setIsOverflowing] = useState<boolean>(false)
   const activeIndex = useStore(
     useActiveIndexStore,
     (state) => state.activeIndex
@@ -59,6 +62,7 @@ export default function Canvas() {
   } = useImageOptions()
   const { selectedImage, selectedText, setSelectedImage, enableCrop } =
     useSelectedLayers()
+  const { imagesCheck } = useColorExtractor()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
   const {
@@ -74,11 +78,12 @@ export default function Canvas() {
   const [width, height]: number[] = resolution.split('x').map(Number)
 
   const aspectRatio = width / height
+
   console.log(`Current DOM resoltion: ${exactDomResolution}`)
+
   let style: CSSProperties = {
     aspectRatio,
     backgroundImage: `var(--gradient-bg)`,
-
     borderRadius: `${canvasRoundness}rem`,
   }
 
@@ -96,23 +101,12 @@ export default function Canvas() {
     }
   }
 
-  if (aspectRatio < 1) {
-    style = { ...style, width: 'auto', height: '100%' }
-  } else if (aspectRatio >= 0.95 && aspectRatio <= 1.1) {
-    const containerSize = '85vmin' // 100vmin will make it fit within the viewport while maintaining aspect ratio, but had overflow issue so 84vmin (it just makes it a bit smaller)
-    style = {
-      ...style,
-      width: containerSize,
-    }
-  } else if (aspectRatio >= 0.9 && aspectRatio <= 1.6) {
-    const containerSize = '95vmin'
-    style = {
-      ...style,
-      width: containerSize,
-    }
-  } else if (aspectRatio > 1) {
-    style = { ...style, width: '100%', height: 'auto' }
-  }
+  // if (aspectRatio <= 1) {
+  //   // After the screen width is less than 1100px then width to 100% and height to auto
+  //   style = { ...style, width: 'auto', height: '100%' }
+  // } else {
+  //   style = { ...style, width: '100%', height: 'auto' }
+  // }
 
   useEffect(() => {
     const element = screenshotRef.current
@@ -129,16 +123,6 @@ export default function Canvas() {
               domHeight * dynamicScaleFactor * quality
             }`
           )
-          // if (aspectRatio >= 0 && aspectRatio <= 1.75) {
-          //   setShouldFloat(true)
-          // } else {
-          //   setShouldFloat(false)
-          // }
-          if (aspectRatio <= 1.1) {
-            setShouldFloat(true)
-          } else {
-            setShouldFloat(false)
-          }
         }
       })
 
@@ -151,8 +135,91 @@ export default function Canvas() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [resolution, quality])
 
+  useEffect(
+    () => {
+      const parentEl = parentRef.current
+      const childEl = screenshotRef.current
+
+      if (parentEl && childEl) {
+        if (parentEl && childEl) {
+          if (
+            parentEl.clientWidth <= childEl.clientWidth ||
+            parentEl.clientHeight <= childEl.clientHeight
+          ) {
+            console.log('is overflowing')
+
+            if (
+              childEl.classList.contains('w-auto') &&
+              childEl.classList.contains('h-full')
+            ) {
+              childEl.classList.remove('w-auto')
+              childEl.classList.add('w-full')
+              childEl.classList.add('h-auto')
+              childEl.classList.remove('h-full')
+            } else if (
+              childEl.classList.contains('w-full') &&
+              childEl.classList.contains('h-auto')
+            ) {
+              childEl.classList.remove('w-full')
+              childEl.classList.add('w-auto')
+              childEl.classList.add('h-full')
+              childEl.classList.remove('h-auto')
+            }
+          }
+        }
+      }
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [resolution, quality, imagesCheck]
+  )
+
+  // if the screen width is less than 768px then set the scrollScale to 1
+  useEffect(() => {
+    const handleResize = () => {
+      setScrollScale(1)
+
+      const parentEl = parentRef.current
+      const childEl = screenshotRef.current
+
+      if (parentEl && childEl) {
+        if (
+          parentEl.clientWidth <= childEl.clientWidth ||
+          parentEl.clientHeight <= childEl.clientHeight
+        ) {
+          console.log('is overflowing')
+
+          if (
+            childEl.classList.contains('w-auto') &&
+            childEl.classList.contains('h-full')
+          ) {
+            childEl.classList.remove('w-auto')
+            childEl.classList.add('w-full')
+            childEl.classList.add('h-auto')
+            childEl.classList.remove('h-full')
+          } else if (
+            childEl.classList.contains('w-full') &&
+            childEl.classList.contains('h-auto')
+          ) {
+            childEl.classList.remove('w-full')
+            childEl.classList.add('w-auto')
+            childEl.classList.add('h-full')
+            childEl.classList.remove('h-auto')
+          }
+        }
+      }
+    }
+    window.addEventListener('resize', handleResize)
+
+    return () => {
+      window.removeEventListener('resize', handleResize)
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [])
+
   const handleScroll = (e: React.WheelEvent<HTMLDivElement>) => {
-    if (typeof window !== 'undefined' && window.innerWidth <= 700) return
+    if (typeof window !== 'undefined' && window.innerWidth <= 768) {
+      return
+    }
     if (enableCrop) return
     if (e.deltaY < 0) {
       // Scrolling up
@@ -164,6 +231,17 @@ export default function Canvas() {
       setScrollScale(scrollScale - 0.1) // Decrement the scroll scale by 0.1
     }
   }
+
+  useEffect(() => {
+    if (window.innerWidth <= 768 && !sessionStorage.getItem('toastShown')) {
+      toast({
+        title: 'Not optimized for mobile devices!',
+        description:
+          "The editor is not optimized for mobile devices, hence many feature won't work as expected. Please use a desktop device for the best experience.",
+      })
+      sessionStorage.setItem('toastShown', 'true')
+    }
+  }, [])
 
   let parentScaleStyle = {
     scale: `${scrollScale}`,
@@ -199,83 +277,66 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        className="relative flex h-full w-full flex-1 overflow-hidden bg-[#111] px-4 py-4 md:px-8 md:py-8 lg:px-12 lg:py-12"
+        className={`relative flex h-full w-full flex-col overflow-hidden bg-[#111] md:grid md:place-items-center ${
+          aspectRatio <= 1 ? 'p-4 md:p-12' : 'p-4 md:p-12'
+        }
+        `}
+        style={parentScaleStyle}
+        onWheel={handleScroll}
       >
-        {/* <div className="flex h-14 w-full items-center border border-border">
-          TODO: ADD UPPER SETTINGS
-        </div> */}
         <div
-          onWheel={handleScroll}
-          style={parentScaleStyle}
-          className="relative flex h-full w-full flex-col items-center justify-start lg:justify-center"
+          className={`canvas-container relative flex min-h-[20rem] items-center justify-center overflow-hidden ${
+            aspectRatio <= 1
+              ? 'h-auto w-full lg:h-full lg:w-auto'
+              : 'h-auto w-full'
+          }`}
+          ref={screenshotRef}
+          id="canvas-container"
+          style={style}
         >
-          <div
-            className={
-              'canvas-container relative flex items-center justify-center overflow-hidden'
-            }
-            ref={screenshotRef}
-            id="canvas-container"
-            style={style}
-          >
-            {/* <div className="pointer-events-none absolute bottom-[3%] left-[2%] z-50">
-              <motion.div
-                animate={{
-                  opacity: showControls && isMultipleTargetSelected ? 1 : 0,
-                  y: showControls && isMultipleTargetSelected ? 0 : 20,
-                }}
-                transition={{
-                  duration: 0.2,
-                }}
-                className="rounded-lg bg-sidebar/80 p-2 text-center text-xs text-dark backdrop-blur-md md:text-sm "
-              >
-                <p>
-                  Press <span className="font-semibold">ESC</span> to deselect.
-                </p>
-              </motion.div>
-            </div> */}
-            {imageBackground && (
-              // eslint-disable-next-line @next/next/no-img-element
-              <img
-                draggable={false}
-                className={`pointer-events-none absolute z-[0] h-full w-full object-cover`}
-                src={imageBackground}
-                alt="background image"
-              />
-            )}
-            <Noise />
-            {showControls && <MoveableComponent id={`${selectedImage}`} />}
-            {showTextControls && !isEditable && (
-              <TiptapMoveable id={`text-${selectedText}`} />
-            )}
+          {imageBackground && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img
+              draggable={false}
+              className={`pointer-events-none absolute z-[0] h-full w-full object-cover`}
+              src={imageBackground}
+              alt="background image"
+            />
+          )}
+          <Noise />
+          {showControls && <MoveableComponent id={`${selectedImage}`} />}
+          {showTextControls && !isEditable && (
+            <TiptapMoveable id={`text-${selectedText}`} />
+          )}
 
-            <div
-              className="selecto-area relative flex h-full min-h-[15rem] w-full place-items-center items-center justify-center"
-              style={{
-                scale,
-              }}
-            >
-              <ImageUpload />
-              <TipTap />
-            </div>
+          <div
+            className="selecto-area relative flex h-full min-h-[15rem] w-full place-items-center items-center justify-center"
+            style={{
+              scale,
+            }}
+          >
+            <ImageUpload />
+            <TipTap />
           </div>
-          <ScrollArea className="mt-6 w-full md:hidden" type="auto">
-            <div className="w-full max-w-[90%] md:hidden">
-              {activeIndex === 0 && <CanvasOptions />}
-              {activeIndex === 1 && <ImageOptions />}
-              {activeIndex === 2 && <BackgroundOptions />}
-              {activeIndex === 3 && <FrameOptions />}
-              {activeIndex === 4 && <TextOptions />}
-              {activeIndex === 5 && <PerspectiveOptions />}
-              {activeIndex === 6 && <PositionOptions />}
-            </div>
-          </ScrollArea>
         </div>
-        <SelectoComponent />
+        <ScrollArea className="mt-6 w-full md:hidden" type="auto">
+          <div className="w-full max-w-[90%] md:hidden">
+            {activeIndex === 0 && <CanvasOptions />}
+            {activeIndex === 1 && <ImageOptions />}
+            {activeIndex === 2 && <BackgroundOptions />}
+            {activeIndex === 3 && <FrameOptions />}
+            {activeIndex === 4 && <TextOptions />}
+            {activeIndex === 5 && <PerspectiveOptions />}
+            {activeIndex === 6 && <PositionOptions />}
+          </div>
+        </ScrollArea>
         {/* <FloatingOptions /> */}
       </section>
 
+      <SelectoComponent />
+
       {attribution.name !== null && (
-        <div className="absolute bottom-2 right-4 rounded-md bg-sidebar/80 p-2 text-[0.85rem] text-dark/70 backdrop-blur-md">
+        <div className="absolute bottom-2 right-4 rounded-md bg-[#151515] p-2 text-[0.85rem] text-dark/70 backdrop-blur-md ">
           Img by{' '}
           <a
             className="text-blue-500"

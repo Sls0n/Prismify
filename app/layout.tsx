@@ -101,13 +101,11 @@ export default function RootLayout({
       className={cn('antialiased', Font.className)}
       lang="en"
     >
-      <body className="h-full bg-primary pt-12 text-primary dark:bg-dark dark:text-dark ">
+      <body className="h-screen w-screen bg-primary text-primary dark:bg-[#111] dark:text-dark ">
         <Toaster />
         <Analytics />
 
-        <Providers>
-          <div className="flex h-full flex-col">{children}</div>
-        </Providers>
+        <Providers>{children}</Providers>
       </body>
     </html>
   )
