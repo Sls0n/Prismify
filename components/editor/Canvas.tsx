@@ -27,6 +27,7 @@ import TipTap from './Tiptap'
 import TiptapMoveable from './TiptapMoveable'
 import dynamic from 'next/dynamic'
 import { useColorExtractor } from '@/store/use-color-extractor'
+import { toast } from '@/hooks/use-toast'
 
 const MoveableComponent = dynamic(
   () => import('./MoveableComponent').then((mod) => mod.default),
@@ -231,6 +232,17 @@ export default function Canvas() {
     }
   }
 
+  useEffect(() => {
+    if (window.innerWidth <= 768 && !sessionStorage.getItem('toastShown')) {
+      toast({
+        title: 'Not optimized for mobile devices!',
+        description:
+          "The editor is not optimized for mobile devices, hence many feature won't work as expected. Please use a desktop device for the best experience.",
+      })
+      sessionStorage.setItem('toastShown', 'true')
+    }
+  }, [])
+
   let parentScaleStyle = {
     scale: `${scrollScale}`,
   }
@@ -265,15 +277,15 @@ export default function Canvas() {
     <>
       <section
         ref={parentRef}
-        className={`relative grid h-full w-full place-items-center overflow-hidden bg-[#111] ${
-          aspectRatio <= 1 ? 'p-12' : 'p-12'
+        className={`relative flex h-full w-full flex-col overflow-hidden bg-[#111] md:grid md:place-items-center ${
+          aspectRatio <= 1 ? 'p-4 md:p-12' : 'p-4 md:p-12'
         }
         `}
         style={parentScaleStyle}
         onWheel={handleScroll}
       >
         <div
-          className={`canvas-container relative flex items-center justify-center overflow-hidden ${
+          className={`canvas-container relative flex min-h-[20rem] items-center justify-center overflow-hidden ${
             aspectRatio <= 1
               ? 'h-auto w-full lg:h-full lg:w-auto'
               : 'h-auto w-full'
