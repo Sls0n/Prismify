@@ -159,67 +159,81 @@ export default function MoveableComponent({ id }: { id: string }) {
         }
         hideChildMoveableDefaultLines={true}
         draggable={true}
-        // onRender={(e) => {
-        //   console.log(e)
-        //   const translateX = e.transformObject.translate[0]
-        //   const translateY = e.transformObject.translate[1]
-        //   const scaleX = e.transformObject.scale[0]
-        //   const rotate = e.transformObject.rotate
-        //   // const rotateX = e.transformObject.rotateX
-        //   // const rotateY = e.transformObject.rotateY
-        //   // const rotateZ = e.transformObject.rotateZ
-        //   const translateXPercent = (translateX / +width) * 100
-        //   const translateYPercent = (translateY / +height) * 100
+        onDrag={({ target, beforeTranslate }) => {
+          const perspective =
+            target.style.transform.match(/perspective\((.*?)\)/)
+          // @ts-expect-error
+          const xPerc = (beforeTranslate[0] / target?.offsetWidth) * 100
+          // @ts-expect-error
+          const yPerc = (beforeTranslate[1] / target?.offsetHeight) * 100
 
-        //   // Apply the translate with percentage values
-        //   e.target.style.transform = `translate(${translateXPercent}%, ${translateYPercent}%) scale(${scaleX}) rotate(${rotate}deg)`
-        // }}
+          const scale = target.style.transform.match(/scale\((.*?)\)/)
 
-        onDrag={(e) => {
-          console.log(e)
-          e.target.style.transform = e.transform
-          // const x = e.beforeTranslate[0]
-          // const y = e.beforeTranslate[1]
-          // const scale = e.transform.split('scale(')[1].split(')')[0]
-          // const rotateX = e.transform.split('rotateX(')[1].split(')')[0]
-          // const rotateY = e.transform.split('rotateY(')[1].split(')')[0]
-          // const rotateZ = e.transform.split('rotateZ(')[1].split(')')[0]
+          const rotate = target.style.transform.match(/rotate\((.*?)\)/)
 
-          // // Calculate percentage values based on the parent dimensions
-          // const translateXPercent = (x / +width) * 100
-          // const translateYPercent = (y / +height) * 100
+          const rotateX = target.style.transform.match(/rotateX\((.*?)\)/)
+          const rotateY = target.style.transform.match(/rotateY\((.*?)\)/)
+          const rotateZ = target.style.transform.match(/rotateZ\((.*?)\)/)
 
-          // e.target.style.transform = `translate(${translateXPercent}%, ${translateYPercent}%) scale(${scale}) rotateX(${rotateX}) rotateY(${rotateY}) rotateZ(${rotateZ}) `
+          target.style.transform = `${
+            perspective ? perspective[0] : ''
+          } translate(${xPerc}%, ${yPerc}%) ${scale ? scale[0] : ''} ${
+            rotate ? rotate[0] : ''
+          } ${rotateX ? rotateX[0] : ''} ${rotateY ? rotateY[0] : ''} ${
+            rotateZ ? rotateZ[0] : ''
+          } `
         }}
-        onDragEnd={handleDrag}
+        // onDragEnd={handleDrag}
         scalable={true}
         keepRatio={true}
-        onScale={(e) => {
-          console.log(e)
+        onScale={({ scale, target, drag }) => {
+          const perspective =
+            target.style.transform.match(/perspective\((.*?)\)/)
+          const rotateX = target.style.transform.match(/rotateX\((.*?)\)/)
 
-          e.target.style.transform = e.drag.transform
+          const scaleX = scale[0]
+          const scaleY = scale[1]
+
+          const rotate = target.style.transform.match(/rotate\((.*?)\)/)
+
+          const rotateY = target.style.transform.match(/rotateY\((.*?)\)/)
+          const rotateZ = target.style.transform.match(/rotateZ\((.*?)\)/)
+
+          // @ts-expect-error
+          const xPerc = (drag.beforeTranslate[0] / target.offsetWidth) * 100
+          // @ts-expect-error
+          const yPerc = (drag.beforeTranslate[1] / target.offsetHeight) * 100
+
+          target.style.transform = `${
+            perspective ? perspective[0] : ''
+          } translate(${xPerc}%, ${yPerc}%) scale(${scaleX}, ${scaleY}) ${
+            rotate ? rotate[0] : ''
+          } ${rotateX ? rotateX[0] : ''} ${rotateY ? rotateY[0] : ''} ${
+            rotateZ ? rotateZ[0] : ''
+          }`
         }}
-        onScaleEnd={handleScale}
+        // onScaleEnd={handleScale}
         rotatable={!isMultipleTargetSelected}
         rotationPosition={'top'}
-        onRotate={(e) => {
-          e.target.style.transform = e.drag.transform
-          // selectedImage &&
-          //   setImages(
-          //     images.map((image, index) =>
-          //       index === selectedImage - 1
-          //         ? {
-          //             ...image,
-          //             style: {
-          //               ...image.style,
-          //               rotate: `${e?.beforeRotation}`,
-          //             },
-          //           }
-          //         : image
-          //     )
-          //   )
+        onRotate={({ target, beforeRotate }) => {
+          const scale = target.style.transform.match(/scale\((.*?)\)/)
+          const translate = target.style.transform.match(/translate\((.*?)\)/)
+
+          const perspective =
+            target.style.transform.match(/perspective\((.*?)\)/)
+          const rotateX = target.style.transform.match(/rotateX\((.*?)\)/)
+          const rotateY = target.style.transform.match(/rotateY\((.*?)\)/)
+          const rotateZ = target.style.transform.match(/rotateZ\((.*?)\)/)
+
+          const rotate = beforeRotate || ''
+
+          target.style.transform = `${perspective ? perspective[0] : ''} ${
+            translate ? translate[0] : ''
+          } ${scale ? scale[0] : ''} ${rotate ? `rotate(${rotate}deg)` : ''} ${
+            rotateX ? rotateX[0] : ''
+          } ${rotateY ? rotateY[0] : ''} ${rotateZ ? rotateZ[0] : ''}`
         }}
-        onRotateEnd={handleRotate}
+        // onRotateEnd={handleRotate}
         snapRotationThreshold={5}
         snapRotationDegrees={[0, 90, 180, 270]}
         snappable={true}

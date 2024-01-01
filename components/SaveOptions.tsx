@@ -286,8 +286,27 @@ export default function SaveOptions() {
         <Clipboard size={18} className="mr-0 text-dark/80 lg:mr-2" />
         <p className="hidden text-dark/80 lg:block">Copy</p>
       </Button>
-      <div className="z-50 flex h-fit overflow-hidden rounded-xl border border-[rgba(99,102,241,0.15)]">
+      <div
+        tabIndex={0}
+        className="z-50 flex h-fit overflow-hidden rounded-xl border border-[rgba(99,102,241,0.15)] focus:outline-none focus:ring-2 focus:ring-[#898aeb]"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter') {
+            snapshotCreator()
+              .then((blob) => {
+                saveAs(blob, `prismify-render-${Date.now()}`)
+              })
+              .catch((err) => {
+                toast({
+                  variant: 'destructive',
+                  title: 'Error!',
+                  description: err.message,
+                })
+              })
+          }
+        }}
+      >
         <Button
+          tabIndex={-1}
           onClick={() => {
             snapshotCreator()
               .then((blob) => {
@@ -312,6 +331,7 @@ export default function SaveOptions() {
         <Popover>
           <PopoverTrigger asChild>
             <Button
+              tabIndex={-1}
               className="rounded-none border-b-0 border-l-0 border-r-[1.5px] border-t-0 border-[rgba(99,102,241,0.15)] px-2.5 text-[0.8rem] font-medium"
               variant="stylish"
               size="sm"
@@ -347,6 +367,7 @@ export default function SaveOptions() {
         <Popover>
           <PopoverTrigger asChild>
             <Button
+              tabIndex={-1}
               className="flex items-center justify-center rounded-none border-none px-2 text-[0.8rem] font-medium"
               variant="stylish"
               size="sm"

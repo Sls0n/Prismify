@@ -37,7 +37,7 @@ export default function Error({
           href="mailto:silson0072@gmail.com"
           className={cn(
             buttonVariants({ variant: 'default' }),
-            'w-48 px-4 text-[0.95rem] sm:w-fit'
+            'w-48 px-4 text-[15.2px] sm:w-fit'
           )}
         >
           <MailWarning className="mr-2 h-5 w-5 text-foreground/80" />

@@ -106,6 +106,7 @@ interface ImageOptionsState {
       backgroundColor: string
       padding: string
       zIndex: number
+      position: string
     }
   }[]
   setTexts: (
@@ -127,6 +128,7 @@ interface ImageOptionsState {
         backgroundColor: string
         padding: string
         zIndex: number
+        position: string
       }
     }[]
   ) => void
@@ -168,6 +170,7 @@ interface ImageOptionsState {
     backgroundColor: string
     padding: string
     zIndex: number
+    position: string
   }
 }
 
@@ -226,6 +229,7 @@ export const useImageOptions = create(
         backgroundColor: '#ffffff50',
         padding: '0',
         zIndex: 2,
+        position: '',
       },
 
       images: [],

@@ -123,7 +123,7 @@ const ImageUpload = () => {
                       transformOrigin: `50% 50%`,
                       // rotate: `${image.style.rotate}deg`,
                       // transform: `scale(${image.style.imageSize}) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg) `,
-                      transform: `scale(${image.style.imageSize}) translate(${image.style.translateX}px, ${image.style.translateY}px) rotate(${image.style.rotate}deg) perspective(${image.style.perspective}px) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
+                      transform: `perspective(${image.style.perspective}px) translate(${image.style.translateX}%, ${image.style.translateY}%) scale(${image.style.imageSize}) rotate(${image.style.rotate}deg) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
                       borderRadius: `${image.style.imageRoundness}rem`,
                       boxShadow:
                         image.style.shadowName !== 'Medium'

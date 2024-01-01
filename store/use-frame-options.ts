@@ -43,7 +43,7 @@ export const useFrameOptions = create<FrameOptionsState>()((set) => ({
   showStroke: true,
   setShowStroke: (showStroke) => set({ showStroke }),
 
-  macOsDarkColor: '#353535',
+  macOsDarkColor: '#1a1a1a',
   setMacOsDarkColor: (color) => set({ macOsDarkColor: color }),
 
   macOsLightColor: '#f4f4f4',

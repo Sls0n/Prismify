@@ -101,7 +101,7 @@ export default function Navbar({
     })
   }
   return (
-    <header className="fixed inset-x-0 top-0 z-[10] flex h-[4.5rem] items-center border-b border-border bg-[#131313] px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
+    <header className="fixed inset-x-0 top-0 z-[10] flex h-[72px] items-center border-b border-border bg-[#131313] px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-between">
         <nav className="flex items-center gap-8">
           {/* Can add hamburger or something here */}
@@ -157,7 +157,7 @@ export default function Navbar({
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
-                          className="rounded-xl text-[0.85rem]"
+                          className="rounded-xl text-[13.6px]"
                           size="sm"
                           variant="default"
                         >
@@ -246,7 +246,7 @@ export default function Navbar({
 
                         <ChevronDown
                           size={16}
-                          className="translate-y-[0.1rem] text-primary/70 dark:text-dark/80"
+                          className="translate-y-[1.6px] text-primary/70 dark:text-dark/80"
                         />
                       </div>
                     </Button>
@@ -254,7 +254,7 @@ export default function Navbar({
                   <DropdownMenuContent className="mt-2 w-40">
                     <DropdownMenuGroup>
                       <DropdownMenuItem>
-                        <div className=" flex min-w-[2rem] items-center justify-center">
+                        <div className=" flex min-w-[32px] items-center justify-center">
                           <User
                             size={18}
                             className="mr-3 h-4 w-4 text-primary/70 dark:text-dark/80"
@@ -263,7 +263,7 @@ export default function Navbar({
                         </div>
                       </DropdownMenuItem>
                       <DropdownMenuItem>
-                        <div className="flex min-w-[2rem] items-center justify-center">
+                        <div className="flex min-w-[32px] items-center justify-center">
                           <Settings
                             size={18}
                             className="mr-3 h-4 w-4 text-primary/70 dark:text-dark/80"
@@ -290,7 +290,7 @@ export default function Navbar({
                               })
                             })
                         }}
-                        className="flex min-w-[2rem] items-center justify-center"
+                        className="flex min-w-[32px] items-center justify-center"
                       >
                         <LogOut
                           size={18}

@@ -84,7 +84,7 @@ export default function Canvas() {
   let style: CSSProperties = {
     aspectRatio,
     backgroundImage: `var(--gradient-bg)`,
-    borderRadius: `${canvasRoundness}rem`,
+    borderRadius: `${canvasRoundness * 16}px`,
   }
 
   if (backgroundType === 'mesh') {
@@ -310,7 +310,7 @@ export default function Canvas() {
           )}
 
           <div
-            className="selecto-area relative flex h-full min-h-[15rem] w-full place-items-center items-center justify-center"
+            className="selecto-area relative flex h-full w-full place-items-center items-center justify-center"
             style={{
               scale,
             }}

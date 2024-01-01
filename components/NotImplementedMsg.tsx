@@ -24,7 +24,7 @@ export default function NotImplementedMsg() {
           href="/"
           className={cn(
             buttonVariants({ variant: 'default' }),
-            'w-48 px-4 text-[0.95rem] sm:w-fit'
+            'w-48 px-4 text-[15.2px] sm:w-fit'
           )}
         >
           <MoveLeft className="mr-2 h-5 w-5 text-foreground/80" />

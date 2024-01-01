@@ -23,7 +23,7 @@ export default function AddTextLayer() {
       variant="stylish"
       className="w-full rounded-lg text-center text-base"
     >
-      <Plus size={24} className="mr-2 inline-block align-middle" />
+      <Plus size={22} className="mr-2 inline-block align-middle" />
       <span>Add a text layer</span>
     </Button>
   )
