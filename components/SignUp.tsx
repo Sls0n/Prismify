@@ -15,6 +15,7 @@ import { Eye, EyeOff } from 'lucide-react'
 import { signIn } from 'next-auth/react'
 import { toast } from '@/hooks/use-toast'
 import Link from 'next/link'
+import { useAuthModal } from '@/store/use-auth-modal'
 
 type SignUpProps = {
   authenticated?: boolean
@@ -23,6 +24,7 @@ type SignUpProps = {
 export default function SignUp({ authenticated }: SignUpProps) {
   const [loading, setLoading] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
+  const {setShow} = useAuthModal()
 
   const router = useRouter()
 
@@ -90,7 +92,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="w-full max-w-md space-y-10 p-6">
+      <div className="w-full space-y-10">
         <div>
           <h1 className="text-center text-4xl font-semibold text-gray-800 dark:text-dark sm:font-bold">
             Sign up on{' '}
@@ -188,7 +190,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
             )}
           </div>
           <div>
-            <div className="mb-8 mt-4 flex gap-3 text-start text-sm text-primary">
+            <div className="mb-8 mt-4 flex gap-1.5 text-start text-sm text-primary">
               <Checkbox />
               <p className="-translate-x-1 dark:text-dark/80">
                 I agree to the{' '}
@@ -220,15 +222,18 @@ export default function SignUp({ authenticated }: SignUpProps) {
             </Button>
           </div>
 
-          <p className="mt-2 text-center text-sm text-primary dark:text-dark/80">
+          <Button
+            onClick={() => {
+              setShow('signin')
+            }}
+            variant="noHoverGhost"
+            className="mx-auto mt-3 w-full max-w-full text-center  text-sm text-gray-600 dark:text-dark/80"
+          >
             Already have an account?{' '}
-            <Link
-              href="/sign-in"
-              className="font-medium text-purple hover:text-purple/90 hover:underline"
-            >
+            <p className="ml-0.5 font-semibold text-purple hover:text-purple/90 hover:underline">
               Sign in
-            </Link>
-          </p>
+            </p>
+          </Button>
         </form>
       </div>
     </div>

@@ -11,6 +11,7 @@ import { Eye, EyeOff } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
 import Link from 'next/link'
+import { useAuthModal } from '@/store/use-auth-modal'
 
 type SignInProps = {
   authenticated?: boolean
@@ -21,6 +22,7 @@ export default function SignIn({ authenticated }: SignInProps) {
   const [showPassword, setShowPassword] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [isGithubLoading, setIsGithubLoading] = useState(false)
+  const { setShow } = useAuthModal()
 
   const router = useRouter()
 
@@ -61,12 +63,10 @@ export default function SignIn({ authenticated }: SignInProps) {
     })
   }
 
-  const signInWithProvider = (provider: "google" | "github") => {
-    provider === "google"
-      ? setIsGoogleLoading(true)
-      : setIsGithubLoading(true)
+  const signInWithProvider = (provider: 'google' | 'github') => {
+    provider === 'google' ? setIsGoogleLoading(true) : setIsGithubLoading(true)
     signIn(provider, {
-      callbackUrl: "/",
+      callbackUrl: '/',
     })
       .then((data) => {
         console.log(data)
@@ -76,7 +76,7 @@ export default function SignIn({ authenticated }: SignInProps) {
         toast({
           variant: 'destructive',
           title: 'Trouble signing in!',
-          description: err.message ?? "Something went wrong",
+          description: err.message ?? 'Something went wrong',
         })
       })
       .finally(() => {
@@ -89,7 +89,7 @@ export default function SignIn({ authenticated }: SignInProps) {
 
   return (
     <div className="flex items-center justify-center">
-      <div className="w-full max-w-md space-y-10 p-6">
+      <div className="w-full space-y-10 ">
         <div>
           <h1 className="text-center text-4xl font-semibold text-gray-800 dark:text-dark sm:font-bold">
             Sign in to{' '}
@@ -110,7 +110,7 @@ export default function SignIn({ authenticated }: SignInProps) {
               <input
                 type="email"
                 id="email"
-                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
+                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 focus:border-[#8e8ece] focus:outline-none focus:ring-1  focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
                 {...register('email', {
                   required: { value: true, message: 'Email is required' },
                   pattern: {
@@ -137,7 +137,7 @@ export default function SignIn({ authenticated }: SignInProps) {
               <input
                 type={showPassword ? 'text' : 'password'}
                 id="password"
-                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
+                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
                 {...register('password', {
                   required: { value: true, message: 'Password is required' },
                 })}
@@ -178,7 +178,7 @@ export default function SignIn({ authenticated }: SignInProps) {
               type="submit"
               isLoading={loading}
               className={cn(
-                'flex w-full items-center justify-center rounded-md bg-gray-200 px-4 py-3 text-sm font-medium'
+                'flex w-full items-center justify-center rounded-md px-4 py-3 text-[0.9rem] font-semibold'
               )}
               size={'lg'}
             >
@@ -191,8 +191,8 @@ export default function SignIn({ authenticated }: SignInProps) {
             <div className="absolute inset-0 flex items-center">
               <div className="w-full border-t border-gray-300 dark:border-[#22262b]" />
             </div>
-            <div className="relative rounded-md flex justify-center text-sm">
-              <span className="bg-primary px-2 text-primary dark:bg-dark dark:text-dark/80">
+            <div className="relative flex justify-center rounded-md text-sm">
+              <span className="bg-primary px-2 text-primary dark:bg-[#121212] dark:text-dark/80">
                 Or continue with
               </span>
             </div>
@@ -200,52 +200,55 @@ export default function SignIn({ authenticated }: SignInProps) {
 
           {/* Provider buttons */}
           <div className="mt-6 grid grid-cols-2 gap-3">
-              <Button
-                variant="outline"
-                className="rounded-md bg-formDark px-4 py-2 shadow-sm"
-                type="button"
-                onClick={() => {
-                  signInWithProvider("google")
-                }}
-                disabled={isGoogleLoading}
-              >
-                <span className="sr-only">Sign in with Google</span>
-                <img
-                  className="h-5 w-5"
-                  src="https://img.icons8.com/color/48/000000/google-logo.png"
-                  alt="Google logo"
-                  loading="lazy"
-                />
-              </Button>
-
-              <Button
-                variant="outline"
-                className={`rounded-md bg-formDark px-4 py-2 shadow-sm `}
-                type="button"
-                onClick={() => {
-                  signInWithProvider("github")
-                }}
-                disabled={isGithubLoading}
-              >
-                <span className="sr-only">Sign in with Github</span>
-                <img
-                  className={`h-5 w-5 `}
-                  src="https://img.icons8.com/fluency/48/000000/github.png"
-                  alt="Github logo"
-                  loading="lazy"
-                />
-              </Button>
-            </div>
-
-          <p className="mt-3 text-center text-sm text-gray-600 dark:text-dark/80">
-            Dont have an account?{' '}
-            <Link
-              href="/sign-up"
-              className="font-medium text-purple hover:text-purple/90 hover:underline"
+            <Button
+              variant="outline"
+              className="rounded-md bg-formDark px-4 py-2 shadow-sm"
+              type="button"
+              onClick={() => {
+                signInWithProvider('google')
+              }}
+              disabled={isGoogleLoading}
             >
+              <span className="sr-only">Sign in with Google</span>
+              <img
+                className="h-5 w-5"
+                src="https://img.icons8.com/color/48/000000/google-logo.png"
+                alt="Google logo"
+                loading="lazy"
+              />
+            </Button>
+
+            <Button
+              variant="outline"
+              className={`rounded-md bg-formDark px-4 py-2 shadow-sm `}
+              type="button"
+              onClick={() => {
+                signInWithProvider('github')
+              }}
+              disabled={isGithubLoading}
+            >
+              <span className="sr-only">Sign in with Github</span>
+              <img
+                className={`h-5 w-5 `}
+                src="https://img.icons8.com/fluency/48/000000/github.png"
+                alt="Github logo"
+                loading="lazy"
+              />
+            </Button>
+          </div>
+
+          <Button
+            onClick={() => {
+              setShow('signup')
+            }}
+            variant="noHoverGhost"
+            className="mx-auto mt-3 w-full max-w-full text-center  text-sm text-gray-600 dark:text-dark/80"
+          >
+            Dont have an account?{' '}
+            <p className="ml-0.5 font-semibold text-purple hover:text-purple/90 hover:underline">
               Sign up
-            </Link>
-          </p>
+            </p>
+          </Button>
         </form>
       </div>
     </div>

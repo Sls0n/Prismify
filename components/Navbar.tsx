@@ -31,6 +31,7 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import SpotlightButton from './ui/SpotlightButton'
 import { useImageOptions } from '@/store/use-image-options'
 import ThemeButtonIcon from './ui/ThemeButtonIcon'
+import { AuthModal } from './AuthModal'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -154,7 +155,7 @@ export default function Navbar({
 
                     <div className="dark:bg-border-dark mx-3 h-7 w-[2px] bg-border" />
 
-                    <Dialog>
+                    {/* <Dialog>
                       <DialogTrigger asChild>
                         <Button
                           className="rounded-xl text-[13.6px]"
@@ -171,7 +172,9 @@ export default function Navbar({
                           <SignIn />
                         </div>
                       </DialogContent>
-                    </Dialog>
+                    </Dialog> */}
+
+                    <AuthModal />
                   </>
                 )}
 
