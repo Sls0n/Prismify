@@ -193,7 +193,7 @@ export default function MoveableComponent({ id }: { id: string }) {
             )
           )
       }}
-      snapRotationThreshold={5}
+      snapRotationThreshold={2}
       snapRotationDegrees={[0, 90, 180, 270]}
       snappable={true}
       snapDirections={{
