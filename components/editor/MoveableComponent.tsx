@@ -265,14 +265,36 @@ export default function MoveableComponent({ id }: { id: string }) {
           middle: true,
         }}
         elementGuidelines={!isMultipleTargetSelected ? elementGuidelines : []}
-        onRenderGroup={(e) => {
-          if (!isMultipleTargetSelected) return
+        onRenderGroup={({ targets, events }) => {
+          events.forEach((ev) => {
+            const perspective =
+              ev.target.style.transform.match(/perspective\((.*?)\)/)
+            const xPerc =
+              // @ts-expect-error
+              (ev?.transformObject?.translate[0] / ev?.target?.offsetWidth) *
+              100
+            const yPerc =
+              // @ts-expect-error
+              (ev?.transformObject?.translate[1] / ev?.target?.offsetHeight) *
+              100
 
-          e.events.forEach((ev) => {
-            ev.target.style.transform = ev.transform
+            const scale = ev.target.style.transform.match(/scale\((.*?)\)/)
+
+            const rotate = ev.target.style.transform.match(/rotate\((.*?)\)/)
+
+            const rotateX = ev.target.style.transform.match(/rotateX\((.*?)\)/)
+            const rotateY = ev.target.style.transform.match(/rotateY\((.*?)\)/)
+            const rotateZ = ev.target.style.transform.match(/rotateZ\((.*?)\)/)
+
+            ev.target.style.transform = `${
+              perspective ? perspective[0] : ''
+            } translate(${xPerc}%, ${yPerc}%) ${scale ? scale[0] : ''} ${
+              rotate ? rotate[0] : ''
+            } ${rotateX ? rotateX[0] : ''} ${rotateY ? rotateY[0] : ''} ${
+              rotateZ ? rotateZ[0] : ''
+            } `
           })
         }}
-        onRenderGroupEnd={handleRenderGroupEnd}
       />
     </>
   )
