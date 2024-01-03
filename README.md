@@ -1,6 +1,3 @@
-> **Warning**
-> This app is a work in progress.
-
 ## Prismify
 
 Prismify is a web app that aims to revitalize & enhance boring images/screenshots. With prismify, you can effortlessly enhance your images/screenshots.
