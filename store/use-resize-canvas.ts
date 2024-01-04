@@ -1,5 +1,4 @@
-import { create, StateCreator } from 'zustand'
-import { persist, createJSONStorage, PersistOptions } from 'zustand/middleware'
+import { create } from 'zustand'
 
 interface ResizeCanvasState {
   resolution: string
@@ -27,43 +26,28 @@ interface ResizeCanvasState {
   setExactDomResolution: (exactDomResolution: string) => void
 }
 
-type MyPersist = (
-  config: StateCreator<ResizeCanvasState>,
-  options: PersistOptions<ResizeCanvasState>
-) => StateCreator<ResizeCanvasState>
+export const useResizeCanvas = create<ResizeCanvasState>((set) => ({
+  resolution: '1920x1080',
+  setResolution: (res) => set({ resolution: res }),
 
-export const useResizeCanvas = create<ResizeCanvasState, []>(
-  (persist as MyPersist)(
-    (set): ResizeCanvasState => ({
-      resolution: '1920x1080',
-      setResolution: (res) => set({ resolution: res }),
+  exactDomResolution: '1920x1080',
+  setExactDomResolution: (exactDomResolution) => set({ exactDomResolution }),
 
-      exactDomResolution: '1920x1080',
-      setExactDomResolution: (exactDomResolution) =>
-        set({ exactDomResolution }),
+  domResolution: '....x....',
+  setDomResolution: (res) => set({ domResolution: res }),
 
-      domResolution: '....x....',
-      setDomResolution: (res) => set({ domResolution: res }),
+  canvasRoundness: 0.75,
+  setCanvasRoundness: (canvasRoundness) => set({ canvasRoundness }),
 
-      canvasRoundness: 0.75,
-      setCanvasRoundness: (canvasRoundness) => set({ canvasRoundness }),
+  scrollScale: 1,
+  setScrollScale: (scrollScale) => set({ scrollScale }),
 
-      scrollScale: 1,
-      setScrollScale: (scrollScale) => set({ scrollScale }),
+  scaleFactor: 1,
+  setScaleFactor: (scaleFactor) => set({ scaleFactor }),
 
-      scaleFactor: 1,
-      setScaleFactor: (scaleFactor) => set({ scaleFactor }),
+  shouldFloat: false,
+  setShouldFloat: (shouldFloat) => set({ shouldFloat }),
 
-      shouldFloat: false,
-      setShouldFloat: (shouldFloat) => set({ shouldFloat }),
-
-      automaticResolution: false,
-      setAutomaticResolution: (automaticResolution) =>
-        set({ automaticResolution }),
-    }),
-    {
-      name: 'resize-canvas',
-      storage: createJSONStorage(() => localStorage),
-    }
-  )
-)
+  automaticResolution: false,
+  setAutomaticResolution: (automaticResolution) => set({ automaticResolution }),
+}))

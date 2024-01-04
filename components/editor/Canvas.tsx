@@ -9,7 +9,6 @@ import PerspectiveOptions from '@/components/editor/PerspectiveOptions/Perspecti
 import PositionOptions from '@/components/editor/PositionOptions/PositionOptions'
 import TextOptions from '@/components/editor/TextOptions/TextOptions'
 import { useEventListener } from '@/hooks/use-event-listener'
-import useStore from '@/hooks/use-store'
 import { useActiveIndexStore } from '@/store/use-active-index'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
@@ -36,10 +35,8 @@ const MoveableComponent = dynamic(
 
 export default function Canvas() {
   const [isOverflowing, setIsOverflowing] = useState<boolean>(false)
-  const activeIndex = useStore(
-    useActiveIndexStore,
-    (state) => state.activeIndex
-  )
+  const { activeIndex } = useActiveIndexStore()
+
   const { quality } = useImageQualityStore()
   const { backgroundType, imageBackground, attribution } =
     useBackgroundOptions()
@@ -146,7 +143,6 @@ export default function Canvas() {
             parentEl.clientWidth <= childEl.clientWidth ||
             parentEl.clientHeight <= childEl.clientHeight
           ) {
-            console.log('is overflowing')
 
             if (
               childEl.classList.contains('w-auto') &&
@@ -186,7 +182,6 @@ export default function Canvas() {
           parentEl.clientWidth <= childEl.clientWidth ||
           parentEl.clientHeight <= childEl.clientHeight
         ) {
-          console.log('is overflowing')
 
           if (
             childEl.classList.contains('w-auto') &&
@@ -271,7 +266,6 @@ export default function Canvas() {
     screenshotRef
   )
 
-  console.log(`SelectedImage : - ${selectedImage}`)
 
   return (
     <>

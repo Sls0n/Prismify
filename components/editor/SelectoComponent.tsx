@@ -33,11 +33,9 @@ export default function SelectoComponent() {
       ratio={0}
       hitRate={0}
       onSelectStart={(e) => {
-        console.log('selecting')
         setIsSelecting(true)
       }}
       onSelectEnd={(e) => {
-        console.log(e)
         setTimeout(() => {
           setIsSelecting(false)
         }, 100)

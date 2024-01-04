@@ -13,7 +13,6 @@ import {
 } from '@/components/ui/Tooltip'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
-import FontPicker from 'font-picker-react'
 import {
   AlignHorizontalJustifyCenter,
   AlignLeft,
@@ -22,6 +21,14 @@ import {
   Minus,
   Plus,
 } from 'lucide-react'
+import dynamic from 'next/dynamic'
+
+const FontPicker = dynamic(
+  () => import('font-picker-react').then((mod) => mod.default),
+  {
+    ssr: false,
+  }
+)
 
 export default function FontSettings() {
   const { setTexts, texts } = useImageOptions()
@@ -100,6 +107,7 @@ export default function FontSettings() {
       <div className="mb-3 mt-2 flex items-center px-1 md:max-w-full">
         <h1 className="text-[0.85rem]">Font family</h1>
       </div>
+      {/* @ts-expect-error */}
       <FontPicker
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY!}
         activeFontFamily={activeFontFamily}

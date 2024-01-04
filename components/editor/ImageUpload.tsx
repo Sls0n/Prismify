@@ -73,7 +73,6 @@ const ImageUpload = () => {
     extractColors()
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [imagesCheck])
-  console.log(imagesCheck)
   console.log(images)
 
   useOnClickOutside(targetRef, () => {
@@ -224,6 +223,88 @@ const ImageUpload = () => {
                       }}
                     />
                   </div>
+
+                  {/* Trying layout feature! */}
+                  {/* <div
+                    className={`flex flex-col image image-check absolute flex-1 z-[2]   ${
+                      isSelecting ? 'selectable' : ''
+                    } ${selectedImage ? '' : ''}`}
+                    style={{
+                      // width: '65%',
+                      // maxHeight: '35%',
+                      width: `${+image.style.imageSize * +exactDomWidth}px`,
+                      maxHeight: `${+image.style.imageSize * +exactDomHeight}px`,
+                      // transform: `translate(35%,50%) rotateX(40deg) rotate(50deg) scale(1.3) skew(8deg, 0deg)`,
+                      borderRadius: `${image.style.imageRoundness}rem`,
+                      boxShadow:
+                        image.style.shadowName !== 'Medium'
+                          ? `${image.style.imageShadow} ${convertHex(
+                              image.style.shadowColor,
+                              image.style.shadowOpacity
+                            )}${
+                              image.frame === 'Shadow'
+                                ? ',11px 11px rgba(0,0,0,0.8)'
+                                : ''
+                            }`
+                          : `0px 18px 88px -4px ${convertHex(
+                              image.style.shadowColor,
+                              image.style.shadowOpacity
+                            )}, 0px 8px 28px -6px ${convertHex(
+                              image.style.shadowColor,
+                              image.style.shadowOpacity
+                            )}${
+                              image.frame === 'Shadow'
+                                ? ',11px 11px rgba(0,0,0,0.8)'
+                                : ''
+                            }`,
+                    }}
+                    ref={
+                      !isMultipleTargetSelected
+                        ? image.id === selectedImage
+                          ? targetRef
+                          : null
+                        : targetRef
+                    }
+                    id={`${image.id}`}
+                    onClick={() => {
+                      setShowControls(true)
+                      setSelectedImage(image.id)
+                    }}
+                    onContextMenu={(e) => {
+                      setShowControls(true)
+                      setSelectedImage(image.id)
+                    }}
+                  >
+                    <BrowserFrame frame={image.frame || 'None'} />
+                    <img
+                      draggable={false}
+                      className={`pointer-events-none h-full w-full shrink-0 object-cover object-center ${
+                        image.frame === 'Arc' ? 'shadow-md' : ''
+                      }`}
+                      id={`img-${image.id}`}
+                      src={image.image}
+                      alt="Uploaded image"
+                      style={{
+                        borderRadius:
+                          image.frame !== 'None'
+                            ? image.frame === 'Arc'
+                              ? `calc(${image.style.imageRoundness}rem - 9px)`
+                              : ''
+                            : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
+
+                        padding:
+                          image.frame === 'None'
+                            ? ''
+                            : `${image.style.insetSize}px`,
+
+                        backgroundColor:
+                          image.style.insetSize !== '0' &&
+                          image.frame !== 'None'
+                            ? `${image?.style.insetColor}`
+                            : '',
+                      }}
+                    />
+                  </div> */}
                 </ContextMenuImage>
               )
           })}

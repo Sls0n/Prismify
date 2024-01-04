@@ -1,11 +1,19 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { NextAuthOptions } from 'next-auth'
+import { type NextAuthOptions, type DefaultSession } from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
-// import FacebookProvider from 'next-auth/providers/facebook'
 import prismadb from '@/libs/prismadb'
 import bcrypt from 'bcrypt'
+
+declare module 'next-auth' {
+  interface Session extends DefaultSession {
+    user: {
+      id: string
+      isCreator: boolean
+    } & DefaultSession['user']
+  }
+}
 
 export const authOptions: NextAuthOptions = {
   pages: {
@@ -22,10 +30,6 @@ export const authOptions: NextAuthOptions = {
       clientId: process.env.GOOGLE_ID!,
       clientSecret: process.env.GOOGLE_SECRET!,
     }),
-    // FacebookProvider({
-    //   clientId: process.env.FACEBOOK_ID!,
-    //   clientSecret: process.env.FACEBOOK_SECRET!,
-    // }),
     CredentialsProvider({
       name: 'Credentials',
       credentials: {
@@ -69,6 +73,43 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  callbacks: {
+    // session: (p) => {
+    //   const { session, user } = p
+
+    //   return {
+    //     ...session,
+    //     user: {
+    //       ...session.user,
+    //       id: user.id,
+    //       isCreator: user.isCreator,
+    //     }
+    //   }
+    // },
+    async jwt({ token, user, session }) {
+      if (user) {
+        return {
+          ...token,
+          id: user.id,
+          // @ts-expect-error isCreator is there but its not showing
+          isCreator: user?.isCreator,
+        }
+      }
+
+      return token
+    },
+    async session({ session, token, user }) {
+      // console.log('session', session, token)
+      return {
+        ...session,
+        user: {
+          ...session.user,
+          id: token.id,
+          isCreator: token.isCreator,
+        },
+      }
+    },
+  },
   session: {
     strategy: 'jwt',
   },

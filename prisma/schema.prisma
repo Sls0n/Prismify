@@ -17,6 +17,7 @@ model User {
   hashedPassword String?
   createdAt      DateTime  @default(now())
   updatedAt      DateTime  @updatedAt
+  isCreator      Boolean   @default(false)
 
   saves    Saves[]
   accounts Account[]

@@ -263,7 +263,6 @@ export default function MoveableComponent({ id }: { id: string }) {
             if (targetIndex !== -1) {
               const updatedEvent = events[targetIndex]
 
-              console.log(updatedEvent)
 
               const xPerc =
                 (updatedEvent?.transformObject?.translate[0] /

@@ -22,7 +22,6 @@ import FrameOptions from './FrameOptions/FrameOptions'
 import PositionOptions from './PositionOptions/PositionOptions'
 import { useTemporalStore } from '@/store/use-image-options'
 import TextOptions from './TextOptions/TextOptions'
-import useStore from '@/hooks/use-store'
 import PerspectiveOptions from './PerspectiveOptions/PerspectiveOptions'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useMoveable } from '@/store/use-moveable'
@@ -30,10 +29,8 @@ import { useMoveable } from '@/store/use-moveable'
 export default function Sidebar() {
   const { setShowControls } = useMoveable()
   const { undo, redo } = useTemporalStore((state) => state)
-  const activeIndex = useStore(
-    useActiveIndexStore,
-    (state) => state.activeIndex
-  )
+  const { activeIndex } = useActiveIndexStore()
+
   const sidebarButtons = [
     {
       text: 'Canvas',
@@ -101,10 +98,7 @@ export default function Sidebar() {
 }
 
 export function SidebarImageSettings() {
-  const activeIndex = useStore(
-    useActiveIndexStore,
-    (state) => state.activeIndex
-  )
+  const { activeIndex } = useActiveIndexStore()
   const sidebarButtons = [
     {
       text: 'Canvas',
