@@ -17,7 +17,7 @@ const Font = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title:
-    'Prismify - Effortlessly Create Beautiful SaaS/Product Shots & Graphics',
+    'Prismify - Create Beautiful Screenshots & Graphics for Websites & Social Media',
   description:
     'Easily make your SaaS/product shots and graphics design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations.',
   verification: {
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title:
-      'Prismify - Effortlessly Create Beautiful SaaS/Product Shots & Graphics',
+    'Prismify - Create Beautiful Screenshots & Graphics for Websites & Social Media',
     description:
       'Easily make your SaaS/product shots & design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations.',
     siteName: 'Prismify',
@@ -88,6 +88,7 @@ export const metadata: Metadata = {
     'SaaS marketing visuals',
   ],
   metadataBase: new URL('https://prismify.vercel.app'),
+  robots: 'index, follow',
 }
 
 export default function RootLayout({
