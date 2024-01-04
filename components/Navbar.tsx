@@ -1,19 +1,6 @@
 'use client'
 
-import Link from 'next/link'
-import { cn } from '@/utils/buttonUtils'
 import { Button, buttonVariants } from '@/components/ui/Button'
-import { saveAs } from 'file-saver'
-import * as htmlToImage from 'html-to-image'
-import Image from 'next/image'
-import {
-  ChevronDown,
-  Download,
-  LogIn,
-  LogOut,
-  Settings,
-  User,
-} from 'lucide-react'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -22,16 +9,29 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/DropdownMenu'
-import { Dialog, DialogContent, DialogTrigger } from '@/components/ui/Dialog'
-import { signOut } from 'next-auth/react'
-import SignIn from './SignIn'
 import { toast } from '@/hooks/use-toast'
-import SaveOptions from './SaveOptions'
-import { useResizeCanvas } from '@/store/use-resize-canvas'
-import SpotlightButton from './ui/SpotlightButton'
 import { useImageOptions } from '@/store/use-image-options'
-import ThemeButtonIcon from './ui/ThemeButtonIcon'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
+import { cn } from '@/utils/buttonUtils'
+import { DropdownMenuArrow } from '@radix-ui/react-dropdown-menu'
+import * as htmlToImage from 'html-to-image'
+import {
+  BadgeInfo,
+  BookCopy,
+  ChevronDown,
+  LogIn,
+  LogOut,
+  Mails,
+  Settings,
+  User,
+  Wand2,
+  Zap,
+} from 'lucide-react'
+import { signOut } from 'next-auth/react'
+import Image from 'next/image'
+import Link from 'next/link'
 import { AuthModal } from './AuthModal'
+import SaveOptions from './SaveOptions'
 
 type NavbarProps = {
   mode?: 'default' | 'signin' | 'signup'
@@ -131,13 +131,85 @@ export default function Navbar({
             <div className="dark:bg-border-dark hidden h-6 w-[2px] bg-border md:block" />
           </Link>
 
-          <Link className="hidden md:flex" href="/templates">
+          {/* <Link className="hidden md:flex" href="/templates">
             <p className="text-sm font-medium text-dark/70">Templates</p>
-          </Link>
+          </Link> */}
 
-          <Link className="hidden md:flex" href="/blogs">
-            <p className="text-sm font-medium text-dark/70">Articles</p>
-          </Link>
+          <DropdownMenu>
+            <DropdownMenuTrigger className="add-focus group flex items-center">
+              <p className="text-sm font-medium text-dark/70 group-hover:text-dark/90">
+                Resources
+              </p>
+              <ChevronDown
+                size={16}
+                className="ml-1 translate-y-0.5 text-dark/70 group-hover:text-dark/90"
+              />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              sideOffset={15}
+              className="w-[180px] rounded-xl border border-border/70 bg-[#151515]/60 p-1.5 py-2 shadow-xl backdrop-blur-md"
+            >
+              <DropdownMenuGroup>
+                <DropdownMenuItem className="group mb-1 cursor-pointer rounded-lg focus:bg-white">
+                  <Link
+                    href="/articles"
+                    className="flex  items-center justify-center focus:shadow-md"
+                  >
+                    <BookCopy
+                      size={18}
+                      className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                    />
+                    <span className="font-medium group-focus:text-black/90">
+                      Articles
+                    </span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="group mb-1 cursor-pointer rounded-lg focus:bg-white">
+                  <Link
+                    href="/examples"
+                    className="flex  items-center justify-center focus:shadow-md"
+                  >
+                    <Wand2
+                      size={18}
+                      className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                    />
+                    <span className="font-medium group-focus:text-black/90">
+                      Examples
+                    </span>
+                  </Link>
+                </DropdownMenuItem>
+                <DropdownMenuItem className="group mb-1 cursor-pointer rounded-lg focus:bg-white">
+                  <Link
+                    href="/about"
+                    className="flex  items-center justify-center focus:shadow-md"
+                  >
+                    <BadgeInfo
+                      size={18}
+                      className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                    />
+                    <span className="font-medium group-focus:text-black/90">
+                      About
+                    </span>
+                  </Link>
+                </DropdownMenuItem>
+              </DropdownMenuGroup>
+              <DropdownMenuSeparator className="mb-1 opacity-80" />
+              <DropdownMenuItem className="group cursor-pointer rounded-lg focus:bg-white">
+                <Link
+                  href="/contact"
+                  className="flex  items-center justify-center focus:shadow-md"
+                >
+                  <Mails
+                    size={18}
+                    className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                  />
+                  <span className="font-medium group-focus:text-black/90">
+                    Contact
+                  </span>
+                </Link>
+              </DropdownMenuItem>
+            </DropdownMenuContent>
+          </DropdownMenu>
         </nav>
         {/* add a vertical separator */}
         <div className="flex items-center gap-10 ">
@@ -227,7 +299,10 @@ export default function Navbar({
                 <div className="dark:bg-border-dark mx-3 h-7 w-[2px] bg-border" />
 
                 <DropdownMenu>
-                  <DropdownMenuTrigger asChild>
+                  <DropdownMenuTrigger
+                    asChild
+                    className="group flex items-center"
+                  >
                     <Button
                       variant="ghost"
                       className="flex h-10 cursor-pointer items-center justify-center gap-x-2.5 rounded-xl bg-[#f5f7fa] px-4 py-2 font-medium text-primary dark:bg-formDark dark:text-dark"
@@ -254,53 +329,74 @@ export default function Navbar({
                       </div>
                     </Button>
                   </DropdownMenuTrigger>
-                  <DropdownMenuContent className="mt-2 w-40">
+                  <DropdownMenuContent
+                    align="end"
+                    sideOffset={10}
+                    className="w-[180px] rounded-xl border border-border/70 bg-[#151515]/95 p-1.5 py-2 shadow-xl backdrop-blur-lg"
+                  >
                     <DropdownMenuGroup>
-                      <DropdownMenuItem>
-                        <div className=" flex min-w-[32px] items-center justify-center">
+                      <DropdownMenuItem className="group mb-1 cursor-pointer rounded-lg focus:bg-white">
+                        <div className="flex items-center justify-center focus:shadow-md">
                           <User
                             size={18}
-                            className="mr-3 h-4 w-4 text-primary/70 dark:text-dark/80"
+                            className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
                           />
-                          <span className="font-medium">Profile</span>
+                          <span className="font-medium group-focus:text-black/90">
+                            Profile
+                          </span>
                         </div>
                       </DropdownMenuItem>
-                      <DropdownMenuItem>
-                        <div className="flex min-w-[32px] items-center justify-center">
+                      <DropdownMenuItem className="group mb-1 cursor-pointer rounded-lg focus:bg-white">
+                        <div className="flex items-center justify-center focus:shadow-md">
                           <Settings
                             size={18}
-                            className="mr-3 h-4 w-4 text-primary/70 dark:text-dark/80"
+                            className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
                           />
-                          <span className="font-medium">Settings</span>
+                          <span className="font-medium group-focus:text-black/90">
+                            Settings
+                          </span>
+                        </div>
+                      </DropdownMenuItem>
+                      <DropdownMenuItem className="group mb-1 cursor-pointer rounded-lg focus:bg-white">
+                        <div className="flex items-center justify-center focus:shadow-md">
+                          <Zap
+                            size={18}
+                            className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                          />
+                          <span className="font-medium group-focus:text-black/90">
+                            Upgrade
+                          </span>
                         </div>
                       </DropdownMenuItem>
                     </DropdownMenuGroup>
-                    <DropdownMenuSeparator />
-                    <DropdownMenuItem>
-                      <button
-                        onClick={() => {
-                          signOut()
-                            .then(() => {
-                              toast({
-                                title: 'Logging out..',
-                              })
+                    <DropdownMenuSeparator className="mb-1" />
+                    <DropdownMenuItem
+                      onClick={() => {
+                        signOut()
+                          .then(() => {
+                            toast({
+                              title: 'Logging out..',
                             })
-                            .catch(() => {
-                              toast({
-                                variant: 'destructive',
-                                title: "Couldn't sign you out!",
-                                description: 'Try again later.',
-                              })
+                          })
+                          .catch(() => {
+                            toast({
+                              variant: 'destructive',
+                              title: "Couldn't sign you out!",
+                              description: 'Try again later.',
                             })
-                        }}
-                        className="flex min-w-[32px] items-center justify-center"
-                      >
+                          })
+                      }}
+                      className="group cursor-pointer rounded-lg focus:bg-white"
+                    >
+                      <div className="flex  items-center justify-center focus:shadow-md">
                         <LogOut
                           size={18}
-                          className="mr-3 h-4 w-4 text-primary/70 dark:text-dark/80"
+                          className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
                         />
-                        <span className="font-medium">Sign out</span>
-                      </button>
+                        <span className="font-medium group-focus:text-black/90">
+                          Sign out
+                        </span>
+                      </div>
                     </DropdownMenuItem>
                   </DropdownMenuContent>
                 </DropdownMenu>

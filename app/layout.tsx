@@ -17,7 +17,7 @@ const Font = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title:
-    'Prismify - Create Beautiful Screenshots & Graphics for Websites & Social Media',
+    'Prismify - Create beautiful screenshots, graphics, designs for websites and social medias.',
   description:
     'Easily make your SaaS/product shots and graphics design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations.',
   verification: {
@@ -47,7 +47,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title:
-    'Prismify - Create Beautiful Screenshots & Graphics for Websites & Social Media',
+    'Prismify - Create beautiful screenshots, graphics, designs for websites and social medias.',
     description:
       'Easily make your SaaS/product shots & design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations.',
     siteName: 'Prismify',
