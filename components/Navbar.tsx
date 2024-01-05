@@ -48,61 +48,9 @@ export default function Navbar({
 }: NavbarProps) {
   const { shouldFloat, scaleFactor } = useResizeCanvas()
   const { images } = useImageOptions()
-  const snapshotCreator = () => {
-    return new Promise<Blob>((resolve, reject) => {
-      try {
-        if (images.length === 0) {
-          toast({
-            title: 'Error!',
-            description: 'Upload an image then try again',
-            variant: 'destructive',
-          })
-          return
-        }
-        const scale = scaleFactor * 2
-        const element =
-          typeof window !== 'undefined' &&
-          document?.getElementById('canvas-container')
-        if (!element) {
-          throw new Error('Element not found.')
-        }
 
-        htmlToImage
-          .toJpeg(element, {
-            height: element.offsetHeight * scale,
-            width: element.offsetWidth * scale,
-
-            style: {
-              transform: 'scale(' + scale + ')',
-              transformOrigin: 'top left',
-              width: element.offsetWidth + 'px',
-              height: element.offsetHeight + 'px',
-            },
-          })
-          .then((dataURL) => {
-            const blob = dataURL as unknown as Blob
-            resolve(blob)
-          })
-          .catch((e: any) => {
-            toast({
-              title: 'Image not uploaded',
-              description: e.message,
-              variant: 'destructive',
-            })
-            reject(e)
-          })
-      } catch (e: any) {
-        toast({
-          title: 'Error!',
-          description: e.message,
-          variant: 'destructive',
-        })
-        reject(e)
-      }
-    })
-  }
   return (
-    <header className="fixed inset-x-0 top-0 z-[10] flex h-[72px] items-center border-b border-border bg-[#131313] px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
+    <header className="fixed inset-0 top-0 z-[10] flex h-[72px] items-center border-b border-border bg-[#131313] px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
       <div className="flex w-full items-center justify-between">
         <nav className="flex items-center gap-8">
           {/* Can add hamburger or something here */}
@@ -136,7 +84,7 @@ export default function Navbar({
           </Link> */}
 
           <DropdownMenu>
-            <DropdownMenuTrigger className="add-focus group flex items-center">
+            <DropdownMenuTrigger className="add-focus group hidden items-center md:flex">
               <p className="text-sm font-medium text-dark/70 group-hover:text-dark/90">
                 Resources
               </p>
@@ -147,7 +95,7 @@ export default function Navbar({
             </DropdownMenuTrigger>
             <DropdownMenuContent
               sideOffset={15}
-              className="w-[180px] rounded-xl border border-border/70 bg-[#151515]/60 p-1.5 py-2 shadow-xl backdrop-blur-md"
+              className="w-[180px] rounded-xl border border-border/70 bg-[#151515]/95 p-1.5 py-2 shadow-xl backdrop-blur-lg"
             >
               <DropdownMenuGroup>
                 <DropdownMenuItem className="group mb-1 cursor-pointer rounded-lg focus:bg-white">

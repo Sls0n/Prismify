@@ -4,6 +4,7 @@ import { cn } from '@/utils/buttonUtils'
 import type { Metadata } from 'next'
 import { Analytics } from '@vercel/analytics/react'
 import { Plus_Jakarta_Sans } from 'next/font/google'
+import type { Viewport } from 'next'
 import '@/styles/globals.css'
 
 // const Font = LocalFont({
@@ -47,7 +48,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     title:
-    'Prismify - Create beautiful screenshots, graphics, designs for websites and social medias.',
+      'Prismify - Create beautiful screenshots, graphics, designs for websites and social medias.',
     description:
       'Easily make your SaaS/product shots & design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations.',
     siteName: 'Prismify',
@@ -63,9 +64,7 @@ export const metadata: Metadata = {
       },
     ],
   },
-  colorScheme: 'dark',
   category: 'Design',
-  themeColor: '#151515',
   alternates: {
     canonical: 'https://prismify.vercel.app',
   },
@@ -91,6 +90,11 @@ export const metadata: Metadata = {
   robots: 'index, follow',
 }
 
+export const viewport: Viewport = {
+  themeColor: '#151515',
+  colorScheme: 'dark',
+}
+
 export default function RootLayout({
   children,
 }: {
@@ -102,7 +106,7 @@ export default function RootLayout({
       className={cn('antialiased', Font.className)}
       lang="en"
     >
-      <body className="h-screen w-screen bg-primary text-primary dark:bg-[#111] dark:text-dark ">
+      <body className="h-screen no-scrollbar w-screen bg-primary text-primary dark:bg-[#111] dark:text-dark ">
         <Toaster />
         <Analytics />
 

@@ -12,8 +12,7 @@ const buttonVariants = cva(
       variant: {
         default:
           'bg-gradient-to-br from-[#898AEB]/80 via-[#898dd9]/80 to-[#8e8ece]/80 text-white h-10 px-5 py-3  font-medium',
-        secondary:
-          'text-primary dark:text-dark h-10 px-4 py-2  font-medium',
+        secondary: 'text-primary dark:text-dark h-10 px-4 py-2  font-medium',
         outline:
           'text-primary border border-border/80 dark:text-[#c2c3c9] h-10 px-4 py-2  bg-formDark font-normal',
         ghost:
@@ -27,6 +26,8 @@ const buttonVariants = cva(
         icon: 'text-primary bg-[#E0E0EC] dark:bg-formDark border border-border dark:text-dark h-12 px-5 py-2.5 ',
         activeIcon:
           'text-white bg-gradient-to-br from-[#898AEB] via-[#898dd9]/90 to-[#7d75d0] h-12 px-5 py-2.5  font-medium border-0 border-border dark:text-[#F2F3F9] focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-2',
+        menuItem:
+          'justify-between px-1.5 hover:bg-indigo-400/10 hover:text-foreground/80 rounded-sm cursor-default',
       },
       size: {
         'x-lg': 'h-13 py-[0.8rem] px-[1.1rem]',
