@@ -21,7 +21,7 @@ export default async function Article(props: Props) {
   })
 
   return (
-    <div className="w-full">
+    <div className="w-full pt-[72px]">
       <div className="mb-16 flex h-48 w-full flex-col items-center justify-center bg-black/10">
         <Text
           variant="h1"

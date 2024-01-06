@@ -17,7 +17,7 @@ export default async function AdminLayout({
         img={session?.user?.image || undefined}
         username={session?.user?.name || 'User'}
       />
-      <div className="h-full w-full pt-[72px]">
+      <div className="h-full w-full">
         {children}
 
         <Footer />

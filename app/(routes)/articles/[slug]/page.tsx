@@ -33,7 +33,7 @@ export default async function ArticlePage({ params }: ArticleProps) {
   }
 
   return (
-    <section className="flex w-full flex-col gap-8 lg:gap-16">
+    <section className="flex pt-[72px] w-full flex-col gap-8 lg:gap-16">
       <div className="container mt-8">
         <BackButton />
       </div>
