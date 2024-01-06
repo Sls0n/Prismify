@@ -31,14 +31,12 @@ import { AuthModal } from './AuthModal'
 import SaveOptions from './SaveOptions'
 
 type NavbarProps = {
-  mode?: 'default' | 'signin' | 'signup'
   authenticated?: boolean
   img?: string
   username?: string
 }
 
 export default function Navbar({
-  mode = 'default',
   authenticated,
   username,
   img,
@@ -159,7 +157,7 @@ export default function Navbar({
         </nav>
         <div className="flex items-center gap-10 ">
           <div className="flex items-center gap-2">
-            <SaveOptions />
+            {isHome && <SaveOptions />}
 
             <div className="dark:bg-border-dark mx-3 h-7 w-[2px] bg-border" />
 
