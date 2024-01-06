@@ -37,7 +37,7 @@ export default function BlogForm() {
 
   const { mutate: publishBlog, isLoading: isPublishing } = useMutation({
     mutationFn: async () => {
-      const res = axios.post('/api/article/post', {
+      const res = await axios.post('/api/article/post', {
         title,
         summary,
         category,
@@ -218,7 +218,7 @@ const MenuBar = () => {
 
   useEffect(() => {
     setBlogOutput(editor?.getJSON() ?? {})
-  // eslint-disable-next-line react-hooks/exhaustive-deps
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [editor?.state, setBlogOutput])
 
   const addImage = useCallback(() => {

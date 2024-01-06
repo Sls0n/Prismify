@@ -48,7 +48,7 @@ model Article {
   id       String  @id @default(cuid())
   title    String
   slug     String  @unique
-  summary  String?
+  summary  String? @db.Text
   imageUrl String?
   content  Json
   category String?

@@ -45,10 +45,9 @@ export default async function ArticlePage({ params }: ArticleProps) {
             <div className="flex items-center">
               <Calendar className="mr-2 h-[1.15rem] w-[1.15rem] text-white/40" />
               <time
-                className="text-base font-medium text-dark/60"
+                className="text-base font-normal text-dark/60"
                 dateTime={
-                  blog?.updatedAt.toLocaleDateString() ??
-                  blog?.createdAt.toLocaleDateString()
+                  blog?.updatedAt.toISOString() ?? blog?.createdAt.toISOString()
                 }
               >
                 {generateFormattedBlogDate(blog?.createdAt, blog?.updatedAt)}
@@ -79,7 +78,7 @@ export default async function ArticlePage({ params }: ArticleProps) {
           </div>
         </div>
 
-        <div className="prose-md prose prose-neutral mb-16 dark:prose-invert md:prose-lg  prose-img:rounded-md">
+        <div className="prose-md prose prose-neutral prose-p:tracking-[0.002em] mb-16 dark:prose-invert md:prose-lg prose-p:text-dark prose-img:rounded-md">
           {blog?.imageUrl && (
             <figure>
               <Image
@@ -151,7 +150,7 @@ export default async function ArticlePage({ params }: ArticleProps) {
               // heading
               case 'heading':
                 return (
-                  <h3 key={index} className="font-bold">
+                  <h3 key={index} className="font-bold text-dark/90">
                     {item?.content?.map((text, textIndex) => {
                       let className = ''
                       if (text.marks) {
@@ -172,16 +171,18 @@ export default async function ArticlePage({ params }: ArticleProps) {
                           })
                           .join(' ')
                       }
-                      return (
+                      return className ? (
                         <span
                           key={textIndex}
                           className={
                             className +
-                            ' text-[1.4rem] font-extrabold md:text-2xl'
+                            ' text-[1.4rem] font-bold md:text-2xl'
                           }
                         >
                           {text.text}
                         </span>
+                      ) : (
+                        text.text || ''
                       )
                     })}
                   </h3>
@@ -237,10 +238,12 @@ export default async function ArticlePage({ params }: ArticleProps) {
                               })
                               .join(' ')
                           }
-                          return (
+                          return className ? (
                             <span key={textIndex} className={className}>
                               {text.text}
                             </span>
+                          ) : (
+                            text.text || ''
                           )
                         })}
                       </p>

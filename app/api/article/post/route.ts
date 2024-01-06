@@ -39,6 +39,7 @@ export async function POST(request: Request) {
     return new NextResponse('OK')
   } catch (error) {
     console.log(error)
+    console.log(error)
     if (error instanceof z.ZodError) {
       return new NextResponse(error.message, { status: 400 })
     }
