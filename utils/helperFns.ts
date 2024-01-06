@@ -40,3 +40,94 @@ export function calculateEqualCanvasSize(
 
   return `${canvasWidth}x${canvasHeight}`
 }
+
+export function capitalize(str: string) {
+  if (!str || typeof str !== 'string') return str
+  return str.charAt(0).toUpperCase() + str.slice(1)
+}
+
+export const truncate = (str: string, length: number) => {
+  if (!str || str.length <= length) return str
+  return `${str.slice(0, length)}...`
+}
+
+export const separateCommas = (str: string) => {
+  if (!str) return
+
+  const strArr = str.split(',')
+
+  return strArr.map((item) => item.trim())
+}
+
+export const generateBadgeVariant = (str: string) => {
+  if (!str) return
+
+  const helpVariant = ['help', 'support', 'question', 'faq']
+  const destructiveVariant = [
+    'error',
+    'critical',
+    'important',
+    'caution',
+    'alert',
+    'important',
+  ]
+  const successVariant = [
+    'trends',
+    'announcement',
+    'sale',
+    'tutorial',
+    'guide',
+    'new',
+    'update',
+    'feature',
+  ]
+
+  if (helpVariant.includes(str.toLowerCase())) return 'help'
+  if (successVariant.includes(str.toLowerCase())) return 'success'
+  if (destructiveVariant.includes(str.toLowerCase())) return 'destructive'
+  return 'default'
+}
+
+export function formatDate(date: Date | string | number | undefined): string {
+  // format date as 29 May, 2021
+  if (!date) return 'N/A'
+
+  if (typeof date === 'number' || typeof date === 'string')
+    date = new Date(date)
+
+  const d = new Date(date)
+  const year = d.getFullYear()
+  const month = d.toLocaleString('default', { month: 'short' })
+  const day = d.getDate()
+
+  return `${day} ${month}, ${year}`
+}
+
+export function generateFormattedBlogDate(
+  createdAt: string | Date,
+  updatedAt: string | Date
+): string {
+  const createdDate: Date = new Date(createdAt)
+  const updatedDate: Date = new Date(updatedAt)
+
+  // Check if the dates are the same
+  const datesAreEqual: boolean = createdDate.getTime() === updatedDate.getTime()
+
+  // Format the date string
+  const formattedDate = (date: Date): string => {
+    const options: Intl.DateTimeFormatOptions = {
+      year: 'numeric',
+      month: 'long',
+      day: 'numeric',
+    }
+    return date.toLocaleDateString('en-US', options)
+  }
+
+  if (datesAreEqual) {
+    // If the dates are the same, show 'Published on'
+    return `Published on ${formattedDate(createdDate)}`
+  } else {
+    // If the dates are different, show 'Updated on'
+    return `Updated on ${formattedDate(updatedDate)}`
+  }
+}

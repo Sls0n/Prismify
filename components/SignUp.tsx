@@ -57,7 +57,7 @@ export default function SignUp({ authenticated }: SignUpProps) {
       })
 
       router.push('/')
-    } catch (err: any) {
+    } catch (err) {
       if (err instanceof AxiosError) {
         if (err.response?.status === 409) {
           toast({

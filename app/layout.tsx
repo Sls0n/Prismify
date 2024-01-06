@@ -1,18 +1,10 @@
 import { Toaster } from '@/components/ui/Toaster'
 import Providers from '@/context/Providers'
-import { cn } from '@/utils/buttonUtils'
-import type { Metadata } from 'next'
-import { Analytics } from '@vercel/analytics/react'
-import { Plus_Jakarta_Sans } from 'next/font/google'
-import type { Viewport } from 'next'
 import '@/styles/globals.css'
-
-// const Font = LocalFont({
-//   src: '../public/fonts/EudoxusSansGX.woff2',
-//   display: 'swap',
-//   adjustFontFallback: 'Arial',
-//   fallback: ['system-ui', 'sans-serif'],
-// })
+import { cn } from '@/utils/buttonUtils'
+import { Analytics } from '@vercel/analytics/react'
+import type { Metadata, Viewport } from 'next'
+import { Plus_Jakarta_Sans } from 'next/font/google'
 
 const Font = Plus_Jakarta_Sans({ subsets: ['latin'] })
 

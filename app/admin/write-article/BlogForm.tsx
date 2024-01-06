@@ -15,24 +15,93 @@ import {
   Strikethrough,
   Underline,
 } from 'lucide-react'
-import { useCallback, useState } from 'react'
+import { useCallback, useEffect, useState } from 'react'
 // import { FileUpload } from '@/components/file-upload'
 import { Button } from '@/components/ui/Button'
 import { Input } from '@/components/ui/Input'
 import { cn } from '@/utils/buttonUtils'
 import { extensions } from '@/utils/tiptap-extensions'
-// import { useEditorOutput } from '@/store/use-editor-output'
+import { useMutation } from '@tanstack/react-query'
 import { Text } from '@/components/ui/Text'
+import { useTiptap } from '@/store/use-tiptap'
+import axios, { AxiosError } from 'axios'
+import { toast } from '@/hooks/use-toast'
 
 export default function BlogForm() {
-  // const { jsonOutput } = useEditorOutput()
+  const { blogOutput } = useTiptap()
   const [title, setTitle] = useState<string>('')
-  const [author, setAuthor] = useState<string>('')
+  const [summary, setSummary] = useState<string>('')
+  const [category, setCategory] = useState<string>('')
+  const [slug, setSlug] = useState<string>('')
   const [mainBlogImg, setMainBlogImg] = useState<string>('')
+
+  const { mutate: publishBlog, isLoading: isPublishing } = useMutation({
+    mutationFn: async () => {
+      const res = axios.post('/api/article/post', {
+        title,
+        summary,
+        category,
+        slug,
+        mainBlogImg,
+        content: blogOutput,
+      })
+
+      return res
+    },
+    onSuccess: () => {
+      toast({
+        title: 'Blog published successfully',
+      })
+    },
+    onError: (err) => {
+      if (err instanceof AxiosError) {
+        if (err.response?.status === 400) {
+          toast({
+            title: err?.response?.data?.[0]?.message,
+            variant: 'destructive',
+          })
+        }
+
+        if (err.response?.status === 401) {
+          toast({
+            title: 'You are not authorized to publish this blog',
+            description: 'Please login to publish this blog',
+            variant: 'destructive',
+          })
+        }
+
+        if (err.response?.status === 409) {
+          toast({
+            title: 'Blog with this slug already exists',
+            description: 'Please modify the slug a bit.',
+            variant: 'destructive',
+          })
+        }
+
+        if (err.response?.status === 500) {
+          toast({
+            title: 'Something went wrong',
+            description: 'Please try again later',
+            variant: 'destructive',
+          })
+        }
+      }
+      console.log(err)
+    },
+  })
+
+  const publishBlogHandler = () => {
+    publishBlog()
+  }
+
+  const slugifyTitle = async (title: string) => {
+    const slugify = (await import('slugify')).default
+    setSlug(slugify(title, { lower: true, strict: true }))
+  }
 
   return (
     <>
-      <div className="mb-8 mt-8 space-y-6 border-border bg-[#151515] lg:rounded-lg lg:border-[1.5px] lg:p-8">
+      <div className="mb-8 mt-8 space-y-6 rounded-lg border-[1.5px] border-border bg-[#151515] p-8">
         <div className="space-y-2">
           <Text className="text-dark/90" variant="bodyLarge" semibold>
             Title
@@ -42,33 +111,61 @@ export default function BlogForm() {
             placeholder="Write title for your blog..."
             className="h-16 border-transparent bg-[#151515] p-0 placeholder:text-dark/50 focus-visible:ring-0 focus-visible:ring-transparent md:text-xl "
             value={title}
-            onChange={(e) => setTitle(e.target.value)}
+            onChange={(e) => {
+              setTitle(e.target.value)
+              slugifyTitle(e.target.value)
+            }}
             required
           />
         </div>
 
         <div className="space-y-2">
           <Text className="text-dark/90" variant="bodyLarge" semibold>
-            Author (Optional)
+            Summary
           </Text>
 
           <Input
-            placeholder="Author's name..."
+            placeholder="Summary of the blog..."
             className="h-16 border-transparent bg-transparent p-0 placeholder:text-dark/50 focus-visible:ring-transparent md:text-xl"
-            value={author}
-            onChange={(e) => setAuthor(e.target.value)}
-            maxLength={50}
+            value={summary}
+            onChange={(e) => setSummary(e.target.value)}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Text className="text-dark/90" variant="bodyLarge" semibold>
+            Category (Comma separated)
+          </Text>
+
+          <Input
+            placeholder="Eg: Design, Marketing"
+            className="h-16 border-transparent bg-transparent p-0 placeholder:text-dark/50 focus-visible:ring-transparent md:text-xl"
+            value={category}
+            onChange={(e) => setCategory(e.target.value)}
+          />
+        </div>
+
+        <div className="space-y-2">
+          <Text className="text-dark/90" variant="bodyLarge" semibold>
+            Slug
+          </Text>
+
+          <Input
+            placeholder="Eg: blog-title-slug"
+            className="h-16 border-transparent bg-transparent p-0 placeholder:text-dark/50 focus-visible:ring-transparent md:text-xl"
+            value={slug}
+            onChange={(e) => setSlug(e.target.value)}
           />
         </div>
       </div>
 
-      <div className="mb-8 mt-4 w-full space-y-6 border-border bg-[#151515] lg:rounded-lg lg:border-[1.5px] lg:p-8">
+      <div className="mb-8 mt-4 w-full space-y-6 rounded-lg border-[1.5px] border-border bg-[#151515] p-8">
         <div className="w-full ">
           <Text variant="bodyXLarge" className="pb-4 text-dark/90" semibold>
             Write your blog here
           </Text>
 
-          <hr className="border-border pb-4 lg:-mx-8" />
+          <hr className="-mx-8 border-border pb-4" />
 
           <EditorProvider
             slotBefore={<MenuBar />}
@@ -101,8 +198,8 @@ export default function BlogForm() {
       </div> */}
 
       <Button
-        // isLoading={isPublishing}
-        // onClick={publishBlogHandler}
+        isLoading={isPublishing}
+        onClick={publishBlogHandler}
         variant="default"
         className="mb-24 max-w-[10rem]"
       >
@@ -117,12 +214,12 @@ export default function BlogForm() {
 const MenuBar = () => {
   const { editor } = useCurrentEditor()
 
-  // const { setJsonOutput, setHtmlOutput } = useEditorOutput()
+  const { setBlogOutput } = useTiptap()
 
-  // useEffect(() => {
-  //   setJsonOutput(editor?.getJSON() ?? {})
-  //   setHtmlOutput(editor?.getHTML() ?? '')
-  // }, [editor?.state, setHtmlOutput, setJsonOutput])
+  useEffect(() => {
+    setBlogOutput(editor?.getJSON() ?? {})
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [editor?.state, setBlogOutput])
 
   const addImage = useCallback(() => {
     const url = window.prompt('URL')
@@ -154,7 +251,7 @@ const MenuBar = () => {
 
   return (
     <div className="sticky top-[4.5rem] z-50 bg-[#151515]">
-      <div className="z-50 mx-auto flex max-w-prose flex-wrap gap-y-4 bg-[#151515] px-8 pb-5 pt-2 backdrop-blur-md">
+      <div className="z-50 flex flex-wrap gap-y-4 bg-[#151515] pb-5 pt-2 backdrop-blur-md">
         <Button
           variant="menuItem"
           onClick={() =>

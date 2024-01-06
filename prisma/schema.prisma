@@ -44,6 +44,21 @@ model Account {
   @@index([userId])
 }
 
+model Article {
+  id       String  @id @default(cuid())
+  title    String
+  slug     String  @unique
+  summary  String?
+  imageUrl String?
+  content  Json
+  category String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([slug])
+}
+
 model Saves {
   id       String  @id @default(cuid())
   imageUrl String

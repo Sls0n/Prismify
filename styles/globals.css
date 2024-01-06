@@ -246,6 +246,10 @@ html {
   pointer-events: none;
 } 
 
+.prose-a {
+  color: #898aeb !important;
+}
+
 #tippy-1 ::selection {
   background-color: #fff;
   color: #333;

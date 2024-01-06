@@ -1,5 +1,9 @@
 import { PrismaAdapter } from '@next-auth/prisma-adapter'
-import { type NextAuthOptions, type DefaultSession } from 'next-auth'
+import {
+  type NextAuthOptions,
+  type DefaultSession,
+  getServerSession,
+} from 'next-auth'
 import CredentialsProvider from 'next-auth/providers/credentials'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
@@ -74,18 +78,6 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    // session: (p) => {
-    //   const { session, user } = p
-
-    //   return {
-    //     ...session,
-    //     user: {
-    //       ...session.user,
-    //       id: user.id,
-    //       isCreator: user.isCreator,
-    //     }
-    //   }
-    // },
     async jwt({ token, user, session }) {
       if (user) {
         return {
@@ -116,3 +108,6 @@ export const authOptions: NextAuthOptions = {
   secret: process.env.NEXTAUTH_SECRET,
   debug: process.env.NODE_ENV === 'development',
 }
+
+/** Reusable function to eliminate the need of passing authOptions everytime */
+export const getCurrentSession = () => getServerSession(authOptions)

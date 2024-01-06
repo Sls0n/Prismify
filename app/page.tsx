@@ -1,11 +1,10 @@
 import Navbar from '@/components/Navbar'
-import { getServerSession } from 'next-auth/next'
-import { authOptions } from '@/utils/authOptions'
 import Sidebar from '@/components/editor/Sidebar'
 import Canvas from '@/components/editor/Canvas'
+import { getCurrentSession } from '@/utils/authOptions'
 
 export default async function Home() {
-  const session = await getServerSession(authOptions)
+  const session = await getCurrentSession()
   const authenticated = !!session
 
   return (
@@ -16,7 +15,7 @@ export default async function Home() {
         username={session?.user?.name || 'User'}
       />
 
-      <main className="flex w-screen h-[100dvh] pt-[72px] sm:flex-row">
+      <main className="flex h-[100vh] w-screen pt-[72px] sm:flex-row">
         <Sidebar />
         <Canvas />
       </main>
