@@ -56,7 +56,7 @@ export const separateCommas = (str: string) => {
 
   const strArr = str.split(',')
 
-  return strArr.map((item) => item.trim())
+  return strArr.map((item) => capitalize(item.trim()))
 }
 
 export const generateBadgeVariant = (str: string) => {
