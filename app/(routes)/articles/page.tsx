@@ -2,9 +2,19 @@ import prismadb from '@/libs/prismadb'
 import { Text } from '@/components/ui/Text'
 import ArticleCard from '@/components/articles/ArticleCard'
 import { formatDate, separateCommas } from '@/utils/helperFns'
+import type { Metadata } from 'next'
 
 type Props = {
   searchParams: { [key: string]: string | string[] | undefined }
+}
+
+export const metadata: Metadata = {
+  title: 'Articles - Prismify',
+  description: 'Read latest articles from Prismify.',
+  openGraph: {
+    title: 'Articles - Prismify',
+    description: 'Read latest articles from Prismify.',
+  },
 }
 
 export default async function Article(props: Props) {

@@ -12,11 +12,63 @@ import prismadb from '@/libs/prismadb'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/Badge'
 import { Calendar } from 'lucide-react'
+import type { Metadata, ResolvingMetadata } from 'next'
 
 type ArticleProps = {
   params: {
     slug: string
   }
+}
+
+export async function generateMetadata({ params }: ArticleProps) {
+  const blog = await prismadb.article.findFirst({
+    where: {
+      slug: params.slug,
+    },
+  })
+
+  if (!blog) {
+    return
+  }
+
+  const metadata: Metadata = {
+    title: `${blog.title} - Prismify`,
+    description: blog.summary,
+    openGraph: {
+      title: `${blog.title} - Prismify`,
+      description: blog.summary,
+      locale: 'en_US',
+      url: `https://prismify.vercel.app/articles/${blog.slug}`,
+      type: 'article',
+      images: [
+        {
+          url:
+            blog.imageUrl ?? 'https://prismify.vercel.app/opengraph-image.jpg',
+          width: 1280,
+          height: 720,
+          alt: blog.title,
+        },
+      ],
+    },
+    twitter: {
+      creator: '@xSls0n_007',
+      title: `${blog.title} - Prismify`,
+      description: blog.summary,
+      card: 'summary_large_image',
+      images: [
+        {
+          url:
+            blog.imageUrl ?? 'https://prismify.vercel.app/opengraph-image.jpg',
+          width: 1280,
+          height: 720,
+          alt: blog.title,
+        },
+      ],
+    },
+    publisher: 'Prismify',
+  }
+
+  return metadata
 }
 
 export default async function ArticlePage({ params }: ArticleProps) {
@@ -33,7 +85,7 @@ export default async function ArticlePage({ params }: ArticleProps) {
   }
 
   return (
-    <section className="flex pt-[72px] w-full flex-col gap-8 lg:gap-16">
+    <section className="flex w-full flex-col gap-8 pt-[72px] lg:gap-16">
       <div className="container mt-8">
         <BackButton />
       </div>
@@ -78,7 +130,7 @@ export default async function ArticlePage({ params }: ArticleProps) {
           </div>
         </div>
 
-        <div className="prose-md prose prose-neutral prose-p:tracking-[0.002em] mb-16 dark:prose-invert md:prose-lg prose-p:text-dark prose-img:rounded-md">
+        <div className="prose prose-lg prose-neutral mb-16 dark:prose-invert prose-p:tracking-[0.002em] prose-p:text-dark prose-img:rounded-md">
           {blog?.imageUrl && (
             <figure>
               <Image
@@ -175,8 +227,7 @@ export default async function ArticlePage({ params }: ArticleProps) {
                         <span
                           key={textIndex}
                           className={
-                            className +
-                            ' text-[1.4rem] font-bold md:text-2xl'
+                            className + ' text-[1.4rem] font-bold md:text-2xl'
                           }
                         >
                           {text.text}

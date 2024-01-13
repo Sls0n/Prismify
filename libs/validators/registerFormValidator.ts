@@ -4,7 +4,7 @@ export const RegisterSchema = z.object({
   username: z
     .string()
     .min(4, { message: 'The username must be 4 characters or more' })
-    .max(10, { message: 'The username must be 10 characters or less' })
+    .max(16, { message: 'The username must be 16 characters or less' })
     .regex(
       /^[a-zA-Z0-9_]+$/,
       'The username must contain only letters, numbers and underscore (_)'
@@ -14,11 +14,8 @@ export const RegisterSchema = z.object({
   }),
   password: z
     .string()
-    .min(6, { message: 'Password must be atleast 6 characters' })
-    .regex(
-      /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)[a-zA-Z\d]{6,}$/,
-      'Your password must contain at least one uppercase letter and one number.'
-    ),
+    .min(8, { message: 'Password must be atleast 6 characters' })
+    .max(30, { message: 'Password must be 30 characters or less' }),
 })
 
 export type RegisterInput = z.infer<typeof RegisterSchema>

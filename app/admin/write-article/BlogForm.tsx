@@ -26,6 +26,7 @@ import { Text } from '@/components/ui/Text'
 import { useTiptap } from '@/store/use-tiptap'
 import axios, { AxiosError } from 'axios'
 import { toast } from '@/hooks/use-toast'
+import { Textarea } from '@/components/ui/TextArea'
 
 export default function BlogForm() {
   const { blogOutput } = useTiptap()
@@ -124,7 +125,7 @@ export default function BlogForm() {
             Summary
           </Text>
 
-          <Input
+          <Textarea
             placeholder="Summary of the blog..."
             className="h-16 border-transparent bg-transparent p-0 placeholder:text-dark/50 focus-visible:ring-transparent md:text-xl"
             value={summary}
@@ -157,6 +158,19 @@ export default function BlogForm() {
             onChange={(e) => setSlug(e.target.value)}
           />
         </div>
+
+        <div className="space-y-2">
+          <Text className="text-dark/90" variant="bodyLarge" semibold>
+            Image URL
+          </Text>
+
+          <Input
+            placeholder="Eg: https://images.unsplash.com/photo/..."
+            className="h-16 border-transparent bg-transparent p-0 placeholder:text-dark/50 focus-visible:ring-transparent md:text-xl"
+            value={mainBlogImg}
+            onChange={(e) => setMainBlogImg(e.target.value)}
+          />
+        </div>
       </div>
 
       <div className="mb-8 mt-4 w-full space-y-6 rounded-lg border-[1.5px] border-border bg-[#151515] p-8">
@@ -181,21 +195,6 @@ export default function BlogForm() {
           </EditorProvider>
         </div>
       </div>
-
-      {/* <div className="mb-8 mt-4 w-full space-y-6 border-border bg-white lg:max-w-[60%] lg:rounded-lg lg:border-[1.5px] lg:p-8">
-        <div className="space-y-4">
-          <Text variant="bodyXLarge" bold>
-            Main Image
-          </Text>
-          <FileUpload
-            endpoint="blogImage"
-            onChange={(imgUrl) => {
-              if (imgUrl) setMainBlogImg(imgUrl)
-            }}
-            value={mainBlogImg}
-          />
-        </div>
-      </div> */}
 
       <Button
         isLoading={isPublishing}

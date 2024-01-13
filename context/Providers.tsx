@@ -9,7 +9,15 @@ type ProviderProps = {
 }
 
 export default function Providers({ children }: ProviderProps) {
-  const queryClient = new QueryClient()
+  const queryClient = new QueryClient({
+    defaultOptions: {
+      queries: {
+        refetchOnWindowFocus: false,
+        refetchOnMount: false,
+        retry: 2,
+      },
+    },
+  })
 
   return (
     <QueryClientProvider client={queryClient}>
