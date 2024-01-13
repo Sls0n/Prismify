@@ -13,6 +13,7 @@ export default async function Home() {
         authenticated={authenticated}
         img={session?.user?.image || '/images/fallback-avatar.png'}
         username={session?.user?.name || 'User'}
+        id={session?.user?.id || '0'}
       />
 
       <main className="flex h-[100vh] w-screen pt-[72px] sm:flex-row">

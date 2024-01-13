@@ -14,6 +14,8 @@ export const metadata: Metadata = {
   openGraph: {
     title: 'Articles - Prismify',
     description: 'Read latest articles from Prismify.',
+    type: 'article',
+    url: 'https://prismify.vercel.app/articles',
   },
   alternates: {
     canonical: 'https://prismify.vercel.app/articles',
@@ -59,21 +61,29 @@ export default async function Article(props: Props) {
         className="container mt-5 grid grid-cols-1 grid-rows-2 gap-16 sm:mt-10 sm:grid-cols-2 md:mt-24 lg:grid-cols-3"
         role="list"
       >
-        {articles.map((article) => {
-          return (
-            <div key={article.id} className="relative col-span-1 row-span-1">
-              <ArticleCard
-                title={article.title ?? 'N/A'}
-                image={article.imageUrl ?? '/images/fallback.jpg'}
-                date={formatDate(article.updatedAt) ?? 'N/A'}
-                href={`/articles/${article.slug}`}
-                category={
-                  separateCommas(article?.category ?? 'Design')?.at(0) ?? ''
-                }
-              />
-            </div>
-          )
-        })}
+        {articles.length === 0 ? (
+          <div className="mb-24 text-center">
+            <Text variant="bodyMedium" className="text-dark/70">
+              &mdash; The list is empty. Go back to previous page
+            </Text>
+          </div>
+        ) : (
+          articles.map((article) => {
+            return (
+              <div key={article.id} className="relative col-span-1 row-span-1">
+                <ArticleCard
+                  title={article.title ?? 'N/A'}
+                  image={article.imageUrl ?? '/images/fallback.jpg'}
+                  date={formatDate(article.updatedAt) ?? 'N/A'}
+                  href={`/articles/${article.slug}`}
+                  category={
+                    separateCommas(article?.category ?? 'Design')?.at(0) ?? ''
+                  }
+                />
+              </div>
+            )
+          })
+        )}
       </ul>
     </div>
   )

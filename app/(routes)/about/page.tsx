@@ -11,6 +11,9 @@ export const metadata: Metadata = {
     title: 'About - Prismify',
     description: 'Read details about Prismify.',
   },
+  alternates: {
+    canonical: 'https://prismify.vercel.app/about',
+  },
 }
 
 export default function page() {

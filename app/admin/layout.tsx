@@ -20,7 +20,7 @@ export default async function AdminLayout({
         authenticated={!!session?.user}
         img={session?.user?.image || undefined}
         username={session?.user?.name || 'User'}
-      
+        id={session?.user?.id || '0'}
       />
       <div className="container h-full w-full">{children}</div>
     </>

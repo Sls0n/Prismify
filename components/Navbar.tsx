@@ -29,17 +29,36 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { AuthModal } from './AuthModal'
 import SaveOptions from './SaveOptions'
+import { gradients } from '@/utils/config'
 
 type NavbarProps = {
   authenticated?: boolean
   img?: string
   username?: string
+  id: string
 }
 
-export default function Navbar({ authenticated, username, img }: NavbarProps) {
+export default function Navbar({
+  authenticated,
+  username,
+  id,
+  img,
+}: NavbarProps) {
   const pathname = usePathname()
 
   const isHome = pathname === '/'
+
+  const generateUniqueGradient = () => {
+    const filteredGradients = gradients.filter(
+      (gradient) => gradient.type === 'Normal'
+    )
+  
+    const sumAscii = id.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
+    const gradientIndex = sumAscii % filteredGradients.length;
+  
+    const gradient = filteredGradients[gradientIndex].gradient;
+    return gradient;
+  }
 
   return (
     <header className="fixed inset-0 top-0 z-[10] flex h-[72px] items-center border-b border-border bg-[#131313] px-4 py-4 pt-4 backdrop-blur-md sm:px-6 lg:px-8">
@@ -167,14 +186,12 @@ export default function Navbar({ authenticated, username, img }: NavbarProps) {
                     variant="ghost"
                     className="flex h-10 cursor-pointer items-center justify-center gap-x-2.5 rounded-xl bg-[#f5f7fa] px-4 py-2 font-medium text-primary dark:bg-[#181818] dark:text-dark"
                   >
-                    <div className="h-8 w-8">
-                      {/* eslint-disable-next-line @next/next/no-img-element */}
-                      <img
-                        src={img || '/images/fallback-avatar.png'}
+                    <div className="h-6 w-6">
+                      <div
+                        style={{
+                          backgroundImage: generateUniqueGradient(),
+                        }}
                         className="h-full w-full rounded-full"
-                        alt={`${username}'s avatar` || 'User avatar'}
-                        aria-label="User avatar"
-                        loading='lazy'
                       />
                     </div>
 
