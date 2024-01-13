@@ -65,6 +65,9 @@ export async function generateMetadata({ params }: ArticleProps) {
         },
       ],
     },
+    alternates: {
+      canonical: `https://prismify.vercel.app/articles/${blog.slug}`,
+    },
     publisher: 'Prismify',
   }
 

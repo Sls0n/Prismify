@@ -15,6 +15,9 @@ export const metadata: Metadata = {
     title: 'Articles - Prismify',
     description: 'Read latest articles from Prismify.',
   },
+  alternates: {
+    canonical: 'https://prismify.vercel.app/articles',
+  },
 }
 
 export default async function Article(props: Props) {
