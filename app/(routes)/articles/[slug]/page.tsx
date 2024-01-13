@@ -87,7 +87,7 @@ export default async function ArticlePage({ params }: ArticleProps) {
                 width={1280}
                 height={720}
                 priority
-                className="aspect-video object-cover"
+                className="aspect-auto object-cover"
               />
 
               {/* <figcaption>

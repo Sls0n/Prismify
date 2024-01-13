@@ -1,6 +1,6 @@
-import classes from './Loader.module.css'
+import classes from './Spinner.module.css'
 
-export default function Loader() {
+export default function Spinner() {
   return (
     <>
       <svg className={classes.ring} viewBox="25 25 50 50" strokeWidth="5">

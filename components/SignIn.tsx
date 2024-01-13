@@ -10,7 +10,6 @@ import { signIn } from 'next-auth/react'
 import { Eye, EyeOff } from 'lucide-react'
 import { toast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
-import Link from 'next/link'
 import { useAuthModal } from '@/store/use-auth-modal'
 
 type SignInProps = {

@@ -49,7 +49,7 @@ model Article {
   title    String
   slug     String  @unique
   summary  String? @db.Text
-  imageUrl String?
+  imageUrl String? @db.Text
   content  Json
   category String?
 
