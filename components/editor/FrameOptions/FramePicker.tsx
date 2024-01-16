@@ -119,8 +119,8 @@ export default function FramePicker() {
       </div>
 
       {selectedImage &&
-        images[selectedImage - 1].frame !== 'Shadow' &&
-        images[selectedImage - 1].frame !== 'None' && (
+        images[selectedImage - 1]?.frame !== 'Shadow' &&
+        images[selectedImage - 1]?.frame !== 'None' && (
           <div
             className={`mt-8 flex flex-col gap-3 px-1 md:max-w-full ${
               selectedImage ? '' : 'pointer-events-none opacity-40'
@@ -165,7 +165,7 @@ export function FrameContainer({
       <button
         onClick={onClick}
         className={`relative h-[3.55rem] w-[4.6rem] overflow-hidden whitespace-nowrap rounded-lg border border-border/80 bg-gray-300 ring-offset-background transition-colors focus:z-10 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 ${
-          selectedImage && images[selectedImage - 1].frame === text
+          selectedImage && images[selectedImage - 1]?.frame === text
             ? 'ring-2 ring-ring ring-offset-2'
             : ''
         }`}
