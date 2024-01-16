@@ -5,7 +5,7 @@ import { getCurrentSession } from '@/utils/authOptions'
 
 export default async function Home() {
   const session = await getCurrentSession()
-  const authenticated = !!session
+  const authenticated = !!session?.user
 
   return (
     <>

@@ -14,7 +14,7 @@ export const RegisterSchema = z.object({
   }),
   password: z
     .string()
-    .min(8, { message: 'Password must be atleast 6 characters' })
+    .min(8, { message: 'Password must be atleast 8 characters' })
     .max(30, { message: 'Password must be 30 characters or less' }),
 })
 

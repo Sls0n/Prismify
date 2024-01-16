@@ -15,7 +15,6 @@ import {
   BadgeInfo,
   BookCopy,
   ChevronDown,
-  LogIn,
   LogOut,
   Mails,
   Settings,
@@ -49,15 +48,19 @@ export default function Navbar({
   const isHome = pathname === '/'
 
   const generateUniqueGradient = () => {
+    if (!id) return
+
     const filteredGradients = gradients.filter(
       (gradient) => gradient.type === 'Normal'
     )
-  
-    const sumAscii = id.split('').reduce((sum, char) => sum + char.charCodeAt(0), 0);
-    const gradientIndex = sumAscii % filteredGradients.length;
-  
-    const gradient = filteredGradients[gradientIndex].gradient;
-    return gradient;
+
+    const sumAscii = id
+      .split('')
+      .reduce((sum, char) => sum + char.charCodeAt(0), 0)
+    const gradientIndex = sumAscii % filteredGradients.length
+
+    const gradient = filteredGradients[gradientIndex].gradient
+    return gradient
   }
 
   return (
@@ -172,7 +175,7 @@ export default function Navbar({
         </nav>
         <div className="flex items-center gap-10 ">
           <div className="flex items-center gap-2">
-            {isHome && <SaveOptions />}
+            {isHome && <SaveOptions isLoggedIn={authenticated || false} />}
 
             <div className="dark:bg-border-dark mx-3 h-7 w-[2px] bg-border" />
 
@@ -253,6 +256,8 @@ export default function Navbar({
                     onClick={() => {
                       signOut()
                         .then(() => {
+                          if (typeof window !== 'undefined')
+                            localStorage.removeItem('downloaded')
                           toast({
                             title: 'Logging out..',
                           })

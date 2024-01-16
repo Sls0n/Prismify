@@ -261,7 +261,7 @@ export default function ContextMenuImage({
 
         <DialogFooter className="mt-auto flex items-center gap-1.5">
           <Button
-            variant="stylish"
+            variant="outline"
             onClick={() => {
               setEnableCrop(false)
             }}

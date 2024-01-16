@@ -1,6 +1,5 @@
 'use client'
 
-import FloatingOptions from '@/components/FloatingOptions'
 import BackgroundOptions from '@/components/editor/BackgroundOptions/BackgroundOptions'
 import CanvasOptions from '@/components/editor/CanvasOptions/CanvasOptions'
 import FrameOptions from '@/components/editor/FrameOptions/FrameOptions'
@@ -49,7 +48,6 @@ export default function Canvas() {
     setScrollScale,
     canvasRoundness,
     setScaleFactor,
-    setShouldFloat,
   } = useResizeCanvas()
   const {
     images,
@@ -143,7 +141,6 @@ export default function Canvas() {
             parentEl.clientWidth <= childEl.clientWidth ||
             parentEl.clientHeight <= childEl.clientHeight
           ) {
-
             if (
               childEl.classList.contains('w-auto') &&
               childEl.classList.contains('h-full')
@@ -182,7 +179,6 @@ export default function Canvas() {
           parentEl.clientWidth <= childEl.clientWidth ||
           parentEl.clientHeight <= childEl.clientHeight
         ) {
-
           if (
             childEl.classList.contains('w-auto') &&
             childEl.classList.contains('h-full')
@@ -265,7 +261,6 @@ export default function Canvas() {
     },
     screenshotRef
   )
-
 
   return (
     <>

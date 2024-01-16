@@ -1,34 +1,70 @@
-import { ChevronDown, Clipboard, Download, Eye } from 'lucide-react'
-import { Button } from './ui/Button'
-import { saveAs } from 'file-saver'
-import { useImageQualityStore } from '@/store/use-image-quality'
-import { useImageOptions } from '@/store/use-image-options'
-import { useResizeCanvas } from '@/store/use-resize-canvas'
-import { toast } from '@/hooks/use-toast'
+'use client'
+
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/Popover'
-import * as htmlToImage from 'html-to-image'
+import { toast } from '@/hooks/use-toast'
+import { useImageOptions } from '@/store/use-image-options'
+import { useImageQualityStore } from '@/store/use-image-quality'
+import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { qualities } from '@/utils/config'
+import { saveAs } from 'file-saver'
+import * as htmlToImage from 'html-to-image'
+import { ChevronDown, Clipboard, Download, Info } from 'lucide-react'
+import { useState } from 'react'
+import { Button } from './ui/Button'
+import {
+  Dialog,
+  DialogContent,
+  DialogDescription,
+  DialogFooter,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+} from '@/components/ui/Dialog'
 
-export default function SaveOptions() {
+export default function SaveOptions({ isLoggedIn }: { isLoggedIn: boolean }) {
+  const [isModalOpen, setIsModalOpen] = useState(false)
   const { quality, setQuality, fileType, setFileType } = useImageQualityStore()
   const { images } = useImageOptions()
   const { scaleFactor } = useResizeCanvas()
 
+  const allowDownload = () => {
+    if (images.length === 0) {
+      toast({
+        title: 'Error!',
+        description: 'Upload an image then try again',
+        variant: 'destructive',
+      })
+      return false
+    }
+
+    if (!isLoggedIn) {
+      const downloaded = localStorage.getItem('downloaded')
+
+      // allow one free download if not loggedin then ask to login for the next download
+      if (downloaded === 'false' || !downloaded) {
+        setIsModalOpen(true)
+        return true
+      }
+
+      toast({
+        title: 'You need to be logged in to download images',
+        variant: 'destructive',
+      })
+      return false
+    }
+
+    return true
+  }
+
   const snapshotCreator = () => {
     return new Promise<Blob>((resolve, reject) => {
       try {
-        if (images.length === 0) {
-          toast({
-            title: 'Error!',
-            description: 'Upload an image then try again',
-            variant: 'destructive',
-          })
-          return
-        }
+        if (!allowDownload()) return
+
         const scale = scaleFactor * quality
         const element =
           typeof window !== 'undefined' &&
@@ -52,6 +88,7 @@ export default function SaveOptions() {
             })
             .then((dataURL) => {
               const blob = dataURL as unknown as Blob
+              localStorage.setItem('downloaded', 'true')
               resolve(blob)
             })
             .catch((e: any) => {
@@ -77,6 +114,7 @@ export default function SaveOptions() {
             })
             .then((dataURL) => {
               const blob = dataURL as unknown as Blob
+              localStorage.setItem('downloaded', 'true')
               resolve(blob)
             })
             .catch((e: any) => {
@@ -102,7 +140,7 @@ export default function SaveOptions() {
             })
             .then(function (canvas) {
               // Convert canvas to .webp format
-
+              localStorage.setItem('downloaded', 'true')
               return canvas.toDataURL('image/webp')
             })
             .then(function (webpDataUrl) {
@@ -132,6 +170,7 @@ export default function SaveOptions() {
             })
             .then((dataURL) => {
               const blob = dataURL as unknown as Blob
+              localStorage.setItem('downloaded', 'true')
               resolve(blob)
             })
             .catch((e: any) => {
@@ -159,14 +198,8 @@ export default function SaveOptions() {
   const snapShotCreatorForCopy = () => {
     return new Promise<Blob>((resolve, reject) => {
       try {
-        if (images.length === 0) {
-          toast({
-            title: 'Error!',
-            description: 'Upload an image then try again',
-            variant: 'destructive',
-          })
-          return
-        }
+        if (!allowDownload()) return
+
         const scale = scaleFactor * quality
         const element =
           typeof window !== 'undefined' &&
@@ -189,6 +222,7 @@ export default function SaveOptions() {
           })
           .then((dataURL) => {
             const blob = dataURL as unknown as Blob
+            localStorage.setItem('downloaded', 'true')
             resolve(blob)
           })
           .catch((e: any) => {
@@ -403,6 +437,34 @@ export default function SaveOptions() {
           </PopoverContent>
         </Popover>
       </div>
+      <Dialog open={isModalOpen}>
+        <DialogContent className="sm:max-w-[425px]">
+          <DialogHeader>
+            <DialogTitle className="mb-2 flex items-center gap-2 text-dark">
+              <Info className="h-5 w-5 opacity-70" />
+              Important
+            </DialogTitle>
+            <DialogDescription>
+              <p className="mb-2 text-base font-normal text-dark/60 ">
+                Next time, you need an{' '}
+                <span className="font-medium text-dark/70">account</span> to
+                download images. Dont worry because you still can download as
+                many images as you want for free. Just make sure to login before
+                you start creating something.
+              </p>
+            </DialogDescription>
+          </DialogHeader>
+          <DialogFooter className="sm:justify-start ">
+            <Button
+              onClick={() => setIsModalOpen(false)}
+              variant="outline"
+              type="submit"
+            >
+              Got it!
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </>
   )
 }
