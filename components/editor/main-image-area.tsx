@@ -11,7 +11,7 @@ import { useMoveable } from '@/store/use-moveable'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import {
   calculateEqualCanvasSize,
-  convertHex,
+  convertHexToRgba,
   splitWidthHeight,
 } from '@/utils/helper-fns'
 import { ImageIcon, Upload } from 'lucide-react'
@@ -126,7 +126,7 @@ const ImageUpload = () => {
                       borderRadius: `${image.style.imageRoundness}rem`,
                       boxShadow:
                         image.style.shadowName !== 'Medium'
-                          ? `${image.style.imageShadow} ${convertHex(
+                          ? `${image.style.imageShadow} ${convertHexToRgba(
                               image.style.shadowColor,
                               image.style.shadowOpacity
                             )}${
@@ -134,10 +134,10 @@ const ImageUpload = () => {
                                 ? ',11px 11px rgba(0,0,0,0.8)'
                                 : ''
                             }`
-                          : `0px 18px 88px -4px ${convertHex(
+                          : `0px 18px 88px -4px ${convertHexToRgba(
                               image.style.shadowColor,
                               image.style.shadowOpacity
-                            )}, 0px 8px 28px -6px ${convertHex(
+                            )}, 0px 8px 28px -6px ${convertHexToRgba(
                               image.style.shadowColor,
                               image.style.shadowOpacity
                             )}${
@@ -238,7 +238,7 @@ const ImageUpload = () => {
                       borderRadius: `${image.style.imageRoundness}rem`,
                       boxShadow:
                         image.style.shadowName !== 'Medium'
-                          ? `${image.style.imageShadow} ${convertHex(
+                          ? `${image.style.imageShadow} ${convertHexToRgba(
                               image.style.shadowColor,
                               image.style.shadowOpacity
                             )}${
@@ -246,10 +246,10 @@ const ImageUpload = () => {
                                 ? ',11px 11px rgba(0,0,0,0.8)'
                                 : ''
                             }`
-                          : `0px 18px 88px -4px ${convertHex(
+                          : `0px 18px 88px -4px ${convertHexToRgba(
                               image.style.shadowColor,
                               image.style.shadowOpacity
-                            )}, 0px 8px 28px -6px ${convertHex(
+                            )}, 0px 8px 28px -6px ${convertHexToRgba(
                               image.style.shadowColor,
                               image.style.shadowOpacity
                             )}${

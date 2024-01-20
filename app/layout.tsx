@@ -98,7 +98,7 @@ export default function RootLayout({
       className={cn('antialiased', Font.className)}
       lang="en"
     >
-      <body className="no-scrollbar h-screen w-screen bg-primary text-primary dark:bg-[#111] dark:text-dark ">
+      <body className="no-scrollbar h-screen w-screen bg-[#111] text-dark">
         <Toaster />
         <Analytics />
 

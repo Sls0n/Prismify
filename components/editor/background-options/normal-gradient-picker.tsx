@@ -23,6 +23,7 @@ import {
   TooltipTrigger,
 } from '@/components/ui/tooltip'
 import ColorThief from 'colorthief'
+import { Badge } from '@/components/ui/badge'
 
 type Color = string
 
@@ -165,12 +166,9 @@ export default function NormalGradientPicker() {
 
   return (
     <div>
-      <h3 className="mt-8 flex items-center gap-1.5 text-xs font-medium uppercase text-dark/70">
-        <p>Adaptive</p>
-        <span className="inline-flex items-center rounded-md bg-indigo-500/10 px-2 py-1 text-xs font-medium capitalize text-purple shadow-sm ring-1 ring-inset ring-indigo-500/20 dark:bg-indigo-500/10">
-          Beta
-        </span>
-        :
+      <h3 className="mt-8 flex items-center gap-1.5 text-xs font-medium text-dark/70">
+        <p className='uppercase'>Adaptive</p>
+        <Badge>Beta</Badge>:
       </h3>
 
       <div

@@ -1,21 +1,22 @@
 'use client'
 
-import { useState } from 'react'
-import { useRouter } from 'next/navigation'
-import { useForm } from 'react-hook-form'
 import { zodResolver } from '@hookform/resolvers/zod'
+import { useRouter } from 'next/navigation'
+import { useState } from 'react'
+import { useForm } from 'react-hook-form'
 
-import { Button } from './ui/button'
-import { cn } from '@/utils/button-utils'
-import Checkbox from '@/components/ui/checkbox'
-import axios, { AxiosError } from 'axios'
-import { RegisterInput } from '@/libs/validators/register-form-validator'
-import { RegisterSchema } from '@/libs/validators/register-form-validator'
-import { Eye, EyeOff } from 'lucide-react'
-import { signIn } from 'next-auth/react'
+import { GradientText } from '@/components/ui/gradient-text'
 import { toast } from '@/hooks/use-toast'
-import Link from 'next/link'
+import {
+  RegisterInput,
+  RegisterSchema,
+} from '@/libs/validators/register-form-validator'
 import { useAuthModal } from '@/store/use-auth-modal'
+import { cn } from '@/utils/button-utils'
+import axios, { AxiosError } from 'axios'
+import { signIn } from 'next-auth/react'
+import { Button } from '@/components/ui/button'
+import { FormField } from '@/components/ui/form-field'
 
 type SignUpFormProps = {
   authenticated?: boolean
@@ -41,6 +42,16 @@ export default function SignUpForm({ authenticated }: SignUpFormProps) {
     },
   })
 
+  const signupFormFields = [
+    { id: 'username', type: 'text', label: 'Username' },
+    { id: 'email', type: 'email', label: 'Email address' },
+    {
+      id: 'password',
+      type: showPassword ? 'text' : 'password',
+      label: 'Password',
+    },
+  ]
+
   const signupUser = async (data: RegisterInput) => {
     try {
       setLoading(true)
@@ -59,28 +70,30 @@ export default function SignUpForm({ authenticated }: SignUpFormProps) {
       router.push('/')
     } catch (err) {
       if (err instanceof AxiosError) {
-        if (err.response?.status === 409) {
-          toast({
-            title: 'User already exists',
-            description: 'Please try with a different email.',
-            variant: 'destructive',
-          })
-        }
+        const { status } = err.response || {}
 
-        if (err.response?.status === 401) {
-          toast({
-            title: 'Invalid credentials',
-            description: 'Please try with a different email or password.',
-            variant: 'destructive',
-          })
-        }
-
-        if (err.response?.status === 500) {
-          toast({
-            title: 'Something went wrong',
-            description: 'Please try again later.',
-            variant: 'destructive',
-          })
+        switch (status) {
+          case 409:
+            toast({
+              title: 'User already exists',
+              description: 'Please try with a different email.',
+              variant: 'destructive',
+            })
+            break
+          case 401:
+            toast({
+              title: 'Invalid credentials',
+              description: 'Please try with a different email or password.',
+              variant: 'destructive',
+            })
+            break
+          default:
+            toast({
+              title: 'Something went wrong',
+              description: 'Please try again later.',
+              variant: 'destructive',
+            })
+            break
         }
       }
     } finally {
@@ -93,143 +106,46 @@ export default function SignUpForm({ authenticated }: SignUpFormProps) {
   return (
     <div className="flex items-center justify-center">
       <div className="w-full space-y-10">
-        <div>
-          <h1 className="text-center text-4xl font-semibold text-gray-800 dark:text-dark sm:font-bold">
-            Sign up on{' '}
-            <span className="bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-transparent">
-              Prismify
-            </span>
-          </h1>
-        </div>
+        <h1 className="text-center text-4xl font-semibold text-dark sm:font-bold">
+          Sign up on <GradientText variant="purple" className='font-bold'>Prismify</GradientText>
+        </h1>
         <form onSubmit={handleSubmit(signupUser)} className="space-y-8">
-          <div>
-            <label
-              htmlFor="username"
-              className="block text-sm font-semibold text-slate-700 dark:text-dark/70"
-            >
-              Username
-            </label>
-            <div className="mt-2">
-              <input
-                type="text"
-                id="username"
-                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
-                {...register('username')}
-              />
-            </div>
-            {errors?.username && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.username.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold text-slate-700 dark:text-dark/70"
-            >
-              Email address
-            </label>
-            <div className="mt-2">
-              <input
-                type="email"
-                id="email"
-                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
-                {...register('email')}
-              />
-            </div>
-            {errors?.email && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.email.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-semibold text-slate-700 dark:text-dark/70"
-            >
-              Password
-            </label>
-            <div className="relative mt-2">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-sm text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
-                {...register('password')}
-              />
-              <button
-                aria-label="Show password"
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-2 flex items-center pr-3 text-sm text-gray-700 dark:text-dark/70"
-              >
-                {showPassword ? (
-                  <>
-                    <EyeOff
-                      size={19}
-                      className="text-gray-600 dark:text-dark/70"
-                    />
-                    <span className="sr-only">Hide password</span>
-                  </>
-                ) : (
-                  <>
-                    <Eye
-                      size={19}
-                      className="text-gray-600 dark:text-dark/70"
-                    />
-                    <span className="sr-only">Show password</span>
-                  </>
-                )}
-              </button>
-            </div>
-            {errors?.password && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <div className="mb-8 mt-4 flex gap-1.5 text-start text-sm text-primary">
-              <Checkbox />
-              <p className="-translate-x-1 dark:text-dark/80">
-                I agree to the{' '}
-                <Link
-                  href="/terms"
-                  className="font-medium text-purple underline underline-offset-2  hover:text-purple/90"
-                >
-                  Terms of Service
-                </Link>{' '}
-                and{' '}
-                <Link
-                  href="/privacy"
-                  className="font-medium text-purple underline underline-offset-2 hover:text-purple/90"
-                >
-                  Privacy Policy
-                </Link>
-              </p>
-            </div>
+          {signupFormFields.map((field) => (
+            <FormField
+              key={field.id}
+              id={field.id}
+              type={field.type}
+              label={field.label}
+              register={register}
+              error={errors[field.id as 'username' | 'email' | 'password']}
+              showPassword={field.id === 'password' ? showPassword : undefined}
+              toggleShowPassword={
+                field.id === 'password'
+                  ? () => setShowPassword(!showPassword)
+                  : undefined
+              }
+            />
+          ))}
 
-            <Button
-              type="submit"
-              isLoading={loading}
-              className={cn(
-                'flex w-full items-center justify-center rounded-md px-4 py-3 text-sm font-medium'
-              )}
-              size={'lg'}
-            >
-              Sign up
-            </Button>
-          </div>
+          <Button
+            type="submit"
+            isLoading={loading}
+            className={cn(
+              'flex w-full items-center justify-center rounded-md px-4 py-3 text-[0.9rem] font-semibold'
+            )}
+            size={'lg'}
+          >
+            Register
+          </Button>
 
           <Button
             onClick={() => {
               setShow('signin')
             }}
             variant="noHoverGhost"
-            className="mx-auto mt-3 w-full max-w-full text-center  text-sm text-gray-600 dark:text-dark/80"
+            className="mx-auto mt-3 w-full max-w-full text-center text-sm"
           >
-            Already have an account?{' '}
+           <span className='text-dark/80'>Already have an account?</span>
             <p className="ml-0.5 font-semibold text-purple hover:text-purple/90 hover:underline">
               Sign in
             </p>

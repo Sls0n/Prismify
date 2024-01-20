@@ -4,7 +4,7 @@ import useTiptapEditor from '@/hooks/use-editor'
 import { useOnClickOutside } from '@/hooks/use-on-click-outside'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
-import { convertHex } from '@/utils/helper-fns'
+import { convertHexToRgba } from '@/utils/helper-fns'
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/react'
 import { useRef } from 'react'
 import ContextMenuText from './text-context-menu'
@@ -138,7 +138,9 @@ export default function TipTap() {
                 fontWeight: `${text.style.fontWeight}`,
                 textAlign: `${text.style.textAlign}`,
                 letterSpacing: `${text.style.letterSpacing}em`,
-                filter: `drop-shadow(${text.style.textShadow} ${convertHex(
+                filter: `drop-shadow(${
+                  text.style.textShadow
+                } ${convertHexToRgba(
                   text.style.shadowColor,
                   text.style.shadowOpacity
                 )})`,

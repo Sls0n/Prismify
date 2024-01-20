@@ -148,14 +148,14 @@ export default function FontSettings() {
             <span className="sr-only">Decrease font weight</span>
             <Minus className="h-5 w-5" aria-hidden="true" />
           </button>
-          <div className="flex-center border-b border-t border-border bg-secondary-foreground px-4 dark:bg-formDark ">
-            <p className="text-[0.85rem] font-medium text-primary/80 dark:text-dark/80">
+          <div className="flex-center border-b border-t border-border px-4 bg-formDark">
+            <p className="text-[0.85rem] font-medium text-dark/80">
               {texts[selectedText - 1]?.style.fontWeight ?? 400}
             </p>
           </div>
           <button
             type="button"
-            className="relative inline-flex items-center rounded-r-md bg-secondary-foreground px-2 py-2 ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed dark:bg-formDark dark:text-dark"
+            className="relative inline-flex items-center rounded-r-md px-2 py-2 ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed bg-formDark text-dark"
             onClick={
               texts[selectedText - 1]?.style.fontWeight < 800
                 ? () =>
@@ -319,7 +319,7 @@ export default function FontSettings() {
 
       <div className="mb-3 mt-8 flex items-center px-1">
         <h1 className="text-[0.85rem]">Opacity</h1>
-        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
+        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-dark/70">
           {Math.round(
             Number(texts[selectedText - 1]?.style.shadowOpacity ?? 1) * 100
           )}

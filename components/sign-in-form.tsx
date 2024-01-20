@@ -4,17 +4,25 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 
-import { Button } from './ui/button'
+import { Button } from '@/components/ui/button'
+import { GradientText } from '@/components/ui/gradient-text'
+import { toast } from '@/hooks/use-toast'
+import { useAuthModal } from '@/store/use-auth-modal'
 import { cn } from '@/utils/button-utils'
 import { signIn } from 'next-auth/react'
-import { Eye, EyeOff } from 'lucide-react'
-import { toast } from '@/hooks/use-toast'
 import { useRouter } from 'next/navigation'
-import { useAuthModal } from '@/store/use-auth-modal'
+import { FormField } from './ui/form-field'
+import {
+  RegisterInput,
+  RegisterSchema,
+} from '@/libs/validators/register-form-validator'
+import { zodResolver } from '@hookform/resolvers/zod'
 
 type SignInFormProps = {
   authenticated?: boolean
 }
+
+type LoginInput = Omit<RegisterInput, 'username'>
 
 export default function SignInForm({ authenticated }: SignInFormProps) {
   const [loading, setLoading] = useState(false)
@@ -29,12 +37,22 @@ export default function SignInForm({ authenticated }: SignInFormProps) {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({
+  } = useForm<LoginInput>({
+    resolver: zodResolver(RegisterSchema.pick({ email: true, password: true })),
     defaultValues: {
       email: '',
       password: '',
     },
   })
+
+  const signinFormFields = [
+    { id: 'email', type: 'email', label: 'Email address' },
+    {
+      id: 'password',
+      type: showPassword ? 'text' : 'password',
+      label: 'Password',
+    },
+  ]
 
   const loginUser = (data: { email: string; password: string }) => {
     setLoading(true)
@@ -89,109 +107,48 @@ export default function SignInForm({ authenticated }: SignInFormProps) {
   return (
     <div className="flex items-center justify-center">
       <div className="w-full space-y-10 ">
-        <div>
-          <h1 className="text-center text-4xl font-semibold text-gray-800 dark:text-dark sm:font-bold">
-            Sign in to{' '}
-            <span className="bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-transparent ">
-              Prismify
-            </span>
-          </h1>
-        </div>
+        <h1 className="text-center text-4xl font-semibold text-dark sm:font-bold">
+          Sign in to{' '}
+          <GradientText variant="purple" className="font-bold">
+            Prismify
+          </GradientText>
+        </h1>
         <form onSubmit={handleSubmit(loginUser)} className="space-y-8">
-          <div>
-            <label
-              htmlFor="email"
-              className="block text-sm font-semibold text-slate-700 dark:text-dark/70"
-            >
-              Email address
-            </label>
-            <div className="mt-2">
-              <input
-                type="email"
-                id="email"
-                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 focus:border-[#8e8ece] focus:outline-none focus:ring-1  focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
-                {...register('email', {
-                  required: { value: true, message: 'Email is required' },
-                  pattern: {
-                    value: /^[A-Z0-9._%+-]+@[A-Z0-9.-]+\.[A-Z]{2,}$/i,
-                    message: 'Invalid email address',
-                  },
-                })}
-              />
-            </div>
-            {errors?.email && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.email.message}
-              </p>
+          {signinFormFields.map((field) => (
+            <FormField
+              key={field.id}
+              id={field.id}
+              type={field.type}
+              label={field.label}
+              register={register}
+              error={errors[field.id as 'email' | 'password']}
+              showPassword={field.id === 'password' ? showPassword : undefined}
+              toggleShowPassword={
+                field.id === 'password'
+                  ? () => setShowPassword(!showPassword)
+                  : undefined
+              }
+            />
+          ))}
+
+          <Button
+            type="submit"
+            isLoading={loading}
+            className={cn(
+              'flex w-full items-center justify-center rounded-md px-4 py-3 text-[0.9rem] font-semibold'
             )}
-          </div>
-          <div>
-            <label
-              htmlFor="password"
-              className="block text-sm font-semibold text-slate-700 dark:text-dark/70"
-            >
-              Password
-            </label>
-            <div className="relative mt-2">
-              <input
-                type={showPassword ? 'text' : 'password'}
-                id="password"
-                className="h-11 w-full rounded-md border border-gray-300 px-4 py-3 text-base text-gray-900 focus:border-[#8e8ece] focus:outline-none  focus:ring-1 focus:ring-[#8e8ece] dark:border-[#22262b] dark:bg-formDark dark:text-gray-100 md:text-sm"
-                {...register('password', {
-                  required: { value: true, message: 'Password is required' },
-                })}
-              />
-              <button
-                aria-label="Show password"
-                type="button"
-                onClick={() => setShowPassword(!showPassword)}
-                className="absolute inset-y-0 right-2 flex items-center pr-3 text-sm text-gray-700 dark:text-dark/70"
-              >
-                {showPassword ? (
-                  <>
-                    <EyeOff
-                      size={19}
-                      className="text-gray-600 dark:text-dark/70"
-                    />
-                    <span className="sr-only">Hide password</span>
-                  </>
-                ) : (
-                  <>
-                    <Eye
-                      size={19}
-                      className="text-gray-600 dark:text-dark/70"
-                    />
-                    <span className="sr-only">Show password</span>
-                  </>
-                )}
-              </button>
-            </div>
-            {errors?.password && (
-              <p className="mt-1 text-sm text-red-500">
-                {errors.password.message}
-              </p>
-            )}
-          </div>
-          <div>
-            <Button
-              type="submit"
-              isLoading={loading}
-              className={cn(
-                'flex w-full items-center justify-center rounded-md px-4 py-3 text-[0.9rem] font-semibold'
-              )}
-              size={'lg'}
-            >
-              Sign in
-            </Button>
-          </div>
+            size={'lg'}
+          >
+            Sign in
+          </Button>
 
           {/* Continue with separator */}
           <div className="relative">
             <div className="absolute inset-0 flex items-center">
-              <div className="w-full border-t border-gray-300 dark:border-[#22262b]" />
+              <div className="w-full border-t border-[#22262b]" />
             </div>
             <div className="relative flex justify-center rounded-md text-sm">
-              <span className="bg-primary px-2 text-primary dark:bg-[#121212] dark:text-dark/80">
+              <span className="bg-[#121212] px-2 text-dark/80">
                 Or continue with
               </span>
             </div>
@@ -199,51 +156,27 @@ export default function SignInForm({ authenticated }: SignInFormProps) {
 
           {/* Provider buttons */}
           <div className="mt-6 grid grid-cols-2 gap-3">
-            <Button
-              variant="outline"
-              className="rounded-md bg-formDark px-4 py-2 shadow-sm"
-              type="button"
-              onClick={() => {
-                signInWithProvider('google')
-              }}
-              disabled={isGoogleLoading}
-            >
-              <span className="sr-only">Sign in with Google</span>
-              <img
-                className="h-5 w-5"
-                src="https://img.icons8.com/color/48/000000/google-logo.png"
-                alt="Google logo"
-                loading="lazy"
-              />
-            </Button>
-
-            <Button
-              variant="outline"
-              className={`rounded-md bg-formDark px-4 py-2 shadow-sm `}
-              type="button"
-              onClick={() => {
-                signInWithProvider('github')
-              }}
-              disabled={isGithubLoading}
-            >
-              <span className="sr-only">Sign in with Github</span>
-              <img
-                className={`h-5 w-5 `}
-                src="https://img.icons8.com/fluency/48/000000/github.png"
-                alt="Github logo"
-                loading="lazy"
-              />
-            </Button>
+            <ProviderButton
+              provider="google"
+              isLoading={isGoogleLoading}
+              onClick={() => signInWithProvider('google')}
+            />
+            <ProviderButton
+              provider="github"
+              isLoading={isGithubLoading}
+              onClick={() => signInWithProvider('github')}
+            />
           </div>
 
+          {/* Sign in message */}
           <Button
             onClick={() => {
               setShow('signup')
             }}
             variant="noHoverGhost"
-            className="mx-auto mt-3 w-full max-w-full text-center  text-sm text-gray-600 dark:text-dark/80"
+            className="mx-auto mt-3 w-full max-w-full text-center text-sm"
           >
-            Dont have an account?{' '}
+            <span className='text-dark/80'>Dont have an account?</span>
             <p className="ml-0.5 font-semibold text-purple hover:text-purple/90 hover:underline">
               Sign up
             </p>
@@ -251,5 +184,37 @@ export default function SignInForm({ authenticated }: SignInFormProps) {
         </form>
       </div>
     </div>
+  )
+}
+
+const ProviderButton = ({
+  provider,
+  isLoading,
+  onClick,
+}: {
+  provider: 'google' | 'github'
+  isLoading: boolean
+  onClick: () => void
+}) => {
+  return (
+    <Button
+      variant="outline"
+      className="rounded-md bg-formDark px-4 py-2 shadow-sm"
+      type="button"
+      onClick={onClick}
+      disabled={isLoading}
+    >
+      <span className="sr-only">Sign in with {provider}</span>
+      <img
+        className="h-5 w-5"
+        src={
+          provider === 'google'
+            ? `https://img.icons8.com/color/48/000000/google-logo.png`
+            : `https://img.icons8.com/fluency/48/000000/github.png`
+        }
+        alt={`${provider} logo`}
+        loading="lazy"
+      />
+    </Button>
   )
 }

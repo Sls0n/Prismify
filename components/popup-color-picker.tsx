@@ -27,7 +27,7 @@ export default function PopupColorPicker({
             <div className="mr-4 flex flex-1 items-center">
               <ChevronDown
                 size={20}
-                className="text-primary/70 dark:text-dark/80"
+                className="text-dark/80"
               />
             </div>
           </div>

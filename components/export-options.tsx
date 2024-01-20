@@ -374,7 +374,7 @@ export default function ExportOptions({ isLoggedIn }: { isLoggedIn: boolean }) {
           </PopoverTrigger>
           <PopoverContent
             align="end"
-            className="mb-4 flex w-full min-w-[15rem] max-w-[15rem] flex-col gap-4 rounded-lg border border-border/60 dark:bg-[#151515]"
+            className="mb-4 flex w-full min-w-[15rem] max-w-[15rem] flex-col gap-4 rounded-lg border border-border/60 bg-[#151515]"
           >
             <p className="text-sm font-medium text-dark/90">Quality</p>
             <div className="grid w-full grid-cols-2 gap-2.5">
@@ -410,7 +410,7 @@ export default function ExportOptions({ isLoggedIn }: { isLoggedIn: boolean }) {
           </PopoverTrigger>
           <PopoverContent
             align="end"
-            className="mb-4 flex w-full min-w-[15rem] max-w-[15rem] flex-col gap-4 rounded-lg border border-border/60 dark:bg-[#151515]"
+            className="mb-4 flex w-full min-w-[15rem] max-w-[15rem] flex-col gap-4 rounded-lg border border-border/60 bg-[#151515]"
           >
             <p className="text-sm font-medium text-dark/90">Image formats</p>
             <div className="grid w-full grid-cols-2 gap-2.5">
