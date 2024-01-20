@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import { NextResponse } from 'next/server'
 import prismadb from '@/libs/prismadb'
-import { getCurrentSession } from '@/utils/authOptions'
-import { postSchema } from '@/libs/validators/articlePostValidator'
+import { getCurrentSession } from '@/utils/auth-options'
+import { postSchema } from '@/libs/validators/article-post-validator'
 
 export async function POST(request: Request) {
   try {
@@ -47,5 +47,3 @@ export async function POST(request: Request) {
     return new NextResponse('Something went wrong', { status: 500 })
   }
 }
-
-

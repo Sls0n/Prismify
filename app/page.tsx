@@ -1,7 +1,7 @@
-import Navbar from '@/components/Navbar'
-import Sidebar from '@/components/editor/Sidebar'
-import Canvas from '@/components/editor/Canvas'
-import { getCurrentSession } from '@/utils/authOptions'
+import Navbar from '@/components/navbar'
+import Sidebar from '@/components/editor/sidebar'
+import Canvas from '@/components/editor/canvas-area'
+import { getCurrentSession } from '@/utils/auth-options'
 
 export default async function Home() {
   const session = await getCurrentSession()
@@ -11,12 +11,12 @@ export default async function Home() {
     <>
       <Navbar
         authenticated={authenticated}
-        img={session?.user?.image || '/images/fallback-avatar.png'}
+        img={session?.user?.image || '/images/fallback.jpg'}
         username={session?.user?.name || 'User'}
         id={session?.user?.id || '0'}
       />
 
-      <main className="flex h-[100vh] w-screen pt-[72px] sm:flex-row">
+      <main className="flex h-screen w-screen pt-[72px] sm:flex-row">
         <Sidebar />
         <Canvas />
       </main>

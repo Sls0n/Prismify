@@ -36,7 +36,7 @@ export const useResizeCanvas = create<ResizeCanvasState>((set) => ({
   domResolution: '....x....',
   setDomResolution: (res) => set({ domResolution: res }),
 
-  canvasRoundness: 0.75,
+  canvasRoundness: 0,
   setCanvasRoundness: (canvasRoundness) => set({ canvasRoundness }),
 
   scrollScale: 1,

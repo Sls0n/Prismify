@@ -1,7 +1,7 @@
 import prismadb from '@/libs/prismadb'
-import { Text } from '@/components/ui/Text'
-import ArticleCard from '@/components/articles/ArticleCard'
-import { formatDate, separateCommas } from '@/utils/helperFns'
+import { Text } from '@/components/ui/text'
+import ArticleCard from '@/components/articles/article-card'
+import { formatDate, separateCommas } from '@/utils/helper-fns'
 import type { Metadata } from 'next'
 
 type Props = {

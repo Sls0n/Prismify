@@ -1,9 +1,10 @@
 /* eslint-disable react/no-unescaped-entities */
 'use client'
 
-import { buttonVariants } from '@/components/ui/Button'
-import { cn } from '@/utils/buttonUtils'
+import { buttonVariants } from '@/components/ui/button'
+import { cn } from '@/utils/button-utils'
 import { MoveLeft } from 'lucide-react'
+import Link from 'next/link'
 
 export default function NotFound() {
   return (
@@ -18,16 +19,16 @@ export default function NotFound() {
       </p>
 
       <div className="mt-10 flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-3">
-        <a
+        <Link
           href="/"
           className={cn(
             buttonVariants({ variant: 'default' }),
-            'w-48 px-4 text-[15.2px] sm:w-fit'
+            'w-48 px-4 text-base sm:w-fit'
           )}
         >
           <MoveLeft className="mr-2 h-5 w-5 text-foreground/80" />
-          Get me out of here 😬
-        </a>
+          Back to home
+        </Link>
       </div>
     </div>
   )

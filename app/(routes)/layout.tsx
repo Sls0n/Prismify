@@ -1,6 +1,6 @@
-import Footer from '@/components/Footer'
-import Navbar from '@/components/Navbar'
-import { getCurrentSession } from '@/utils/authOptions'
+import Footer from '@/components/footer'
+import Navbar from '@/components/navbar'
+import { getCurrentSession } from '@/utils/auth-options'
 import React from 'react'
 
 export default async function AdminLayout({
