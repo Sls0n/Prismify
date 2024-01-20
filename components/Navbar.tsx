@@ -28,7 +28,7 @@ import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { AuthModal } from './AuthModal'
 import SaveOptions from './SaveOptions'
-import { gradients } from '@/utils/config'
+import { gradients } from '@/utils/presets/gradients'
 
 type NavbarProps = {
   authenticated?: boolean

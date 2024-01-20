@@ -9,7 +9,7 @@ import {
   PopoverTrigger,
 } from '@/components/ui/Popover'
 import { useBackgroundOptions } from '@/store/use-background-options'
-import { Gradient, gradients } from '@/utils/config'
+import { type Gradient, gradients } from '@/utils/presets/gradients'
 import { useCallback } from 'react'
 import ImageGradients from './ImageGradients'
 import { Settings2 } from 'lucide-react'
