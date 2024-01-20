@@ -18,7 +18,7 @@ export default function RotateOptions() {
         }`}
       >
         <h1 className="text-[0.85rem]">3D Depth</h1>
-        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
+        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-dark/70">
           {`${Math.round(
             selectedImage ? images[selectedImage - 1]?.style.perspective : 0
           )}px`}
@@ -45,7 +45,7 @@ export default function RotateOptions() {
             )
           }
         >
-          <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
+          <RotateCcw size={15} className="text-dark/80" />
         </Button>
       </div>
 
@@ -124,7 +124,7 @@ export default function RotateOptions() {
       {/* RotateX */}
       <div className="mb-3 flex items-center px-1 md:max-w-full">
         <h1 className="text-[0.85rem]">Rotate X</h1>
-        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
+        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-dark/70">
           {`${Math.round(
             selectedImage ? images[selectedImage - 1]?.style.rotateX : 0
           )}px`}
@@ -151,7 +151,7 @@ export default function RotateOptions() {
               )
           }}
         >
-          <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
+          <RotateCcw size={15} className="text-dark/80" />
         </Button>
       </div>
 
@@ -226,7 +226,7 @@ export default function RotateOptions() {
       {/* RotateY */}
       <div className="mb-3 mt-3 flex items-center px-1 md:max-w-full">
         <h1 className="text-[0.85rem]">Rotate Y</h1>
-        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
+        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-dark/70">
           {`${Math.round(
             selectedImage ? images[selectedImage - 1]?.style.rotateY : 0
           )}px`}
@@ -253,7 +253,7 @@ export default function RotateOptions() {
               )
           }}
         >
-          <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
+          <RotateCcw size={15} className="text-dark/80" />
         </Button>
       </div>
 
@@ -328,7 +328,7 @@ export default function RotateOptions() {
       {/* RotateZ */}
       <div className="mb-3 mt-3 flex items-center px-1 md:max-w-full">
         <h1 className="text-[0.85rem]">Rotate Z</h1>
-        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
+        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-dark/70">
           {`${Math.round(
             selectedImage ? images[selectedImage - 1]?.style.rotateZ : 0
           )}px`}
@@ -355,7 +355,7 @@ export default function RotateOptions() {
             )
           }
         >
-          <RotateCcw size={15} className="text-primary/70 dark:text-dark/80" />
+          <RotateCcw size={15} className="text-dark/80" />
         </Button>
       </div>
 

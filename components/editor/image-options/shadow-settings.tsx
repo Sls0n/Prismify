@@ -100,22 +100,19 @@ export default function ShadowSettings() {
           </div>
           <div className="flex h-full w-full flex-1 items-center justify-between px-4">
             <div className="flex w-full flex-col items-start">
-              <p className="text-[0.85rem] font-medium text-primary/70 dark:text-dark/70">
+              <p className="text-[0.85rem] font-medium text-dark/70">
                 {selectedImage
                   ? images[selectedImage - 1]?.style.shadowName
                   : 'None'}
               </p>
-              <p className="text-[0.7rem] font-bold text-primary/50 dark:text-dark/50">
+              <p className="text-[0.7rem] font-bold text-dark/50">
                 {selectedImage
                   ? images[selectedImage - 1]?.style.shadowColor.slice(0, 7)
                   : '#000'}
               </p>
             </div>
 
-            <ChevronDown
-              size={18}
-              className="text-primary/70 dark:text-dark/80"
-            />
+            <ChevronDown size={18} className="text-dark/80" />
           </div>
         </PopoverTrigger>
         <PopoverContent
@@ -150,7 +147,7 @@ export default function ShadowSettings() {
 
       <div className="mb-3 mt-8 flex items-center px-1">
         <h1 className="text-[0.85rem]">Opacity</h1>
-        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-primary/70 dark:text-dark/70">
+        <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-dark/70">
           {Math.round(
             Number(
               selectedImage

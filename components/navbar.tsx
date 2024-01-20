@@ -85,12 +85,12 @@ export default function Navbar({
             />
             <p className="mr-3 hidden bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-lg font-semibold tracking-tight text-transparent md:block ">
               Prismify
-              <span className="ml-2 inline-flex items-center rounded-md bg-indigo-500/10 px-2 py-1 text-xs font-medium text-purple shadow-sm ring-1 ring-inset ring-indigo-500/20 dark:bg-indigo-500/10">
+              <span className="ml-2 inline-flex items-center rounded-md px-2 py-1 text-xs font-medium text-purple shadow-sm ring-1 ring-inset ring-indigo-500/20 bg-indigo-500/10">
                 Beta
               </span>
             </p>
 
-            <div className="dark:bg-border-dark hidden h-6 w-[2px] bg-border md:block" />
+            <div className="hidden h-6 w-[2px] bg-border-dark md:block" />
           </Link>
 
           {/* <Link className="hidden md:flex" href="/templates">
@@ -177,7 +177,7 @@ export default function Navbar({
           <div className="flex items-center gap-2">
             {isHome && <ExportOptions isLoggedIn={authenticated || false} />}
 
-            <div className="dark:bg-border-dark mx-3 h-7 w-[2px] bg-border" />
+            <div className="bg-border-dark mx-3 h-7 w-[2px] bg-border" />
 
             {authenticated ? (
               <DropdownMenu>
@@ -187,7 +187,7 @@ export default function Navbar({
                 >
                   <Button
                     variant="ghost"
-                    className="flex h-10 cursor-pointer items-center justify-center gap-x-2.5 rounded-xl bg-[#f5f7fa] px-4 py-2 font-medium text-primary dark:bg-[#181818] dark:text-dark"
+                    className="flex h-10 cursor-pointer items-center justify-center gap-x-2.5 rounded-xl px-4 py-2 font-medium bg-[#181818] text-dark"
                   >
                     <div className="h-6 w-6">
                       <div
@@ -198,7 +198,7 @@ export default function Navbar({
                       />
                     </div>
 
-                    <div className="flex translate-y-[-1px] items-center justify-center gap-1.5  truncate font-medium capitalize text-primary/70 dark:text-dark/80 md:text-base">
+                    <div className="flex translate-y-[-1px] items-center justify-center gap-1.5  truncate font-medium capitalize text-dark/80 md:text-base">
                       <span className="sr-only">Logged in as</span>
                       <span className="hidden text-sm md:inline">
                         {username?.split(' ')[0]}
@@ -206,7 +206,7 @@ export default function Navbar({
 
                       <ChevronDown
                         size={16}
-                        className="translate-y-[1.6px] text-primary/70 dark:text-dark/80"
+                        className="translate-y-[1.6px] text-dark/80"
                       />
                     </div>
                   </Button>
