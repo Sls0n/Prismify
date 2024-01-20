@@ -3,7 +3,7 @@ export function splitWidthHeight(resolution: string) {
   return { width, height }
 }
 
-export function convertHex(hexCode: string, opacity = 1) {
+export function convertHexToRgba(hexCode: string, opacity = 1) {
   var hex = hexCode.replace('#', '')
 
   if (hex.length === 3) {
