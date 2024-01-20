@@ -1,4 +1,4 @@
-import classes from '@/components/ui/style/Checkbox.module.css'
+import classes from '@/components/ui/style/checkbox.module.css'
 
 export default function Checkbox() {
   return (

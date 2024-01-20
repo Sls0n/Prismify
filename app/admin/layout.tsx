@@ -1,5 +1,5 @@
-import Navbar from '@/components/Navbar'
-import { getCurrentSession } from '@/utils/authOptions'
+import Navbar from '@/components/navbar'
+import { getCurrentSession } from '@/utils/auth-options'
 import { redirect } from 'next/navigation'
 import React from 'react'
 
@@ -16,7 +16,7 @@ export default async function AdminLayout({
 
   return (
     <>
-      <Navbar 
+      <Navbar
         authenticated={!!session?.user}
         img={session?.user?.image || undefined}
         username={session?.user?.name || 'User'}

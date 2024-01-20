@@ -3,9 +3,9 @@
 import * as React from 'react'
 import * as SliderPrimitive from '@radix-ui/react-slider'
 
-import { cn } from '@/utils/buttonUtils'
+import { cn } from '@/utils/button-utils'
 import { MinusIcon, Plus } from 'lucide-react'
-import { Button } from './Button'
+import { Button } from './button'
 
 const Slider = React.forwardRef<
   React.ElementRef<typeof SliderPrimitive.Root>,

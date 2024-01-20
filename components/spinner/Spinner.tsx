@@ -1,4 +1,4 @@
-import classes from './Spinner.module.css'
+import classes from './spinner.module.css'
 
 export default function Spinner() {
   return (

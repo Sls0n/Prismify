@@ -4,10 +4,10 @@ import useTiptapEditor from '@/hooks/use-editor'
 import { useOnClickOutside } from '@/hooks/use-on-click-outside'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
-import { convertHex } from '@/utils/helperFns'
+import { convertHex } from '@/utils/helper-fns'
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/react'
 import { useRef } from 'react'
-import ContextMenuText from './ContextMenuText'
+import ContextMenuText from './text-context-menu'
 
 type MenuBarProps = {
   editor: Editor | null

@@ -1,7 +1,7 @@
 /* eslint-disable react/no-unescaped-entities */
 import React from 'react'
-import BackButton from '@/components/ui/BackButton'
-import { Text } from '@/components/ui/Text'
+import BackButton from '@/components/ui/back-button'
+import { Text } from '@/components/ui/text'
 import type { Metadata } from 'next'
 
 export const metadata: Metadata = {
@@ -44,16 +44,24 @@ export default function page() {
             product or social media? I hear you! But guess what? Prismify's here
             to save the day.
           </p>{' '}
-          <h3 className='text-dark'>Let's dive into the struggles we all face:</h3>
+          <h3 className="text-dark">
+            Let's dive into the struggles we all face:
+          </h3>
           <ul>
             <li>
-              <strong>Zero Design Skills:</strong> Who has time to become a design pro? With Prismify, you don't need to! It's like having a magic wand for your visuals.
+              <strong>Zero Design Skills:</strong> Who has time to become a
+              design pro? With Prismify, you don't need to! It's like having a
+              magic wand for your visuals.
             </li>
             <li>
-              <strong>Clock's Ticking:</strong> Time is money, they say. Prismify respects that – swift, efficient, and no-nonsense design tools.
+              <strong>Clock's Ticking:</strong> Time is money, they say.
+              Prismify respects that – swift, efficient, and no-nonsense design
+              tools.
             </li>
             <li>
-              <strong>Quality Matters:</strong> We all want our stuff to look top-notch. Prismify keeps your visuals sharp and professional without the designer price tag.
+              <strong>Quality Matters:</strong> We all want our stuff to look
+              top-notch. Prismify keeps your visuals sharp and professional
+              without the designer price tag.
             </li>
           </ul>
           <p>

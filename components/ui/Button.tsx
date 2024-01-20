@@ -1,5 +1,5 @@
-import { cn } from '@/utils/buttonUtils'
-import Spinner from '@/components/spinner/Spinner'
+import { cn } from '@/utils/button-utils'
+import Spinner from '@/components/spinner/spinner'
 import { VariantProps, cva } from 'class-variance-authority'
 import { ButtonHTMLAttributes } from 'react'
 import { forwardRef } from 'react'

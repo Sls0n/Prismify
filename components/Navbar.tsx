@@ -1,6 +1,6 @@
 'use client'
 
-import { Button, buttonVariants } from '@/components/ui/Button'
+import { Button, buttonVariants } from '@/components/ui/button'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -8,9 +8,9 @@ import {
   DropdownMenuItem,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/DropdownMenu'
+} from '@/components/ui/dropdown-menu'
 import { toast } from '@/hooks/use-toast'
-import { cn } from '@/utils/buttonUtils'
+import { cn } from '@/utils/button-utils'
 import {
   BadgeInfo,
   BookCopy,
@@ -26,8 +26,8 @@ import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
-import { AuthModal } from './AuthModal'
-import SaveOptions from './SaveOptions'
+import { AuthModal } from '@/components/auth-modal'
+import ExportOptions from '@/components/export-options'
 import { gradients } from '@/utils/presets/gradients'
 
 type NavbarProps = {
@@ -175,7 +175,7 @@ export default function Navbar({
         </nav>
         <div className="flex items-center gap-10 ">
           <div className="flex items-center gap-2">
-            {isHome && <SaveOptions isLoggedIn={authenticated || false} />}
+            {isHome && <ExportOptions isLoggedIn={authenticated || false} />}
 
             <div className="dark:bg-border-dark mx-3 h-7 w-[2px] bg-border" />
 

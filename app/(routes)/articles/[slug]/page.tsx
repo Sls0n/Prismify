@@ -1,16 +1,16 @@
 // @ts-nocheck
 
 import { notFound } from 'next/navigation'
-import { Text } from '@/components/ui/Text'
-import BackButton from '@/components/ui/BackButton'
+import { Text } from '@/components/ui/text'
+import BackButton from '@/components/ui/back-button'
 import {
   generateBadgeVariant,
   generateFormattedBlogDate,
   separateCommas,
-} from '@/utils/helperFns'
+} from '@/utils/helper-fns'
 import prismadb from '@/libs/prismadb'
 import Image from 'next/image'
-import { Badge } from '@/components/ui/Badge'
+import { Badge } from '@/components/ui/badge'
 import { Calendar } from 'lucide-react'
 import type { Metadata, ResolvingMetadata } from 'next'
 

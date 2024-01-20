@@ -1,4 +1,4 @@
-import { cn } from "@/utils/buttonUtils"
+import { cn } from "@/utils/button-utils"
 
 function Skeleton({
   className,

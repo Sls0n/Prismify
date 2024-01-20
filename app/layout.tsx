@@ -1,7 +1,7 @@
-import { Toaster } from '@/components/ui/Toaster'
-import Providers from '@/context/Providers'
+import { Toaster } from '@/components/ui/toaster'
+import Providers from '@/providers'
 import '@/styles/globals.css'
-import { cn } from '@/utils/buttonUtils'
+import { cn } from '@/utils/button-utils'
 import { Analytics } from '@vercel/analytics/react'
 import type { Metadata, Viewport } from 'next'
 import { Plus_Jakarta_Sans } from 'next/font/google'
@@ -98,7 +98,7 @@ export default function RootLayout({
       className={cn('antialiased', Font.className)}
       lang="en"
     >
-      <body className="h-screen no-scrollbar w-screen bg-primary text-primary dark:bg-[#111] dark:text-dark ">
+      <body className="no-scrollbar h-screen w-screen bg-primary text-primary dark:bg-[#111] dark:text-dark ">
         <Toaster />
         <Analytics />
 

@@ -1,7 +1,7 @@
 'use client'
 
-import SidebarButton from './SidebarButton'
-import { Button } from '@/components/ui/Button'
+import SidebarButton from './sidebar-buttons'
+import { Button } from '@/components/ui/button'
 import {
   Image as Images,
   AppWindow,
@@ -13,16 +13,16 @@ import {
   Redo2,
   Box,
 } from 'lucide-react'
-import { ScrollArea } from '@/components/ui/ScrollArea'
+import { ScrollArea } from '@/components/ui/scroll-area'
 import { useActiveIndexStore } from '@/store/use-active-index'
-import CanvasOptions from './CanvasOptions/CanvasOptions'
-import ImageOptions from './ImageOptions/ImageOptions'
-import BackgroundOptions from '@/components/editor/BackgroundOptions/BackgroundOptions'
-import FrameOptions from './FrameOptions/FrameOptions'
-import PositionOptions from './PositionOptions/PositionOptions'
+import CanvasOptions from './canvas-options'
+import ImageOptions from './image-options'
+import BackgroundOptions from '@/components/editor/background-options'
+import FrameOptions from './frame-options'
+import PositionOptions from './position-options'
 import { useTemporalStore } from '@/store/use-image-options'
-import TextOptions from './TextOptions/TextOptions'
-import PerspectiveOptions from './PerspectiveOptions/PerspectiveOptions'
+import TextOptions from './text-options'
+import PerspectiveOptions from './perspective-options'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { useMoveable } from '@/store/use-moveable'
 

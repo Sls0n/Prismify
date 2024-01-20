@@ -1,12 +1,12 @@
-import { cn } from '@/utils/buttonUtils'
+import { cn } from '@/utils/button-utils'
 import Link from 'next/link'
 import React from 'react'
-import { buttonVariants } from './ui/Button'
+import { buttonVariants } from './ui/button'
 
 export default function Footer() {
   return (
     <footer className="mt-16 w-full border-t border-border/40 bg-black/10 px-4 py-10 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 items-center gap-5 text-center md:text-start md:grid-cols-3">
+      <div className="grid grid-cols-1 items-center gap-5 text-center md:grid-cols-3 md:text-start">
         <div>
           <Link
             href="/"
@@ -16,9 +16,7 @@ export default function Footer() {
             )}
             aria-label="Prismify"
           >
-            <p className="mr-3 text-dark/80 ">
-              Prismify
-            </p>
+            <p className="mr-3 text-dark/80 ">Prismify</p>
           </Link>
         </div>
 

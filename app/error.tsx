@@ -1,9 +1,10 @@
 'use client'
 
 /* eslint-disable react/no-unescaped-entities */
-import { Button, buttonVariants } from '@/components/ui/Button'
-import { cn } from '@/utils/buttonUtils'
+import { Button, buttonVariants } from '@/components/ui/button'
+import { cn } from '@/utils/button-utils'
 import { MailWarning, RotateCcw } from 'lucide-react'
+import Link from 'next/link'
 import { useEffect } from 'react'
 
 export default function Error({
@@ -29,20 +30,20 @@ export default function Error({
       </p>
 
       <div className="mt-10 flex flex-col items-center justify-center gap-2 sm:flex-row sm:gap-3">
-        <Button onClick={reset} className="w-48 sm:w-fit" variant="stylish">
+        <Button onClick={reset} className="w-48 text-base sm:w-fit" variant="stylish">
           <RotateCcw className="mr-2 h-5 w-5 text-foreground/80" />
           Pray & Retry
         </Button>
-        <a
+        <Link
           href="mailto:silson0072@gmail.com"
           className={cn(
             buttonVariants({ variant: 'default' }),
-            'w-48 px-4 text-[15.2px] sm:w-fit'
+            'w-48 px-4 text-base sm:w-fit'
           )}
         >
           <MailWarning className="mr-2 h-5 w-5 text-foreground/80" />
-          Report 🥱
-        </a>
+          Report
+        </Link>
       </div>
     </div>
   )
