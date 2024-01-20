@@ -31,7 +31,7 @@ export const metadata: Metadata = {
     card: 'summary_large_image',
     images: [
       {
-        url: 'https://prismify.vercel.app/twitter-image.jpg',
+        url: 'https://prismify.vercel.app/opengraph-image.jpg',
         width: 1200,
         height: 630,
         alt: 'Prismify - Effortlessly Create Beautiful SaaS/Product Shots & Graphics',

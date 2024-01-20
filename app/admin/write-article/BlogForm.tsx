@@ -181,6 +181,7 @@ export default function BlogForm() {
 
           <hr className="-mx-8 border-border pb-4" />
 
+          {/* @ts-expect-error children missing error */}
           <EditorProvider
             slotBefore={<MenuBar />}
             extensions={extensions}
@@ -190,9 +191,7 @@ export default function BlogForm() {
                   'prose prose-md max-w-prose mx-auto prose-neutral mb-16 md:prose-lg prose-img:rounded-md focus:outline-none min-h-[30rem] dark:prose-invert',
               },
             }}
-          >
-            {/*  */}
-          </EditorProvider>
+          />
         </div>
       </div>
 
