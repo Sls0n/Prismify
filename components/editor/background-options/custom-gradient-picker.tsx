@@ -55,7 +55,7 @@ export default function CustomGradientPicker() {
           <span>Solid Colors:</span>
         </h3>
 
-        <div className="mt-4 flex w-full flex-wrap gap-3">
+        <div className="mt-4 flex grid-cols-5 flex-wrap gap-x-2.5 gap-y-3 md:grid w-full">
           {solidColors.slice(0, 1).map(({ background: solidBackground }) => {
             return (
               <Button
@@ -82,7 +82,7 @@ export default function CustomGradientPicker() {
               <Button
                 key={solidBackground}
                 variant="secondary"
-                className={`aspect-square rounded-sm ${
+                className={`h-[2.56rem] w-[2.56rem] rounded-md ${
                   background === solidBackground &&
                   !imageBackground &&
                   'outline-none ring-2 ring-ring ring-offset-2'

@@ -1,18 +1,18 @@
 'use client'
 
-import { Key, useState } from 'react'
-import { Skeleton } from '@/components/ui/skeleton'
-import { useBackgroundOptions } from '@/store/use-background-options'
-import { toast } from '@/hooks/use-toast'
-import { useQuery } from '@tanstack/react-query'
 import { Button } from '@/components/ui/button'
-import { Settings2 } from 'lucide-react'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Switch } from '@/components/ui/switch'
+import { toast } from '@/hooks/use-toast'
+import { useBackgroundOptions } from '@/store/use-background-options'
+import { useQuery } from '@tanstack/react-query'
+import { ChevronLeft, ChevronRight, Settings2 } from 'lucide-react'
+import { Key, useEffect, useState } from 'react'
 
 export default function ImageGradientPicker() {
   const {
@@ -36,17 +36,26 @@ export default function ImageGradientPicker() {
   const {
     isLoading,
     isError,
+    refetch,
     data: unsplashData,
     error,
   } = useQuery({
-    queryKey: ['unsplash-gradients', currentPage],
+    queryKey: ['unsplash-gradients'],
     queryFn: () => fetchUnsplashPictures(currentPage),
   })
+
+  useEffect(
+    () => {
+      refetch()
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    [currentPage]
+  )
 
   if (isLoading) {
     const skeletonLoaders = Array.from({ length: 30 }).map((_, index) => (
       <li
-        className={`aspect-square h-12 w-12 rounded-md`}
+        className={`h-[2.56rem] w-[2.56rem] rounded-md`}
         key={`skeleton-${index}`}
       >
         <Skeleton className="h-full w-full rounded-md" />
@@ -77,7 +86,7 @@ export default function ImageGradientPicker() {
   return (
     <>
       <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
-        <span>Unsplash gradients:</span>
+        <span>Images:</span>
         <Popover>
           <PopoverTrigger asChild>
             <Settings2 size={20} />
@@ -94,7 +103,7 @@ export default function ImageGradientPicker() {
         </Popover>
       </h3>
 
-      <ul className="mt-4 flex h-full w-full flex-wrap gap-3">
+      <ul className="mt-4 flex grid-cols-5 flex-wrap gap-x-2.5 gap-y-3 md:grid">
         {unsplashData.map(
           (data: {
             user: any
@@ -107,7 +116,7 @@ export default function ImageGradientPicker() {
             }
             alt_description: string | undefined
           }) => (
-            <li className={`h-[3.25rem] w-[3.25rem] rounded-md`} key={data.id}>
+            <li className={`h-[2.56rem] w-[2.56rem] rounded-md`} key={data.id}>
               <button
                 className={`h-full w-full rounded-md ${
                   imageBackground ===
@@ -145,28 +154,29 @@ export default function ImageGradientPicker() {
         )}
       </ul>
 
-      <div className="flex gap-2">
+      <div className="flex justify-end mt-6 gap-2">
         <Button
           size="sm"
           variant={'stylish'}
           disabled={currentPage === 1}
-          className="mt-4 text-sm"
+          className="text-sm flex-center h-9 px-2.5"
           onClick={() => {
             setCurrentPage((prevPage) => prevPage - 1)
           }}
         >
-          &larr; Back
+          <ChevronLeft size={16} className="mr-1 translate-y-[1px]" />
+          <p>Back</p>
         </Button>
         <Button
-          size="sm"
           variant={'stylish'}
           disabled={currentPage === 3}
-          className="mt-4 text-sm"
+          className="text-sm flex-center h-9 px-2.5"
           onClick={() => {
             setCurrentPage((prevPage) => prevPage + 1)
           }}
         >
-          Next &rarr;
+          <p>Next</p> 
+          <ChevronRight size={16} className="ml-1 translate-y-[1px]" />
         </Button>
       </div>
     </>

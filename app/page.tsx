@@ -11,7 +11,6 @@ export default async function Home() {
     <>
       <Navbar
         authenticated={authenticated}
-        img={session?.user?.image || '/images/fallback.jpg'}
         username={session?.user?.name || 'User'}
         id={session?.user?.id || '0'}
       />

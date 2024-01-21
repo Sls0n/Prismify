@@ -16,7 +16,7 @@ export default function BackgroundOptions() {
 
   return (
     <Tabs
-      className="mt-4"
+      className="mt-4 w-full"
       defaultValue={
         backgroundType === 'solid'
           ? 'customTab'
@@ -25,9 +25,9 @@ export default function BackgroundOptions() {
           : 'gradientsTab'
       }
     >
-      <TabsList className="mb-4 bg-[#191919] [&>*]:px-[1rem]">
+      <TabsList className="mb-4 bg-[#171717] [&>*]:px-[1rem]">
         <TabsTrigger value="gradientsTab">Gradient</TabsTrigger>
-        <TabsTrigger value="patternsTab">Pattern</TabsTrigger>
+        <TabsTrigger value="patternsTab">Wallpaper</TabsTrigger>
         <TabsTrigger className="hidden sm:flex" value="customTab">
           Pick
         </TabsTrigger>
