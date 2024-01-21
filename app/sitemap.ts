@@ -5,7 +5,7 @@ export default function sitemap(): MetadataRoute.Sitemap {
     return {
       url: `https://prismify.vercel.app/${p}`,
       lastModified: '2024-01-13T12:17:43.023Z',
-      changeFrequency: p === '' ? 'monthly' : 'monthly',
+      changeFrequency: p === '' ? 'monthly' : 'weekly',
     }
   })
 

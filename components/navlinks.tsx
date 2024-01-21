@@ -48,7 +48,7 @@ export function NavLinks() {
           <Badge className="ml-2">Beta</Badge>
         </GradientText>
 
-        <div className="bg-border-dark hidden h-6 w-[2px] md:block" />
+        <div className="bg-border hidden h-5 w-[1.5px] md:block" />
       </Link>
 
       {/* <Link className="hidden md:flex" href="/templates">

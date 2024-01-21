@@ -1,7 +1,5 @@
 'use client'
 
-import { useState } from 'react'
-
 import PopupColorPicker from '@/components/popup-color-picker'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
@@ -33,9 +31,6 @@ const FontPicker = dynamic(
 export default function FontSettings() {
   const { setTexts, texts } = useImageOptions()
   const { selectedText } = useSelectedLayers()
-  const [activeFontFamily, setActiveFontFamily] = useState(
-    texts[selectedText - 1]?.style.fontFamily ?? 'Inter'
-  )
   const { setShowTextControls } = useMoveable()
 
   const handleColorChange = (color: string) => {
@@ -110,7 +105,7 @@ export default function FontSettings() {
       {/* @ts-expect-error */}
       <FontPicker
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY!}
-        activeFontFamily={activeFontFamily}
+        activeFontFamily={texts[selectedText - 1]?.style.fontFamily}
         variants={['200', '300', 'regular', '500', '600', '700', '800']}
         onChange={(font) => {
           setTexts(
@@ -126,7 +121,6 @@ export default function FontSettings() {
                 : text
             )
           )
-          setActiveFontFamily(font.family)
         }}
       />
 
@@ -148,14 +142,14 @@ export default function FontSettings() {
             <span className="sr-only">Decrease font weight</span>
             <Minus className="h-5 w-5" aria-hidden="true" />
           </button>
-          <div className="flex-center border-b border-t border-border px-4 bg-formDark">
+          <div className="flex-center border-b border-t border-border bg-formDark px-4">
             <p className="text-[0.85rem] font-medium text-dark/80">
               {texts[selectedText - 1]?.style.fontWeight ?? 400}
             </p>
           </div>
           <button
             type="button"
-            className="relative inline-flex items-center rounded-r-md px-2 py-2 ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed bg-formDark text-dark"
+            className="relative inline-flex items-center rounded-r-md bg-formDark px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
             onClick={
               texts[selectedText - 1]?.style.fontWeight < 800
                 ? () =>
