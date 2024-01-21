@@ -14,22 +14,25 @@ const gradientTextVariants = cva('font-medium whitespace-normal font-sans', {
   },
 })
 
-type TextElement = HTMLHeadingElement | HTMLParagraphElement
+type TextElement = HTMLParagraphElement | HTMLHeadingElement | HTMLSpanElement
 
 export interface TextProps
   extends HTMLAttributes<TextElement>,
-    VariantProps<typeof gradientTextVariants> {}
+    VariantProps<typeof gradientTextVariants> {
+  as?: React.ElementType;
+}
 
 const GradientText = forwardRef<TextElement, TextProps>(
-  ({ className, children, variant, ...props }, ref) => {
+  ({ as = 'span', className, children, variant, ...props }, ref) => {
+    const Component = as
     return (
-      <span
+      <Component
         ref={ref}
         className={cn(gradientTextVariants({ variant }), className)}
         {...props}
       >
         {children}
-      </span>
+      </Component>
     )
   }
 )

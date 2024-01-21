@@ -1,29 +1,29 @@
 'use client'
 
-import React, { useState } from 'react'
+import { useState } from 'react'
 
+import { Badge } from '@/components/ui/badge'
 import { Button } from '@/components/ui/button'
+import CircularSliderComp from '@/components/ui/circular-slider'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
-import { useBackgroundOptions } from '@/store/use-background-options'
-import { type Gradient, gradients } from '@/utils/presets/gradients'
-import { useCallback } from 'react'
-import ImageGradientPicker from './image-gradient-picker'
-import { Settings2 } from 'lucide-react'
-import CircularSliderComp from '@/components/ui/circular-slider'
 import SpotlightButton from '@/components/ui/spotlight-button'
-import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import {
   Tooltip,
   TooltipContent,
   TooltipProvider,
   TooltipTrigger,
 } from '@/components/ui/tooltip'
+import { useBackgroundOptions } from '@/store/use-background-options'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
+import { gradients, type Gradient } from '@/utils/presets/gradients'
 import ColorThief from 'colorthief'
-import { Badge } from '@/components/ui/badge'
+import { Settings2 } from 'lucide-react'
+import { useCallback } from 'react'
+import ImageGradientPicker from './image-gradient-picker'
 
 type Color = string
 
@@ -167,7 +167,7 @@ export default function NormalGradientPicker() {
   return (
     <div>
       <h3 className="mt-8 flex items-center gap-1.5 text-xs font-medium text-dark/70">
-        <p className='uppercase'>Adaptive</p>
+        <p className="uppercase">Adaptive</p>
         <Badge>Beta</Badge>:
       </h3>
 
@@ -356,7 +356,7 @@ export default function NormalGradientPicker() {
         <span>Gradients:</span>
       </h3>
 
-      <div className="mt-4 flex grid-cols-7 flex-wrap gap-[0.5rem] md:grid">
+      <div className="mt-4 w-full flex grid-cols-7 flex-wrap gap-[0.5rem] md:grid">
         {gradients.map(({ gradient, background, type }: Gradient) => (
           <Button
             key={gradient}

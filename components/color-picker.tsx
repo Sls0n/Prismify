@@ -1,11 +1,11 @@
 'use client'
 
+import { useState } from 'react'
 import {
-  HexColorInput,
   HexAlphaColorPicker,
+  HexColorInput,
   HexColorPicker,
 } from 'react-colorful'
-import { CSSProperties, useState } from 'react'
 
 export default function ColorPicker({
   onChange,
@@ -17,14 +17,6 @@ export default function ColorPicker({
   shouldShowAlpha?: boolean
 }) {
   const [color, setColor] = useState(colorState)
-
-  const style: CSSProperties = {
-    display: 'block',
-    boxSizing: 'border-box',
-    width: '90px',
-    textTransform: 'uppercase',
-    textAlign: 'center',
-  }
 
   return (
     <>

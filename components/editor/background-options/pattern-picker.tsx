@@ -1,18 +1,18 @@
 'use client'
 
-import { Key, useState } from 'react'
 import { Button } from '@/components/ui/button'
-import { Skeleton } from '@/components/ui/skeleton'
-import { useBackgroundOptions } from '@/store/use-background-options'
-import { toast } from '@/hooks/use-toast'
-import { useQuery } from '@tanstack/react-query'
-import { Settings2 } from 'lucide-react'
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
 } from '@/components/ui/popover'
+import { Skeleton } from '@/components/ui/skeleton'
 import { Switch } from '@/components/ui/switch'
+import { toast } from '@/hooks/use-toast'
+import { useBackgroundOptions } from '@/store/use-background-options'
+import { useQuery } from '@tanstack/react-query'
+import { Settings2 } from 'lucide-react'
+import { Key, useState } from 'react'
 
 export default function PatternPicker() {
   const {
@@ -46,7 +46,7 @@ export default function PatternPicker() {
   if (isLoading) {
     const skeletonLoaders = Array.from({ length: 30 }).map((_, index) => (
       <li
-        className={`aspect-square h-12 w-12 rounded-md`}
+        className={`h-[2.56rem] w-[2.56rem] rounded-md`}
         key={`skeleton-${index}`}
       >
         <Skeleton className="h-full w-full rounded-md" />
@@ -56,7 +56,7 @@ export default function PatternPicker() {
     return (
       <>
         <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
-          <span>Patterns:</span>
+          <span>Wallpapers:</span>
         </h3>
         <ul className="mt-4 grid auto-rows-auto grid-cols-4 gap-4 md:max-w-[18rem] md:grid-cols-5">
           {skeletonLoaders}
@@ -77,7 +77,7 @@ export default function PatternPicker() {
   return (
     <>
       <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
-        <span>Patterns:</span>
+        <span>Wallpapers:</span>
         <Popover>
           <PopoverTrigger asChild>
             <Settings2 size={20} className="rotate-90" />
@@ -96,7 +96,7 @@ export default function PatternPicker() {
         </Popover>
       </h3>
 
-      <ul className="mt-4 flex h-full w-full flex-wrap gap-3">
+      <ul className="mt-4 flex grid-cols-5 flex-wrap gap-x-2.5 gap-y-3 md:grid">
         {unsplashData.map(
           (data: {
             user: any
@@ -109,7 +109,7 @@ export default function PatternPicker() {
             }
             alt_description: string | undefined
           }) => (
-            <li className={`aspect-square h-12 w-12 rounded-md`} key={data.id}>
+            <li className={`h-[2.56rem] w-[2.56rem] rounded-md`} key={data.id}>
               <button
                 className={`h-full w-full rounded-md ${
                   imageBackground ===
