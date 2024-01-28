@@ -48,7 +48,7 @@ export function NavLinks() {
           <Badge className="ml-2">Beta</Badge>
         </GradientText>
 
-        <div className="bg-border hidden h-5 w-[1.5px] md:block" />
+        <div className="hidden h-5 w-[1.5px] bg-border md:block" />
       </Link>
 
       {/* <Link className="hidden md:flex" href="/templates">
@@ -76,6 +76,7 @@ export function NavLinks() {
                   className={`group cursor-pointer rounded-lg focus:bg-white ${
                     index !== menuItems.length - 1 ? 'mb-1' : ''
                   }`}
+                  key={item.href}
                 >
                   <Link
                     href={item.href}
@@ -91,7 +92,10 @@ export function NavLinks() {
                   </Link>
                 </DropdownMenuItem>
                 {item.separateFromHere && (
-                  <DropdownMenuSeparator className="mb-1 opacity-80" />
+                  <DropdownMenuSeparator
+                    key={item.label}
+                    className="mb-1 opacity-80"
+                  />
                 )}
               </>
             ))}

@@ -115,8 +115,8 @@ export default function TipTap() {
     useSelectedLayers()
 
   useOnClickOutside(textRef, () => {
-    setIsEditable(false)
-    useMoveable.setState({ showTextControls: false })
+    // setIsEditable(false)
+    // useMoveable.setState({ showTextControls: false })
   })
 
   return (

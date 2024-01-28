@@ -55,18 +55,25 @@ export default function Canvas() {
 
     scale,
   } = useImageOptions()
-  const { selectedImage, selectedText, setSelectedImage, enableCrop } =
-    useSelectedLayers()
+  const {
+    selectedImage,
+    selectedText,
+    setSelectedImage,
+    enableCrop,
+    setSelectedText,
+  } = useSelectedLayers()
   const { imagesCheck } = useColorExtractor()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
   const {
     showControls,
     setShowControls,
+    setShowTextControls,
     isMultipleTargetSelected,
     setIsMultipleTargetSelected,
     showTextControls,
     isEditable,
+    setIsEditable,
     isSelecting,
   } = useMoveable()
 
@@ -255,8 +262,25 @@ export default function Canvas() {
         e?.target?.classList?.contains('selecto-area')
       ) {
         setSelectedImage(null)
+        setShowTextControls(false)
         setShowControls(false)
         setIsMultipleTargetSelected(false)
+      }
+    },
+    screenshotRef
+  )
+
+  useEventListener(
+    'click',
+    (e: any) => {
+      if (
+        e?.target?.classList?.contains('canvas-container') ||
+        e?.target?.classList?.contains('selecto-area')
+      ) {
+        setSelectedText(null)
+        setShowTextControls(false)
+        setShowTextControls(false)
+        setIsEditable(false)
       }
     },
     screenshotRef

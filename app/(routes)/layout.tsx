@@ -17,7 +17,7 @@ export default async function AdminLayout({
         username={session?.user?.name || 'User'}
         id={session?.user?.id || '0'}
       />
-      <div className="h-full w-full">
+      <div className="h-full w-full flex flex-col">
         {children}
 
         <Footer />
