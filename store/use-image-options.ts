@@ -257,8 +257,8 @@ interface SelectedLayerState {
   selectedImage: number | null
   setSelectedImage: (selectedImage: number | null) => void
 
-  selectedText: number
-  setSelectedText: (selectedText: number) => void
+  selectedText: number | null
+  setSelectedText: (selectedText: number | null) => void
 
   enableCrop: boolean
   setEnableCrop: (enableCrop: boolean) => void
@@ -268,7 +268,7 @@ export const useSelectedLayers = create<SelectedLayerState>((set) => ({
   selectedImage: null,
   setSelectedImage: (selectedImage) => set({ selectedImage }),
 
-  selectedText: 1,
+  selectedText: null,
   setSelectedText: (selectedText) => set({ selectedText }),
 
   enableCrop: false,

@@ -21,7 +21,13 @@ const menuItems = [
   { icon: LogOut, label: 'Logout' },
 ]
 
-export const UserDropDown = ({ id, username }: { id: string; username: string }) => {
+export const UserDropDown = ({
+  id,
+  username,
+}: {
+  id: string
+  username: string
+}) => {
   const handleSignOut = async () => {
     try {
       await signOut()
@@ -79,6 +85,7 @@ export const UserDropDown = ({ id, username }: { id: string; username: string })
                 className={`group cursor-pointer rounded-lg focus:bg-white ${
                   index !== menuItems.length - 1 ? 'mb-1' : ''
                 }`}
+                key={item.href}
                 onClick={() =>
                   item.label === 'Logout' ? handleSignOut() : null
                 }
@@ -97,7 +104,10 @@ export const UserDropDown = ({ id, username }: { id: string; username: string })
                 </div>
               </DropdownMenuItem>
               {item.separateFromHere && (
-                <DropdownMenuSeparator className="mb-1 opacity-80" />
+                <DropdownMenuSeparator
+                  key={item.label}
+                  className="mb-1 opacity-80"
+                />
               )}
             </>
           ))}

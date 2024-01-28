@@ -36,7 +36,7 @@ export default async function Article(props: Props) {
   })
 
   return (
-    <div className="w-full pt-[72px]">
+    <div className="w-full flex-1 pt-[72px]">
       <div className="mb-16 flex h-48 w-full flex-col items-center justify-center bg-black/10">
         <Text
           variant="h1"
@@ -58,7 +58,7 @@ export default async function Article(props: Props) {
       </div>
 
       <ul
-        className="container mt-5 grid grid-cols-1 grid-rows-2 gap-16 sm:mt-10 sm:grid-cols-2 md:mt-24 lg:grid-cols-3"
+        className="mt-5 grid grid-cols-1 grid-rows-2 gap-16 sm:mt-10 sm:grid-cols-2 md:mt-24 lg:grid-cols-3"
         role="list"
       >
         {articles.length === 0 ? (

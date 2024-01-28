@@ -93,7 +93,7 @@ export default async function ArticlePage({ params }: ArticleProps) {
         <BackButton />
       </div>
 
-      <article className="mx-auto h-fit w-full max-w-prose rounded-md px-8">
+      <article className="mx-auto h-fit w-full max-w-prose rounded-md">
         <div className="mb-16 flex w-full items-start justify-between">
           <div className="flex flex-col gap-3">
             {/* Time published/updated */}
@@ -142,7 +142,7 @@ export default async function ArticlePage({ params }: ArticleProps) {
                 width={1280}
                 height={720}
                 priority
-                className="aspect-auto object-cover"
+                className="aspect-auto max-w-full object-cover"
               />
 
               {/* <figcaption>

@@ -30,7 +30,7 @@ const ImageUpload = () => {
     setInitialImageUploaded,
     initialImageUploaded,
   } = useImageOptions()
-  const { selectedImage, setSelectedImage } = useSelectedLayers()
+  const { selectedImage, setSelectedImage, setSelectedText } = useSelectedLayers()
   const { setShowControls, isSelecting, isMultipleTargetSelected } =
     useMoveable()
   const { exactDomResolution } = useResizeCanvas()

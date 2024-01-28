@@ -26,6 +26,7 @@ export default function ContextMenuText({
       setTexts([])
       return
     }
+    selectedText &&
     setTexts(
       texts.map((text, index) =>
         index === selectedText - 1

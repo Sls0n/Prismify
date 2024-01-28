@@ -1,7 +1,5 @@
 'use client'
 
-import { useState } from 'react'
-
 import PopupColorPicker from '@/components/popup-color-picker'
 import { Button } from '@/components/ui/button'
 import { Slider } from '@/components/ui/slider'
@@ -33,73 +31,74 @@ const FontPicker = dynamic(
 export default function FontSettings() {
   const { setTexts, texts } = useImageOptions()
   const { selectedText } = useSelectedLayers()
-  const [activeFontFamily, setActiveFontFamily] = useState(
-    texts[selectedText - 1]?.style.fontFamily ?? 'Inter'
-  )
   const { setShowTextControls } = useMoveable()
 
   const handleColorChange = (color: string) => {
-    setTexts(
-      texts.map((text, index) =>
-        index === selectedText - 1
-          ? {
-              ...text,
-              style: {
-                ...text.style,
-                textColor: color,
-              },
-            }
-          : text
+    selectedText &&
+      setTexts(
+        texts.map((text, index) =>
+          index === selectedText - 1
+            ? {
+                ...text,
+                style: {
+                  ...text.style,
+                  textColor: color,
+                },
+              }
+            : text
+        )
       )
-    )
   }
 
   const handleShadowColorChange = (color: string) => {
-    setTexts(
-      texts.map((text, index) =>
-        index === selectedText - 1
-          ? {
-              ...text,
-              style: {
-                ...text.style,
-                shadowColor: color,
-              },
-            }
-          : text
+    selectedText &&
+      setTexts(
+        texts.map((text, index) =>
+          index === selectedText - 1
+            ? {
+                ...text,
+                style: {
+                  ...text.style,
+                  shadowColor: color,
+                },
+              }
+            : text
+        )
       )
-    )
   }
 
   const handleAlignmentChange = (alignment: 'left' | 'center' | 'right') => {
-    setTexts(
-      texts.map((text, index) =>
-        index === selectedText - 1
-          ? {
-              ...text,
-              style: {
-                ...text.style,
-                textAlign: alignment,
-              },
-            }
-          : text
+    selectedText &&
+      setTexts(
+        texts.map((text, index) =>
+          index === selectedText - 1
+            ? {
+                ...text,
+                style: {
+                  ...text.style,
+                  textAlign: alignment,
+                },
+              }
+            : text
+        )
       )
-    )
   }
 
   const handleFontWeight = (weight: number) => {
-    setTexts(
-      texts.map((text, index) =>
-        index === selectedText - 1
-          ? {
-              ...text,
-              style: {
-                ...text.style,
-                fontWeight: weight,
-              },
-            }
-          : text
+    selectedText &&
+      setTexts(
+        texts.map((text, index) =>
+          index === selectedText - 1
+            ? {
+                ...text,
+                style: {
+                  ...text.style,
+                  fontWeight: weight,
+                },
+              }
+            : text
+        )
       )
-    )
   }
 
   return (
@@ -110,23 +109,25 @@ export default function FontSettings() {
       {/* @ts-expect-error */}
       <FontPicker
         apiKey={process.env.NEXT_PUBLIC_GOOGLE_FONTS_API_KEY!}
-        activeFontFamily={activeFontFamily}
+        activeFontFamily={
+          selectedText ? texts[selectedText - 1]?.style.fontFamily : 'Inter'
+        }
         variants={['200', '300', 'regular', '500', '600', '700', '800']}
         onChange={(font) => {
-          setTexts(
-            texts.map((text, index) =>
-              index === selectedText - 1
-                ? {
-                    ...text,
-                    style: {
-                      ...text.style,
-                      fontFamily: font.family,
-                    },
-                  }
-                : text
+          selectedText &&
+            setTexts(
+              texts.map((text, index) =>
+                index === selectedText - 1
+                  ? {
+                      ...text,
+                      style: {
+                        ...text.style,
+                        fontFamily: font.family,
+                      },
+                    }
+                  : text
+              )
             )
-          )
-          setActiveFontFamily(font.family)
         }}
       />
 
@@ -137,7 +138,7 @@ export default function FontSettings() {
             type="button"
             className="relative -ml-px inline-flex items-center rounded-l-md bg-formDark px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
             onClick={
-              texts[selectedText - 1]?.style.fontWeight > 200
+              selectedText && texts[selectedText - 1]?.style.fontWeight > 200
                 ? () =>
                     handleFontWeight(
                       texts[selectedText - 1]?.style.fontWeight - 100
@@ -148,16 +149,16 @@ export default function FontSettings() {
             <span className="sr-only">Decrease font weight</span>
             <Minus className="h-5 w-5" aria-hidden="true" />
           </button>
-          <div className="flex-center border-b border-t border-border px-4 bg-formDark">
+          <div className="flex-center border-b border-t border-border bg-formDark px-4">
             <p className="text-[0.85rem] font-medium text-dark/80">
-              {texts[selectedText - 1]?.style.fontWeight ?? 400}
+              {selectedText ? texts[selectedText - 1]?.style.fontWeight : 400}
             </p>
           </div>
           <button
             type="button"
-            className="relative inline-flex items-center rounded-r-md px-2 py-2 ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed bg-formDark text-dark"
+            className="relative inline-flex items-center rounded-r-md bg-formDark px-2 py-2 text-dark ring-1 ring-inset ring-border focus:z-10 disabled:cursor-not-allowed"
             onClick={
-              texts[selectedText - 1]?.style.fontWeight < 800
+              selectedText && texts[selectedText - 1]?.style.fontWeight < 800
                 ? () =>
                     handleFontWeight(
                       texts[selectedText - 1]?.style.fontWeight + 100
@@ -174,7 +175,9 @@ export default function FontSettings() {
       <div className={`mt-8 flex flex-col gap-3 px-1`}>
         <h1 className="text-[0.85rem]">Color</h1>
         <PopupColorPicker
-          color={texts[selectedText - 1]?.style.textColor}
+          color={
+            selectedText ? texts[selectedText - 1]?.style.textColor : '#fff'
+          }
           onChange={handleColorChange}
         />
       </div>
@@ -187,28 +190,30 @@ export default function FontSettings() {
           min={-0.05}
           step={0.001}
           value={
-            texts.length !== 0
+            texts.length !== 0 && selectedText
               ? [+texts[selectedText - 1]?.style.letterSpacing]
               : [0]
           }
           onValueChange={(value: number[]) => {
             setShowTextControls(false)
-            setTexts(
-              texts.map((text, index) =>
-                index === selectedText - 1
-                  ? {
-                      ...text,
-                      style: {
-                        ...text.style,
-                        letterSpacing: value[0],
-                      },
-                    }
-                  : text
+            selectedText &&
+              setTexts(
+                texts.map((text, index) =>
+                  index === selectedText - 1
+                    ? {
+                        ...text,
+                        style: {
+                          ...text.style,
+                          letterSpacing: value[0],
+                        },
+                      }
+                    : text
+                )
               )
-            )
           }}
           onValueCommit={() => setShowTextControls(true)}
           onIncrement={() => {
+            if (!selectedText) return
             if (
               Number(texts[selectedText - 1]?.style.letterSpacing) >= 0.2 ||
               texts.length === 0
@@ -229,6 +234,7 @@ export default function FontSettings() {
             )
           }}
           onDecrement={() => {
+            if (!selectedText) return
             if (
               Number(texts[selectedText - 1]?.style.letterSpacing) <= -0.05 ||
               texts.length === 0
@@ -321,7 +327,7 @@ export default function FontSettings() {
         <h1 className="text-[0.85rem]">Opacity</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-dark/70">
           {Math.round(
-            Number(texts[selectedText - 1]?.style.shadowOpacity ?? 1) * 100
+            Number(selectedText ? texts[selectedText - 1]?.style.shadowOpacity : 0.1) * 100
           )}
           %
         </p>
@@ -334,26 +340,28 @@ export default function FontSettings() {
           max={1}
           step={0.01}
           onValueChange={(value) => {
-            setTexts(
-              texts.map((text, index) =>
-                index === selectedText - 1
-                  ? {
-                      ...text,
-                      style: {
-                        ...text.style,
-                        shadowOpacity: value[0],
-                      },
-                    }
-                  : text
+            selectedText &&
+              setTexts(
+                texts.map((text, index) =>
+                  index === selectedText - 1
+                    ? {
+                        ...text,
+                        style: {
+                          ...text.style,
+                          shadowOpacity: value[0],
+                        },
+                      }
+                    : text
+                )
               )
-            )
           }}
           value={
-            texts.length !== 0
+            texts.length !== 0 && selectedText
               ? [texts[selectedText - 1]?.style.shadowOpacity]
               : [0.1]
           }
           onIncrement={() => {
+            if (!selectedText) return
             if (
               Number(texts[selectedText - 1]?.style.shadowOpacity) >= 1 ||
               texts.length === 0
@@ -374,6 +382,7 @@ export default function FontSettings() {
             )
           }}
           onDecrement={() => {
+            if (!selectedText) return
             if (
               Number(texts[selectedText - 1]?.style.shadowOpacity) <= 0 ||
               texts.length === 0
@@ -402,7 +411,7 @@ export default function FontSettings() {
 
       <PopupColorPicker
         shouldShowAlpha={false}
-        color={texts[selectedText - 1]?.style.shadowColor}
+        color={selectedText ? texts[selectedText - 1]?.style.shadowColor : '#333'}
         onChange={handleShadowColorChange}
       />
     </div>
