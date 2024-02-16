@@ -1,31 +1,23 @@
 'use client'
 
-import BackgroundOptions from '@/components/editor/background-options'
-import CanvasOptions from '@/components/editor/canvas-options'
-import FrameOptions from '@/components/editor/frame-options'
-import ImageOptions from '@/components/editor/image-options'
-import PerspectiveOptions from '@/components/editor/perspective-options'
-import PositionOptions from '@/components/editor/position-options'
-import TextOptions from '@/components/editor/text-options'
 import { useEventListener } from '@/hooks/use-event-listener'
-import { useActiveIndexStore } from '@/store/use-active-index'
+import { toast } from '@/hooks/use-toast'
 import { useBackgroundOptions } from '@/store/use-background-options'
+import { useColorExtractor } from '@/store/use-color-extractor'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useImageQualityStore } from '@/store/use-image-quality'
 import { useMoveable } from '@/store/use-moveable'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
-import React, { CSSProperties, useEffect, useRef, useState } from 'react'
-import { useHotkeys } from 'react-hotkeys-hook'
-import { ScrollArea } from '../ui/scroll-area'
-import ImageUpload from './main-image-area'
-// import MoveableComponent from './MoveableComponent'
-import Noise from './noise'
-import SelectoComponent from './selecto-component'
-import TipTap from './tiptap'
-import TiptapMoveable from './tiptap-moveable'
 import dynamic from 'next/dynamic'
-import { useColorExtractor } from '@/store/use-color-extractor'
-import { toast } from '@/hooks/use-toast'
+import React, { CSSProperties, useEffect, useRef } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
+import UnsplashAttribute from '../unsplash-attribute'
+import BackgroundImageCanvas from './background-image-canvas'
+import ImageUpload from './main-image-area'
+import MobileViewImageOptions from './mobile-view-image-options'
+import SelectoComponent from './selecto-component'
+import TextLayers from './text-layers'
+import TiptapMoveable from './tiptap-moveable'
 
 const MoveableComponent = dynamic(
   () => import('./moveable-component').then((mod) => mod.default),
@@ -33,12 +25,8 @@ const MoveableComponent = dynamic(
 )
 
 export default function Canvas() {
-  const [isOverflowing, setIsOverflowing] = useState<boolean>(false)
-  const { activeIndex } = useActiveIndexStore()
-
   const { quality } = useImageQualityStore()
-  const { backgroundType, imageBackground, attribution } =
-    useBackgroundOptions()
+  const { backgroundType, imageBackground } = useBackgroundOptions()
   const {
     resolution,
     setDomResolution,
@@ -49,12 +37,7 @@ export default function Canvas() {
     canvasRoundness,
     setScaleFactor,
   } = useResizeCanvas()
-  const {
-    images,
-    initialImageUploaded,
-
-    scale,
-  } = useImageOptions()
+  const { scale } = useImageOptions()
   const {
     selectedImage,
     selectedText,
@@ -69,7 +52,6 @@ export default function Canvas() {
     showControls,
     setShowControls,
     setShowTextControls,
-    isMultipleTargetSelected,
     setIsMultipleTargetSelected,
     showTextControls,
     isEditable,
@@ -102,13 +84,6 @@ export default function Canvas() {
       backgroundColor: `var(--solid-bg)`,
     }
   }
-
-  // if (aspectRatio <= 1) {
-  //   // After the screen width is less than 1100px then width to 100% and height to auto
-  //   style = { ...style, width: 'auto', height: '100%' }
-  // } else {
-  //   style = { ...style, width: '100%', height: 'auto' }
-  // }
 
   useEffect(() => {
     const element = screenshotRef.current
@@ -307,16 +282,7 @@ export default function Canvas() {
           id="canvas-container"
           style={style}
         >
-          {imageBackground && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img
-              draggable={false}
-              className={`pointer-events-none absolute z-[0] h-full w-full object-cover`}
-              src={imageBackground}
-              alt="background image"
-            />
-          )}
-          <Noise />
+          <BackgroundImageCanvas />
           {showControls && <MoveableComponent id={`${selectedImage}`} />}
           {showTextControls && !isEditable && (
             <TiptapMoveable id={`text-${selectedText}`} />
@@ -329,43 +295,14 @@ export default function Canvas() {
             }}
           >
             <ImageUpload />
-            <TipTap />
+            <TextLayers />
           </div>
         </div>
-        <ScrollArea className="mt-6 w-full md:hidden" type="auto">
-          <div className="w-full max-w-[90%] md:hidden">
-            {activeIndex === 0 && <CanvasOptions />}
-            {activeIndex === 1 && <ImageOptions />}
-            {activeIndex === 2 && <BackgroundOptions />}
-            {activeIndex === 3 && <FrameOptions />}
-            {activeIndex === 4 && <TextOptions />}
-            {activeIndex === 5 && <PerspectiveOptions />}
-            {activeIndex === 6 && <PositionOptions />}
-          </div>
-        </ScrollArea>
-        {/* <FloatingOptions /> */}
+        <MobileViewImageOptions />
       </section>
 
       <SelectoComponent />
-
-      {attribution.name !== null && (
-        <div className="absolute bottom-2 right-4 rounded-md bg-[#151515] p-2 text-[0.85rem] text-dark/70 backdrop-blur-md ">
-          Img by{' '}
-          <a
-            className="text-blue-500"
-            href={`https://unsplash.com/@${attribution.link}?utm_source=Prismify&utm_medium=referral`}
-          >
-            {attribution.name}
-          </a>{' '}
-          on{' '}
-          <a
-            className="underline underline-offset-2"
-            href="https://unsplash.com/?utm_source=Prismify&utm_medium=referral"
-          >
-            Unsplash
-          </a>
-        </div>
-      )}
+      <UnsplashAttribute />
     </>
   )
 }

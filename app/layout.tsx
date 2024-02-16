@@ -10,7 +10,7 @@ const Font = Plus_Jakarta_Sans({ subsets: ['latin'] })
 
 export const metadata: Metadata = {
   title:
-    'Prismify - Create beautiful screenshots, graphics, designs for websites and social medias.',
+    'Create beautiful screenshots, graphics, designs for websites and social medias | Prismify',
   description:
     'Easily make your SaaS/product shots and graphics design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations.',
   verification: {
@@ -25,7 +25,7 @@ export const metadata: Metadata = {
   twitter: {
     creator: '@xSls0n_007',
     title:
-      'Prismify - Effortlessly Create Beautiful SaaS/Product Shots & Graphics',
+      'Create beautiful screenshots, graphics, designs for websites and social medias | Prismify',
     description:
       'Easily make your SaaS/product shots & design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations.',
     card: 'summary_large_image',
@@ -34,13 +34,13 @@ export const metadata: Metadata = {
         url: 'https://prismify.vercel.app/opengraph-image.jpg',
         width: 1200,
         height: 630,
-        alt: 'Prismify - Effortlessly Create Beautiful SaaS/Product Shots & Graphics',
+        alt: 'Create beautiful screenshots, graphics, designs for websites and social medias | Prismify',
       },
     ],
   },
   openGraph: {
     title:
-      'Prismify - Create beautiful screenshots, graphics, designs for websites and social medias.',
+      'Create beautiful screenshots, graphics, designs for websites and social medias | Prismify',
     description:
       'Easily make your SaaS/product shots & design stand out. Create beautiful screenshots and graphics for websites, social media, and more. With Prismify, you get browser frames, gradient backgrounds, text, annotations.',
     siteName: 'Prismify',
@@ -98,7 +98,7 @@ export default function RootLayout({
       className={cn('antialiased', Font.className)}
       lang="en"
     >
-      <body className="no-scrollbar h-screen w-screen bg-[#111] text-dark">
+      <body className="no-scrollbar min-h-screen bg-[#111] text-dark">
         <Toaster />
         <Analytics />
 
