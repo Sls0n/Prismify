@@ -1,7 +1,6 @@
 'use client'
 
 import useTiptapEditor from '@/hooks/use-editor'
-import { useOnClickOutside } from '@/hooks/use-on-click-outside'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
 import { convertHexToRgba } from '@/utils/helper-fns'
@@ -13,7 +12,7 @@ type MenuBarProps = {
   editor: Editor | null
 }
 
-const MenuBar = ({ editor }: MenuBarProps) => {
+const BubbleMenuComp = ({ editor }: MenuBarProps) => {
   if (!editor) {
     return null
   }
@@ -75,49 +74,39 @@ const MenuBar = ({ editor }: MenuBarProps) => {
   )
 }
 
-function TipTapEditor({ content = 'Double click to edit' }) {
+function TipTapEditor() {
   const { setShowTextControls, isEditable, setIsEditable } = useMoveable()
   const { defaultStyle } = useImageOptions()
-  const { setSelectedText } = useSelectedLayers()
 
   const { editor } = useTiptapEditor()
 
   return (
-    <>
+    <div
+      onDoubleClick={() => {
+        editor?.chain().selectAll().focus()
+        setIsEditable(true)
+        setShowTextControls(false)
+      }}
+    >
+      <BubbleMenuComp editor={editor} />
       <div
-        onDoubleClick={() => {
-          editor?.chain().selectAll().focus()
-          setIsEditable(true)
-          setShowTextControls(false)
-        }}
+        className={`${
+          isEditable ? 'pointer-events-auto cursor-text' : 'pointer-events-none'
+        }`}
       >
-        <MenuBar editor={editor} />
-        <div
-          className={`${
-            isEditable
-              ? 'pointer-events-auto cursor-text'
-              : 'pointer-events-none'
-          }`}
-        >
-          <EditorContent style={defaultStyle} editor={editor} />
-        </div>
+        <EditorContent style={defaultStyle} editor={editor} />
       </div>
-    </>
+    </div>
   )
 }
 
-export default function TipTap() {
+export default function TextLayers() {
   const textRef = useRef<HTMLDivElement>(null)
 
-  const { setShowTextControls, setIsEditable, setShowControls } = useMoveable()
+  const { setShowTextControls, setShowControls } = useMoveable()
   const { texts } = useImageOptions()
   const { selectedText, setSelectedText, setSelectedImage } =
     useSelectedLayers()
-
-  useOnClickOutside(textRef, () => {
-    // setIsEditable(false)
-    // useMoveable.setState({ showTextControls: false })
-  })
 
   return (
     <>

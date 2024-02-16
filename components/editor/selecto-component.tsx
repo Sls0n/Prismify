@@ -14,13 +14,10 @@ export default function SelectoComponent() {
   const {
     setShowControls,
     showControls,
-    isSelecting,
     setIsSelecting,
     setIsMultipleTargetSelected,
-    setShowTextControls,
-    setIsEditable,
   } = useMoveable()
-  const { setSelectedImage, setSelectedText } = useSelectedLayers()
+  const { setSelectedImage } = useSelectedLayers()
 
   if (showControls) return
   return (
@@ -51,15 +48,6 @@ export default function SelectoComponent() {
           setShowControls(true)
           setSelectedImage(+e?.selected?.[0]?.id! ?? 0)
         }
-
-        // if (
-        //   e?.selected.length === 1 &&
-        //   e?.selected?.[0]?.classList.contains('text')
-        // ) {
-        //   setShowTextControls(true)
-        //   setIsEditable(true)
-        //   setSelectedText(+e?.selected?.[0]?.id.charAt(-1)! ?? 0)
-        // }
 
         if (e?.selected.length > 1) {
           setIsMultipleTargetSelected(true)

@@ -58,7 +58,7 @@ export default async function Article(props: Props) {
       </div>
 
       <ul
-        className="mt-5 grid grid-cols-1 grid-rows-2 gap-16 sm:mt-10 sm:grid-cols-2 md:mt-24 lg:grid-cols-3"
+        className="container mt-5 grid grid-cols-1 grid-rows-2 gap-16 sm:mt-10 sm:grid-cols-2 md:mt-24 lg:grid-cols-3"
         role="list"
       >
         {articles.length === 0 ? (
