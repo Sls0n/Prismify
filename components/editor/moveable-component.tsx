@@ -1,8 +1,8 @@
 'use client'
 
+import React from 'react'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
-import React from 'react'
 
 import { useImageQualityStore } from '@/store/use-image-quality'
 import { useMoveable } from '@/store/use-moveable'

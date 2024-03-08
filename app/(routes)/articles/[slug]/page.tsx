@@ -12,7 +12,8 @@ import prismadb from '@/libs/prismadb'
 import Image from 'next/image'
 import { Badge } from '@/components/ui/badge'
 import { Calendar } from 'lucide-react'
-import type { Metadata, ResolvingMetadata } from 'next'
+import type { Metadata } from 'next'
+import { cache } from 'react'
 
 type ArticleProps = {
   params: {
@@ -20,12 +21,32 @@ type ArticleProps = {
   }
 }
 
-export async function generateMetadata({ params }: ArticleProps) {
-  const blog = await prismadb.article.findFirst({
-    where: {
-      slug: params.slug,
+export const revalidate = 60 * 60 // 1 hour
+
+export async function generateStaticParams() {
+  const blogs = await prismadb.article.findMany({
+    select: {
+      slug: true,
     },
   })
+
+  return blogs.map((blog) => ({
+    slug: blog.slug,
+  }))
+}
+
+const getBlog = cache(async (slug: string) => {
+  const blog = await prismadb.article.findFirst({
+    where: {
+      slug,
+    },
+  })
+
+  return blog
+})
+
+export async function generateMetadata({ params }: ArticleProps) {
+  const blog = await getBlog(params.slug)
 
   if (!blog) {
     return
@@ -75,13 +96,7 @@ export async function generateMetadata({ params }: ArticleProps) {
 }
 
 export default async function ArticlePage({ params }: ArticleProps) {
-  const blog = await prismadb.article.findFirst({
-    where: {
-      slug: params.slug,
-    },
-  })
-
-  console.log(blog)
+  const blog = await getBlog(params.slug)
 
   if (!blog) {
     return notFound()
@@ -245,18 +260,13 @@ export default async function ArticlePage({ params }: ArticleProps) {
               case 'image':
                 return (
                   <figure key={index}>
-                    <img
-                      className="aspect-auto w-full max-w-full"
-                      src={item.attrs.src}
-                      alt={item.attrs.alt ?? 'image'}
-                    />
-                    {/* <ImageWithFallback
+                    <Image
                       width={900}
                       height={600}
                       className="aspect-auto w-full max-w-full"
                       src={item.attrs.src}
                       alt={item.attrs.alt ?? 'image'}
-                    /> */}
+                    />
                   </figure>
                 )
               // codeBlock

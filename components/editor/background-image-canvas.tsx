@@ -1,3 +1,5 @@
+// this component shows background image & noise in the canvas
+
 import { useBackgroundOptions } from '@/store/use-background-options'
 import Noise from '@/components/editor/noise'
 

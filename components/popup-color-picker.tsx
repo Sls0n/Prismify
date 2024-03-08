@@ -1,3 +1,5 @@
+// Formatted color picker component which opens a popover with a color picker.
+
 import { Popover, PopoverContent, PopoverTrigger } from './ui/popover'
 import { ChevronDown } from 'lucide-react'
 import ColorPicker from '@/components/color-picker'

@@ -1,3 +1,4 @@
+import { Button } from '@/components/ui/button'
 import {
   ContextMenu,
   ContextMenuContent,
@@ -9,19 +10,6 @@ import {
   ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu'
-import { useColorExtractor } from '@/store/use-color-extractor'
-import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
-import { useMoveable } from '@/store/use-moveable'
-import {
-  BringToFront,
-  Check,
-  CropIcon,
-  ImagePlus,
-  SendToBack,
-  Trash,
-} from 'lucide-react'
-import React, { ChangeEvent, useRef, useState } from 'react'
-import { useHotkeys } from 'react-hotkeys-hook'
 import {
   Dialog,
   DialogContent,
@@ -30,10 +18,21 @@ import {
   DialogTitle,
   DialogTrigger,
 } from '@/components/ui/dialog'
+import { useColorExtractor } from '@/store/use-color-extractor'
+import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
+import { useMoveable } from '@/store/use-moveable'
+import {
+  BringToFront,
+  CropIcon,
+  ImagePlus,
+  SendToBack,
+  Trash,
+} from 'lucide-react'
+import dynamic from 'next/dynamic'
+import React, { ChangeEvent, useRef, useState } from 'react'
+import { useHotkeys } from 'react-hotkeys-hook'
 import { type Crop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
-import { Button } from '@/components/ui/button'
-import dynamic from 'next/dynamic'
 
 const DynamicCropComponent = dynamic(() =>
   import('react-image-crop').then((mod) => mod.ReactCrop)
@@ -44,11 +43,6 @@ export default function ContextMenuImage({
 }: {
   children: React.ReactNode
 }) {
-  const { setImages, images } = useImageOptions()
-  const imgRef = useRef<HTMLImageElement>(null)
-  const { selectedImage, setSelectedImage, setEnableCrop, enableCrop } =
-    useSelectedLayers()
-  const { showControls, setShowControls } = useMoveable()
   const [crop, setCrop] = useState<Crop>({
     unit: '%', // Can be 'px' or '%'
     x: 25,
@@ -56,6 +50,12 @@ export default function ContextMenuImage({
     width: 50,
     height: 50,
   })
+  const imgRef = useRef<HTMLImageElement>(null)
+  const { setImages, images } = useImageOptions()
+  const { selectedImage, setSelectedImage, setEnableCrop, enableCrop } =
+    useSelectedLayers()
+  const { showControls, setShowControls } = useMoveable()
+  
 
   const handleImageDelete = (id: number) => {
     // const newImages = images.filter((image) => image.id !== id)

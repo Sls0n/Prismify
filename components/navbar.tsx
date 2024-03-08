@@ -5,14 +5,10 @@ import ExportOptions from '@/components/export-options'
 import { NavLinks } from '@/components/navlinks'
 import { usePathname } from 'next/navigation'
 import { UserDropDown } from '@/components/user-dropdown'
+import { useSession } from 'next-auth/react'
 
-type NavbarProps = {
-  authenticated?: boolean
-  username: string
-  id: string
-}
-
-export default function Navbar({ authenticated, username, id }: NavbarProps) {
+export default function Navbar() {
+  const { data, status } = useSession()
   const pathname = usePathname()
   const isHome = pathname === '/'
 
@@ -21,17 +17,30 @@ export default function Navbar({ authenticated, username, id }: NavbarProps) {
       <div className="flex w-full items-center justify-between">
         <NavLinks />
         <div className="flex items-center gap-10 ">
-          <div className="flex items-center gap-2">
-            {isHome && <ExportOptions isLoggedIn={authenticated || false} />}
+          {status !== 'loading' && (
+            <div className="flex items-center gap-2">
+              {isHome && <ExportOptions isLoggedIn={!!data?.user || false} />}
 
-            <div className="bg-border-dark mx-3 h-7 w-[2px] bg-border" />
+              <div className="bg-border-dark mx-3 h-7 w-[2px] bg-border" />
 
-            {authenticated ? (
-              <UserDropDown id={id} username={username} />
-            ) : (
-              <AuthModal />
-            )}
-          </div>
+              {!!data?.user ? (
+                <UserDropDown
+                  id={data?.user?.id}
+                  username={data?.user?.name || 'User'}
+                />
+              ) : (
+                <AuthModal />
+              )}
+            </div>
+            // ) : (
+            //   <div className="flex items-center gap-2">
+            //     <div className="h-7 w-24 border border-[#333333]/20 animate-pulse rounded-md bg-border" />
+            //     <div className="h-7 w-32 animate-pulse border border-[#333333]/20 rounded-md bg-border" />
+            //     <div className="bg-border-dark mx-3 h-7 w-[2px] bg-border" />
+            //     <div className="h-7 w-32 animate-pulse border border-[#333333]/20 rounded-md bg-border" />
+            //   </div>
+            //
+          )}
         </div>
       </div>
     </header>

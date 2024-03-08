@@ -1,3 +1,5 @@
+// Links in the navbar
+
 import { buttonVariants } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -13,6 +15,7 @@ import Image from 'next/image'
 import Link from 'next/link'
 import { Badge } from '@/components/ui/badge'
 import { GradientText } from '@/components/ui/gradient-text'
+import React from 'react'
 
 const menuItems = [
   { href: '/articles', icon: BookCopy, label: 'Articles' },
@@ -71,12 +74,12 @@ export function NavLinks() {
         >
           <DropdownMenuGroup>
             {menuItems.map((item, index) => (
-              <>
+              <React.Fragment key={item.label}>
                 <DropdownMenuItem
                   className={`group cursor-pointer rounded-lg focus:bg-white ${
                     index !== menuItems.length - 1 ? 'mb-1' : ''
                   }`}
-                  key={item.href}
+                  key={item.href + index}
                 >
                   <Link
                     href={item.href}
@@ -97,7 +100,7 @@ export function NavLinks() {
                     className="mb-1 opacity-80"
                   />
                 )}
-              </>
+              </React.Fragment>
             ))}
           </DropdownMenuGroup>
         </DropdownMenuContent>

@@ -1,3 +1,5 @@
+// Reusable loading spinner component to be used as suspense fallback on server components.
+
 export default function Loader() {
   return (
     <div className="flex-center h-screen w-screen">
