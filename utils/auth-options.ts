@@ -21,7 +21,7 @@ declare module 'next-auth' {
 
 export const authOptions: NextAuthOptions = {
   pages: {
-    signIn: '/sign-in',
+    signIn: '/',
     error: '/error',
   },
   adapter: PrismaAdapter(prismadb),

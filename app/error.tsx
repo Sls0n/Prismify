@@ -19,7 +19,7 @@ export default function Error({
   }, [error])
 
   return (
-    <div className="flex flex-col items-center px-4 py-16 text-center sm:px-6 lg:px-8">
+    <div className="flex flex-col items-center px-4 pt-40 text-center sm:px-6 lg:px-8">
       <h1 className="block bg-gradient-to-br from-[#898AEB] via-[#898dd9]/80 to-[#8e8ece] bg-clip-text text-center text-4xl font-bold text-transparent sm:text-6xl ">
         Something went amiss.
       </h1>
