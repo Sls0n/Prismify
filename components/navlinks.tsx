@@ -1,3 +1,5 @@
+// Links in the navbar
+
 import { buttonVariants } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -76,7 +78,7 @@ export function NavLinks() {
                   className={`group cursor-pointer rounded-lg focus:bg-white ${
                     index !== menuItems.length - 1 ? 'mb-1' : ''
                   }`}
-                  key={item.href}
+                  key={item.href + index}
                 >
                   <Link
                     href={item.href}

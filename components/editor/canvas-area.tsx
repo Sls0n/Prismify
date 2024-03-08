@@ -11,7 +11,6 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import dynamic from 'next/dynamic'
 import React, { CSSProperties, useEffect, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
-import UnsplashAttribute from '../unsplash-attribute'
 import BackgroundImageCanvas from './background-image-canvas'
 import ImageUpload from './main-image-area'
 import MobileViewImageOptions from './mobile-view-image-options'
@@ -302,7 +301,6 @@ export default function Canvas() {
       </section>
 
       <SelectoComponent />
-      <UnsplashAttribute />
     </>
   )
 }
