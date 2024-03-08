@@ -21,6 +21,20 @@ type ArticleProps = {
   }
 }
 
+export const revalidate = 60 * 60 // 1 hour
+
+export async function generateStaticParams() {
+  const blogs = await prismadb.article.findMany({
+    select: {
+      slug: true,
+    },
+  })
+
+  return blogs.map((blog) => ({
+    slug: blog.slug,
+  }))
+}
+
 const getBlog = cache(async (slug: string) => {
   const blog = await prismadb.article.findFirst({
     where: {
@@ -31,7 +45,7 @@ const getBlog = cache(async (slug: string) => {
   return blog
 })
 
-export async function generateMetadata({params}: ArticleProps) {
+export async function generateMetadata({ params }: ArticleProps) {
   const blog = await getBlog(params.slug)
 
   if (!blog) {
