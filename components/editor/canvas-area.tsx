@@ -1,15 +1,15 @@
 'use client'
 
+import useAutomaticAspectRatioSwitcher from '@/hooks/canvas-area-hooks/use-automatic-aspect-ratio-switcher'
+import useCanvasResizeObserver from '@/hooks/canvas-area-hooks/use-resize-observer'
+import useScreenSizeWarningToast from '@/hooks/canvas-area-hooks/use-screen-size-warning-toast'
 import { useEventListener } from '@/hooks/use-event-listener'
-import { toast } from '@/hooks/use-toast'
 import { useBackgroundOptions } from '@/store/use-background-options'
-import { useColorExtractor } from '@/store/use-color-extractor'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
-import { useImageQualityStore } from '@/store/use-image-quality'
 import { useMoveable } from '@/store/use-moveable'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import dynamic from 'next/dynamic'
-import React, { CSSProperties, useEffect, useRef } from 'react'
+import React, { CSSProperties, useRef } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import BackgroundImageCanvas from './background-image-canvas'
 import ImageUpload from './main-image-area'
@@ -24,17 +24,13 @@ const MoveableComponent = dynamic(
 )
 
 export default function Canvas() {
-  const { quality } = useImageQualityStore()
-  const { backgroundType, imageBackground } = useBackgroundOptions()
+  const { backgroundType } = useBackgroundOptions()
   const {
     resolution,
-    setDomResolution,
     exactDomResolution,
-    setExactDomResolution,
     scrollScale,
     setScrollScale,
     canvasRoundness,
-    setScaleFactor,
   } = useResizeCanvas()
   const { scale } = useImageOptions()
   const {
@@ -44,7 +40,6 @@ export default function Canvas() {
     enableCrop,
     setSelectedText,
   } = useSelectedLayers()
-  const { imagesCheck } = useColorExtractor()
   const screenshotRef = useRef<HTMLDivElement | null>(null)
   const parentRef = useRef<HTMLDivElement | null>(null)
   const {
@@ -84,109 +79,17 @@ export default function Canvas() {
     }
   }
 
-  useEffect(() => {
-    const element = screenshotRef.current
+  // This hook encapsulates the logic for observing changes in the size of the screenshot element & automatically sets the DOM resolution and scale factor based on the size changes of a provided ref element.
+  useCanvasResizeObserver(screenshotRef)
 
-    if (element) {
-      const resizeObserver = new ResizeObserver((entries) => {
-        for (let entry of entries) {
-          const { width: domWidth, height: domHeight } = entry.contentRect
-          const dynamicScaleFactor = width / domWidth
-          setScaleFactor(dynamicScaleFactor)
-          setExactDomResolution(`${domWidth}x${domHeight}`)
-          setDomResolution(
-            `${domWidth * dynamicScaleFactor * quality}x${
-              domHeight * dynamicScaleFactor * quality
-            }`
-          )
-        }
-      })
+  // This hook encapsulates the logic used to automatically switch the aspect ratio of a screenshot within a container. If the screenshot overflows the container, the aspect ratio is adjusted to fit within the container.
+  useAutomaticAspectRatioSwitcher({
+    containerRef: parentRef,
+    screenshotRef,
+  })
 
-      resizeObserver.observe(element)
-
-      return () => {
-        resizeObserver.unobserve(element)
-      }
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [resolution, quality])
-
-  useEffect(
-    () => {
-      const parentEl = parentRef.current
-      const childEl = screenshotRef.current
-
-      if (parentEl && childEl) {
-        if (parentEl && childEl) {
-          if (
-            parentEl.clientWidth <= childEl.clientWidth ||
-            parentEl.clientHeight <= childEl.clientHeight
-          ) {
-            if (
-              childEl.classList.contains('w-auto') &&
-              childEl.classList.contains('h-full')
-            ) {
-              childEl.classList.remove('w-auto')
-              childEl.classList.add('w-full')
-              childEl.classList.add('h-auto')
-              childEl.classList.remove('h-full')
-            } else if (
-              childEl.classList.contains('w-full') &&
-              childEl.classList.contains('h-auto')
-            ) {
-              childEl.classList.remove('w-full')
-              childEl.classList.add('w-auto')
-              childEl.classList.add('h-full')
-              childEl.classList.remove('h-auto')
-            }
-          }
-        }
-      }
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    [resolution, quality, imagesCheck]
-  )
-
-  // if the screen width is less than 768px then set the scrollScale to 1
-  useEffect(() => {
-    const handleResize = () => {
-      setScrollScale(1)
-
-      const parentEl = parentRef.current
-      const childEl = screenshotRef.current
-
-      if (parentEl && childEl) {
-        if (
-          parentEl.clientWidth <= childEl.clientWidth ||
-          parentEl.clientHeight <= childEl.clientHeight
-        ) {
-          if (
-            childEl.classList.contains('w-auto') &&
-            childEl.classList.contains('h-full')
-          ) {
-            childEl.classList.remove('w-auto')
-            childEl.classList.add('w-full')
-            childEl.classList.add('h-auto')
-            childEl.classList.remove('h-full')
-          } else if (
-            childEl.classList.contains('w-full') &&
-            childEl.classList.contains('h-auto')
-          ) {
-            childEl.classList.remove('w-full')
-            childEl.classList.add('w-auto')
-            childEl.classList.add('h-full')
-            childEl.classList.remove('h-auto')
-          }
-        }
-      }
-    }
-    window.addEventListener('resize', handleResize)
-
-    return () => {
-      window.removeEventListener('resize', handleResize)
-    }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [])
+  // This hook shows a warning toast if the screen size is less than 768px.
+  useScreenSizeWarningToast()
 
   const handleScroll = (e: React.WheelEvent<HTMLDivElement>) => {
     if (typeof window !== 'undefined' && window.innerWidth <= 768) {
@@ -204,21 +107,11 @@ export default function Canvas() {
     }
   }
 
-  useEffect(() => {
-    if (window.innerWidth <= 768 && !sessionStorage.getItem('toastShown')) {
-      toast({
-        title: 'Not optimized for mobile devices!',
-        description:
-          "The editor is not optimized for mobile devices, hence many feature won't work as expected. Please use a desktop device for the best experience.",
-      })
-      sessionStorage.setItem('toastShown', 'true')
-    }
-  }, [])
-
   let parentScaleStyle = {
     scale: `${scrollScale}`,
   }
 
+  // Close the image controls when the escape key is pressed
   useHotkeys('Escape', () => {
     if (showControls) {
       setShowControls(false)
@@ -226,35 +119,27 @@ export default function Canvas() {
     }
   })
 
+  // this hook listens for a click event on the canvas and hides the image controls/text controls if the user clicks outside the image. This just works idk how, I suggest you don't touch it.
   useEventListener(
     'click',
     (e: any) => {
-      if (isSelecting) return
-      if (!selectedImage && !showControls) return
-      if (
+      const isCanvasArea =
         e?.target?.classList?.contains('canvas-container') ||
         e?.target?.classList?.contains('selecto-area')
-      ) {
-        setSelectedImage(null)
-        setShowTextControls(false)
-        setShowControls(false)
-        setIsMultipleTargetSelected(false)
-      }
-    },
-    screenshotRef
-  )
 
-  useEventListener(
-    'click',
-    (e: any) => {
-      if (
-        e?.target?.classList?.contains('canvas-container') ||
-        e?.target?.classList?.contains('selecto-area')
-      ) {
+      if (isCanvasArea) {
         setSelectedText(null)
         setShowTextControls(false)
         setShowTextControls(false)
         setIsEditable(false)
+      }
+
+      if (isSelecting || (!selectedImage && !showControls)) return
+      if (isCanvasArea) {
+        setSelectedImage(null)
+        setShowTextControls(false)
+        setShowControls(false)
+        setIsMultipleTargetSelected(false)
       }
     },
     screenshotRef
