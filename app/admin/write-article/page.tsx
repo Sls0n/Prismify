@@ -14,9 +14,9 @@ const BlogForm = dynamic(() => import('./blog-form'), {
 
 export default function page() {
   return (
-    <div className="mx-auto mt-6 h-[100dvh] w-full max-w-prose pt-[72px] lg:mt-8">
+    <section className="mx-auto mt-6 h-[100dvh] w-full max-w-prose pt-[72px] lg:mt-8">
       <BackButton />
       <BlogForm />
-    </div>
+    </section>
   )
 }

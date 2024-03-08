@@ -15,6 +15,7 @@ import { toast } from '@/hooks/use-toast'
 import { generateUniqueGradient } from '@/utils/generate-unique-gradient'
 import { ChevronDown, LogOut, Settings, User, Zap } from 'lucide-react'
 import { signOut } from 'next-auth/react'
+import React from 'react'
 
 const menuItems = [
   { href: '/profile', icon: User, label: 'Profile' },
@@ -82,7 +83,7 @@ export const UserDropDown = ({
       >
         <DropdownMenuGroup>
           {menuItems.map((item, index) => (
-            <>
+            <React.Fragment key={item.label}>
               <DropdownMenuItem
                 className={`group cursor-pointer rounded-lg focus:bg-white ${
                   index !== menuItems.length - 1 ? 'mb-1' : ''
@@ -111,7 +112,7 @@ export const UserDropDown = ({
                   className="mb-1 opacity-80"
                 />
               )}
-            </>
+            </React.Fragment>
           ))}
         </DropdownMenuGroup>
       </DropdownMenuContent>
