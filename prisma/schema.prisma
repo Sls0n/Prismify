@@ -3,7 +3,7 @@ generator client {
 }
 
 datasource db {
-  provider     = "mysql"
+  provider     = "postgresql"
   url          = env("DATABASE_URL")
   relationMode = "prisma"
 }
@@ -50,7 +50,7 @@ model Article {
   slug     String  @unique
   summary  String? @db.Text
   imageUrl String? @db.Text
-  content  Json
+  content  String  @db.Text
   category String?
 
   createdAt DateTime @default(now())

@@ -6,9 +6,8 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-
   return (
-    <main className="flex h-full flex-col">
+    <main className="flex h-full w-full flex-col">
       {children}
 
       <Footer />

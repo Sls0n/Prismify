@@ -3,6 +3,7 @@ import { NextResponse } from 'next/server'
 import prismadb from '@/libs/prismadb'
 import { getCurrentSession } from '@/utils/auth-options'
 import { postSchema } from '@/libs/validators/article-post-validator'
+import { revalidateTag } from 'next/cache'
 
 export async function POST(request: Request) {
   try {
@@ -35,7 +36,7 @@ export async function POST(request: Request) {
       },
     })
 
-    console.log(blog)
+    revalidateTag('articles')
 
     return new NextResponse('OK')
   } catch (error) {

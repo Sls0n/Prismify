@@ -12,9 +12,9 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { toast } from '@/hooks/use-toast'
-import { generateUniqueGradient } from '@/utils/generate-unique-gradient'
 import { ChevronDown, LogOut, Settings, User, Zap } from 'lucide-react'
 import { signOut } from 'next-auth/react'
+import Image from 'next/image'
 import React from 'react'
 
 const menuItems = [
@@ -25,11 +25,11 @@ const menuItems = [
 ]
 
 export const UserDropDown = ({
-  id,
   username,
+  img,
 }: {
-  id: string
   username: string
+  img: string
 }) => {
   const handleSignOut = async () => {
     try {
@@ -54,11 +54,13 @@ export const UserDropDown = ({
           variant="ghost"
           className="flex h-10 cursor-pointer items-center justify-center gap-x-2.5 rounded-xl bg-[#181818] px-4 py-2 font-medium text-dark"
         >
-          <div className="h-6 w-6">
-            <div
-              style={{
-                backgroundImage: generateUniqueGradient(id),
-              }}
+          <div className="h-7 w-7 overflow-hidden ">
+            <Image
+              src={img}
+              alt={username}
+              unoptimized
+              width={32}
+              height={32}
               className="h-full w-full rounded-full"
             />
           </div>
