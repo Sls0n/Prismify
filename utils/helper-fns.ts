@@ -62,7 +62,7 @@ export const separateCommas = (str: string) => {
 export const generateBadgeVariant = (str: string) => {
   if (!str) return
 
-  const helpVariant = ['help', 'support', 'question', 'faq']
+  const helpVariant = ['help', 'support', 'question', 'faq', 'tutorial', 'guide']
   const destructiveVariant = [
     'error',
     'critical',
@@ -75,8 +75,6 @@ export const generateBadgeVariant = (str: string) => {
     'trends',
     'announcement',
     'sale',
-    'tutorial',
-    'guide',
     'new',
     'update',
     'feature',

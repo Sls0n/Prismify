@@ -6,13 +6,10 @@ import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
 import { useMediaQuery } from '@/hooks/use-media-query'
 import { LogIn } from 'lucide-react'
 import SignInForm from './sign-in-form'
-import { useAuthModal } from '@/store/use-auth-modal'
-import SignUpForm from './sign-up-form'
 
 export function AuthModal() {
   const [open, setOpen] = React.useState(false)
   const isDesktop = useMediaQuery('(min-width: 768px)')
-  const { show } = useAuthModal()
 
   if (isDesktop) {
     return (
@@ -27,8 +24,8 @@ export function AuthModal() {
             <LogIn size={18} className="flex-center md:ml-2" />
           </Button>
         </DialogTrigger>
-        <DialogContent className="p-[4.5rem] sm:max-w-[600px]">
-          {show === 'signin' ? <SignInForm /> : <SignUpForm />}
+        <DialogContent className="scale-110 p-16">
+          <SignInForm />
         </DialogContent>
       </Dialog>
     )
@@ -46,9 +43,9 @@ export function AuthModal() {
           <LogIn size={18} className="flex-center md:ml-2" />
         </Button>
       </DrawerTrigger>
-      <DrawerContent className="rounded-xl bg-[#121212] px-6 py-2">
+      <DrawerContent className="mb-6 rounded-xl bg-[#121212] px-6 py-2">
         <div className="mt-8" />
-        {show === 'signin' ? <SignInForm /> : <SignUpForm />}
+        <SignInForm />
         <div className="mt-4" />
       </DrawerContent>
     </Drawer>

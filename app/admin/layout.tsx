@@ -5,5 +5,9 @@ export default function AdminLayout({
 }: {
   children: React.ReactNode
 }) {
-  return <main className="container h-full w-full">{children}</main>
+  return (
+    <main className="container h-full w-full">
+      {children}
+    </main>
+  )
 }

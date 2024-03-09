@@ -3,6 +3,8 @@ import React from 'react'
 import BackButton from '@/components/ui/back-button'
 import { Text } from '@/components/ui/text'
 import type { Metadata } from 'next'
+import Image from 'next/image'
+import { GradientText } from '@/components/ui/gradient-text'
 
 export const metadata: Metadata = {
   title: 'About - Prismify',
@@ -18,26 +20,35 @@ export const metadata: Metadata = {
 
 export default function page() {
   return (
-    <section className="flex w-full flex-col gap-8 pt-[72px] lg:gap-16">
-      <div className="container mt-8">
+    <section className="container flex w-full flex-col gap-8 pt-[72px] lg:gap-16">
+      <div className="mt-8">
         <BackButton />
       </div>
 
-      <article className="mx-auto h-fit w-full max-w-prose rounded-md px-8">
+      <article className="mx-auto h-fit w-full max-w-prose rounded-md">
         <div className="mb-16 flex w-full items-start justify-between">
-          <div className="flex flex-col gap-3">
+          <div className="mx-auto flex flex-col gap-3">
             {/* Title */}
-            <Text
-              variant="h1"
-              bold
-              className="line-clamp-2 text-center text-[2rem] font-bold capitalize leading-tight   text-purple md:text-[2.8rem]"
+            <GradientText
+              as="h1"
+              variant="purple"
+              className="line-clamp-2 border-b-[3px] border-[#898aeb] text-center text-[2rem] font-semibold capitalize leading-tight md:text-[2.8rem]"
             >
-              About &mdash; Prismify
-            </Text>
+              <span className="!font-medium">About</span> &mdash; Prismify
+            </GradientText>
           </div>
         </div>
 
-        <div className="prose prose-lg prose-neutral mb-16 dark:prose-invert prose-p:tracking-[0.002em] prose-p:text-dark prose-img:rounded-md">
+        <div className="prose prose-lg prose-neutral mb-16 dark:prose-invert prose-p:tracking-[0.002em] prose-p:text-dark prose-img:rounded-lg">
+          <figure className="">
+            <Image
+              width={1280}
+              height={720}
+              src="https://prismify.notion.site/image/https%3A%2F%2Fprod-files-secure.s3.us-west-2.amazonaws.com%2F5262c091-eb0d-485e-8fdc-7a16b54935b4%2F01b77d12-90a7-42a9-87b3-d43ebb33aca3%2Fprofile-4TcKvlK3c7c8cg1PP9gwBEJrYaY2-128shots_so..png?table=block&id=17227f20-3d4b-4256-a2a7-54f8949a03f7&spaceId=5262c091-eb0d-485e-8fdc-7a16b54935b4&width=2000&userId=&cache=v2"
+              alt="About Prismify"
+              className="aspect-auto max-w-full object-cover"
+            />
+          </figure>
           <p>
             Hey there, fellow entrepreneurs! Ever felt like banging your head
             against the wall trying to create eye-catching designs for your

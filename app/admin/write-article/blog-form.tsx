@@ -29,7 +29,7 @@ import { toast } from '@/hooks/use-toast'
 import { Textarea } from '@/components/ui/text-area'
 
 export default function BlogForm() {
-  const { blogOutput } = useTiptap()
+  const [blogOutput, setBlogOutput] = useState<string>('')
   const [title, setTitle] = useState<string>('')
   const [summary, setSummary] = useState<string>('')
   const [category, setCategory] = useState<string>('')
@@ -43,7 +43,7 @@ export default function BlogForm() {
         summary,
         category,
         slug,
-        mainBlogImg,
+        imageUrl: mainBlogImg,
         content: blogOutput,
       })
 
@@ -127,7 +127,7 @@ export default function BlogForm() {
 
           <Textarea
             placeholder="Summary of the blog..."
-            className="h-16 border-transparent bg-transparent p-0 placeholder:text-dark/50 focus-visible:ring-transparent md:text-xl"
+            className="bg-transparent h-32 placeholder:text-dark/50 focus-visible:ring-transparent md:text-xl"
             value={summary}
             onChange={(e) => setSummary(e.target.value)}
           />
@@ -185,12 +185,18 @@ export default function BlogForm() {
           <EditorProvider
             slotBefore={<MenuBar />}
             extensions={extensions}
+            parseOptions={{
+              preserveWhitespace: true,
+            }}
             editorProps={{
               attributes: {
                 class:
                   'prose prose-md max-w-prose mx-auto prose-neutral mb-16 md:prose-lg prose-img:rounded-md focus:outline-none min-h-[30rem] dark:prose-invert',
               },
             }}
+            onUpdate={(content) =>
+              setBlogOutput( content?.editor?.getHTML())
+            }
           />
         </div>
       </div>
@@ -211,13 +217,6 @@ export default function BlogForm() {
 
 const MenuBar = () => {
   const { editor } = useCurrentEditor()
-
-  const { setBlogOutput } = useTiptap()
-
-  useEffect(() => {
-    setBlogOutput(editor?.getJSON() ?? {})
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [editor?.state, setBlogOutput])
 
   const addImage = useCallback(() => {
     const url = window.prompt('URL')

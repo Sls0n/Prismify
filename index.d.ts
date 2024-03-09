@@ -46,3 +46,5 @@ declare module 'colorthief' {
     ): Promise<Array<[number, number, number]>>
   }
 }
+
+declare module 'sanitize-html'

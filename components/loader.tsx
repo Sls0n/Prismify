@@ -2,7 +2,7 @@
 
 export default function Loader() {
   return (
-    <div className="flex-center h-screen w-screen">
+    <div className="flex-center overflow-x-hidden h-screen w-screen">
       <svg
         width="90"
         height="90"

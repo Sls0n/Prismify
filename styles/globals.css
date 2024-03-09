@@ -96,9 +96,9 @@ html {
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 
-  height: 100%;
+  scroll-behavior: smooth;
 
-  overflow-x: auto;
+  height: 100%;
 }
 
 @layer base {

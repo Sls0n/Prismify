@@ -3,10 +3,7 @@ import { Text } from '@/components/ui/text'
 import ArticleCard from '@/components/articles/article-card'
 import { formatDate, separateCommas } from '@/utils/helper-fns'
 import type { Metadata } from 'next'
-
-type Props = {
-  searchParams: { [key: string]: string | string[] | undefined }
-}
+import { unstable_cache as cache } from 'next/cache'
 
 export const metadata: Metadata = {
   title: 'Articles - Prismify',
@@ -22,18 +19,23 @@ export const metadata: Metadata = {
   },
 }
 
-export default async function Article(props: Props) {
-  const searchParams = props.searchParams
-  const page = searchParams.page || 1
-  console.log(page)
+const getCachedArticles = cache(
+  async () => {
+    return await prismadb.article.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      },
+    })
+  },
+  ['articles'],
+  {
+    revalidate: 60 * 60, // 1 hour
+    tags: ['articles'],
+  }
+)
 
-  const articles = await prismadb.article.findMany({
-    orderBy: {
-      createdAt: 'desc',
-    },
-    take: 6,
-    skip: (+page - 1) * 6,
-  })
+export default async function Article() {
+  const articles = await getCachedArticles()
 
   return (
     <section className="w-full flex-1 pt-[72px]">

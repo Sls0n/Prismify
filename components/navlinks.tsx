@@ -59,7 +59,7 @@ export function NavLinks() {
     </Link> */}
 
       <DropdownMenu>
-        <DropdownMenuTrigger className="add-focus group hidden items-center md:flex">
+        <DropdownMenuTrigger className="group hidden items-center md:flex focus-visible:outline-none">
           <p className="text-sm font-medium text-dark/70 group-hover:text-dark/90">
             Resources
           </p>
@@ -76,6 +76,7 @@ export function NavLinks() {
             {menuItems.map((item, index) => (
               <React.Fragment key={item.label}>
                 <DropdownMenuItem
+                  asChild
                   className={`group cursor-pointer rounded-lg focus:bg-white ${
                     index !== menuItems.length - 1 ? 'mb-1' : ''
                   }`}
