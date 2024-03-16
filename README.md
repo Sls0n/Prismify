@@ -18,8 +18,6 @@ Prismify is a web app that aims to revitalize & enhance boring images/screenshot
 - Tailwind
 - Prisma
 - Zustand
-- MySQL
-- PlanetScale
 
 ## Perfect lighthouse score
 ![prismify-render-1704521997749](https://github.com/Sls0n/Prismify/assets/102340248/1f268d3e-cd9b-4d88-88da-247607ccbc45)
