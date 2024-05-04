@@ -146,9 +146,9 @@ export default async function ArticlePage({ params }: ArticleProps) {
           </div>
         </div>
 
-        <div className="prose prose-lg prose-neutral mb-16 dark:prose-invert prose-p:tracking-[0.002em] prose-p:text-dark prose-img:rounded-lg prose-a:text-purple prose-a:cursor-pointer">
+        <div className="prose prose-lg prose-neutral mb-16 dark:prose-invert prose-p:tracking-[0.002em] prose-p:text-dark prose-a:cursor-pointer prose-a:text-purple">
           {blog?.imageUrl && (
-            <figure>
+            <figure className="h-fit overflow-hidden rounded-lg bg-formDark">
               <Image
                 src={blog?.imageUrl ?? '/images/fallback.jpg'}
                 alt={'cover image'}

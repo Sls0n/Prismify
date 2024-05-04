@@ -17,8 +17,11 @@ export default function ArticleCard({
   href,
 }: ArticleCardProps) {
   return (
-    <div className="group flex flex-col items-center text-dark">
-      <Link href={href} className="h-full overflow-hidden rounded-xl">
+    <div className="group  flex flex-col items-center text-dark">
+      <Link
+        href={href}
+        className="h-[300px] w-full overflow-hidden rounded-xl bg-formDark"
+      >
         <Image
           src={image}
           alt={title}
