@@ -12,25 +12,19 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { qualities } from '@/utils/presets/qualities'
 import { saveAs } from 'file-saver'
 import * as htmlToImage from 'html-to-image'
-import { ChevronDown, Clipboard, Download, Info } from 'lucide-react'
-import { useState } from 'react'
+import { Clipboard, Download } from 'lucide-react'
 import { Button } from './ui/button'
-import {
-  Dialog,
-  DialogContent,
-  DialogDescription,
-  DialogFooter,
-  DialogHeader,
-  DialogTitle,
-} from '@/components/ui/dialog'
 
-export default function ExportOptions({ isLoggedIn }: { isLoggedIn: boolean }) {
-  const [isModalOpen, setIsModalOpen] = useState(false)
+interface ExportOptionsProps {
+  isLoggedIn: boolean
+}
+
+export default function ExportOptions({ isLoggedIn }: ExportOptionsProps) {
   const { quality, setQuality, fileType, setFileType } = useImageQualityStore()
   const { images } = useImageOptions()
   const { scaleFactor } = useResizeCanvas()
 
-  const allowDownload = () => {
+  const checkDownloadPermission = () => {
     if (images.length === 0) {
       toast({
         title: 'Error!',
@@ -39,271 +33,133 @@ export default function ExportOptions({ isLoggedIn }: { isLoggedIn: boolean }) {
       })
       return false
     }
-
-    if (!isLoggedIn) {
-      const downloaded = localStorage.getItem('downloaded')
-
-      // allow one free download if not loggedin then ask to login for the next download
-      if (downloaded === 'false' || !downloaded) {
-        setIsModalOpen(true)
-        return true
-      }
-
-      toast({
-        title: 'You need to be logged in to download images',
-        variant: 'destructive',
-      })
-      return false
-    }
-
     return true
   }
 
-  const snapshotCreator = () => {
-    return new Promise<Blob>((resolve, reject) => {
-      try {
-        if (!allowDownload()) return
-
-        const scale = scaleFactor * quality
-        const element =
-          typeof window !== 'undefined' &&
-          document?.getElementById('canvas-container')
-        if (!element) {
-          throw new Error('Element not found.')
-        }
-
-        if (fileType === 'JPG') {
-          htmlToImage
-            .toJpeg(element, {
-              height: element.offsetHeight * scale,
-              width: element.offsetWidth * scale,
-
-              style: {
-                transform: 'scale(' + scale + ')',
-                transformOrigin: 'top left',
-                width: element.offsetWidth + 'px',
-                height: element.offsetHeight + 'px',
-              },
-            })
-            .then((dataURL) => {
-              const blob = dataURL as unknown as Blob
-              localStorage.setItem('downloaded', 'true')
-              resolve(blob)
-            })
-            .catch((e: any) => {
-              toast({
-                title: 'Image not uploaded',
-                description: e.message,
-                variant: 'destructive',
-              })
-              reject(e)
-            })
-        } else if (fileType === 'PNG') {
-          htmlToImage
-            .toBlob(element, {
-              height: element.offsetHeight * scale,
-              width: element.offsetWidth * scale,
-
-              style: {
-                transform: 'scale(' + scale + ')',
-                transformOrigin: 'top left',
-                width: element.offsetWidth + 'px',
-                height: element.offsetHeight + 'px',
-              },
-            })
-            .then((dataURL) => {
-              const blob = dataURL as unknown as Blob
-              localStorage.setItem('downloaded', 'true')
-              resolve(blob)
-            })
-            .catch((e: any) => {
-              toast({
-                title: 'Image not uploaded',
-                description: e.message,
-                variant: 'destructive',
-              })
-              reject(e)
-            })
-        } else if (fileType === 'WEBP') {
-          htmlToImage
-            .toCanvas(element, {
-              height: element.offsetHeight * scale,
-              width: element.offsetWidth * scale,
-
-              style: {
-                transform: 'scale(' + scale + ')',
-                transformOrigin: 'top left',
-                width: element.offsetWidth + 'px',
-                height: element.offsetHeight + 'px',
-              },
-            })
-            .then(function (canvas) {
-              // Convert canvas to .webp format
-              localStorage.setItem('downloaded', 'true')
-              return canvas.toDataURL('image/webp')
-            })
-            .then(function (webpDataUrl) {
-              // Save the .webp image
-              const a = document.createElement('a')
-              a.href = webpDataUrl
-              a.download = `prismify-render-${Date.now()}.webp`
-              document.body.appendChild(a)
-              a.click()
-              document.body.removeChild(a)
-            })
-            .catch(function (error) {
-              console.error('Error:', error)
-            })
-        } else if (fileType === 'SVG') {
-          htmlToImage
-            .toSvg(element, {
-              height: element.offsetHeight * scale,
-              width: element.offsetWidth * scale,
-
-              style: {
-                transform: 'scale(' + scale + ')',
-                transformOrigin: 'top left',
-                width: element.offsetWidth + 'px',
-                height: element.offsetHeight + 'px',
-              },
-            })
-            .then((dataURL) => {
-              const blob = dataURL as unknown as Blob
-              localStorage.setItem('downloaded', 'true')
-              resolve(blob)
-            })
-            .catch((e: any) => {
-              toast({
-                title: 'Image not uploaded',
-                description: e.message,
-                variant: 'destructive',
-              })
-              reject(e)
-            })
-        } else {
-          throw new Error('Invalid fileType') // Handle unsupported fileType
-        }
-      } catch (e: any) {
-        toast({
-          title: 'Error!',
-          description: e.message,
-          variant: 'destructive',
-        })
-        reject(e)
-      }
+  const getHtmlToImageConfig = (element: HTMLElement, scale: number) => {
+    // Get device pixel ratio and reset it to 1 to avoid scaling issues
+    const originalPixelRatio = window.devicePixelRatio
+    Object.defineProperty(window, 'devicePixelRatio', {
+      get: function () {
+        return 1
+      },
     })
-  }
 
-  const snapShotCreatorForCopy = () => {
-    return new Promise<Blob>((resolve, reject) => {
-      try {
-        if (!allowDownload()) return
-
-        const scale = scaleFactor * quality
-        const element =
-          typeof window !== 'undefined' &&
-          document?.getElementById('canvas-container')
-        if (!element) {
-          throw new Error('Element not found.')
-        }
-
-        htmlToImage
-          .toBlob(element, {
-            height: element.offsetHeight * scale,
-            width: element.offsetWidth * scale,
-
-            style: {
-              transform: 'scale(' + scale + ')',
-              transformOrigin: 'top left',
-              width: element.offsetWidth + 'px',
-              height: element.offsetHeight + 'px',
-            },
-          })
-          .then((dataURL) => {
-            const blob = dataURL as unknown as Blob
-            localStorage.setItem('downloaded', 'true')
-            resolve(blob)
-          })
-          .catch((e: any) => {
-            toast({
-              title: 'Image not uploaded',
-              description: e.message,
-              variant: 'destructive',
-            })
-            reject(e)
-          })
-      } catch (e: any) {
-        toast({
-          title: 'Error!',
-          description: e.message,
-          variant: 'destructive',
-        })
-        reject(e)
-      }
-    })
-  }
-
-  const copyImageToClipBoardOtherBrowsers = () => {
-    const isSafari = /^((?!chrome|android).)*safari/i.test(navigator?.userAgent)
-    const isNotFirefox = navigator.userAgent.indexOf('Firefox') < 0
-    if (isSafari) {
-      navigator.clipboard
-        .write([
-          new ClipboardItem({
-            'image/png': new Promise(async (resolve, reject) => {
-              try {
-                const blob = await snapshotCreator()
-                resolve(new Blob([blob], { type: 'image/png' }))
-              } catch (err) {
-                reject(err)
-              }
-            }),
-          }),
-        ])
-        .then(() =>
-          toast({
-            title: 'Copied the image',
-          })
-        )
-        .catch((err: any) =>
-          toast({
-            title: `Couldn't copy`,
-            description: err.message,
-            variant: 'destructive',
-          })
-        )
+    const config = {
+      height: element.offsetHeight * scale,
+      width: element.offsetWidth * scale,
+      style: {
+        transform: `scale(${scale})`,
+        transformOrigin: 'top left',
+        width: `${element.offsetWidth}px`,
+        height: `${element.offsetHeight}px`,
+      },
+      pixelRatio: 1, // Force pixel ratio to 1
     }
-    if (isNotFirefox) {
-      navigator?.permissions
-        // @ts-ignore
-        ?.query({ name: 'clipboard-write' })
-        .then(async (result) => {
-          if (result.state === 'granted') {
-            const type = 'image/png'
-            const blob = await snapShotCreatorForCopy()
-            let data = [new ClipboardItem({ [type]: blob })]
-            navigator.clipboard
-              .write(data)
-              .then(() => {
-                toast({
-                  title: 'Copied to clipboard. 🥳',
-                  description: 'Command + V to paste/use it.',
-                })
-              })
-              .catch((err) => {
-                toast({
-                  title: `Couldn't copy`,
-                  description: err.message,
-                  variant: 'destructive',
-                })
-              })
-          }
-        })
-    } else {
-      toast({
+
+    // Restore original device pixel ratio after config is created
+    Object.defineProperty(window, 'devicePixelRatio', {
+      get: function () {
+        return originalPixelRatio
+      },
+    })
+
+    return config
+  }
+
+  const handleExportError = (error: any) => {
+    toast({
+      title: 'Error!',
+      description: error.message,
+      variant: 'destructive',
+    })
+    return Promise.reject(error)
+  }
+
+  const createSnapshot = async () => {
+    if (!checkDownloadPermission()) return
+
+    const scale = scaleFactor * quality
+    const element = document?.getElementById('canvas-container')
+    if (!element) throw new Error('Canvas element not found')
+
+    const config = getHtmlToImageConfig(element, scale)
+
+    try {
+      let result: Blob | string
+      switch (fileType) {
+        case 'JPG':
+          result = await htmlToImage.toJpeg(element, config)
+          break
+        case 'PNG':
+          result = (await htmlToImage.toBlob(element, config)) as Blob
+          break
+        case 'WEBP':
+          const canvas = await htmlToImage.toCanvas(element, config)
+          const webpUrl = canvas.toDataURL('image/webp')
+          const a = document.createElement('a')
+          a.href = webpUrl
+          a.download = `prismify-render-${Date.now()}.webp`
+          document.body.appendChild(a)
+          a.click()
+          document.body.removeChild(a)
+          return
+        case 'SVG':
+          result = await htmlToImage.toSvg(element, config)
+          break
+        default:
+          throw new Error('Unsupported file type')
+      }
+
+      localStorage.setItem('downloaded', 'true')
+      return result as Blob
+    } catch (error) {
+      return handleExportError(error)
+    }
+  }
+
+  const copyToClipboard = async () => {
+    const isFirefox = navigator.userAgent.includes('Firefox')
+
+    if (!checkDownloadPermission()) return
+
+    if (isFirefox) {
+      return toast({
         title: "Couldn't copy image",
         description: "Firefox doesn't support it",
         variant: 'destructive',
+      })
+    }
+
+    try {
+      const blob = await createSnapshot()
+      if (!blob) return
+      const clipboardItem = new ClipboardItem({
+        'image/png': Promise.resolve(new Blob([blob], { type: 'image/png' })),
+      })
+
+      await navigator.clipboard.write([clipboardItem])
+      toast({ title: 'Copied to clipboard. 🥳' })
+    } catch (error: any) {
+      toast({
+        title: "Couldn't copy",
+        description: error.message,
+        variant: 'destructive',
+      })
+    }
+  }
+
+  const handleDownload = async () => {
+    try {
+      const blob = await createSnapshot()
+      if (blob) {
+        saveAs(blob, `prismify-render-${Date.now()}`)
+      }
+    } catch (error: any) {
+      toast({
+        variant: 'destructive',
+        title: 'Error!',
+        description: error.message,
       })
     }
   }
@@ -314,45 +170,20 @@ export default function ExportOptions({ isLoggedIn }: { isLoggedIn: boolean }) {
         className="w-fit text-[0.8rem] font-medium"
         variant="icon"
         size="sm"
-        onClick={copyImageToClipBoardOtherBrowsers}
+        onClick={copyToClipboard}
       >
         <Clipboard size={18} className="mr-0 text-dark/80 lg:mr-2" />
         <p className="hidden text-dark/80 lg:block">Copy</p>
       </Button>
+
       <div
         tabIndex={0}
         className="z-50 flex h-fit overflow-hidden rounded-xl border border-[rgba(99,102,241,0.15)] focus:outline-none focus:ring-2 focus:ring-[#898aeb]"
-        onKeyDown={(e) => {
-          if (e.key === 'Enter') {
-            snapshotCreator()
-              .then((blob) => {
-                saveAs(blob, `prismify-render-${Date.now()}`)
-              })
-              .catch((err) => {
-                toast({
-                  variant: 'destructive',
-                  title: 'Error!',
-                  description: err.message,
-                })
-              })
-          }
-        }}
+        onKeyDown={(e) => e.key === 'Enter' && handleDownload()}
       >
         <Button
           tabIndex={-1}
-          onClick={() => {
-            snapshotCreator()
-              .then((blob) => {
-                saveAs(blob, `prismify-render-${Date.now()}`)
-              })
-              .catch((err) => {
-                toast({
-                  variant: 'destructive',
-                  title: 'Error!',
-                  description: err.message,
-                })
-              })
-          }}
+          onClick={handleDownload}
           className="rounded-none border-b-0 border-l-0 border-r-[1.5px] border-t-0 border-[rgba(99,102,241,0.15)] px-2 text-[0.8rem] font-medium"
           variant="stylish"
           size="sm"
@@ -386,9 +217,7 @@ export default function ExportOptions({ isLoggedIn }: { isLoggedIn: boolean }) {
                   className="rounded-lg border border-border/80 text-[0.8rem] font-medium"
                 >
                   {q.quality.split('x')[0]}x &mdash;{' '}
-                  <span
-                    className={`${q.value === quality ? '' : 'text-dark/60'}`}
-                  >
+                  <span className={q.value === quality ? '' : 'text-dark/60'}>
                     {q.quality.split('x')[1]}
                   </span>
                 </Button>
@@ -405,7 +234,7 @@ export default function ExportOptions({ isLoggedIn }: { isLoggedIn: boolean }) {
               variant="stylish"
               size="sm"
             >
-              <ChevronDown size={18} className="mr-0" />
+              {fileType}
             </Button>
           </PopoverTrigger>
           <PopoverContent
@@ -414,56 +243,20 @@ export default function ExportOptions({ isLoggedIn }: { isLoggedIn: boolean }) {
           >
             <p className="text-sm font-medium text-dark/90">Image formats</p>
             <div className="grid w-full grid-cols-2 gap-2.5">
-              {(
-                ['PNG', 'JPG', 'WEBP', 'SVG'] as (
-                  | 'PNG'
-                  | 'JPG'
-                  | 'WEBP'
-                  | 'SVG'
-                )[]
-              ).map((file) => (
+              {(['PNG', 'JPG', 'WEBP', 'SVG'] as const).map((format) => (
                 <Button
-                  variant={file === fileType ? 'stylish' : 'outline'}
-                  key={file}
-                  // disabled={file === 'SVG'}
-                  onClick={() => setFileType(file)}
+                  variant={format === fileType ? 'stylish' : 'outline'}
+                  key={format}
+                  onClick={() => setFileType(format)}
                   className="rounded-lg border border-border/80 text-[0.8rem] font-medium"
                 >
-                  .{file}
+                  .{format}
                 </Button>
               ))}
             </div>
           </PopoverContent>
         </Popover>
       </div>
-      <Dialog open={isModalOpen}>
-        <DialogContent className="sm:max-w-[425px]">
-          <DialogHeader>
-            <DialogTitle className="mb-2 flex items-center gap-2 text-dark">
-              <Info className="h-5 w-5 opacity-70" />
-              Important
-            </DialogTitle>
-            <DialogDescription>
-              <p className="mb-2 text-base font-normal text-dark/60 ">
-                Next time, you need an{' '}
-                <span className="font-medium text-dark/70">account</span> to
-                download images. Dont worry because you still can download as
-                many images as you want for free. Just make sure to login before
-                you start creating something.
-              </p>
-            </DialogDescription>
-          </DialogHeader>
-          <DialogFooter className="sm:justify-start ">
-            <Button
-              onClick={() => setIsModalOpen(false)}
-              variant="outline"
-              type="submit"
-            >
-              Got it!
-            </Button>
-          </DialogFooter>
-        </DialogContent>
-      </Dialog>
     </>
   )
 }

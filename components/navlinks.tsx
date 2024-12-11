@@ -1,5 +1,6 @@
 // Links in the navbar
 
+import { Badge } from '@/components/ui/badge'
 import { buttonVariants } from '@/components/ui/button'
 import {
   DropdownMenu,
@@ -9,19 +10,23 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
+import { GradientText } from '@/components/ui/gradient-text'
 import { cn } from '@/utils/button-utils'
-import { BadgeInfo, BookCopy, ChevronDown, Mails, Wand2 } from 'lucide-react'
+import { BadgeInfo, BookCopy, ChevronDown, type LucideIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'
-import { Badge } from '@/components/ui/badge'
-import { GradientText } from '@/components/ui/gradient-text'
 import React from 'react'
 
-const menuItems = [
+const menuItems: Array<{
+  href: string
+  icon: LucideIcon
+  label: string
+  separateFromHere?: boolean
+}> = [
   { href: '/articles', icon: BookCopy, label: 'Articles' },
-  { href: '/examples', icon: Wand2, label: 'Examples' },
-  { href: '/about', icon: BadgeInfo, label: 'About', separateFromHere: true },
-  { href: '/contact', icon: Mails, label: 'Contact' },
+  // , separateFromHere: true
+  { href: '/about', icon: BadgeInfo, label: 'About' },
+  // { href: '/contact', icon: Mails, label: 'Contact' },
 ]
 
 export function NavLinks() {
@@ -54,12 +59,8 @@ export function NavLinks() {
         <div className="hidden h-5 w-[1.5px] bg-border md:block" />
       </Link>
 
-      {/* <Link className="hidden md:flex" href="/templates">
-      <p className="text-sm font-medium text-dark/70">Templates</p>
-    </Link> */}
-
       <DropdownMenu>
-        <DropdownMenuTrigger className="group hidden items-center md:flex focus-visible:outline-none">
+        <DropdownMenuTrigger className="group hidden items-center focus-visible:outline-none md:flex">
           <p className="text-sm font-medium text-dark/70 group-hover:text-dark/90">
             Resources
           </p>
@@ -106,6 +107,14 @@ export function NavLinks() {
           </DropdownMenuGroup>
         </DropdownMenuContent>
       </DropdownMenu>
+
+      <Link
+        target="_blank"
+        className="hidden md:flex"
+        href="https://x.com/sls0n"
+      >
+        <p className="text-sm font-medium text-dark/70">Contact</p>
+      </Link>
     </nav>
   )
 }
