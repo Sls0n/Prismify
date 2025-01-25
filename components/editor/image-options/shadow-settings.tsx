@@ -152,7 +152,7 @@ export default function ShadowSettings() {
             Number(
               selectedImage
                 ? images[selectedImage - 1]?.style.shadowOpacity
-                : 0.5 ?? 1
+                : 0.5
             ) * 100
           )}
           %
