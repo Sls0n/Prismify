@@ -103,7 +103,7 @@ export default function ContextMenuImage({
     }
   }
 
-  useHotkeys('Delete', () => {
+  useHotkeys(['Delete', 'Backspace'], () => {
     if (selectedImage)
       if (showControls) {
         handleImageDelete(selectedImage)
