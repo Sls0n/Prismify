@@ -19,7 +19,7 @@ export default function SelectoComponent() {
   } = useMoveable()
   const { setSelectedImage } = useSelectedLayers()
 
-  if (showControls) return
+  if (showControls) return null
   return (
     <Selecto
       dragContainer={'.canvas-container'}
@@ -46,7 +46,13 @@ export default function SelectoComponent() {
 
         if (e?.selected.length !== 0) {
           setShowControls(true)
-          setSelectedImage(+e?.selected?.[0]?.id! ?? 0)
+
+          const firstSelectedElement = e.selected[0]
+          const selectedId = firstSelectedElement.id
+            ? parseInt(firstSelectedElement.id, 10)
+            : 0
+
+          setSelectedImage(selectedId)
         }
 
         if (e?.selected.length > 1) {
