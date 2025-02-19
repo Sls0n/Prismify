@@ -325,6 +325,49 @@ function LoadAImage() {
   const { setBackground } = useBackgroundOptions()
   const [isDragging, setIsDragging] = useState<boolean>(false)
 
+  useEffect(() => {
+    const handlePaste = async (event: ClipboardEvent) => {
+      const items = event.clipboardData?.items
+      if (!items) return
+
+      const itemsArray = Array.from(items)
+      for (const item of itemsArray) {
+        if (item.type.indexOf('image') === 0) {
+          const file = item.getAsFile()
+          if (file) {
+            const imageUrl = URL.createObjectURL(file)
+            setInitialImageUploaded(true)
+            setImagesCheck([...imagesCheck, imageUrl])
+            setImages([
+              ...images,
+              { image: imageUrl, id: images.length + 1, style: defaultStyle },
+            ])
+            setSelectedImage(images.length + 1)
+
+            if (images.length === 0 && automaticResolution) {
+              const padding = 250
+              const img = new Image()
+              img.src = imageUrl
+
+              img.onload = () => {
+                const { naturalWidth, naturalHeight } = img
+                const newResolution = calculateEqualCanvasSize(
+                  naturalWidth,
+                  naturalHeight,
+                  padding
+                )
+                setResolution(newResolution.toString())
+              }
+            }
+          }
+        }
+      }
+    }
+
+    document.addEventListener('paste', handlePaste)
+    return () => document.removeEventListener('paste', handlePaste)
+  }, [images, imagesCheck, setImages, setImagesCheck, setInitialImageUploaded, setSelectedImage, defaultStyle, automaticResolution, setResolution])
+
   const handleImageLoad = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
