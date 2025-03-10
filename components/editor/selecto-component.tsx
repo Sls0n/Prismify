@@ -46,7 +46,11 @@ export default function SelectoComponent() {
 
         if (e?.selected.length !== 0) {
           setShowControls(true)
-          setSelectedImage(+e?.selected?.[0]?.id! ?? 0)
+          const firstSelected = e.selected[0] as HTMLElement;
+          const selectedId = firstSelected.dataset.id
+            ? +firstSelected.dataset.id
+            : 0;
+          setSelectedImage(selectedId);
         }
 
         if (e?.selected.length > 1) {
