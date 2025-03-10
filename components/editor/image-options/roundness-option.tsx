@@ -11,18 +11,17 @@ export default function RoundnessOption() {
 
   const browserFrame = selectedImage ? images[selectedImage - 1]?.frame : 'None'
 
+  const roundnessValue =
+    selectedImage && images[selectedImage - 1]?.style.imageRoundness
+      ? Number(images[selectedImage - 1].style.imageRoundness)
+      : 0.2
+
   return (
     <div className={`${selectedImage ? '' : 'pointer-events-none opacity-40'}`}>
       <div className="mb-3 mt-6 flex items-center px-1 md:max-w-full">
         <h1 className="text-[0.85rem]">Roundness</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-dark/70">
-          {`${Math.round(
-            Number(
-              selectedImage
-                ? images[selectedImage - 1]?.style.imageRoundness
-                : 0.2 ?? 0.2
-            ) * 10
-          )} `}
+          {Math.round(roundnessValue * 10)}
         </p>
       </div>
 

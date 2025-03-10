@@ -33,6 +33,11 @@ export default function ShadowSettings() {
       : '',
   }
 
+  const shadowOpacityValue =
+  selectedImage && images[selectedImage - 1]?.style.shadowOpacity
+    ? Number(images[selectedImage - 1].style.shadowOpacity)
+    : 0.5;
+
   const backgroundStyle = {
     backgroundImage: `var(--gradient-bg)`,
     backgroundColor:
@@ -148,14 +153,7 @@ export default function ShadowSettings() {
       <div className="mb-3 mt-8 flex items-center px-1">
         <h1 className="text-[0.85rem]">Opacity</h1>
         <p className="ml-2 rounded-md bg-formDark p-[0.4rem] text-[0.8rem] text-dark/70">
-          {Math.round(
-            Number(
-              selectedImage
-                ? images[selectedImage - 1]?.style.shadowOpacity
-                : 0.5 ?? 1
-            ) * 100
-          )}
-          %
+          {Math.round(shadowOpacityValue * 100)}% %
         </p>
       </div>
 
