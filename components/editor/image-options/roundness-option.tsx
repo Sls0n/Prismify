@@ -20,7 +20,7 @@ export default function RoundnessOption() {
             Number(
               selectedImage
                 ? images[selectedImage - 1]?.style.imageRoundness
-                : 0.2 ?? 0.2
+                : 0.2
             ) * 10
           )} `}
         </p>

@@ -46,7 +46,7 @@ export default function SelectoComponent() {
 
         if (e?.selected.length !== 0) {
           setShowControls(true)
-          setSelectedImage(+e?.selected?.[0]?.id! ?? 0)
+          setSelectedImage(+e?.selected?.[0]?.id)
         }
 
         if (e?.selected.length > 1) {
