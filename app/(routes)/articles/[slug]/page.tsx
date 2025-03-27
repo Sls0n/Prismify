@@ -14,12 +14,12 @@ import { notFound } from 'next/navigation'
 import { cache } from 'react'
 
 type ArticleProps = {
-  params: {
+  params: Promise<{
     slug: string
-  }
+  }>
 }
 
-export const revalidate = 60 * 60 // 1 hour
+export const revalidate = 3600 // 1 hour
 
 export async function generateStaticParams() {
   const blogs = await prismadb.article.findMany({
@@ -43,7 +43,8 @@ const getBlog = cache(async (slug: string) => {
   return blog
 })
 
-export async function generateMetadata({ params }: ArticleProps) {
+export async function generateMetadata(props: ArticleProps) {
+  const params = await props.params;
   const blog = await getBlog(params.slug)
 
   if (!blog) {
@@ -93,7 +94,8 @@ export async function generateMetadata({ params }: ArticleProps) {
   return metadata
 }
 
-export default async function ArticlePage({ params }: ArticleProps) {
+export default async function ArticlePage(props: ArticleProps) {
+  const params = await props.params;
   const blog = await getBlog(params.slug)
 
   if (!blog) {

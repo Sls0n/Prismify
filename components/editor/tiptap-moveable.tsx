@@ -15,6 +15,7 @@ import {
   SnappableProps,
   makeMoveable,
 } from 'react-moveable'
+import React from 'react'
 
 const Moveable = makeMoveable<
   DraggableProps & ScalableProps & RotatableProps & SnappableProps
@@ -27,6 +28,7 @@ export default function TiptapMoveable({ id }: { id: string }) {
   const { images, texts } = useImageOptions()
   const { selectedImage, selectedText } = useSelectedLayers()
   const { width, height } = splitWidthHeight(exactDomResolution)
+  const moveableRef = React.useRef<any>(null)
 
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
 
@@ -48,6 +50,7 @@ export default function TiptapMoveable({ id }: { id: string }) {
 
   return (
     <Moveable
+      ref={moveableRef}
       target={
         typeof document !== 'undefined' ? document?.getElementById(id) : ''
       }

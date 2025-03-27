@@ -34,7 +34,7 @@ export default function MoveableComponent({ id }: { id: string }) {
   const { domResolution, scaleFactor, exactDomResolution } = useResizeCanvas()
   const { setImages, images } = useImageOptions()
   const { selectedImage } = useSelectedLayers()
-  const moveableRef = React.useRef<typeof Moveable>()
+  const moveableRef = React.useRef<any>(null)
   const { width, height } = splitWidthHeight(exactDomResolution)
   const { isMultipleTargetSelected } = useMoveable()
 
@@ -49,7 +49,7 @@ export default function MoveableComponent({ id }: { id: string }) {
   const [domWidth, domHeight]: number[] = domResolution.split('x').map(Number)
   return (
     <Moveable
-      ref={moveableRef as any}
+      ref={moveableRef}
       target={
         isMultipleTargetSelected
           ? '.selected'

@@ -10,7 +10,7 @@ import React, { useEffect } from 'react'
  */
 
 export default function useCanvasResizeObserver(
-  ref: React.RefObject<HTMLDivElement>
+  ref: React.RefObject<HTMLDivElement | null>
 ) {
   const {
     setScaleFactor,
