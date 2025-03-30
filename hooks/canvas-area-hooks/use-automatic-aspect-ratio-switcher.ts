@@ -17,8 +17,8 @@ export default function useAutomaticAspectRatioSwitcher({
   containerRef,
   screenshotRef,
 }: {
-  containerRef: React.RefObject<HTMLDivElement>
-  screenshotRef: React.RefObject<HTMLDivElement>
+  containerRef: React.RefObject<HTMLDivElement | null>
+  screenshotRef: React.RefObject<HTMLDivElement | null>
 }) {
   const { resolution, setScrollScale } = useResizeCanvas()
   const { quality } = useImageQualityStore()

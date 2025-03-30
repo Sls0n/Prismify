@@ -31,7 +31,7 @@ export default function SizeOption({ text = 'Scale' }: SizeOptionProps) {
             setScale(value[0])
           }}
           onValueCommit={() => setShowControls(true)}
-          value={[scale] || [1]}
+          value={[scale ?? 1]}
           onIncrement={() => {
             if (scale >= 3) return
             setScale(scale + 0.05)

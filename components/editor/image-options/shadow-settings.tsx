@@ -151,8 +151,8 @@ export default function ShadowSettings() {
           {Math.round(
             Number(
               selectedImage
-                ? images[selectedImage - 1]?.style.shadowOpacity
-                : 0.5 ?? 1
+                ? images[selectedImage - 1]?.style.shadowOpacity ?? 0.5
+                : 0.5
             ) * 100
           )}
           %
