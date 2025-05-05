@@ -53,7 +53,7 @@
     --gradient-angle: 170deg;
     --gradient-bg: linear-gradient(
       var(--gradient-angle),
-      #D8D9DD,
+      #d8d9dd,
       #cccdd1 100%
     );
     --mesh-bg: '';
@@ -99,6 +99,8 @@ html {
   scroll-behavior: smooth;
 
   height: 100%;
+
+  color-scheme: dark;
 }
 
 @layer base {
@@ -128,7 +130,7 @@ html {
   .add-focus {
     @apply focus:outline-none focus:ring-2 focus:ring-ring focus:ring-offset-4 focus:ring-offset-background;
   }
-} 
+}
 
 #canvas-container > div > div > img {
   cursor: pointer;
@@ -154,13 +156,13 @@ html {
 @layer utilities {
   /* Hide scrollbar for Chrome, Safari and Opera */
   .no-scrollbar::-webkit-scrollbar {
-      display: none;
+    display: none;
   }
- /* Hide scrollbar for IE, Edge and Firefox */
+  /* Hide scrollbar for IE, Edge and Firefox */
   .no-scrollbar {
-      -ms-overflow-style: none;  /* IE and Edge */
-      scrollbar-width: none;  /* Firefox */
-}
+    -ms-overflow-style: none; /* IE and Edge */
+    scrollbar-width: none; /* Firefox */
+  }
 }
 
 #canvas-container img {
@@ -244,7 +246,7 @@ html {
   float: left;
   height: 0;
   pointer-events: none;
-} 
+}
 
 .prose-a {
   color: #898aeb !important;

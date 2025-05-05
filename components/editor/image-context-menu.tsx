@@ -5,9 +5,6 @@ import {
   ContextMenuItem,
   ContextMenuSeparator,
   ContextMenuShortcut,
-  ContextMenuSub,
-  ContextMenuSubContent,
-  ContextMenuSubTrigger,
   ContextMenuTrigger,
 } from '@/components/ui/context-menu'
 import {
@@ -27,12 +24,14 @@ import {
   ImagePlus,
   SendToBack,
   Trash,
+  Wand,
 } from 'lucide-react'
 import dynamic from 'next/dynamic'
-import React, { ChangeEvent, useRef, useState } from 'react'
+import React, { ChangeEvent, useEffect, useRef, useState } from 'react'
 import { useHotkeys } from 'react-hotkeys-hook'
 import { type Crop } from 'react-image-crop'
 import 'react-image-crop/dist/ReactCrop.css'
+import Loader from '../loader'
 
 const DynamicCropComponent = dynamic(() =>
   import('react-image-crop').then((mod) => mod.ReactCrop)
@@ -52,15 +51,19 @@ export default function ContextMenuImage({
   })
   const imgRef = useRef<HTMLImageElement>(null)
   const { setImages, images } = useImageOptions()
+  const [isRemovingBackground, setIsRemovingBackground] = useState(false)
+  const [isBgRemovalDialogOpen, setIsBgRemovalDialogOpen] = useState(false)
+  const [isProcessingBackground, setIsProcessingBackground] = useState(false)
+  const [bgRemovalError, setBgRemovalError] = useState<string | null>(null)
+  const [processedImageUrl, setProcessedImageUrl] = useState<string | null>(
+    null
+  )
   const { selectedImage, setSelectedImage, setEnableCrop, enableCrop } =
     useSelectedLayers()
   const { showControls, setShowControls } = useMoveable()
-  
+  const workerRef = useRef<Worker | null>(null)
 
   const handleImageDelete = (id: number) => {
-    // const newImages = images.filter((image) => image.id !== id)
-    // setImages(newImages)
-
     if (images.length === 1) {
       setImages([])
       return
@@ -102,6 +105,63 @@ export default function ContextMenuImage({
       )
     }
   }
+
+  useEffect(() => {
+    // Terminate existing worker if component re-renders or dependencies change
+    workerRef.current?.terminate()
+
+    if (isBgRemovalDialogOpen && selectedImage) {
+      const currentImage = images[selectedImage - 1]
+      if (!currentImage || !currentImage.image) return
+
+      setProcessedImageUrl(null) // Reset image URL first
+      setBgRemovalError(null) // Reset error
+      setIsProcessingBackground(true)
+
+      // Create and configure the worker
+      workerRef.current = new Worker(
+        new URL('@/workers/background-removal.worker.ts', import.meta.url)
+      )
+
+      workerRef.current.onmessage = (
+        event: MessageEvent<
+          { type: 'success'; url: string } | { type: 'error'; error: string }
+        >
+      ) => {
+        if (event.data.type === 'success') {
+          setProcessedImageUrl(event.data.url)
+          setBgRemovalError(null)
+        } else if (event.data.type === 'error') {
+          console.error('Background removal worker error:', event.data.error)
+          setBgRemovalError(event.data.error)
+          // Keep dialog open to show error or close?
+          // setIsBgRemovalDialogOpen(false);
+        }
+        setIsProcessingBackground(false)
+      }
+
+      workerRef.current.onerror = (error) => {
+        console.error('Unhandled worker error:', error)
+        setBgRemovalError('An unexpected worker error occurred.')
+        setIsProcessingBackground(false)
+        // setIsBgRemovalDialogOpen(false);
+      }
+
+      // Send image source to worker
+      workerRef.current.postMessage({ src: currentImage.image })
+    } else {
+      // If dialog is closed, ensure worker is terminated
+      workerRef.current?.terminate()
+      workerRef.current = null
+    }
+
+    // Cleanup function to terminate worker on unmount or when dialog closes
+    return () => {
+      workerRef.current?.terminate()
+      workerRef.current = null
+    }
+    // Rerun effect when dialog opens/closes or selected image changes
+  }, [isBgRemovalDialogOpen, selectedImage, images]) // Added images dependency
 
   useHotkeys(['Delete', 'Backspace'], () => {
     if (selectedImage)
@@ -195,28 +255,32 @@ export default function ContextMenuImage({
 
           <ReplaceImage />
 
-          <ContextMenuSub>
+          <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+            <div
+              onClick={() => setIsBgRemovalDialogOpen(true)}
+              className="ml-6 cursor-pointer"
+            >
+              Remove background
+            </div>
+            <span className="ml-auto text-xs tracking-widest text-muted-foreground">
+              <Wand size={19} className="opacity-80" />
+            </span>
+          </div>
+
+          <DialogTrigger asChild>
+            <div className="relative flex cursor-default select-none items-center rounded-sm px-2 py-1.5 text-sm outline-none hover:bg-accent hover:text-accent-foreground data-[disabled]:pointer-events-none data-[disabled]:opacity-50">
+              <div className="ml-6 cursor-pointer">Crop</div>
+              <span className="ml-auto text-xs tracking-widest text-muted-foreground">
+                <CropIcon size={19} className="opacity-80" />
+              </span>
+            </div>
+          </DialogTrigger>
+
+          {/* <ContextMenuSub>
             <ContextMenuSubTrigger inset>More Tools</ContextMenuSubTrigger>
             <ContextMenuSubContent className="w-48">
-              <DialogTrigger asChild>
-                <ContextMenuItem
-                  onClick={() => {
-                    setEnableCrop(true)
-                  }}
-                >
-                  Crop
-                  <ContextMenuShortcut>
-                    <CropIcon size={19} className="opacity-80" />
-                  </ContextMenuShortcut>
-                </ContextMenuItem>
-              </DialogTrigger>
-
-              <ContextMenuItem>...</ContextMenuItem>
-              <ContextMenuItem>...</ContextMenuItem>
-              <ContextMenuSeparator />
-              <ContextMenuItem>...</ContextMenuItem>
             </ContextMenuSubContent>
-          </ContextMenuSub>
+          </ContextMenuSub> */}
 
           <ContextMenuSeparator />
           <ContextMenuItem
@@ -281,6 +345,119 @@ export default function ContextMenuImage({
           </Button>
         </DialogFooter>
       </DialogContent>
+
+      <Dialog
+        open={isBgRemovalDialogOpen}
+        onOpenChange={setIsBgRemovalDialogOpen}
+      >
+        <DialogContent className="flex h-fit max-h-[95vh] w-1/2 flex-col gap-4">
+          <DialogHeader>
+            <DialogTitle className="mb-4 flex items-center gap-1.5">
+              <Wand size={19} className="opacity-80" />
+              <span>Remove Background</span>
+            </DialogTitle>
+          </DialogHeader>
+
+          <div
+            className="relative mb-4 flex h-full w-full flex-1 items-center justify-center overflow-hidden overflow-y-auto"
+            style={{
+              // Apply checkered background only when done processing, successful, and image is ready
+              backgroundImage:
+                !isProcessingBackground && processedImageUrl && !bgRemovalError
+                  ? 'linear-gradient(45deg, rgba(204,204,204,0.05) 25%, transparent 25%), linear-gradient(-45deg, rgba(204,204,204,0.05) 25%, transparent 25%), linear-gradient(45deg, transparent 75%, rgba(204,204,204,0.05) 75%), linear-gradient(-45deg, transparent 75%, rgba(204,204,204,0.05) 75%)'
+                  : 'none',
+              backgroundSize:
+                !isProcessingBackground && processedImageUrl && !bgRemovalError
+                  ? '20px 20px'
+                  : 'auto',
+              backgroundPosition:
+                !isProcessingBackground && processedImageUrl && !bgRemovalError
+                  ? '0 0, 0 10px, 10px -10px, -10px 0px'
+                  : 'initial',
+              // Keep a fallback bg or use theme background
+              backgroundColor:
+                !isProcessingBackground && processedImageUrl && !bgRemovalError
+                  ? 'hsl(var(--background))' // Use theme background
+                  : 'hsl(var(--muted) / 0.1)', // Original dim background
+            }}
+          >
+            {isProcessingBackground && (
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-black/60 ">
+                <Loader />
+              </div>
+            )}
+            {/* Display Error Message */}
+            {!isProcessingBackground && bgRemovalError && (
+              <div className="absolute inset-0 z-10 flex flex-col items-center justify-center bg-destructive/60 p-4 text-center">
+                <p className="font-semibold text-white">
+                  Error Removing Background
+                </p>
+                <p className="mt-1 text-xs text-white/80">{bgRemovalError}</p>
+              </div>
+            )}
+            {selectedImage && !processedImageUrl && (
+              <img
+                src={images[selectedImage - 1]?.image}
+                alt="Original image"
+                className="h-full w-full object-cover"
+                // Dim image slightly if there's an error overlay
+                style={{ opacity: bgRemovalError ? 0.5 : 1 }}
+              />
+            )}
+            {processedImageUrl && (
+              <img
+                src={processedImageUrl}
+                alt="Image with background removed"
+                className="h-full w-full object-cover" // Show processed image even if error occurred previously
+              />
+            )}
+          </div>
+
+          <DialogFooter className="mt-auto flex items-center gap-1.5">
+            <Button
+              variant="outline"
+              onClick={() => {
+                setIsBgRemovalDialogOpen(false)
+                setProcessedImageUrl(null)
+                setBgRemovalError(null)
+                setIsProcessingBackground(false) // Ensure loading state is reset
+              }}
+            >
+              Cancel
+            </Button>
+
+            <Button
+              onClick={() => {
+                if (selectedImage && processedImageUrl) {
+                  setImages(
+                    images.map((img, index) =>
+                      index === selectedImage - 1
+                        ? {
+                            ...img,
+                            image: processedImageUrl,
+                            style: {
+                              ...img.style,
+                              shadowName: 'None',
+                              imageShadow: '0 0 0 0',
+                            },
+                          }
+                        : img
+                    )
+                  )
+                }
+                setIsBgRemovalDialogOpen(false)
+                setProcessedImageUrl(null)
+              }}
+              disabled={
+                isProcessingBackground || !processedImageUrl || !!bgRemovalError
+              } // Disable if processing, no result, or error
+              className="flex-center gap-1.5"
+            >
+              Done
+            </Button>
+          </DialogFooter>
+        </DialogContent>
+      </Dialog>
     </Dialog>
   )
 }
