@@ -3,6 +3,42 @@ import { temporal, TemporalState } from 'zundo'
 import throttle from 'just-throttle'
 import { FrameTypes } from './use-frame-options'
 
+export interface ImageStyle {
+  imageSize: string
+  imageRoundness: number
+  imageShadow: string
+  shadowPreview: string
+  shadowName: string
+  shadowOpacity: number
+  shadowColor: string
+  borderSize: string | null
+  borderColor: string
+  insetSize: string
+  insetColor: string
+  rotate: string
+  rotateX: number
+  rotateY: number
+  rotateZ: number
+  perspective: number
+  translateX: number
+  translateY: number
+  zIndex: number
+  hasFrame?: boolean
+}
+
+export interface ImageItem {
+  id: number
+  image: string
+  extractedColors?: { color: string; count: number }[]
+  linearGradients?: string[]
+  meshGradients?: string[]
+  radialGradients?: string[]
+  dominantColor?: string
+  pallettes?: string[]
+  style: ImageStyle
+  frame?: FrameTypes
+}
+
 interface ImageOptionsState {
   scale: number
   setScale: (scale: number) => void
@@ -21,72 +57,13 @@ interface ImageOptionsState {
   initialImageUploaded: boolean
   setInitialImageUploaded: (initialImageUploaded: boolean) => void
 
-  images: {
-    id: number
-    image: string
-    extractedColors?: { color: string; count: number }[]
-    linearGradients?: string[]
-    meshGradients?: string[]
-    radialGradients?: string[]
-    dominantColor?: string
-    pallettes?: string[]
-    style: {
-      imageSize: string
-      imageRoundness: number
-      imageShadow: string
-      shadowName: string
-      shadowOpacity: number
-      shadowPreview: string
-      shadowColor: string
-      borderSize: string | null
-      borderColor: string
-      insetSize: string
-      insetColor: string
-      rotate: string
-      rotateX: number
-      rotateY: number
-      rotateZ: number
-      perspective: number
-      translateX: number
-      translateY: number
-      zIndex: number
-    }
-    frame?: FrameTypes
-  }[]
-  setImages: (
-    images: {
-      id: number
-      image: string
-      extractedColors?: { color: string; count: number }[]
-      linearGradients?: string[]
-      meshGradients?: string[]
-      radialGradients?: string[]
-      dominantColor?: string
-      pallettes?: string[]
-      style: {
-        imageSize: string
-        imageRoundness: number
-        imageShadow: string
-        shadowOpacity: number
-        shadowPreview: string
-        shadowName: string
-        shadowColor: string
-        borderSize: string | null
-        borderColor: string
-        insetSize: string
-        insetColor: string
-        rotate: string
-        rotateX: number
-        rotateY: number
-        rotateZ: number
-        perspective: number
-        translateX: number
-        translateY: number
-        zIndex: number
-      }
-      frame?: FrameTypes
-    }[]
-  ) => void
+  images: ImageItem[]
+  setImages: (images: ImageItem[]) => void
+  addImage: (image: ImageItem) => void
+  updateImageStyle: (id: number, style: Partial<ImageStyle>) => void
+  updateImage: (id: number, data: Partial<ImageItem>) => void
+  getImage: (id: number) => ImageItem | undefined
+  getImageIndex: (id: number) => number
 
   texts: {
     id: number
@@ -176,7 +153,7 @@ interface ImageOptionsState {
 
 export const useImageOptions = create(
   temporal<ImageOptionsState>(
-    (set) => ({
+    (set, get) => ({
       scale: 1,
       setScale: (scale) => set({ scale }),
 
@@ -234,6 +211,30 @@ export const useImageOptions = create(
 
       images: [],
       setImages: (images) => set({ images }),
+      addImage: (image) =>
+        set((state) => ({
+          images: [...state.images, image],
+        })),
+      updateImageStyle: (id, style) =>
+        set((state) => ({
+          images: state.images.map((img) =>
+            img.id === id ? { ...img, style: { ...img.style, ...style } } : img
+          ),
+        })),
+      updateImage: (id, data) =>
+        set((state) => ({
+          images: state.images.map((img) =>
+            img.id === id
+              ? {
+                  ...img,
+                  ...data,
+                  style: { ...img.style, ...(data.style ?? {}) },
+                }
+              : img
+          ),
+        })),
+      getImage: (id) => get().images.find((img) => img.id === id),
+      getImageIndex: (id) => get().images.findIndex((img) => img.id === id),
 
       texts: [],
       setTexts: (texts) => set({ texts }),

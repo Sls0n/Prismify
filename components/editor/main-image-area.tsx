@@ -25,7 +25,9 @@ const ImageUpload = () => {
   const targetRef = useRef<HTMLDivElement>(null)
   const {
     images,
-    setImages,
+    addImage,
+    updateImage,
+    updateImageStyle,
 
     setInitialImageUploaded,
     initialImageUploaded,
@@ -54,21 +56,10 @@ const ImageUpload = () => {
 
       const extractedColors = result.slice(0, 12)
 
-      setImages(
-        images.map((image, index) =>
-          index === images.length - 1
-            ? {
-                ...image,
-                extractedColors,
-                // gradientColors,
-                style: {
-                  ...image.style,
-                  insetColor: extractedColors[0].color,
-                },
-              }
-            : image
-        )
-      )
+      updateImage(images.length, { extractedColors })
+      updateImageStyle(images.length, {
+        insetColor: extractedColors[0].color,
+      })
     }
     extractColors()
     // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -317,8 +308,13 @@ const ImageUpload = () => {
 export default ImageUpload
 
 function LoadAImage() {
-  const { images, setImages, defaultStyle, setInitialImageUploaded } =
-    useImageOptions()
+  const {
+    images,
+    addImage,
+    updateImage,
+    defaultStyle,
+    setInitialImageUploaded,
+  } = useImageOptions()
   const { setSelectedImage } = useSelectedLayers()
   const { imagesCheck, setImagesCheck } = useColorExtractor()
   const { setResolution, automaticResolution } = useResizeCanvas()
@@ -338,10 +334,7 @@ function LoadAImage() {
             const imageUrl = URL.createObjectURL(file)
             setInitialImageUploaded(true)
             setImagesCheck([...imagesCheck, imageUrl])
-            setImages([
-              ...images,
-              { image: imageUrl, id: images.length + 1, style: defaultStyle },
-            ])
+            addImage({ image: imageUrl, id: images.length + 1, style: defaultStyle })
             setSelectedImage(images.length + 1)
 
             if (images.length === 0 && automaticResolution) {
@@ -366,7 +359,7 @@ function LoadAImage() {
 
     document.addEventListener('paste', handlePaste)
     return () => document.removeEventListener('paste', handlePaste)
-  }, [images, imagesCheck, setImages, setImagesCheck, setInitialImageUploaded, setSelectedImage, defaultStyle, automaticResolution, setResolution])
+  }, [images, imagesCheck, addImage, setImagesCheck, setInitialImageUploaded, setSelectedImage, defaultStyle, automaticResolution, setResolution])
 
   const handleImageLoad = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
@@ -377,10 +370,7 @@ function LoadAImage() {
         setInitialImageUploaded(true)
 
         setImagesCheck([...imagesCheck, imageUrl])
-        setImages([
-          ...images,
-          { image: imageUrl, id: images.length + 1, style: defaultStyle },
-        ])
+        addImage({ image: imageUrl, id: images.length + 1, style: defaultStyle })
         setSelectedImage(images.length + 1)
 
         if (images.length > 0) return
@@ -405,7 +395,6 @@ function LoadAImage() {
       setInitialImageUploaded,
       setImagesCheck,
       imagesCheck,
-      setImages,
       images,
       defaultStyle,
       setSelectedImage,
@@ -423,10 +412,7 @@ function LoadAImage() {
         setInitialImageUploaded(true)
 
         setImagesCheck([...imagesCheck, imageUrl])
-        setImages([
-          ...images,
-          { image: imageUrl, id: images.length + 1, style: defaultStyle },
-        ])
+        addImage({ image: imageUrl, id: images.length + 1, style: defaultStyle })
         setSelectedImage(images.length + 1)
 
         if (images.length > 0) return
@@ -451,7 +437,6 @@ function LoadAImage() {
       setInitialImageUploaded,
       setImagesCheck,
       imagesCheck,
-      setImages,
       images,
       defaultStyle,
       setSelectedImage,
@@ -467,20 +452,17 @@ function LoadAImage() {
       '--gradient-bg',
       ' linear-gradient(var(--gradient-angle), #898aeb, #d8b9e3)'
     )
-    setImages([
-      ...images,
-      {
-        image: demoImage.src,
-        id: 1,
-        style: {
-          ...defaultStyle,
-          borderSize: '15',
-          imageRoundness: 0.7,
-          imageSize: '0.78',
-          insetSize: '10',
-        },
+    addImage({
+      image: demoImage.src,
+      id: 1,
+      style: {
+        ...defaultStyle,
+        borderSize: '15',
+        imageRoundness: 0.7,
+        imageSize: '0.78',
+        insetSize: '10',
       },
-    ])
+    })
     setImagesCheck([...imagesCheck, demoImage.src])
     setResolution('1920x1080')
   }
