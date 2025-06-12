@@ -4,7 +4,7 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import React, { useEffect } from 'react'
 
 /**
- * This hook encaspulates the logic used to automatically switch the aspect ratio of a screenshot
+ * This hook encapsulates the logic used to automatically switch the aspect ratio of a screenshot
  * within a container. If the screenshot overflows the container, the aspect
  * ratio is adjusted to fit within the container.
  *
