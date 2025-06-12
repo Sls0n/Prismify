@@ -27,18 +27,11 @@ export function calculateEqualCanvasSize(
   imgHeight: number,
   padding: number
 ) {
-  const aspectRatio = imgWidth / imgHeight
-  let canvasWidth, canvasHeight
+  // Calculate a square canvas by adding padding based on the longest side
+  const maxDimension = Math.max(imgWidth, imgHeight)
+  const canvasSize = maxDimension + 2 * padding
 
-  if (aspectRatio > 1) {
-    canvasWidth = imgWidth + 2 * padding
-    canvasHeight = imgHeight + 2 * padding
-  } else {
-    canvasHeight = imgHeight + 2 * padding
-    canvasWidth = imgWidth + 2 * padding
-  }
-
-  return `${canvasWidth}x${canvasHeight}`
+  return `${canvasSize}x${canvasSize}`
 }
 
 export function capitalize(str: string) {
