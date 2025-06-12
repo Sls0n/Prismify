@@ -11,7 +11,7 @@ import {
 import { Button } from '@/components/ui/button'
 
 export default function InsetOption() {
-  const { images, setImages } = useImageOptions()
+  const { images, updateImageStyle, getImage } = useImageOptions()
   const { setShowControls, showControls } = useMoveable()
   const { selectedImage } = useSelectedLayers()
 
@@ -26,7 +26,7 @@ export default function InsetOption() {
                 className="ml-2 h-5 w-5 rounded-md"
                 style={{
                   backgroundColor: selectedImage
-                    ? images[selectedImage - 1]?.style.insetColor
+                    ? getImage(selectedImage)?.style.insetColor
                     : '#fff',
                 }}
                 variant="outline"
@@ -55,19 +55,10 @@ export default function InsetOption() {
                           }`}
                           style={{ backgroundColor: color.color }}
                           onClick={() => {
-                            setImages(
-                              images.map((image, index) =>
-                                index === selectedImage! - 1
-                                  ? {
-                                      ...image,
-                                      style: {
-                                        ...image.style,
-                                        insetColor: color.color,
-                                      },
-                                    }
-                                  : image
-                              )
-                            )
+                            selectedImage &&
+                              updateImageStyle(selectedImage, {
+                                insetColor: color.color,
+                              })
                           }}
                         />
                       )
@@ -89,65 +80,39 @@ export default function InsetOption() {
           onValueChange={(value: number[]) => {
             setShowControls(false)
             selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          insetSize: value[0].toString(),
-                        },
-                      }
-                    : image
-                )
-              )
+              updateImageStyle(selectedImage, {
+                insetSize: value[0].toString(),
+              })
           }}
           value={
             images.length !== 0 && selectedImage
-              ? [+images[selectedImage - 1]?.style.insetSize]
+              ? [+(getImage(selectedImage)?.style.insetSize ?? 0)]
               : [10]
           }
           onValueCommit={() => setShowControls(true)}
           onIncrement={() => {
             setShowControls(false)
             selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          insetSize:
-                            +image.style.insetSize <= 149
-                              ? (+image.style.insetSize + 4).toString()
-                              : '150',
-                        },
-                      }
-                    : image
-                )
-              )
+              updateImageStyle(selectedImage, {
+                insetSize:
+                  +(getImage(selectedImage)?.style.insetSize ?? 0) <= 149
+                    ? (
+                        +(getImage(selectedImage)?.style.insetSize ?? 0) + 4
+                      ).toString()
+                    : '150',
+              })
           }}
           onDecrement={() => {
             setShowControls(false)
             selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          insetSize:
-                            +image.style.insetSize >= 0
-                              ? (+image.style.insetSize - 4).toString()
-                              : '0',
-                        },
-                      }
-                    : image
-                )
-              )
+              updateImageStyle(selectedImage, {
+                insetSize:
+                  +(getImage(selectedImage)?.style.insetSize ?? 0) >= 0
+                    ? (
+                        +(getImage(selectedImage)?.style.insetSize ?? 0) - 4
+                      ).toString()
+                    : '0',
+              })
           }}
         />
       </div>
