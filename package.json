@@ -16,9 +16,9 @@
     "build": "prisma generate && next build",
     "start": "next start",
     "lint": "next lint",
+    "setup": "pnpm install && pnpm exec prisma generate",
     "db:push": "prisma db push",
-    "db:studio": "prisma studio",
-    "postinstall": "prisma generate"
+    "db:studio": "prisma studio"
   },
   "dependencies": {
     "@fseehawer/react-circular-slider": "^2.6.1",
