@@ -132,7 +132,7 @@ export default async function ArticlePage(props: ArticleProps) {
             >
               {blog.title ?? 'N/A'}
             </Text>
-            {/* Cateogry */}
+            {/* Category */}
             {blog?.category && (
               <div className="flex items-center gap-2">
                 {separateCommas(blog?.category)!.map((category) => (
