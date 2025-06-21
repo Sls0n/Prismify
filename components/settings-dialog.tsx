@@ -40,16 +40,30 @@ export default function SettingsDialog({ children }: SettingsDialogProps) {
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
+    
     try {
+      const payload = { 
+        name: name.trim() || undefined,
+        image: image.trim() || undefined 
+      }
+      
       const res = await fetch('/api/user/settings', {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ name, image }),
+        body: JSON.stringify(payload),
       })
+      
       if (!res.ok) {
-        throw new Error(await res.text())
+        const errorText = await res.text()
+        throw new Error(errorText)
       }
-      await update()
+      
+      // force a session update with the new data
+      await update({
+        name: payload.name,
+        image: payload.image,
+      })
+      
       router.refresh()
       toast({ title: 'Profile updated!' })
       setOpen(false)
@@ -89,14 +103,25 @@ export default function SettingsDialog({ children }: SettingsDialogProps) {
           <Input
             id="image"
             className="pl-9"
-            value={image || ''}
+            value={image}
             onChange={(e) => setImage(e.target.value)}
+            placeholder="https://example.com/image.jpg"
           />
           <ImageIcon
             size={16}
             className="absolute left-2 top-1/2 -translate-y-1/2 text-muted-foreground"
           />
         </div>
+        {image && (
+          <div className="mt-2">
+            <p className="text-xs text-muted-foreground mb-2">Preview:</p>
+            <img 
+              src={image} 
+              alt="Profile preview" 
+              className="w-16 h-16 rounded-full object-cover border"
+            />
+          </div>
+        )}
       </div>
       <Button type="submit" className="flex w-full items-center justify-center gap-2">
         <Save size={16} />

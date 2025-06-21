@@ -34,26 +34,54 @@ export const authOptions: NextAuthOptions = {
     }),
   ],
   callbacks: {
-    async jwt({ token, user, session }) {
+    async jwt({ token, user, session, trigger }) {
       if (user) {
         return {
           ...token,
           id: user.id,
+          name: user.name,
+          email: user.email,
+          image: user.image,
           // @ts-expect-error isCreator is there but its not showing
           isCreator: user?.isCreator,
         }
       }
 
+      // fetch new user data from database when session is updated
+      if (trigger === 'update' && token.id) {
+        const dbUser = await prismadb.user.findUnique({
+          where: { id: token.id as string },
+          select: {
+            name: true,
+            email: true,
+            image: true,
+            isCreator: true,
+          },
+        })
+        
+        if (dbUser) {
+          return {
+            ...token,
+            name: dbUser.name,
+            email: dbUser.email,
+            image: dbUser.image,
+            isCreator: dbUser.isCreator,
+          }
+        }
+      }
+
       return token
     },
-    async session({ session, token, user }) {
-      // console.log('session', session, token)
+    async session({ session, token }) {
       return {
         ...session,
         user: {
           ...session.user,
-          id: token.id,
-          isCreator: token.isCreator,
+          id: token.id as string,
+          name: token.name as string | null,
+          email: token.email as string | null,
+          image: token.image as string | null,
+          isCreator: token.isCreator as boolean,
         },
       }
     },
