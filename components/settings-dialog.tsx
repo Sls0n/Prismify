@@ -1,7 +1,13 @@
 'use client'
 
-import { useState } from 'react'
-import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { useState, useEffect } from 'react'
+import { useRouter } from 'next/navigation'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+} from '@/components/ui/dialog'
 import { Drawer, DrawerContent } from '@/components/ui/drawer'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -16,9 +22,15 @@ interface SettingsDialogProps {
 export default function SettingsDialog({ children }: SettingsDialogProps) {
   const isDesktop = useMediaQuery('(min-width: 768px)')
   const [open, setOpen] = useState(false)
+  const router = useRouter()
   const { data: session, update } = useSession()
   const [name, setName] = useState(session?.user?.name || '')
   const [image, setImage] = useState(session?.user?.image || '')
+
+  useEffect(() => {
+    setName(session?.user?.name || '')
+    setImage(session?.user?.image || '')
+  }, [session])
 
   const onSubmit = async (e: React.FormEvent) => {
     e.preventDefault()
@@ -31,7 +43,8 @@ export default function SettingsDialog({ children }: SettingsDialogProps) {
       if (!res.ok) {
         throw new Error(await res.text())
       }
-      await update()
+      await update({ name, image })
+      router.refresh()
       toast({ title: 'Profile updated!' })
       setOpen(false)
     } catch (error: any) {
