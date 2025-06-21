@@ -1,8 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import { Dialog, DialogContent, DialogTrigger, DialogHeader, DialogTitle } from '@/components/ui/dialog'
-import { Drawer, DrawerContent, DrawerTrigger } from '@/components/ui/drawer'
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog'
+import { Drawer, DrawerContent } from '@/components/ui/drawer'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
 import { useMediaQuery } from '@/hooks/use-media-query'
@@ -49,13 +49,21 @@ export default function SettingsDialog({ children }: SettingsDialogProps) {
         <label htmlFor="name" className="text-sm font-medium">
           Username
         </label>
-        <Input id="name" value={name} onChange={(e) => setName(e.target.value)} />
+        <Input
+          id="name"
+          value={name}
+          onChange={(e) => setName(e.target.value)}
+        />
       </div>
       <div className="space-y-1">
         <label htmlFor="image" className="text-sm font-medium">
           Image URL
         </label>
-        <Input id="image" value={image || ''} onChange={(e) => setImage(e.target.value)} />
+        <Input
+          id="image"
+          value={image || ''}
+          onChange={(e) => setImage(e.target.value)}
+        />
       </div>
       <Button type="submit" className="w-full">
         Save
@@ -66,7 +74,7 @@ export default function SettingsDialog({ children }: SettingsDialogProps) {
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={setOpen}>
-        <DialogTrigger asChild>{children}</DialogTrigger>
+        {children}
         <DialogContent className="p-6">
           <DialogHeader>
             <DialogTitle>Edit profile</DialogTitle>
@@ -79,7 +87,7 @@ export default function SettingsDialog({ children }: SettingsDialogProps) {
 
   return (
     <Drawer open={open} onOpenChange={setOpen}>
-      <DrawerTrigger asChild>{children}</DrawerTrigger>
+      {children}
       <DrawerContent className="mb-6 rounded-xl bg-[#121212] px-6 py-2">
         <div className="mt-8" />
         {Form}

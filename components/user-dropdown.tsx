@@ -4,6 +4,7 @@
 
 import { Button } from '@/components/ui/button'
 import SettingsDialog from './settings-dialog'
+import { DialogTrigger } from '@/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -49,10 +50,11 @@ export const UserDropDown = ({
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild className="group flex items-center">
-        <Button
-          variant="ghost"
+    <SettingsDialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild className="group flex items-center">
+          <Button
+            variant="ghost"
           className="flex h-10 cursor-pointer items-center justify-center gap-x-2.5 rounded-xl bg-[#181818] px-4 py-2 font-medium text-dark"
         >
           <div className="h-7 w-7 overflow-hidden ">
@@ -88,7 +90,7 @@ export const UserDropDown = ({
           {menuItems.map((item, index) => (
             <React.Fragment key={item.label}>
               {item.isSettings ? (
-                <SettingsDialog>
+                <DialogTrigger asChild>
                   <DropdownMenuItem
                     className={`group cursor-pointer rounded-lg focus:bg-white ${
                       index !== menuItems.length - 1 ? 'mb-1' : ''
@@ -104,7 +106,7 @@ export const UserDropDown = ({
                       </span>
                     </div>
                   </DropdownMenuItem>
-                </SettingsDialog>
+                </DialogTrigger>
               ) : (
                 <DropdownMenuItem
                   className={`group cursor-pointer rounded-lg focus:bg-white ${
@@ -137,5 +139,6 @@ export const UserDropDown = ({
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
+    </SettingsDialog>
   )
 }
