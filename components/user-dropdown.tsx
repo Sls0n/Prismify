@@ -3,6 +3,7 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import SettingsDialog from './settings-dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +20,7 @@ import React from 'react'
 
 const menuItems = [
   { href: '/profile', icon: User, label: 'Profile' },
-  { href: '/settings', icon: Settings, label: 'Settings' },
+  { icon: Settings, label: 'Settings', isSettings: true },
   { href: '/upgrade', icon: Zap, label: 'Upgrade', separateFromHere: true },
   { icon: LogOut, label: 'Logout' },
 ]
@@ -86,28 +87,45 @@ export const UserDropDown = ({
         <DropdownMenuGroup>
           {menuItems.map((item, index) => (
             <React.Fragment key={item.label}>
-              <DropdownMenuItem
-                className={`group cursor-pointer rounded-lg focus:bg-white ${
-                  index !== menuItems.length - 1 ? 'mb-1' : ''
-                }`}
-                key={item.href}
-                onClick={() =>
-                  item.label === 'Logout' ? handleSignOut() : null
-                }
-              >
-                <div
-                  // href={item.href}
-                  className="flex w-full items-center focus:shadow-md"
+              {item.isSettings ? (
+                <SettingsDialog>
+                  <DropdownMenuItem
+                    className={`group cursor-pointer rounded-lg focus:bg-white ${
+                      index !== menuItems.length - 1 ? 'mb-1' : ''
+                    }`}
+                  >
+                    <div className="flex w-full items-center focus:shadow-md">
+                      <item.icon
+                        size={18}
+                        className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                      />
+                      <span className="font-medium group-focus:text-black/90">
+                        {item.label}
+                      </span>
+                    </div>
+                  </DropdownMenuItem>
+                </SettingsDialog>
+              ) : (
+                <DropdownMenuItem
+                  className={`group cursor-pointer rounded-lg focus:bg-white ${
+                    index !== menuItems.length - 1 ? 'mb-1' : ''
+                  }`}
+                  key={item.href}
+                  onClick={() =>
+                    item.label === 'Logout' ? handleSignOut() : null
+                  }
                 >
-                  <item.icon
-                    size={18}
-                    className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
-                  />
-                  <span className="font-medium group-focus:text-black/90">
-                    {item.label}
-                  </span>
-                </div>
-              </DropdownMenuItem>
+                  <div className="flex w-full items-center focus:shadow-md">
+                    <item.icon
+                      size={18}
+                      className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                    />
+                    <span className="font-medium group-focus:text-black/90">
+                      {item.label}
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              )}
               {item.separateFromHere && (
                 <DropdownMenuSeparator
                   key={item.label}
