@@ -49,7 +49,10 @@ export default function SettingsDialog({ children }: SettingsDialogProps) {
       if (!res.ok) {
         throw new Error(await res.text())
       }
-      await update()
+      await update({
+        name,
+        image,
+      })
       router.refresh()
       toast({ title: 'Profile updated!' })
       setOpen(false)
