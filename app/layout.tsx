@@ -97,7 +97,7 @@ export default function RootLayout({
   return (
     <html
       suppressHydrationWarning
-      className={cn('antialiased', Font.className)}
+      className={cn('dark antialiased', Font.className)}
       lang="en"
     >
       <body className="min-h-screen bg-[#111] text-dark">
