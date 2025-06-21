@@ -3,6 +3,8 @@
 'use client'
 
 import { Button } from '@/components/ui/button'
+import SettingsDialog from './settings-dialog'
+import { DialogTrigger } from '@/components/ui/dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -19,7 +21,7 @@ import React from 'react'
 
 const menuItems = [
   { href: '/profile', icon: User, label: 'Profile' },
-  { href: '/settings', icon: Settings, label: 'Settings' },
+  { icon: Settings, label: 'Settings', isSettings: true },
   { href: '/upgrade', icon: Zap, label: 'Upgrade', separateFromHere: true },
   { icon: LogOut, label: 'Logout' },
 ]
@@ -48,10 +50,11 @@ export const UserDropDown = ({
   }
 
   return (
-    <DropdownMenu>
-      <DropdownMenuTrigger asChild className="group flex items-center">
-        <Button
-          variant="ghost"
+    <SettingsDialog>
+      <DropdownMenu>
+        <DropdownMenuTrigger asChild className="group flex items-center">
+          <Button
+            variant="ghost"
           className="flex h-10 cursor-pointer items-center justify-center gap-x-2.5 rounded-xl bg-[#181818] px-4 py-2 font-medium text-dark"
         >
           <div className="h-7 w-7 overflow-hidden ">
@@ -86,28 +89,45 @@ export const UserDropDown = ({
         <DropdownMenuGroup>
           {menuItems.map((item, index) => (
             <React.Fragment key={item.label}>
-              <DropdownMenuItem
-                className={`group cursor-pointer rounded-lg focus:bg-white ${
-                  index !== menuItems.length - 1 ? 'mb-1' : ''
-                }`}
-                key={item.href}
-                onClick={() =>
-                  item.label === 'Logout' ? handleSignOut() : null
-                }
-              >
-                <div
-                  // href={item.href}
-                  className="flex w-full items-center focus:shadow-md"
+              {item.isSettings ? (
+                <DialogTrigger asChild>
+                  <DropdownMenuItem
+                    className={`group cursor-pointer rounded-lg focus:bg-white ${
+                      index !== menuItems.length - 1 ? 'mb-1' : ''
+                    }`}
+                  >
+                    <div className="flex w-full items-center focus:shadow-md">
+                      <item.icon
+                        size={18}
+                        className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                      />
+                      <span className="font-medium group-focus:text-black/90">
+                        {item.label}
+                      </span>
+                    </div>
+                  </DropdownMenuItem>
+                </DialogTrigger>
+              ) : (
+                <DropdownMenuItem
+                  className={`group cursor-pointer rounded-lg focus:bg-white ${
+                    index !== menuItems.length - 1 ? 'mb-1' : ''
+                  }`}
+                  key={item.href}
+                  onClick={() =>
+                    item.label === 'Logout' ? handleSignOut() : null
+                  }
                 >
-                  <item.icon
-                    size={18}
-                    className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
-                  />
-                  <span className="font-medium group-focus:text-black/90">
-                    {item.label}
-                  </span>
-                </div>
-              </DropdownMenuItem>
+                  <div className="flex w-full items-center focus:shadow-md">
+                    <item.icon
+                      size={18}
+                      className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                    />
+                    <span className="font-medium group-focus:text-black/90">
+                      {item.label}
+                    </span>
+                  </div>
+                </DropdownMenuItem>
+              )}
               {item.separateFromHere && (
                 <DropdownMenuSeparator
                   key={item.label}
@@ -119,5 +139,6 @@ export const UserDropDown = ({
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
+    </SettingsDialog>
   )
 }
