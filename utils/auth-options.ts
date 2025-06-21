@@ -13,7 +13,16 @@ declare module 'next-auth' {
     user: {
       id: string
       isCreator: boolean
+      createdAt: string
     } & DefaultSession['user']
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    id: string
+    isCreator: boolean
+    createdAt: string
   }
 }
 
@@ -41,6 +50,8 @@ export const authOptions: NextAuthOptions = {
           id: user.id,
           // @ts-expect-error isCreator is there but its not showing
           isCreator: user?.isCreator,
+          // @ts-expect-error createdAt is on user model
+          createdAt: user?.createdAt,
         }
       }
 
@@ -54,6 +65,7 @@ export const authOptions: NextAuthOptions = {
           ...session.user,
           id: token.id,
           isCreator: token.isCreator,
+          createdAt: token.createdAt,
         },
       }
     },
