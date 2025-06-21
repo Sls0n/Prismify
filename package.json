@@ -18,7 +18,10 @@
     "lint": "next lint",
     "setup": "pnpm install && pnpm exec prisma generate",
     "db:push": "prisma db push",
-    "db:studio": "prisma studio"
+    "db:studio": "prisma studio",
+    "docker:up": "docker-compose up -d",
+    "docker:down": "docker-compose down",
+    "docker:clean": "docker-compose down -v"
   },
   "dependencies": {
     "@fseehawer/react-circular-slider": "^2.6.1",
