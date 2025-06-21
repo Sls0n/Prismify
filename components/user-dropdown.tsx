@@ -4,6 +4,7 @@
 
 import { Button } from '@/components/ui/button'
 import SettingsDialog from './settings-dialog'
+import ProfileDialog from './profile-dialog'
 import { DialogTrigger } from '@/components/ui/dialog'
 import {
   DropdownMenu,
@@ -20,7 +21,7 @@ import Image from 'next/image'
 import React from 'react'
 
 const menuItems = [
-  { href: '/profile', icon: User, label: 'Profile' },
+  { icon: User, label: 'Profile', isProfile: true },
   { icon: Settings, label: 'Settings', isSettings: true },
   { href: '/upgrade', icon: Zap, label: 'Upgrade', separateFromHere: true },
   { icon: LogOut, label: 'Logout' },
@@ -50,11 +51,10 @@ export const UserDropDown = ({
   }
 
   return (
-    <SettingsDialog>
-      <DropdownMenu>
-        <DropdownMenuTrigger asChild className="group flex items-center">
-          <Button
-            variant="ghost"
+    <DropdownMenu>
+      <DropdownMenuTrigger asChild className="group flex items-center">
+        <Button
+          variant="ghost"
           className="flex h-10 cursor-pointer items-center justify-center gap-x-2.5 rounded-xl bg-[#181818] px-4 py-2 font-medium text-dark"
         >
           <div className="h-7 w-7 overflow-hidden ">
@@ -89,24 +89,46 @@ export const UserDropDown = ({
         <DropdownMenuGroup>
           {menuItems.map((item, index) => (
             <React.Fragment key={item.label}>
-              {item.isSettings ? (
-                <DialogTrigger asChild>
-                  <DropdownMenuItem
-                    className={`group cursor-pointer rounded-lg focus:bg-white ${
-                      index !== menuItems.length - 1 ? 'mb-1' : ''
-                    }`}
-                  >
-                    <div className="flex w-full items-center focus:shadow-md">
-                      <item.icon
-                        size={18}
-                        className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
-                      />
-                      <span className="font-medium group-focus:text-black/90">
-                        {item.label}
-                      </span>
-                    </div>
-                  </DropdownMenuItem>
-                </DialogTrigger>
+              {item.isProfile ? (
+                <ProfileDialog>
+                  <DialogTrigger asChild>
+                    <DropdownMenuItem
+                      className={`group cursor-pointer rounded-lg focus:bg-white ${
+                        index !== menuItems.length - 1 ? 'mb-1' : ''
+                      }`}
+                    >
+                      <div className="flex w-full items-center focus:shadow-md">
+                        <item.icon
+                          size={18}
+                          className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                        />
+                        <span className="font-medium group-focus:text-black/90">
+                          {item.label}
+                        </span>
+                      </div>
+                    </DropdownMenuItem>
+                  </DialogTrigger>
+                </ProfileDialog>
+              ) : item.isSettings ? (
+                <SettingsDialog>
+                  <DialogTrigger asChild>
+                    <DropdownMenuItem
+                      className={`group cursor-pointer rounded-lg focus:bg-white ${
+                        index !== menuItems.length - 1 ? 'mb-1' : ''
+                      }`}
+                    >
+                      <div className="flex w-full items-center focus:shadow-md">
+                        <item.icon
+                          size={18}
+                          className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                        />
+                        <span className="font-medium group-focus:text-black/90">
+                          {item.label}
+                        </span>
+                      </div>
+                    </DropdownMenuItem>
+                  </DialogTrigger>
+                </SettingsDialog>
               ) : (
                 <DropdownMenuItem
                   className={`group cursor-pointer rounded-lg focus:bg-white ${
@@ -139,6 +161,5 @@ export const UserDropDown = ({
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-    </SettingsDialog>
   )
 }
