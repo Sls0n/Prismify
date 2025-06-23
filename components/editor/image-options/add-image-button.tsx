@@ -121,14 +121,6 @@ export default function AddImageButton({}: AddImageButtonProps) {
             </div>
             <input
               {...getInputProps()}
-              id="upload"
-              ref={uploadRef}
-              name="upload"
-              type="file"
-              onChange={handleImageChange}
-              accept="image/*"
-              className="sr-only"
-              tabIndex={-1}
             />
           </div>
         )}
