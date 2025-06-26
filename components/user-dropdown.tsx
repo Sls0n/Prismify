@@ -4,6 +4,7 @@
 
 import { Button } from '@/components/ui/button'
 import SettingsDialog from './settings-dialog'
+import ProfileDialog from './profile-dialog'
 import { DialogTrigger } from '@/components/ui/dialog'
 import {
   DropdownMenu,
@@ -20,7 +21,7 @@ import Image from 'next/image'
 import React from 'react'
 
 const menuItems = [
-  { href: '/profile', icon: User, label: 'Profile' },
+  { icon: User, label: 'Profile', isProfile: true },
   { icon: Settings, label: 'Settings', isSettings: true },
   { href: '/upgrade', icon: Zap, label: 'Upgrade', separateFromHere: true },
   { icon: LogOut, label: 'Logout' },
@@ -33,6 +34,7 @@ export const UserDropDown = ({
   username: string
   img: string
 }) => {
+  const [profileOpen, setProfileOpen] = React.useState(false)
   const handleSignOut = async () => {
     try {
       await signOut()
@@ -50,6 +52,7 @@ export const UserDropDown = ({
   }
 
   return (
+    <>
     <SettingsDialog>
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="group flex items-center">
@@ -113,9 +116,13 @@ export const UserDropDown = ({
                     index !== menuItems.length - 1 ? 'mb-1' : ''
                   }`}
                   key={item.href}
-                  onClick={() =>
-                    item.label === 'Logout' ? handleSignOut() : null
-                  }
+                  onClick={() => {
+                    if (item.isProfile) {
+                      setProfileOpen(true)
+                    } else if (item.label === 'Logout') {
+                      handleSignOut()
+                    }
+                  }}
                 >
                   <div className="flex w-full items-center focus:shadow-md">
                     <item.icon
@@ -140,5 +147,7 @@ export const UserDropDown = ({
       </DropdownMenuContent>
     </DropdownMenu>
     </SettingsDialog>
+    <ProfileDialog open={profileOpen} onOpenChange={setProfileOpen} />
+    </>
   )
 }
