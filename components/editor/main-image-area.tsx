@@ -31,15 +31,19 @@ const ImageUpload = () => {
 
     setInitialImageUploaded,
     initialImageUploaded,
+    defaultStyle,
   } = useImageOptions()
-  const { selectedImage, setSelectedImage, setSelectedText } = useSelectedLayers()
+  const { selectedImage, setSelectedImage, setSelectedText } =
+    useSelectedLayers()
   const { setShowControls, isSelecting, isMultipleTargetSelected } =
     useMoveable()
-  const { exactDomResolution } = useResizeCanvas()
+  const { exactDomResolution, setResolution, automaticResolution } =
+    useResizeCanvas()
   const { width: exactDomWidth, height: exactDomHeight } =
     splitWidthHeight(exactDomResolution)
   const { frameHeight, showStroke, arcDarkMode } = useFrameOptions()
-  const { imagesCheck } = useColorExtractor()
+  const { imagesCheck, setImagesCheck } = useColorExtractor()
+  const [isCanvasDragging, setIsCanvasDragging] = useState<boolean>(false)
 
   useEffect(() => {
     if (images.length === 0) {
@@ -71,6 +75,103 @@ const ImageUpload = () => {
     // setShowControls(false)
   })
 
+  useEffect(() => {
+    const handlePaste = async (event: ClipboardEvent) => {
+      const items = event.clipboardData?.items
+      if (!items) return
+
+      const itemsArray = Array.from(items)
+      for (const item of itemsArray) {
+        if (item.type.indexOf('image') === 0) {
+          const file = item.getAsFile()
+          if (file) {
+            const imageUrl = URL.createObjectURL(file)
+            setInitialImageUploaded(true)
+            setImagesCheck([...imagesCheck, imageUrl])
+            addImage({
+              image: imageUrl,
+              id: images.length + 1,
+              style: defaultStyle,
+            })
+            setSelectedImage(images.length + 1)
+
+            if (images.length === 0 && automaticResolution) {
+              const padding = 250
+              const img = new Image()
+              img.src = imageUrl
+
+              img.onload = () => {
+                const { naturalWidth, naturalHeight } = img
+                const newResolution = calculateEqualCanvasSize(
+                  naturalWidth,
+                  naturalHeight,
+                  padding
+                )
+                setResolution(newResolution.toString())
+              }
+            }
+          }
+        }
+      }
+    }
+
+    document.addEventListener('paste', handlePaste)
+    return () => document.removeEventListener('paste', handlePaste)
+  }, [
+    images,
+    imagesCheck,
+    addImage,
+    setImagesCheck,
+    setInitialImageUploaded,
+    setSelectedImage,
+    defaultStyle,
+    automaticResolution,
+    setResolution,
+  ])
+
+  const handleImageChange = useCallback(
+    (file: any) => {
+      if (file) {
+        const imageUrl = URL.createObjectURL(file)
+        setInitialImageUploaded(true)
+        setImagesCheck([...imagesCheck, imageUrl])
+        addImage({
+          image: imageUrl,
+          id: images.length + 1,
+          style: defaultStyle,
+        })
+        setSelectedImage(images.length + 1)
+
+        if (images.length > 0) return
+        if (automaticResolution) {
+          const padding = 250
+          const img = new Image()
+          img.src = imageUrl
+
+          img.onload = () => {
+            const { naturalWidth, naturalHeight } = img
+            const newResolution = calculateEqualCanvasSize(
+              naturalWidth,
+              naturalHeight,
+              padding
+            )
+            setResolution(newResolution.toString())
+          }
+        }
+      }
+    },
+    [
+      setInitialImageUploaded,
+      setImagesCheck,
+      imagesCheck,
+      images,
+      defaultStyle,
+      setSelectedImage,
+      automaticResolution,
+      setResolution,
+    ]
+  )
+
   // useOnClickOutside(multipleTargetRef, () => {
   //   setShowControls(false)
 
@@ -87,136 +188,152 @@ const ImageUpload = () => {
   // } = images[selectedImage - 1]?.style || {}
 
   return (
-    <>
-      {!initialImageUploaded && <LoadAImage />}
-      {images && (
-        <>
-          {images.map((image, index) => {
-            if (image.image !== '')
-              return (
-                <ContextMenuImage key={image.id + index}>
-                  <div
-                    className={`image image-check absolute z-[2] flex-1 overflow-hidden ${
-                      isSelecting ? 'selectable' : ''
-                    } ${selectedImage ? '' : ''}`}
-                    ref={
-                      !isMultipleTargetSelected
-                        ? image.id === selectedImage
-                          ? targetRef
-                          : null
-                        : targetRef
-                    }
-                    style={{
-                      // transition:
-                      //   'box-shadow 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
-                      transformStyle: 'preserve-3d',
-                      transformOrigin: `50% 50%`,
-                      // rotate: `${image.style.rotate}deg`,
-                      // transform: `scale(${image.style.imageSize}) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg) `,
-                      transform: `perspective(${image.style.perspective}px) translate(${image.style.translateX}%, ${image.style.translateY}%) scale(${image.style.imageSize}) rotate(${image.style.rotate}deg) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
-                      borderRadius: `${image.style.imageRoundness}rem`,
-                      boxShadow:
-                        image.style.shadowName !== 'Medium'
-                          ? `${image.style.imageShadow} ${convertHexToRgba(
-                              image.style.shadowColor,
-                              image.style.shadowOpacity
-                            )}${
-                              image.frame === 'Shadow'
-                                ? ',11px 11px rgba(0,0,0,0.8)'
-                                : ''
-                            }`
-                          : `0px 18px 88px -4px ${convertHexToRgba(
-                              image.style.shadowColor,
-                              image.style.shadowOpacity
-                            )}, 0px 8px 28px -6px ${convertHexToRgba(
-                              image.style.shadowColor,
-                              image.style.shadowOpacity
-                            )}${
-                              image.frame === 'Shadow'
-                                ? ',11px 11px rgba(0,0,0,0.8)'
-                                : ''
-                            }`,
-
-                      padding:
-                        image.frame !== 'None'
-                          ? image.frame === 'Arc'
-                            ? frameHeight === 'small'
-                              ? '10px'
-                              : frameHeight === 'medium'
-                              ? '13px'
-                              : '15px'
-                            : ''
-                          : `${image.style.insetSize}px`,
-
-                      backgroundColor:
-                        image.style.insetSize !== '0' && image.frame === 'None'
-                          ? `${image?.style.insetColor}`
-                          : image.frame === 'Arc'
-                          ? arcDarkMode
-                            ? '#00000050'
-                            : '#ffffff50'
-                          : image.frame === 'Shadow'
-                          ? 'rgba(0,0,0,0.8)'
-                          : 'transparent',
-
-                      border:
-                        image.frame === 'Arc'
-                          ? arcDarkMode
-                            ? '1px solid #00000020'
-                            : '1px solid #ffffff60'
-                          : image.frame === 'Shadow'
-                          ? showStroke
-                            ? '3px solid rgba(0,0,0,0.8)'
-                            : ''
-                          : '',
-
-                      zIndex: `${image.style.zIndex}`,
-                    }}
-                    id={`${image.id}`}
-                    onClick={() => {
-                      setShowControls(true)
-                      setSelectedImage(image.id)
-                    }}
-                    // on right click too do the same
-                    onContextMenu={(e) => {
-                      setShowControls(true)
-                      setSelectedImage(image.id)
-                    }}
-                  >
-                    <BrowserFrame frame={image.frame || 'None'} />
-
-                    <img
-                      draggable={false}
-                      className={`pointer-events-none h-full w-full shrink-0 ${
-                        image.frame === 'Arc' ? 'shadow-md' : ''
-                      }`}
-                      id={`img-${image.id}`}
-                      src={image.image}
-                      alt="Uploaded image"
+    <Dropzone
+      multiple={false}
+      onDrop={(acceptedFiles) => {
+        handleImageChange(acceptedFiles[0])
+      }}
+      onDragEnter={() => setIsCanvasDragging(true)}
+      onDragLeave={() => setIsCanvasDragging(false)}
+      noClick
+      noKeyboard
+    >
+      {({ getRootProps, getInputProps }) => (
+        <div {...getRootProps()} className="relative h-full w-full">
+          {isCanvasDragging && (
+            <div className="pointer-events-none absolute inset-0 z-50 flex items-center justify-center rounded-lg border-2 border-dashed border-[#898aeb] bg-[#898aeb]/20">
+              <Upload className="h-8 w-8 text-[#898aeb]" />
+            </div>
+          )}
+          {!initialImageUploaded && <LoadAImage />}
+          {images &&
+            images.map((image, index) => {
+              if (image.image !== '')
+                return (
+                  <ContextMenuImage key={image.id + index}>
+                    <div
+                      className={`image image-check absolute z-[2] flex-1 overflow-hidden ${
+                        isSelecting ? 'selectable' : ''
+                      } ${selectedImage ? '' : ''}`}
+                      ref={
+                        !isMultipleTargetSelected
+                          ? image.id === selectedImage
+                            ? targetRef
+                            : null
+                          : targetRef
+                      }
                       style={{
-                        borderRadius:
-                          image.frame !== 'None'
-                            ? image.frame === 'Arc'
-                              ? `calc(${image.style.imageRoundness}rem - 9px)`
-                              : ''
-                            : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
+                        // transition:
+                        //   'box-shadow 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
+                        transformStyle: 'preserve-3d',
+                        transformOrigin: `50% 50%`,
+                        // rotate: `${image.style.rotate}deg`,
+                        // transform: `scale(${image.style.imageSize}) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg) `,
+                        transform: `perspective(${image.style.perspective}px) translate(${image.style.translateX}%, ${image.style.translateY}%) scale(${image.style.imageSize}) rotate(${image.style.rotate}deg) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
+                        borderRadius: `${image.style.imageRoundness}rem`,
+                        boxShadow:
+                          image.style.shadowName !== 'Medium'
+                            ? `${image.style.imageShadow} ${convertHexToRgba(
+                                image.style.shadowColor,
+                                image.style.shadowOpacity
+                              )}${
+                                image.frame === 'Shadow'
+                                  ? ',11px 11px rgba(0,0,0,0.8)'
+                                  : ''
+                              }`
+                            : `0px 18px 88px -4px ${convertHexToRgba(
+                                image.style.shadowColor,
+                                image.style.shadowOpacity
+                              )}, 0px 8px 28px -6px ${convertHexToRgba(
+                                image.style.shadowColor,
+                                image.style.shadowOpacity
+                              )}${
+                                image.frame === 'Shadow'
+                                  ? ',11px 11px rgba(0,0,0,0.8)'
+                                  : ''
+                              }`,
 
                         padding:
-                          image.frame === 'None'
-                            ? ''
+                          image.frame !== 'None'
+                            ? image.frame === 'Arc'
+                              ? frameHeight === 'small'
+                                ? '10px'
+                                : frameHeight === 'medium'
+                                ? '13px'
+                                : '15px'
+                              : ''
                             : `${image.style.insetSize}px`,
 
                         backgroundColor:
                           image.style.insetSize !== '0' &&
-                          image.frame !== 'None'
+                          image.frame === 'None'
                             ? `${image?.style.insetColor}`
-                            : '',
-                      }}
-                    />
-                  </div>
+                            : image.frame === 'Arc'
+                            ? arcDarkMode
+                              ? '#00000050'
+                              : '#ffffff50'
+                            : image.frame === 'Shadow'
+                            ? 'rgba(0,0,0,0.8)'
+                            : 'transparent',
 
-                  {/* Trying layout feature! */}
-                  {/* <div
+                        border:
+                          image.frame === 'Arc'
+                            ? arcDarkMode
+                              ? '1px solid #00000020'
+                              : '1px solid #ffffff60'
+                            : image.frame === 'Shadow'
+                            ? showStroke
+                              ? '3px solid rgba(0,0,0,0.8)'
+                              : ''
+                            : '',
+
+                        zIndex: `${image.style.zIndex}`,
+                      }}
+                      id={`${image.id}`}
+                      onClick={() => {
+                        setShowControls(true)
+                        setSelectedImage(image.id)
+                      }}
+                      // on right click too do the same
+                      onContextMenu={(e) => {
+                        setShowControls(true)
+                        setSelectedImage(image.id)
+                      }}
+                    >
+                      <BrowserFrame frame={image.frame || 'None'} />
+
+                      <img
+                        draggable={false}
+                        className={`pointer-events-none h-full w-full shrink-0 ${
+                          image.frame === 'Arc' ? 'shadow-md' : ''
+                        }`}
+                        id={`img-${image.id}`}
+                        src={image.image}
+                        alt="Uploaded image"
+                        style={{
+                          borderRadius:
+                            image.frame !== 'None'
+                              ? image.frame === 'Arc'
+                                ? `calc(${image.style.imageRoundness}rem - 9px)`
+                                : ''
+                              : `calc(${image.style.imageRoundness}rem - ${image.style.insetSize}px)`,
+
+                          padding:
+                            image.frame === 'None'
+                              ? ''
+                              : `${image.style.insetSize}px`,
+
+                          backgroundColor:
+                            image.style.insetSize !== '0' &&
+                            image.frame !== 'None'
+                              ? `${image?.style.insetColor}`
+                              : '',
+                        }}
+                      />
+                    </div>
+
+                    {/* Trying layout feature! */}
+                    {/* <div
                     className={`flex flex-col image image-check absolute flex-1 z-[2]   ${
                       isSelecting ? 'selectable' : ''
                     } ${selectedImage ? '' : ''}`}
@@ -296,12 +413,13 @@ const ImageUpload = () => {
                       }}
                     />
                   </div> */}
-                </ContextMenuImage>
-              )
-          })}
-        </>
+                  </ContextMenuImage>
+                )
+            })}
+          <input {...getInputProps()} />
+        </div>
       )}
-    </>
+    </Dropzone>
   )
 }
 
@@ -321,46 +439,6 @@ function LoadAImage() {
   const { setBackground } = useBackgroundOptions()
   const [isDragging, setIsDragging] = useState<boolean>(false)
 
-  useEffect(() => {
-    const handlePaste = async (event: ClipboardEvent) => {
-      const items = event.clipboardData?.items
-      if (!items) return
-
-      const itemsArray = Array.from(items)
-      for (const item of itemsArray) {
-        if (item.type.indexOf('image') === 0) {
-          const file = item.getAsFile()
-          if (file) {
-            const imageUrl = URL.createObjectURL(file)
-            setInitialImageUploaded(true)
-            setImagesCheck([...imagesCheck, imageUrl])
-            addImage({ image: imageUrl, id: images.length + 1, style: defaultStyle })
-            setSelectedImage(images.length + 1)
-
-            if (images.length === 0 && automaticResolution) {
-              const padding = 250
-              const img = new Image()
-              img.src = imageUrl
-
-              img.onload = () => {
-                const { naturalWidth, naturalHeight } = img
-                const newResolution = calculateEqualCanvasSize(
-                  naturalWidth,
-                  naturalHeight,
-                  padding
-                )
-                setResolution(newResolution.toString())
-              }
-            }
-          }
-        }
-      }
-    }
-
-    document.addEventListener('paste', handlePaste)
-    return () => document.removeEventListener('paste', handlePaste)
-  }, [images, imagesCheck, addImage, setImagesCheck, setInitialImageUploaded, setSelectedImage, defaultStyle, automaticResolution, setResolution])
-
   const handleImageLoad = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
       const file = event.target.files?.[0]
@@ -370,7 +448,11 @@ function LoadAImage() {
         setInitialImageUploaded(true)
 
         setImagesCheck([...imagesCheck, imageUrl])
-        addImage({ image: imageUrl, id: images.length + 1, style: defaultStyle })
+        addImage({
+          image: imageUrl,
+          id: images.length + 1,
+          style: defaultStyle,
+        })
         setSelectedImage(images.length + 1)
 
         if (images.length > 0) return
@@ -412,7 +494,11 @@ function LoadAImage() {
         setInitialImageUploaded(true)
 
         setImagesCheck([...imagesCheck, imageUrl])
-        addImage({ image: imageUrl, id: images.length + 1, style: defaultStyle })
+        addImage({
+          image: imageUrl,
+          id: images.length + 1,
+          style: defaultStyle,
+        })
         setSelectedImage(images.length + 1)
 
         if (images.length > 0) return
