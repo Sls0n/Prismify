@@ -22,12 +22,12 @@ import { useSession } from 'next-auth/react'
 import { Image as ImageIcon, Save, Settings as SettingsIcon, User as UserIcon } from 'lucide-react'
 
 interface SettingsDialogProps {
-  children: React.ReactNode
+  open: boolean
+  onOpenChange: (open: boolean) => void
 }
 
-export default function SettingsDialog({ children }: SettingsDialogProps) {
+export default function SettingsDialog({ open, onOpenChange }: SettingsDialogProps) {
   const isDesktop = useMediaQuery('(min-width: 768px)')
-  const [open, setOpen] = useState(false)
   const router = useRouter()
   const { data: session, update } = useSession()
   const [name, setName] = useState(session?.user?.name || '')
@@ -66,7 +66,7 @@ export default function SettingsDialog({ children }: SettingsDialogProps) {
       
       router.refresh()
       toast({ title: 'Profile updated!' })
-      setOpen(false)
+      onOpenChange(false)
     } catch (error: any) {
       toast({
         title: 'Error updating profile',
@@ -132,8 +132,7 @@ export default function SettingsDialog({ children }: SettingsDialogProps) {
 
   if (isDesktop) {
     return (
-      <Dialog open={open} onOpenChange={setOpen}>
-        {children}
+      <Dialog open={open} onOpenChange={onOpenChange}>
         <DialogContent className="p-6">
           <DialogHeader>
             <DialogTitle className="mb-4 flex items-center gap-1.5">
@@ -148,8 +147,7 @@ export default function SettingsDialog({ children }: SettingsDialogProps) {
   }
 
   return (
-    <Drawer open={open} onOpenChange={setOpen}>
-      {children}
+    <Drawer open={open} onOpenChange={onOpenChange}>
       <DrawerContent className="mb-6 rounded-xl bg-[#121212] px-6 py-4">
         <DrawerHeader className="text-left">
           <DrawerTitle className="mb-4 flex items-center gap-1.5">
