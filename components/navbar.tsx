@@ -38,6 +38,7 @@ const UserSection = ({ isHome }: { isHome: boolean }) => {
         <UserDropDown
           img={data?.user?.image || '/images/fallback.jpg'}
           username={data?.user?.name || 'User'}
+          isCreator={data?.user.isCreator ?? false}
         />
       ) : (
         <AuthModal />

@@ -181,7 +181,6 @@ export default function BlogForm() {
 
           <hr className="-mx-8 border-border pb-4" />
 
-          {/* @ts-expect-error children missing error */}
           <EditorProvider
             slotBefore={<MenuBar />}
             extensions={extensions}
@@ -195,7 +194,7 @@ export default function BlogForm() {
               },
             }}
             onUpdate={(content) =>
-              setBlogOutput( content?.editor?.getHTML())
+              setBlogOutput(content?.editor?.getHTML())
             }
           />
         </div>

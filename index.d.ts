@@ -48,3 +48,5 @@ declare module 'colorthief' {
 }
 
 declare module 'sanitize-html'
+
+declare module 'web-push'
