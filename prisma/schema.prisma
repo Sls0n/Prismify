@@ -19,9 +19,10 @@ model User {
   updatedAt      DateTime  @updatedAt
   isCreator      Boolean   @default(false)
 
-  saves    Saves[]
-  accounts Account[]
-  settings UserSettings?
+  saves            Saves[]
+  accounts         Account[]
+  settings         UserSettings?
+  PushSubscription PushSubscription[]
 }
 
 model Account {
@@ -74,4 +75,20 @@ model UserSettings {
   userId   String  @unique
   isPublic Boolean @default(true)
   user     User    @relation(fields: [userId], references: [id])
+}
+
+model Notification {
+  id        String   @id @default(cuid())
+  title     String
+  body      String
+  createdAt DateTime @default(now())
+}
+
+model PushSubscription {
+  id        String   @id @default(cuid())
+  endpoint  String   @unique
+  keys      Json
+  userId    String?
+  user      User?    @relation(fields: [userId], references: [id])
+  createdAt DateTime @default(now())
 }

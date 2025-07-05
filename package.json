@@ -95,7 +95,8 @@
     "vaul": "^0.8.0",
     "zod": "^3.21.4",
     "zundo": "2.0.0",
-    "zustand": "^4.3.9"
+    "zustand": "^4.3.9",
+    "web-push": "^3.6.2"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
