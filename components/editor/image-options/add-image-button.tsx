@@ -9,7 +9,7 @@ import Dropzone from 'react-dropzone'
 type AddImageButtonProps = {}
 
 export default function AddImageButton({}: AddImageButtonProps) {
-  const { setImages, images, defaultStyle } = useImageOptions()
+  const { addImage, images, defaultStyle } = useImageOptions()
   const { imagesCheck, setImagesCheck } = useColorExtractor()
   const uploadRef = useRef<HTMLInputElement>(null)
   const { automaticResolution, setResolution } = useResizeCanvas()
@@ -17,20 +17,17 @@ export default function AddImageButton({}: AddImageButtonProps) {
 
   const handleImageUpload = (file: File) => {
     const imageUrl = URL.createObjectURL(file)
-    setImages([
-      ...images,
-      {
-        image: imageUrl,
-        id: images.length + 1,
-        style:
-          images.length < 1
-            ? defaultStyle
-            : {
-                ...defaultStyle,
-                imageSize: '0.5',
-              },
-      },
-    ])
+    addImage({
+      image: imageUrl,
+      id: images.length + 1,
+      style:
+        images.length < 1
+          ? defaultStyle
+          : {
+              ...defaultStyle,
+              imageSize: '0.5',
+            },
+    })
     setImagesCheck([...imagesCheck, imageUrl])
 
     if (images.length > 0) return

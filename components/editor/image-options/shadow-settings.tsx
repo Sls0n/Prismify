@@ -15,7 +15,7 @@ import { Slider } from '@/components/ui/slider'
 import { useMoveable } from '@/store/use-moveable'
 
 export default function ShadowSettings() {
-  const { images, setImages, defaultStyle } = useImageOptions()
+  const { images, updateImageStyle } = useImageOptions()
   const { showControls } = useMoveable()
   const { selectedImage } = useSelectedLayers()
 
@@ -44,45 +44,27 @@ export default function ShadowSettings() {
     fullName: string
     preview: string
   }) => {
-    selectedImage &&
-      setImages(
-        images.map((image, index) =>
-          index === selectedImage - 1
-            ? {
-                ...image,
-                style: {
-                  ...image.style,
-                  imageShadow: shadow.shadow,
-                  shadowName: shadow.fullName,
-                  shadowPreview: shadow.preview,
-                },
-              }
-            : image
-        )
-      )
+    if (selectedImage) {
+      updateImageStyle(selectedImage, {
+        imageShadow: shadow.shadow,
+        shadowName: shadow.fullName,
+        shadowPreview: shadow.preview,
+      })
+    }
   }
 
   const handleColorChange = (color: string) => {
-    selectedImage &&
-      setImages(
-        images.map((image, index) =>
-          index === selectedImage - 1
-            ? {
-                ...image,
-                style: {
-                  ...image.style,
-                  shadowColor: color,
-                  imageShadow:
-                    shadows.find(
-                      (shadow) =>
-                        shadow.fullName ===
-                        (images[selectedImage - 1]?.style.shadowName ?? '')
-                    )?.shadow ?? '',
-                },
-              }
-            : image
-        )
-      )
+    if (selectedImage) {
+      updateImageStyle(selectedImage, {
+        shadowColor: color,
+        imageShadow:
+          shadows.find(
+            (shadow) =>
+              shadow.fullName ===
+              (images[selectedImage - 1]?.style.shadowName ?? '')
+          )?.shadow ?? '',
+      })
+    }
   }
 
   return (
@@ -166,20 +148,11 @@ export default function ShadowSettings() {
           max={1}
           step={0.01}
           onValueChange={(value) => {
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          shadowOpacity: value[0],
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, {
+                shadowOpacity: value[0],
+              })
+            }
           }}
           value={
             images.length !== 0 && selectedImage
@@ -190,37 +163,17 @@ export default function ShadowSettings() {
             if (images.length === 0 || !selectedImage) return
             if (Number(images[selectedImage - 1]?.style.shadowOpacity) >= 1)
               return
-            setImages(
-              images.map((image, index) =>
-                index === selectedImage - 1
-                  ? {
-                      ...image,
-                      style: {
-                        ...image.style,
-                        shadowOpacity: Number(image.style.shadowOpacity) + 0.01,
-                      },
-                    }
-                  : image
-              )
-            )
+            updateImageStyle(selectedImage, {
+              shadowOpacity: Number(images[selectedImage - 1]?.style.shadowOpacity) + 0.01,
+            })
           }}
           onDecrement={() => {
             if (images.length === 0 || !selectedImage) return
             if (Number(images[selectedImage - 1]?.style.shadowOpacity) <= 0)
               return
-            setImages(
-              images.map((image, index) =>
-                index === selectedImage - 1
-                  ? {
-                      ...image,
-                      style: {
-                        ...image.style,
-                        shadowOpacity: Number(image.style.shadowOpacity) - 0.01,
-                      },
-                    }
-                  : image
-              )
-            )
+            updateImageStyle(selectedImage, {
+              shadowOpacity: Number(images[selectedImage - 1]?.style.shadowOpacity) - 0.01,
+            })
           }}
         />
       </div>

@@ -13,26 +13,18 @@ import { cn } from '@/utils/button-utils'
 export default function FramePicker() {
   const { setFrameHeight, frameHeight } = useFrameOptions()
   const { selectedImage } = useSelectedLayers()
-  const { setImages, images } = useImageOptions()
+  const { updateImage, images } = useImageOptions()
   const { setShowControls } = useMoveable()
 
   const frameChangeHandler = (frame: FrameTypes) => {
-    selectedImage &&
-      setImages(
-        images.map((image, index) =>
-          index === selectedImage - 1
-            ? {
-                ...image,
-                frame,
-                style: {
-                  ...image.style,
-                  imageRoundness:
-                    frame === 'None' ? 0.4 : frame === 'Arc' ? 1.5 : 0.7,
-                },
-              }
-            : image
-        )
-      )
+    if (selectedImage) {
+      updateImage(selectedImage, {
+        frame,
+        style: {
+          imageRoundness: frame === 'None' ? 0.4 : frame === 'Arc' ? 1.5 : 0.7,
+        },
+      })
+    }
     setShowControls(false)
   }
 

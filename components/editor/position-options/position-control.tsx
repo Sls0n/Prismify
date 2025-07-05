@@ -15,30 +15,19 @@ import { useEffect, useCallback } from 'react'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 
 export default function PositionControl() {
-  const { images, setImages } = useImageOptions()
+  const { images, updateImageStyle } = useImageOptions()
   const { selectedImage } = useSelectedLayers()
 
   const move = useCallback(
     (deltaX: number, deltaY: number) => {
-      selectedImage &&
-        setImages(
-          images.map((image, index) =>
-            index === selectedImage - 1
-              ? {
-                  ...image,
-                  style: {
-                    ...image.style,
-                    translateX:
-                      images[selectedImage - 1]?.style.translateX + deltaX,
-                    translateY:
-                      images[selectedImage - 1]?.style.translateY + deltaY,
-                  },
-                }
-              : image
-          )
-        )
+      if (selectedImage) {
+        updateImageStyle(selectedImage, {
+          translateX: images[selectedImage - 1]?.style.translateX + deltaX,
+          translateY: images[selectedImage - 1]?.style.translateY + deltaY,
+        })
+      }
     },
-    [images, setImages, selectedImage]
+    [images, updateImageStyle, selectedImage]
   )
 
   useEffect(() => {
@@ -68,21 +57,9 @@ export default function PositionControl() {
   }, [move])
 
   const centerImage = () => {
-    selectedImage &&
-      setImages(
-        images.map((image, index) =>
-          index === selectedImage - 1
-            ? {
-                ...image,
-                style: {
-                  ...image.style,
-                  translateX: 0,
-                  translateY: 0,
-                },
-              }
-            : image
-        )
-      )
+    if (selectedImage) {
+      updateImageStyle(selectedImage, { translateX: 0, translateY: 0 })
+    }
   }
 
   return (

@@ -17,7 +17,7 @@ export default function ContextMenuText({
 }: {
   children: React.ReactNode
 }) {
-  const { setTexts, texts } = useImageOptions()
+  const { setTexts, texts, updateText, updateTextStyle } = useImageOptions()
   const { selectedText, setSelectedText } = useSelectedLayers()
   const { showTextControls, setShowTextControls } = useMoveable()
 
@@ -26,38 +26,19 @@ export default function ContextMenuText({
       setTexts([])
       return
     }
-    selectedText &&
-    setTexts(
-      texts.map((text, index) =>
-        index === selectedText - 1
-          ? {
-              ...text,
-              content: '',
-              text: '',
-            }
-          : text
-      )
-    )
+    if (selectedText) {
+      updateText(selectedText, { content: '' })
+    }
   }
 
   const bringToFrontOrBack = (direction: 'front' | 'back') => {
     if (selectedText) {
-      setTexts(
-        texts.map((text, index) =>
-          index === selectedText - 1
-            ? {
-                ...text,
-                style: {
-                  ...text.style,
-                  zIndex:
-                    direction === 'front'
-                      ? text.style.zIndex + 1
-                      : text.style.zIndex - 1,
-                },
-              }
-            : text
-        )
-      )
+      updateTextStyle(selectedText, {
+        zIndex:
+          direction === 'front'
+            ? texts[selectedText - 1].style.zIndex + 1
+            : texts[selectedText - 1].style.zIndex - 1,
+      })
     }
   }
 
