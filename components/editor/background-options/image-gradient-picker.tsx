@@ -27,7 +27,7 @@ export default function ImageGradientPicker() {
 
   const fetchUnsplashPictures = async (page: number) => {
     const response = await fetch(
-      `https://api.unsplash.com/collections/5wgHcmn38m4/photos?page=${page}&per_page=55&q=100&fit=clip&w=1500&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
+      `https://api.unsplash.com/collections/5wgHcmn38m4/photos?page=${page}&per_page=30&q=100&fit=clip&w=1500&client_id=${process.env.NEXT_PUBLIC_UNSPLASH_ACCESS_KEY}`
     )
     const data = await response.json()
     return data

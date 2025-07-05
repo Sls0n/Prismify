@@ -19,19 +19,25 @@ import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import React from 'react'
 
-const baseItems = [
+interface MenuItem {
+  icon: React.ComponentType<{ size?: number; className?: string }>
+  label: string
+  href?: string
+  isProfile?: boolean
+  isSettings?: boolean
+  separateFromHere?: boolean
+}
+
+const baseItems: MenuItem[] = [
   { icon: User, label: 'Profile', isProfile: true },
   { icon: Settings, label: 'Settings', isSettings: true },
   { href: '/upgrade', icon: Zap, label: 'Upgrade', separateFromHere: true },
   { icon: LogOut, label: 'Logout' },
 ]
 
-const getMenuItems = (isCreator: boolean) => {
+const getMenuItems = (isCreator: boolean): MenuItem[] => {
   return isCreator
-    ? [
-        { href: '/admin/notifications', icon: User, label: 'Admin' },
-        ...baseItems,
-      ]
+    ? [{ href: '/admin/notifications', icon: User, label: 'Admin' }, ...baseItems]
     : baseItems
 }
 
@@ -47,7 +53,7 @@ export const UserDropDown = ({
   const [profileOpen, setProfileOpen] = React.useState(false)
   const [settingsOpen, setSettingsOpen] = React.useState(false)
   const menuItems = getMenuItems(isCreator)
-
+  
   const handleSignOut = async () => {
     try {
       await signOut()
@@ -64,7 +70,7 @@ export const UserDropDown = ({
     }
   }
 
-  const handleMenuItemClick = (item: (typeof menuItems)[0]) => {
+  const handleMenuItemClick = (item: MenuItem) => {
     if (item.isProfile) {
       setProfileOpen(true)
     } else if (item.isSettings) {

@@ -55,8 +55,8 @@
     "@tiptap/extension-underline": "^2.1.13",
     "@tiptap/react": "^2.1.11",
     "@tiptap/starter-kit": "^2.1.11",
-    "@types/react": "19.0.12",
-    "@types/react-dom": "19.0.4",
+    "@types/react": "19.0.0",
+    "@types/react-dom": "19.0.0",
     "@vercel/analytics": "^1.0.2",
     "autoprefixer": "10.4.14",
     "axios": "^1.4.0",
@@ -70,7 +70,7 @@
     "html-to-image": "^1.11.11",
     "just-throttle": "^4.2.0",
     "lucide-react": "^0.265.0",
-    "next": "15.2.4",
+    "next": "15.1.0",
     "next-auth": "^4.24.11",
     "next-themes": "^0.2.1",
     "onnxruntime-web": "1.21.0-dev.20250206-d981b153d3",
@@ -93,10 +93,10 @@
     "tailwindcss-animate": "^1.0.6",
     "typescript": "5.1.6",
     "vaul": "^0.8.0",
+    "web-push": "^3.6.7",
     "zod": "^3.21.4",
     "zundo": "2.0.0",
-    "zustand": "^4.3.9",
-    "web-push": "^3.6.2"
+    "zustand": "^4.3.9"
   },
   "devDependencies": {
     "@types/file-saver": "^2.0.5",
@@ -105,10 +105,5 @@
     "prettier-plugin-tailwindcss": "^0.3.0",
     "prisma": "^5.7.1"
   },
-  "pnpm": {
-    "overrides": {
-      "@types/react": "19.0.12",
-      "@types/react-dom": "19.0.4"
-    }
-  }
+  "packageManager": "pnpm@8.15.5+sha256.4b4efa12490e5055d59b9b9fc9438b7d581a6b7af3b5675eb5c5f447cee1a589"
 }
