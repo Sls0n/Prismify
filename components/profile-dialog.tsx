@@ -1,8 +1,7 @@
 'use client'
 
-import { useEffect, useState } from 'react'
+import { useMemo } from 'react'
 import { useSession } from 'next-auth/react'
-import Image from 'next/image'
 import { User as UserIcon } from 'lucide-react'
 import {
   Dialog,
@@ -24,79 +23,65 @@ interface ProfileDialogProps {
   onOpenChange: (open: boolean) => void
 }
 
-export default function ProfileDialog({ open, onOpenChange }: ProfileDialogProps) {
+export default function ProfileDialog({
+  open,
+  onOpenChange,
+}: ProfileDialogProps) {
   const isDesktop = useMediaQuery('(min-width: 768px)')
   const { data } = useSession()
-  const [joined, setJoined] = useState<string | null>(null)
 
-  useEffect(() => {
-    async function fetchJoinDate() {
-      try {
-        const res = await fetch('/api/user/settings')
-        if (res.ok) {
-          const json = await res.json()
-          if (json?.database?.createdAt) {
-            setJoined(formatDate(json.database.createdAt))
-          }
-        }
-      } catch {
-        // ignore
-      }
-    }
-    if (open) fetchJoinDate()
-  }, [open])
+  const name = data?.user?.name ?? 'User'
+  const image = data?.user?.image ?? ''
+  const joined = useMemo(() => {
+    if (!data?.user?.createdAt) return null
+    return formatDate(data.user.createdAt)
+  }, [data?.user?.createdAt])
 
-  const name = data?.user?.name || 'User'
-  const image = data?.user?.image || ''
-
-  const initials = name
-    .split(' ')
-    .map((n) => n.charAt(0))
-    .join('')
-    .slice(0, 2)
-    .toUpperCase()
+  const initials = useMemo(() => {
+    return name
+      .split(' ')
+      .map((n) => n.charAt(0))
+      .join('')
+      .slice(0, 2)
+      .toUpperCase()
+  }, [name])
 
   const avatar = image ? (
-    <Image
+    // eslint-disable-next-line @next/next/no-img-element
+    <img
       src={image}
       alt={name}
-      width={80}
-      height={80}
-      className="h-20 w-20 rounded-full object-cover"
+      width={96}
+      height={96}
+      className="h-24 w-24 rounded-full object-cover shadow-lg"
     />
   ) : (
-    <div className="flex h-20 w-20 items-center justify-center rounded-full bg-muted text-xl font-semibold">
+    <div className="flex h-24 w-24 items-center justify-center rounded-full bg-muted text-2xl font-semibold text-foreground shadow-inner">
       {initials}
     </div>
   )
 
   const Body = (
-    <div className="flex flex-col items-center space-y-2">
+    <div className="flex flex-col items-center space-y-3">
       {avatar}
-      <p className="text-lg font-semibold">{name}</p>
-      {joined && <p className="text-sm text-muted-foreground">Joined {joined}</p>}
+      <p className="text-lg font-semibold text-foreground">{name}</p>
+      {joined && (
+        <p className="text-sm text-muted-foreground">Joined {joined}</p>
+      )}
     </div>
   )
 
   if (isDesktop) {
     return (
       <Dialog open={open} onOpenChange={onOpenChange}>
-        <DialogContent className="p-6">
-          <DialogHeader>
-            <DialogTitle className="mb-4 flex items-center gap-1.5">
-              <UserIcon size={18} className="opacity-80" />
-              <span>Profile</span>
-            </DialogTitle>
-          </DialogHeader>
-          {Body}
-        </DialogContent>
+        <DialogContent className="px-6 py-12">{Body}</DialogContent>
       </Dialog>
     )
   }
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
-      <DrawerContent className="mb-6 rounded-xl bg-[#121212] px-6 py-4">
+      <DrawerContent className="mb-6 rounded-xl bg-background px-6 py-4">
         <DrawerHeader className="text-left">
           <DrawerTitle className="mb-4 flex items-center gap-1.5">
             <UserIcon size={18} className="opacity-80" />

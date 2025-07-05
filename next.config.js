@@ -29,6 +29,11 @@ const nextConfig = {
       fullUrl: true,
     },
   },
+  compiler: {
+    removeConsole: {
+      exclude: ['error'],
+    },
+  },
 }
 
 module.exports = nextConfig
