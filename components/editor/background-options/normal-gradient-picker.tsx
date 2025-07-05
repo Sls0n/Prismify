@@ -356,7 +356,7 @@ export default function NormalGradientPicker() {
         <span>Gradients:</span>
       </h3>
 
-      <div className="mt-4 w-full flex grid-cols-7 flex-wrap gap-[0.5rem] md:grid">
+      <div className="mt-4 flex w-full grid-cols-7 flex-wrap gap-[0.5rem] md:grid">
         {gradients.map(({ gradient, background, type }: Gradient) => (
           <Button
             key={gradient}

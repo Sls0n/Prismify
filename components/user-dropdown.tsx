@@ -4,7 +4,7 @@
 
 import { Button } from '@/components/ui/button'
 import SettingsDialog from './settings-dialog'
-import { DialogTrigger } from '@/components/ui/dialog'
+import ProfileDialog from './profile-dialog'
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -20,7 +20,7 @@ import Image from 'next/image'
 import React from 'react'
 
 const menuItems = [
-  { href: '/profile', icon: User, label: 'Profile' },
+  { icon: User, label: 'Profile', isProfile: true },
   { icon: Settings, label: 'Settings', isSettings: true },
   { href: '/upgrade', icon: Zap, label: 'Upgrade', separateFromHere: true },
   { icon: LogOut, label: 'Logout' },
@@ -33,6 +33,9 @@ export const UserDropDown = ({
   username: string
   img: string
 }) => {
+  const [profileOpen, setProfileOpen] = React.useState(false)
+  const [settingsOpen, setSettingsOpen] = React.useState(false)
+  
   const handleSignOut = async () => {
     try {
       await signOut()
@@ -50,7 +53,7 @@ export const UserDropDown = ({
   }
 
   return (
-    <SettingsDialog>
+    <>
       <DropdownMenu>
         <DropdownMenuTrigger asChild className="group flex items-center">
           <Button
@@ -89,45 +92,31 @@ export const UserDropDown = ({
         <DropdownMenuGroup>
           {menuItems.map((item, index) => (
             <React.Fragment key={item.label}>
-              {item.isSettings ? (
-                <DialogTrigger asChild>
-                  <DropdownMenuItem
-                    className={`group cursor-pointer rounded-lg focus:bg-white ${
-                      index !== menuItems.length - 1 ? 'mb-1' : ''
-                    }`}
-                  >
-                    <div className="flex w-full items-center focus:shadow-md">
-                      <item.icon
-                        size={18}
-                        className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
-                      />
-                      <span className="font-medium group-focus:text-black/90">
-                        {item.label}
-                      </span>
-                    </div>
-                  </DropdownMenuItem>
-                </DialogTrigger>
-              ) : (
-                <DropdownMenuItem
-                  className={`group cursor-pointer rounded-lg focus:bg-white ${
-                    index !== menuItems.length - 1 ? 'mb-1' : ''
-                  }`}
-                  key={item.href}
-                  onClick={() =>
-                    item.label === 'Logout' ? handleSignOut() : null
+              <DropdownMenuItem
+                className={`group cursor-pointer rounded-lg focus:bg-white ${
+                  index !== menuItems.length - 1 ? 'mb-1' : ''
+                }`}
+                key={item.href}
+                onClick={() => {
+                  if (item.isProfile) {
+                    setProfileOpen(true)
+                  } else if (item.isSettings) {
+                    setSettingsOpen(true)
+                  } else if (item.label === 'Logout') {
+                    handleSignOut()
                   }
-                >
-                  <div className="flex w-full items-center focus:shadow-md">
-                    <item.icon
-                      size={18}
-                      className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
-                    />
-                    <span className="font-medium group-focus:text-black/90">
-                      {item.label}
-                    </span>
-                  </div>
-                </DropdownMenuItem>
-              )}
+                }}
+              >
+                <div className="flex w-full items-center focus:shadow-md">
+                  <item.icon
+                    size={18}
+                    className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                  />
+                  <span className="font-medium group-focus:text-black/90">
+                    {item.label}
+                  </span>
+                </div>
+              </DropdownMenuItem>
               {item.separateFromHere && (
                 <DropdownMenuSeparator
                   key={item.label}
@@ -139,6 +128,8 @@ export const UserDropDown = ({
         </DropdownMenuGroup>
       </DropdownMenuContent>
     </DropdownMenu>
-    </SettingsDialog>
+    <SettingsDialog open={settingsOpen} onOpenChange={setSettingsOpen} />
+    <ProfileDialog open={profileOpen} onOpenChange={setProfileOpen} />
+    </>
   )
 }

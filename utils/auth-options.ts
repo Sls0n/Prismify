@@ -13,7 +13,16 @@ declare module 'next-auth' {
     user: {
       id: string
       isCreator: boolean
+      createdAt: string | null
     } & DefaultSession['user']
+  }
+}
+
+declare module 'next-auth/jwt' {
+  interface JWT {
+    id?: string
+    isCreator?: boolean
+    createdAt?: string | null
   }
 }
 
@@ -42,8 +51,9 @@ export const authOptions: NextAuthOptions = {
           name: user.name,
           email: user.email,
           image: user.image,
-          // @ts-expect-error isCreator is there but its not showing
+          // @ts-expect-error values come from Prisma but not in default type
           isCreator: user?.isCreator,
+          createdAt: (user as any)?.createdAt ?? null,
         }
       }
 
@@ -56,9 +66,10 @@ export const authOptions: NextAuthOptions = {
             email: true,
             image: true,
             isCreator: true,
+            createdAt: true,
           },
         })
-        
+
         if (dbUser) {
           return {
             ...token,
@@ -66,6 +77,7 @@ export const authOptions: NextAuthOptions = {
             email: dbUser.email,
             image: dbUser.image,
             isCreator: dbUser.isCreator,
+            createdAt: dbUser.createdAt?.toISOString() ?? null,
           }
         }
       }
@@ -82,6 +94,7 @@ export const authOptions: NextAuthOptions = {
           email: token.email as string | null,
           image: token.image as string | null,
           isCreator: token.isCreator as boolean,
+          createdAt: token.createdAt as string | null,
         },
       }
     },
