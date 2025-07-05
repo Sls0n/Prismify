@@ -50,7 +50,7 @@ export default function ContextMenuImage({
     height: 50,
   })
   const imgRef = useRef<HTMLImageElement>(null)
-  const { setImages, images } = useImageOptions()
+  const { updateImage, updateImageStyle, images } = useImageOptions()
   const [isRemovingBackground, setIsRemovingBackground] = useState(false)
   const [isBgRemovalDialogOpen, setIsBgRemovalDialogOpen] = useState(false)
   const [isProcessingBackground, setIsProcessingBackground] = useState(false)
@@ -70,16 +70,7 @@ export default function ContextMenuImage({
     }
 
     if (selectedImage) {
-      setImages(
-        images.map((image, index) =>
-          index === selectedImage - 1
-            ? {
-                ...image,
-                image: '',
-              }
-            : image
-        )
-      )
+      updateImage(selectedImage, { image: '' })
     }
 
     setSelectedImage(null)
@@ -87,22 +78,12 @@ export default function ContextMenuImage({
 
   const bringToFrontOrBack = (direction: 'front' | 'back') => {
     if (selectedImage) {
-      setImages(
-        images.map((image, index) =>
-          index === selectedImage - 1
-            ? {
-                ...image,
-                style: {
-                  ...image.style,
-                  zIndex:
-                    direction === 'front'
-                      ? image.style.zIndex + 1
-                      : image.style.zIndex - 1,
-                },
-              }
-            : image
-        )
-      )
+      updateImageStyle(selectedImage, {
+        zIndex:
+          direction === 'front'
+            ? images[selectedImage - 1]?.style.zIndex + 1
+            : images[selectedImage - 1]?.style.zIndex - 1,
+      })
     }
   }
 
@@ -201,17 +182,9 @@ export default function ContextMenuImage({
     )
 
     const base64Image = canvas.toDataURL('image/png')
-    selectedImage &&
-      setImages(
-        images.map((image, index) =>
-          index === selectedImage - 1
-            ? {
-                ...image,
-                image: base64Image,
-              }
-            : image
-        )
-      )
+    if (selectedImage) {
+      updateImage(selectedImage, { image: base64Image })
+    }
   }
 
   return (
@@ -429,21 +402,13 @@ export default function ContextMenuImage({
             <Button
               onClick={() => {
                 if (selectedImage && processedImageUrl) {
-                  setImages(
-                    images.map((img, index) =>
-                      index === selectedImage - 1
-                        ? {
-                            ...img,
-                            image: processedImageUrl,
-                            style: {
-                              ...img.style,
-                              shadowName: 'None',
-                              imageShadow: '0 0 0 0',
-                            },
-                          }
-                        : img
-                    )
-                  )
+                  updateImage(selectedImage, {
+                    image: processedImageUrl,
+                    style: {
+                      shadowName: 'None',
+                      imageShadow: '0 0 0 0',
+                    },
+                  })
                 }
                 setIsBgRemovalDialogOpen(false)
                 setProcessedImageUrl(null)
@@ -463,7 +428,7 @@ export default function ContextMenuImage({
 }
 
 function ReplaceImage() {
-  const { setImages, images } = useImageOptions()
+  const { updateImage, images } = useImageOptions()
   const { selectedImage, setSelectedImage } = useSelectedLayers()
 
   const { setImagesCheck, imagesCheck } = useColorExtractor()
@@ -478,18 +443,12 @@ function ReplaceImage() {
       })
       const extractedColors = result.slice(0, 12)
 
-      selectedImage &&
-        setImages(
-          images.map((image, index) =>
-            index === selectedImage - 1
-              ? {
-                  ...image,
-                  image: imageUrl,
-                  colors: extractedColors,
-                }
-              : image
-          )
-        )
+      if (selectedImage) {
+        updateImage(selectedImage, {
+          image: imageUrl,
+          colors: extractedColors,
+        })
+      }
 
       setImagesCheck([...imagesCheck, imageUrl])
     }

@@ -32,7 +32,7 @@ const Moveable = makeMoveable<
 export default function MoveableComponent({ id }: { id: string }) {
   const { quality } = useImageQualityStore()
   const { domResolution, scaleFactor, exactDomResolution } = useResizeCanvas()
-  const { setImages, images } = useImageOptions()
+  const { updateImageStyle, updateImage, images } = useImageOptions()
   const { selectedImage } = useSelectedLayers()
   const moveableRef = React.useRef<any>(null)
   const { width, height } = splitWidthHeight(exactDomResolution)
@@ -88,21 +88,12 @@ export default function MoveableComponent({ id }: { id: string }) {
         // @ts-expect-error
         const yPerc = (lastEvent?.translate[1] / target?.offsetHeight) * 100
 
-        selectedImage &&
-          setImages(
-            images.map((image, index) =>
-              index === selectedImage - 1
-                ? {
-                    ...image,
-                    style: {
-                      ...image.style,
-                      translateX: xPerc,
-                      translateY: yPerc,
-                    },
-                  }
-                : image
-            )
-          )
+        if (selectedImage) {
+          updateImageStyle(selectedImage, {
+            translateX: xPerc,
+            translateY: yPerc,
+          })
+        }
       }}
       scalable={true}
       keepRatio={true}
@@ -139,22 +130,13 @@ export default function MoveableComponent({ id }: { id: string }) {
           // @ts-expect-error
           (lastEvent?.drag?.translate[1] / target.offsetHeight) * 100
 
-        selectedImage &&
-          setImages(
-            images.map((image, index) =>
-              index === selectedImage - 1
-                ? {
-                    ...image,
-                    style: {
-                      ...image.style,
-                      translateX: xPerc,
-                      translateY: yPerc,
-                      imageSize: `${scaleX}`,
-                    },
-                  }
-                : image
-            )
-          )
+        if (selectedImage) {
+          updateImageStyle(selectedImage, {
+            translateX: xPerc,
+            translateY: yPerc,
+            imageSize: `${scaleX}`,
+          })
+        }
       }}
       rotatable={!isMultipleTargetSelected}
       rotationPosition={'top'}
@@ -178,20 +160,9 @@ export default function MoveableComponent({ id }: { id: string }) {
       onRotateEnd={({ target, lastEvent }) => {
         const rotate = lastEvent.rotate
 
-        selectedImage &&
-          setImages(
-            images.map((image, index) =>
-              index === selectedImage - 1
-                ? {
-                    ...image,
-                    style: {
-                      ...image.style,
-                      rotate: rotate,
-                    },
-                  }
-                : image
-            )
-          )
+        if (selectedImage) {
+          updateImageStyle(selectedImage, { rotate })
+        }
       }}
       snapRotationThreshold={2}
       snapRotationDegrees={[0, 90, 180, 270]}
@@ -268,7 +239,9 @@ export default function MoveableComponent({ id }: { id: string }) {
             return image
           })
 
-          setImages(updatedImages)
+          updatedImages.forEach((img) => {
+            updateImage(img.id, { image: img.image, style: img.style })
+          })
         }
       }}
     />

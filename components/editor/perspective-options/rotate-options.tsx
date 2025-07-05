@@ -5,7 +5,7 @@ import { RotateCcw } from 'lucide-react'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 
 export default function RotateOptions() {
-  const { images, setImages } = useImageOptions()
+  const { images, updateImageStyle } = useImageOptions()
   const { selectedImage } = useSelectedLayers()
   const { setShowControls } = useMoveable()
 
@@ -28,22 +28,11 @@ export default function RotateOptions() {
           variant="secondary"
           size="sm"
           className="ml-auto translate-x-2"
-          onClick={() =>
-            selectedImage &&
-            setImages(
-              images.map((image, index) =>
-                index === selectedImage - 1
-                  ? {
-                      ...image,
-                      style: {
-                        ...image.style,
-                        perspective: 2000,
-                      },
-                    }
-                  : image
-              )
-            )
-          }
+          onClick={() => {
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { perspective: 2000 })
+            }
+          }}
         >
           <RotateCcw size={15} className="text-dark/80" />
         </Button>
@@ -61,20 +50,9 @@ export default function RotateOptions() {
               : [2000]
           }
           onValueChange={(value: number[]) => {
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          perspective: value[0],
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { perspective: value[0] })
+            }
             setShowControls(false)
           }}
           onValueCommit={() => setShowControls(true)}
@@ -82,38 +60,18 @@ export default function RotateOptions() {
             if (selectedImage) {
               if (images[selectedImage - 1]?.style.perspective >= 6500) return
 
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          perspective: Number(image.style.perspective) + 500,
-                        },
-                      }
-                    : image
-                )
-              )
+              updateImageStyle(selectedImage, {
+                perspective: Number(images[selectedImage - 1]?.style.perspective) + 500,
+              })
             }
           }}
           onDecrement={() => {
             if (selectedImage) {
               if (images[selectedImage - 1]?.style.perspective <= 0) return
 
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          perspective: Number(image.style.perspective) - 500,
-                        },
-                      }
-                    : image
-                )
-              )
+              updateImageStyle(selectedImage, {
+                perspective: Number(images[selectedImage - 1]?.style.perspective) - 500,
+              })
             }
           }}
         />
@@ -135,20 +93,9 @@ export default function RotateOptions() {
           size="sm"
           className="ml-auto translate-x-2"
           onClick={() => {
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateX: 0.0001,
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { rotateX: 0.0001 })
+            }
           }}
         >
           <RotateCcw size={15} className="text-dark/80" />
@@ -165,20 +112,9 @@ export default function RotateOptions() {
             selectedImage ? [images[selectedImage - 1]?.style.rotateX] : [0]
           }
           onValueChange={(value: number[]) => {
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateX: value[0],
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { rotateX: value[0] })
+            }
             setShowControls(false)
           }}
           onValueCommit={() => setShowControls(true)}
@@ -186,38 +122,18 @@ export default function RotateOptions() {
             if (selectedImage) {
               if (images[selectedImage - 1]?.style.rotateX >= 180) return
 
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateX: Number(image.style.rotateX) + 1,
-                        },
-                      }
-                    : image
-                )
-              )
+              updateImageStyle(selectedImage, {
+                rotateX: Number(images[selectedImage - 1]?.style.rotateX) + 1,
+              })
             }
           }}
           onDecrement={() => {
             if (selectedImage) {
               if (images[selectedImage - 1]?.style.rotateX <= -180) return
 
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateX: Number(image.style.rotateX) - 1,
-                        },
-                      }
-                    : image
-                )
-              )
+              updateImageStyle(selectedImage, {
+                rotateX: Number(images[selectedImage - 1]?.style.rotateX) - 1,
+              })
             }
           }}
         />
@@ -237,20 +153,9 @@ export default function RotateOptions() {
           size="sm"
           className="ml-auto translate-x-2"
           onClick={() => {
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateY: 0,
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { rotateY: 0 })
+            }
           }}
         >
           <RotateCcw size={15} className="text-dark/80" />
@@ -267,20 +172,9 @@ export default function RotateOptions() {
             selectedImage ? [images[selectedImage - 1]?.style.rotateY] : [0]
           }
           onValueChange={(value: number[]) => {
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateY: value[0],
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { rotateY: value[0] })
+            }
             setShowControls(false)
           }}
           onValueCommit={() => setShowControls(true)}
@@ -288,38 +182,18 @@ export default function RotateOptions() {
             if (selectedImage) {
               if (images[selectedImage - 1]?.style.rotateY >= 180) return
 
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateY: Number(image.style.rotateY) + 1,
-                        },
-                      }
-                    : image
-                )
-              )
+              updateImageStyle(selectedImage, {
+                rotateY: Number(images[selectedImage - 1]?.style.rotateY) + 1,
+              })
             }
           }}
           onDecrement={() => {
             if (selectedImage) {
               if (images[selectedImage - 1]?.style.rotateY <= -180) return
 
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateY: Number(image.style.rotateY) - 1,
-                        },
-                      }
-                    : image
-                )
-              )
+              updateImageStyle(selectedImage, {
+                rotateY: Number(images[selectedImage - 1]?.style.rotateY) - 1,
+              })
             }
           }}
         />
@@ -338,22 +212,11 @@ export default function RotateOptions() {
           variant="secondary"
           size="sm"
           className="ml-auto translate-x-2"
-          onClick={() =>
-            selectedImage &&
-            setImages(
-              images.map((image, index) =>
-                index === selectedImage - 1
-                  ? {
-                      ...image,
-                      style: {
-                        ...image.style,
-                        rotateZ: 0,
-                      },
-                    }
-                  : image
-              )
-            )
-          }
+          onClick={() => {
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { rotateZ: 0 })
+            }
+          }}
         >
           <RotateCcw size={15} className="text-dark/80" />
         </Button>
@@ -369,20 +232,9 @@ export default function RotateOptions() {
             selectedImage ? [images[selectedImage - 1]?.style.rotateZ] : [0]
           }
           onValueChange={(value: number[]) => {
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateZ: value[0],
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { rotateZ: value[0] })
+            }
             setShowControls(false)
           }}
           onValueCommit={() => setShowControls(true)}
@@ -390,38 +242,18 @@ export default function RotateOptions() {
             if (selectedImage) {
               if (images[selectedImage - 1]?.style.rotateZ >= 180) return
 
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateZ: Number(image.style.rotateZ) + 1,
-                        },
-                      }
-                    : image
-                )
-              )
+              updateImageStyle(selectedImage, {
+                rotateZ: Number(images[selectedImage - 1]?.style.rotateZ) + 1,
+              })
             }
           }}
           onDecrement={() => {
             if (selectedImage) {
               if (images[selectedImage - 1]?.style.rotateZ <= -180) return
 
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateZ: Number(image.style.rotateZ) - 1,
-                        },
-                      }
-                    : image
-                )
-              )
+              updateImageStyle(selectedImage, {
+                rotateZ: Number(images[selectedImage - 1]?.style.rotateZ) - 1,
+              })
             }
           }}
         />
