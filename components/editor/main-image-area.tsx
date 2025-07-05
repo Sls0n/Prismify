@@ -192,6 +192,7 @@ const ImageUpload = () => {
       multiple={false}
       onDrop={(acceptedFiles) => {
         handleImageChange(acceptedFiles[0])
+        setIsCanvasDragging(false)
       }}
       onDragEnter={() => setIsCanvasDragging(true)}
       onDragLeave={() => setIsCanvasDragging(false)}
@@ -223,13 +224,12 @@ const ImageUpload = () => {
                           : targetRef
                       }
                       style={{
-                        // transition:
-                        //   'box-shadow 0.8s cubic-bezier(0.6, 0.6, 0, 1)',
+                        position: 'absolute',
+                        top: '50%',
+                        left: '50%',
                         transformStyle: 'preserve-3d',
-                        transformOrigin: `50% 50%`,
-                        // rotate: `${image.style.rotate}deg`,
-                        // transform: `scale(${image.style.imageSize}) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg) `,
-                        transform: `perspective(${image.style.perspective}px) translate(${image.style.translateX}%, ${image.style.translateY}%) scale(${image.style.imageSize}) rotate(${image.style.rotate}deg) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
+                        transformOrigin: '50% 50%',
+                        transform: `translate(-50%, -50%) translate(${image.style.translateX}%, ${image.style.translateY}%) perspective(${image.style.perspective}px) scale(${image.style.imageSize}) rotate(${image.style.rotate}deg) rotateX(${image.style.rotateX}deg) rotateY(${image.style.rotateY}deg) rotateZ(${image.style.rotateZ}deg)`,
                         borderRadius: `${image.style.imageRoundness}rem`,
                         boxShadow:
                           image.style.shadowName !== 'Medium'
@@ -558,6 +558,7 @@ function LoadAImage() {
       multiple={false}
       onDrop={(acceptedFiles) => {
         handleImageChange(acceptedFiles[0])
+        setIsDragging(false)
       }}
       onDragEnter={() => setIsDragging(true)}
       onDragLeave={() => setIsDragging(false)}
