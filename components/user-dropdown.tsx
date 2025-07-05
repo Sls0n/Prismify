@@ -19,20 +19,29 @@ import { signOut } from 'next-auth/react'
 import Image from 'next/image'
 import React from 'react'
 
-const menuItems = [
+const baseItems = [
   { href: '/profile', icon: User, label: 'Profile' },
   { icon: Settings, label: 'Settings', isSettings: true },
   { href: '/upgrade', icon: Zap, label: 'Upgrade', separateFromHere: true },
   { icon: LogOut, label: 'Logout' },
 ]
 
+const getMenuItems = (isCreator: boolean) => {
+  return isCreator
+    ? [{ href: '/admin/notifications', icon: User, label: 'Admin' }, ...baseItems]
+    : baseItems
+}
+
 export const UserDropDown = ({
   username,
   img,
+  isCreator,
 }: {
   username: string
   img: string
+  isCreator: boolean
 }) => {
+  const menuItems = getMenuItems(isCreator)
   const handleSignOut = async () => {
     try {
       await signOut()
@@ -107,15 +116,12 @@ export const UserDropDown = ({
                     </div>
                   </DropdownMenuItem>
                 </DialogTrigger>
-              ) : (
+              ) : item.label === 'Logout' ? (
                 <DropdownMenuItem
                   className={`group cursor-pointer rounded-lg focus:bg-white ${
                     index !== menuItems.length - 1 ? 'mb-1' : ''
                   }`}
-                  key={item.href}
-                  onClick={() =>
-                    item.label === 'Logout' ? handleSignOut() : null
-                  }
+                  onClick={handleSignOut}
                 >
                   <div className="flex w-full items-center focus:shadow-md">
                     <item.icon
@@ -127,6 +133,24 @@ export const UserDropDown = ({
                     </span>
                   </div>
                 </DropdownMenuItem>
+              ) : (
+                <a href={item.href!} className="no-underline">
+                  <DropdownMenuItem
+                    className={`group cursor-pointer rounded-lg focus:bg-white ${
+                      index !== menuItems.length - 1 ? 'mb-1' : ''
+                    }`}
+                  >
+                    <div className="flex w-full items-center focus:shadow-md">
+                      <item.icon
+                        size={18}
+                        className="mr-3 h-4 w-4  text-dark/80 group-focus:text-black/90"
+                      />
+                      <span className="font-medium group-focus:text-black/90">
+                        {item.label}
+                      </span>
+                    </div>
+                  </DropdownMenuItem>
+                </a>
               )}
               {item.separateFromHere && (
                 <DropdownMenuSeparator
