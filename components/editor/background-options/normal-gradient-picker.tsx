@@ -40,7 +40,7 @@ export default function NormalGradientPicker() {
     setNoise,
   } = useBackgroundOptions()
 
-  const { images, setImages } = useImageOptions()
+  const { images, updateImage } = useImageOptions()
   const { selectedImage } = useSelectedLayers()
   const [dominantColor, setDominantColor] = useState(null)
   const [isGenerating, setIsGenerating] = useState(false)
@@ -170,20 +170,15 @@ export default function NormalGradientPicker() {
         const radialGradients = generateRadialGradients()
         const meshGradients = generateMeshGradients()
 
-        setImages(
-          images.map((image, index) =>
-            index === images.length - 1
-              ? {
-                  ...image,
-                  dominantColor,
-                  palletes,
-                  linearGradients,
-                  meshGradients,
-                  radialGradients,
-                }
-              : image
-          )
-        )
+        if (images.length > 0) {
+          updateImage(images[images.length - 1].id, {
+            dominantColor,
+            palletes,
+            linearGradients,
+            meshGradients,
+            radialGradients,
+          })
+        }
 
         setTimeout(() => setIsGenerating(false), 800)
 

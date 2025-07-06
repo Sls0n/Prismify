@@ -39,6 +39,30 @@ export interface ImageItem {
   frame?: FrameTypes
 }
 
+export interface TextStyle {
+  textSize: string
+  textColor: string
+  textAlign: 'left' | 'center' | 'right'
+  fontWeight: number
+  fontFamily: string
+  letterSpacing: number
+  textShadow: string
+  shadowName: string
+  shadowColor: string
+  shadowOpacity: number
+  hasBackground: boolean
+  backgroundColor: string
+  padding: string
+  zIndex: number
+  position: string
+}
+
+export interface TextItem {
+  id: number
+  content: string
+  style: TextStyle
+}
+
 interface ImageOptionsState {
   scale: number
   setScale: (scale: number) => void
@@ -65,50 +89,13 @@ interface ImageOptionsState {
   getImage: (id: number) => ImageItem | undefined
   getImageIndex: (id: number) => number
 
-  texts: {
-    id: number
-    content: string
-    style: {
-      textSize: string
-      textColor: string
-      textAlign: 'left' | 'center' | 'right'
-      fontWeight: number
-      fontFamily: string
-      letterSpacing: number
-      textShadow: string
-      shadowName: string
-      shadowColor: string
-      shadowOpacity: number
-      hasBackground: boolean
-      backgroundColor: string
-      padding: string
-      zIndex: number
-      position: string
-    }
-  }[]
-  setTexts: (
-    texts: {
-      id: number
-      content: string
-      style: {
-        textSize: string
-        textColor: string
-        textAlign: 'left' | 'center' | 'right'
-        fontWeight: number
-        fontFamily: string
-        letterSpacing: number
-        textShadow: string
-        shadowName: string
-        shadowColor: string
-        shadowOpacity: number
-        hasBackground: boolean
-        backgroundColor: string
-        padding: string
-        zIndex: number
-        position: string
-      }
-    }[]
-  ) => void
+  texts: TextItem[]
+  setTexts: (texts: TextItem[]) => void
+  addText: (text: TextItem) => void
+  updateTextStyle: (id: number, style: Partial<TextStyle>) => void
+  updateText: (id: number, data: Partial<TextItem>) => void
+  getText: (id: number) => TextItem | undefined
+  getTextIndex: (id: number) => number
 
   defaultStyle: {
     imageSize: string
@@ -238,6 +225,30 @@ export const useImageOptions = create(
 
       texts: [],
       setTexts: (texts) => set({ texts }),
+      addText: (text) =>
+        set((state) => ({
+          texts: [...state.texts, text],
+        })),
+      updateTextStyle: (id, style) =>
+        set((state) => ({
+          texts: state.texts.map((txt) =>
+            txt.id === id ? { ...txt, style: { ...txt.style, ...style } } : txt
+          ),
+        })),
+      updateText: (id, data) =>
+        set((state) => ({
+          texts: state.texts.map((txt) =>
+            txt.id === id
+              ? {
+                  ...txt,
+                  ...data,
+                  style: { ...txt.style, ...(data.style ?? {}) },
+                }
+              : txt
+          ),
+        })),
+      getText: (id) => get().texts.find((txt) => txt.id === id),
+      getTextIndex: (id) => get().texts.findIndex((txt) => txt.id === id),
     }),
     {
       limit: 30,

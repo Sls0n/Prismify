@@ -5,19 +5,16 @@ import { Button } from '@/components/ui/button'
 import { useImageOptions } from '@/store/use-image-options'
 
 export default function AddTextLayer() {
-  const { setTexts, defaultTextStyle, texts } = useImageOptions()
+  const { addText, defaultTextStyle, texts } = useImageOptions()
 
   return (
     <Button
       onClick={() => {
-        setTexts([
-          ...texts,
-          {
-            content: 'Edit this text',
-            id: texts.length + 1,
-            style: defaultTextStyle,
-          },
-        ])
+        addText({
+          content: 'Edit this text',
+          id: texts.length + 1,
+          style: defaultTextStyle,
+        })
       }}
       size="lg"
       variant="stylish"

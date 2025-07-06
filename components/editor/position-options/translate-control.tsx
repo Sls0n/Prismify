@@ -5,7 +5,7 @@ import { RotateCcw } from 'lucide-react'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 
 export default function TranslateOption() {
-  const { images, setImages } = useImageOptions()
+  const { images, updateImageStyle } = useImageOptions()
   const { selectedImage } = useSelectedLayers()
   const { setShowControls } = useMoveable()
 
@@ -24,20 +24,9 @@ export default function TranslateOption() {
           size="sm"
           className="ml-auto translate-x-2"
           onClick={() => {
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          translateX: 0,
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { translateX: 0 })
+            }
           }}
         >
           <RotateCcw size={15} className="text-dark/80" />
@@ -54,56 +43,27 @@ export default function TranslateOption() {
             selectedImage ? [images[selectedImage - 1]?.style.translateX] : [0]
           }
           onValueChange={(value: number[]) => {
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          translateX: value[0],
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { translateX: value[0] })
+            }
             setShowControls(false)
           }}
           onValueCommit={() => setShowControls(true)}
           onIncrement={() => {
-            selectedImage &&
-              (images[selectedImage - 1]?.style.translateX >= 1000 ||
-                setImages(
-                  images.map((image, index) =>
-                    index === selectedImage - 1
-                      ? {
-                          ...image,
-                          style: {
-                            ...image.style,
-                            translateX: image.style.translateX + 1,
-                          },
-                        }
-                      : image
-                  )
-                ))
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.translateX >= 1000) return
+              updateImageStyle(selectedImage, {
+                translateX: images[selectedImage - 1]?.style.translateX + 1,
+              })
+            }
           }}
           onDecrement={() => {
-            selectedImage &&
-              (images[selectedImage - 1]?.style.translateX <= -1000 ||
-                setImages(
-                  images.map((image, index) =>
-                    index === selectedImage - 1
-                      ? {
-                          ...image,
-                          style: {
-                            ...image.style,
-                            translateX: image.style.translateX - 1,
-                          },
-                        }
-                      : image
-                  )
-                ))
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.translateX <= -1000) return
+              updateImageStyle(selectedImage, {
+                translateX: images[selectedImage - 1]?.style.translateX - 1,
+              })
+            }
           }}
         />
       </div>
@@ -121,20 +81,9 @@ export default function TranslateOption() {
           size="sm"
           className="ml-auto translate-x-2"
           onClick={() => {
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          translateY: 0,
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { translateY: 0 })
+            }
           }}
         >
           <RotateCcw size={15} className="text-dark/80" />
@@ -151,56 +100,27 @@ export default function TranslateOption() {
             selectedImage ? [images[selectedImage - 1]?.style.translateY] : [0]
           }
           onValueChange={(value: number[]) => {
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          translateY: value[0],
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { translateY: value[0] })
+            }
             setShowControls(false)
           }}
           onValueCommit={() => setShowControls(true)}
           onIncrement={() => {
-            selectedImage &&
-              (images[selectedImage - 1]?.style.translateY >= 500 ||
-                setImages(
-                  images.map((image, index) =>
-                    index === selectedImage - 1
-                      ? {
-                          ...image,
-                          style: {
-                            ...image.style,
-                            translateY: image.style.translateY + 1,
-                          },
-                        }
-                      : image
-                  )
-                ))
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.translateY >= 500) return
+              updateImageStyle(selectedImage, {
+                translateY: images[selectedImage - 1]?.style.translateY + 1,
+              })
+            }
           }}
           onDecrement={() => {
-            selectedImage &&
-              (images[selectedImage - 1]?.style.translateY <= -500 ||
-                setImages(
-                  images.map((image, index) =>
-                    index === selectedImage - 1
-                      ? {
-                          ...image,
-                          style: {
-                            ...image.style,
-                            translateY: image.style.translateY - 1,
-                          },
-                        }
-                      : image
-                  )
-                ))
+            if (selectedImage) {
+              if (images[selectedImage - 1]?.style.translateY <= -500) return
+              updateImageStyle(selectedImage, {
+                translateY: images[selectedImage - 1]?.style.translateY - 1,
+              })
+            }
           }}
         />
       </div>
