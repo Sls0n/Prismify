@@ -56,7 +56,7 @@ export default function PatternPicker() {
     return (
       <>
         <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
-          <span>Wallpapers:</span>
+          <span>Abstract:</span>
         </h3>
         <ul className="mt-4 grid auto-rows-auto grid-cols-4 gap-4 md:max-w-[18rem] md:grid-cols-5">
           {skeletonLoaders}
@@ -77,7 +77,7 @@ export default function PatternPicker() {
   return (
     <>
       <h3 className="mt-8 flex items-center gap-2 text-xs font-medium uppercase text-dark/70">
-        <span>Wallpapers:</span>
+        <span>Abstract:</span>
         <Popover>
           <PopoverTrigger asChild>
             <Settings2 size={20} className="rotate-90" />
