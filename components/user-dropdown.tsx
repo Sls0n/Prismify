@@ -37,7 +37,7 @@ const baseItems: MenuItem[] = [
 
 const getMenuItems = (isCreator: boolean): MenuItem[] => {
   return isCreator
-    ? [{ href: '/admin/notifications', icon: User, label: 'Admin' }, ...baseItems]
+    ? [{ href: '/admin/write-article', icon: User, label: 'Admin' }, ...baseItems]
     : baseItems
 }
 

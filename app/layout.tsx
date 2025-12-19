@@ -2,7 +2,6 @@ import ClarityScript from '@/components/clarity-script'
 import Navbar from '@/components/navbar'
 import { Toaster } from '@/components/ui/toaster'
 import Providers from '@/providers'
-import PwaInit from '@/components/pwa-init'
 import '@/styles/globals.css'
 import { cn } from '@/utils/button-utils'
 import { Analytics } from '@vercel/analytics/react'
@@ -110,8 +109,6 @@ export default function RootLayout({
           <Navbar />
           {children}
         </Providers>
-
-        <PwaInit />
 
         <ClarityScript />
       </body>
