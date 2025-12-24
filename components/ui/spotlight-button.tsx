@@ -1,6 +1,6 @@
 'use client'
 
-import { cn } from '@/utils/button-utils'
+import { cn } from '@/lib/utils'
 import { Sparkles, Wand, Wand2 } from 'lucide-react'
 
 type Props = {

@@ -2,7 +2,7 @@
 
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
-import { splitWidthHeight } from '@/utils/helper-fns'
+import { splitWidthHeight } from '@/lib/utils'
 import { useImageQualityStore } from '@/store/use-image-quality'
 import {
   Draggable,

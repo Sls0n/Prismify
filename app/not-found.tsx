@@ -2,7 +2,7 @@
 'use client'
 
 import { buttonVariants } from '@/components/ui/button'
-import { cn } from '@/utils/button-utils'
+import { cn } from '@/lib/utils'
 import { MoveLeft } from 'lucide-react'
 import Link from 'next/link'
 

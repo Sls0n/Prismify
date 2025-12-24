@@ -6,7 +6,7 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 
 import { useImageQualityStore } from '@/store/use-image-quality'
 import { useMoveable } from '@/store/use-moveable'
-import { splitWidthHeight } from '@/utils/helper-fns'
+import { splitWidthHeight } from '@/lib/utils'
 import {
   Draggable,
   DraggableProps,

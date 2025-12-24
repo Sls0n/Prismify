@@ -19,12 +19,12 @@ import {
 } from '@/components/ui/tooltip'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
-import { gradients, type Gradient } from '@/utils/presets/gradients'
+import { gradients, type Gradient } from '@/lib/presets/gradients'
 import ColorThief from 'colorthief'
 import { Settings2, Sparkles, Zap, Palette, Wand2, Check, Rocket } from 'lucide-react'
 import { useCallback } from 'react'
 import ImageGradientPicker from './image-gradient-picker'
-import { cn } from '@/utils/button-utils'
+import { cn } from '@/lib/utils'
 
 type Color = string
 

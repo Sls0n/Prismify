@@ -3,7 +3,7 @@
 import useTiptapEditor from '@/hooks/use-editor'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
-import { convertHexToRgba } from '@/utils/helper-fns'
+import { convertHexToRgba } from '@/lib/utils'
 import { BubbleMenu, Editor, EditorContent } from '@tiptap/react'
 import { useRef } from 'react'
 import ContextMenuText from './text-context-menu'

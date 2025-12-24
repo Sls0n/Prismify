@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { cn } from '@/utils/button-utils'
+import { cn } from '@/lib/utils'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { Button } from '@/components/ui/button'
@@ -10,7 +10,7 @@ import {
 } from '@/components/ui/popover'
 import { PopoverArrow } from '@radix-ui/react-popover'
 import { ChevronDown } from 'lucide-react'
-import { calculateEqualCanvasSize } from '@/utils/helper-fns'
+import { calculateEqualCanvasSize } from '@/lib/utils'
 
 export function ResolutionButton({
   resolutions,

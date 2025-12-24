@@ -4,7 +4,7 @@ import React from 'react'
 import { Text } from '@/components/ui/text'
 import { Button } from '@/components/ui/button'
 import { useRouter } from 'next/navigation'
-import { cn } from '@/utils/button-utils'
+import { cn } from '@/lib/utils'
 import { ChevronLeft } from 'lucide-react'
 
 type BackButtonProps = {

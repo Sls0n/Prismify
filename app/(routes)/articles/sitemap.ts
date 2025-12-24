@@ -1,4 +1,4 @@
-import prismadb from '@/libs/prismadb'
+import prismadb from '@/lib/prismadb'
 import { MetadataRoute } from 'next'
 
 export default async function sitemap(): Promise<MetadataRoute.Sitemap> {

@@ -12,7 +12,7 @@ import { useResizeCanvas } from '@/store/use-resize-canvas'
 import {
   calculateEqualCanvasSize,
   convertHexToRgba,
-} from '@/utils/helper-fns'
+} from '@/lib/utils'
 import { ImageIcon, Upload } from 'lucide-react'
 import { useCallback, useEffect, useRef, useState } from 'react'
 import Dropzone from 'react-dropzone'

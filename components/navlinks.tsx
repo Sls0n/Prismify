@@ -11,7 +11,7 @@ import {
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu'
 import { GradientText } from '@/components/ui/gradient-text'
-import { cn } from '@/utils/button-utils'
+import { cn } from '@/lib/utils'
 import { BadgeInfo, BookCopy, ChevronDown, type LucideIcon } from 'lucide-react'
 import Image from 'next/image'
 import Link from 'next/link'

@@ -1,7 +1,7 @@
 'use client'
 
 import { useCallback } from 'react'
-import { solidColors } from '@/utils/presets/solid-colors'
+import { solidColors } from '@/lib/presets/solid-colors'
 import { Button } from '@/components/ui/button'
 import PopupColorPicker from '@/components/popup-color-picker'
 import { useBackgroundOptions } from '@/store/use-background-options'

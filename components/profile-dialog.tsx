@@ -16,7 +16,7 @@ import {
   DrawerTitle,
 } from '@/components/ui/drawer'
 import { useMediaQuery } from '@/hooks/use-media-query'
-import { formatDate } from '@/utils/helper-fns'
+import { formatDate } from '@/lib/utils'
 
 interface ProfileDialogProps {
   open: boolean

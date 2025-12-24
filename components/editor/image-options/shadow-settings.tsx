@@ -9,7 +9,7 @@ import {
 } from '@/components/ui/popover'
 import { useBackgroundOptions } from '@/store/use-background-options'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
-import { shadows } from '@/utils/presets/shadows'
+import { shadows } from '@/lib/presets/shadows'
 import { ChevronDown } from 'lucide-react'
 import { Slider } from '@/components/ui/slider'
 import { useMoveable } from '@/store/use-moveable'

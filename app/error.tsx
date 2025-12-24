@@ -2,7 +2,7 @@
 
 /* eslint-disable react/no-unescaped-entities */
 import { Button, buttonVariants } from '@/components/ui/button'
-import { cn } from '@/utils/button-utils'
+import { cn } from '@/lib/utils'
 import { MailWarning, RotateCcw } from 'lucide-react'
 import Link from 'next/link'
 import { useEffect } from 'react'

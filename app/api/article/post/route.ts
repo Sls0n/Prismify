@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import { NextResponse } from 'next/server'
-import prismadb from '@/libs/prismadb'
-import { getCurrentSession } from '@/utils/auth-options'
-import { postSchema } from '@/libs/validators/article-post-validator'
+import prismadb from '@/lib/prismadb'
+import { getCurrentSession } from '@/lib/auth-options'
+import { postSchema } from '@/lib/validators/article-post-validator'
 import { revalidateTag } from 'next/cache'
 
 export async function POST(request: Request) {

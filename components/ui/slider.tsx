@@ -3,7 +3,7 @@
 import * as React from 'react'
 import * as SliderPrimitive from '@radix-ui/react-slider'
 
-import { cn } from '@/utils/button-utils'
+import { cn } from '@/lib/utils'
 import { MinusIcon, Plus } from 'lucide-react'
 import { Button } from './button'
 

@@ -8,7 +8,7 @@ import {
 import { FrameTypes, useFrameOptions } from '@/store/use-frame-options'
 import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
-import { cn } from '@/utils/button-utils'
+import { cn } from '@/lib/utils'
 
 export default function FramePicker() {
   const { setFrameHeight, frameHeight } = useFrameOptions()

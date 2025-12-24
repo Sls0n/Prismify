@@ -6,7 +6,7 @@ import {
 } from 'next-auth'
 import GithubProvider from 'next-auth/providers/github'
 import GoogleProvider from 'next-auth/providers/google'
-import prismadb from '@/libs/prismadb'
+import prismadb from '@/lib/prismadb'
 
 declare module 'next-auth' {
   interface Session extends DefaultSession {

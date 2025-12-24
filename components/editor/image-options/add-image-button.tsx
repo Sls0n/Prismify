@@ -2,7 +2,7 @@ import { ChangeEvent, useRef, useState } from 'react'
 import { X, Plus, Upload } from 'lucide-react'
 import { useImageOptions } from '@/store/use-image-options'
 import { useColorExtractor } from '@/store/use-color-extractor'
-import { calculateEqualCanvasSize } from '@/utils/helper-fns'
+import { calculateEqualCanvasSize } from '@/lib/utils'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import Dropzone from 'react-dropzone'
 

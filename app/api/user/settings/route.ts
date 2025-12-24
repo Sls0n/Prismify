@@ -1,8 +1,8 @@
 import { z } from 'zod'
 import { NextResponse } from 'next/server'
-import prismadb from '@/libs/prismadb'
-import { getCurrentSession } from '@/utils/auth-options'
-import { userSettingsSchema } from '@/libs/validators/user-settings-validator'
+import prismadb from '@/lib/prismadb'
+import { getCurrentSession } from '@/lib/auth-options'
+import { userSettingsSchema } from '@/lib/validators/user-settings-validator'
 
 export async function GET() {
   try {

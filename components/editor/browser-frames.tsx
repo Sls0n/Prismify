@@ -3,7 +3,7 @@
 'use client'
 
 import { FrameTypes, useFrameOptions } from '@/store/use-frame-options'
-import { cn } from '@/utils/button-utils'
+import { cn } from '@/lib/utils'
 
 const FrameButton = ({ color }: { color: string }) => (
   <div

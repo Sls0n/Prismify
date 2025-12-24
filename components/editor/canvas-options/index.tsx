@@ -12,7 +12,7 @@ import {
   ArrowRight,
 } from 'lucide-react'
 import { useEffect, useState } from 'react'
-import { resolutions } from '@/utils/presets/resolutions'
+import { resolutions } from '@/lib/presets/resolutions'
 import { Button } from '@/components/ui/button'
 import { useResizeCanvas } from '@/store/use-resize-canvas'
 import { Separator } from '@/components/ui/separator'

@@ -1,7 +1,7 @@
-import prismadb from '@/libs/prismadb'
+import prismadb from '@/lib/prismadb'
 import { Text } from '@/components/ui/text'
 import ArticleCard from '@/components/articles/article-card'
-import { formatDate, separateCommas } from '@/utils/helper-fns'
+import { formatDate, separateCommas } from '@/lib/utils'
 import type { Metadata } from 'next'
 import { unstable_cache as cache } from 'next/cache'
 

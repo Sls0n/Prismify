@@ -1,12 +1,12 @@
 import BackButton from '@/components/ui/back-button'
 import { Badge } from '@/components/ui/badge'
 import { Text } from '@/components/ui/text'
-import prismadb from '@/libs/prismadb'
+import prismadb from '@/lib/prismadb'
 import {
   generateBadgeVariant,
   generateFormattedBlogDate,
   separateCommas,
-} from '@/utils/helper-fns'
+} from '@/lib/utils'
 import { Calendar } from 'lucide-react'
 import type { Metadata } from 'next'
 import Image from 'next/image'
