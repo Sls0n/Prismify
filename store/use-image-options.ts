@@ -39,6 +39,30 @@ export interface ImageItem {
   frame?: FrameTypes
 }
 
+export interface TextStyle {
+  textSize: string
+  textColor: string
+  textAlign: 'left' | 'center' | 'right'
+  fontWeight: number
+  fontFamily: string
+  letterSpacing: number
+  textShadow: string
+  shadowName: string
+  shadowColor: string
+  shadowOpacity: number
+  hasBackground: boolean
+  backgroundColor: string
+  padding: string
+  zIndex: number
+  position: string
+}
+
+export interface TextItem {
+  id: number
+  content: string
+  style: TextStyle
+}
+
 interface ImageOptionsState {
   scale: number
   setScale: (scale: number) => void
@@ -65,90 +89,14 @@ interface ImageOptionsState {
   getImage: (id: number) => ImageItem | undefined
   getImageIndex: (id: number) => number
 
-  texts: {
-    id: number
-    content: string
-    style: {
-      textSize: string
-      textColor: string
-      textAlign: 'left' | 'center' | 'right'
-      fontWeight: number
-      fontFamily: string
-      letterSpacing: number
-      textShadow: string
-      shadowName: string
-      shadowColor: string
-      shadowOpacity: number
-      hasBackground: boolean
-      backgroundColor: string
-      padding: string
-      zIndex: number
-      position: string
-    }
-  }[]
-  setTexts: (
-    texts: {
-      id: number
-      content: string
-      style: {
-        textSize: string
-        textColor: string
-        textAlign: 'left' | 'center' | 'right'
-        fontWeight: number
-        fontFamily: string
-        letterSpacing: number
-        textShadow: string
-        shadowName: string
-        shadowColor: string
-        shadowOpacity: number
-        hasBackground: boolean
-        backgroundColor: string
-        padding: string
-        zIndex: number
-        position: string
-      }
-    }[]
-  ) => void
+  texts: TextItem[]
+  setTexts: (texts: TextItem[]) => void
+  updateTextStyle: (id: number, style: Partial<TextStyle>) => void
+  getText: (id: number) => TextItem | undefined
 
-  defaultStyle: {
-    imageSize: string
-    imageRoundness: number
-    imageShadow: string
-    shadowPreview: string
-    shadowName: string
-    shadowOpacity: number
-    shadowColor: string
-    borderSize: string
-    borderColor: string
-    insetSize: string
-    insetColor: string
-    rotate: string
-    rotateX: number
-    rotateY: number
-    rotateZ: number
-    perspective: number
-    translateX: number
-    translateY: number
-    zIndex: number
-  }
+  defaultStyle: Omit<ImageStyle, 'hasFrame'> & { hasFrame: boolean }
 
-  defaultTextStyle: {
-    textSize: string
-    textColor: string
-    textAlign: 'left' | 'center' | 'right'
-    fontWeight: number
-    fontFamily: string
-    letterSpacing: number
-    textShadow: string
-    shadowName: string
-    shadowColor: string
-    shadowOpacity: number
-    hasBackground: boolean
-    backgroundColor: string
-    padding: string
-    zIndex: number
-    position: string
-  }
+  defaultTextStyle: TextStyle
 }
 
 export const useImageOptions = create(
@@ -238,6 +186,13 @@ export const useImageOptions = create(
 
       texts: [],
       setTexts: (texts) => set({ texts }),
+      updateTextStyle: (id, style) =>
+        set((state) => ({
+          texts: state.texts.map((text) =>
+            text.id === id ? { ...text, style: { ...text.style, ...style } } : text
+          ),
+        })),
+      getText: (id) => get().texts.find((text) => text.id === id),
     }),
     {
       limit: 30,

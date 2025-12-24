@@ -262,8 +262,6 @@ export default function NormalGradientPicker() {
     </div>
   )
 
-  console.log(dominantColor)
-
   return (
     <div>
       {/* Premium Header */}

@@ -12,7 +12,7 @@ import { Button } from '@/components/ui/button'
 
 export default function InsetOption() {
   const { images, updateImageStyle, getImage } = useImageOptions()
-  const { setShowControls, showControls } = useMoveable()
+  const { setShowControls } = useMoveable()
   const { selectedImage } = useSelectedLayers()
 
   return (

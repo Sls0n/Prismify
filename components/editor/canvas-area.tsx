@@ -57,8 +57,6 @@ export default function Canvas() {
 
   const aspectRatio = width / height
 
-  console.log(`Current DOM resoltion: ${exactDomResolution}`)
-
   let style: CSSProperties = {
     aspectRatio,
     backgroundImage: `var(--gradient-bg)`,
@@ -129,7 +127,6 @@ export default function Canvas() {
 
       if (isCanvasArea) {
         setSelectedText(null)
-        setShowTextControls(false)
         setShowTextControls(false)
         setIsEditable(false)
       }
