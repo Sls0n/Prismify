@@ -30,7 +30,7 @@ export function ResolutionButton({
   const [isHovering, setIsHovering] = useState(false)
 
   const { setResolution, setScaleFactor, domResolution } = useResizeCanvas()
-  const { images, setImages, initialImageUploaded } = useImageOptions()
+  const { images, updateImageStyle, initialImageUploaded } = useImageOptions()
   const { selectedImage } = useSelectedLayers()
 
   const [domWidth]: number[] = domResolution.split('x').map(Number)
@@ -84,20 +84,9 @@ export function ResolutionButton({
               padding
             )
             setResolution(newResolution.toString())
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          imageSize: '0.75',
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { imageSize: '0.75' })
+            }
           }
         }}
         aria-label={name}
@@ -129,20 +118,9 @@ export function ResolutionButton({
               padding
             )
             setResolution(newResolution.toString())
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          imageSize: '0.75',
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, { imageSize: '0.75' })
+            }
           }
         }}
         aria-label={name}

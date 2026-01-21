@@ -29,76 +29,32 @@ const FontPicker = dynamic(
 )
 
 export default function FontSettings() {
-  const { setTexts, texts } = useImageOptions()
+  const { updateTextStyle, updateText, texts } = useImageOptions()
   const { selectedText } = useSelectedLayers()
   const { setShowTextControls } = useMoveable()
 
   const handleColorChange = (color: string) => {
-    selectedText &&
-      setTexts(
-        texts.map((text, index) =>
-          index === selectedText - 1
-            ? {
-                ...text,
-                style: {
-                  ...text.style,
-                  textColor: color,
-                },
-              }
-            : text
-        )
-      )
+    if (selectedText) {
+      updateTextStyle(selectedText, { textColor: color })
+    }
   }
 
   const handleShadowColorChange = (color: string) => {
-    selectedText &&
-      setTexts(
-        texts.map((text, index) =>
-          index === selectedText - 1
-            ? {
-                ...text,
-                style: {
-                  ...text.style,
-                  shadowColor: color,
-                },
-              }
-            : text
-        )
-      )
+    if (selectedText) {
+      updateTextStyle(selectedText, { shadowColor: color })
+    }
   }
 
   const handleAlignmentChange = (alignment: 'left' | 'center' | 'right') => {
-    selectedText &&
-      setTexts(
-        texts.map((text, index) =>
-          index === selectedText - 1
-            ? {
-                ...text,
-                style: {
-                  ...text.style,
-                  textAlign: alignment,
-                },
-              }
-            : text
-        )
-      )
+    if (selectedText) {
+      updateTextStyle(selectedText, { textAlign: alignment })
+    }
   }
 
   const handleFontWeight = (weight: number) => {
-    selectedText &&
-      setTexts(
-        texts.map((text, index) =>
-          index === selectedText - 1
-            ? {
-                ...text,
-                style: {
-                  ...text.style,
-                  fontWeight: weight,
-                },
-              }
-            : text
-        )
-      )
+    if (selectedText) {
+      updateTextStyle(selectedText, { fontWeight: weight })
+    }
   }
 
   return (
@@ -114,20 +70,9 @@ export default function FontSettings() {
         }
         variants={['200', '300', 'regular', '500', '600', '700', '800']}
         onChange={(font) => {
-          selectedText &&
-            setTexts(
-              texts.map((text, index) =>
-                index === selectedText - 1
-                  ? {
-                      ...text,
-                      style: {
-                        ...text.style,
-                        fontFamily: font.family,
-                      },
-                    }
-                  : text
-              )
-            )
+          if (selectedText) {
+            updateTextStyle(selectedText, { fontFamily: font.family })
+          }
         }}
       />
 
@@ -196,20 +141,9 @@ export default function FontSettings() {
           }
           onValueChange={(value: number[]) => {
             setShowTextControls(false)
-            selectedText &&
-              setTexts(
-                texts.map((text, index) =>
-                  index === selectedText - 1
-                    ? {
-                        ...text,
-                        style: {
-                          ...text.style,
-                          letterSpacing: value[0],
-                        },
-                      }
-                    : text
-                )
-              )
+            if (selectedText) {
+              updateTextStyle(selectedText, { letterSpacing: value[0] })
+            }
           }}
           onValueCommit={() => setShowTextControls(true)}
           onIncrement={() => {
@@ -219,19 +153,11 @@ export default function FontSettings() {
               texts.length === 0
             )
               return
-            setTexts(
-              texts.map((text, index) =>
-                index === selectedText - 1
-                  ? {
-                      ...text,
-                      style: {
-                        ...text.style,
-                        letterSpacing: Number(text.style.letterSpacing) + 0.001,
-                      },
-                    }
-                  : text
-              )
-            )
+            if (selectedText) {
+              updateTextStyle(selectedText, {
+                letterSpacing: Number(texts[selectedText - 1].style.letterSpacing) + 0.001,
+              })
+            }
           }}
           onDecrement={() => {
             if (!selectedText) return
@@ -240,19 +166,11 @@ export default function FontSettings() {
               texts.length === 0
             )
               return
-            setTexts(
-              texts.map((text, index) =>
-                index === selectedText - 1
-                  ? {
-                      ...text,
-                      style: {
-                        ...text.style,
-                        letterSpacing: Number(text.style.letterSpacing) - 0.001,
-                      },
-                    }
-                  : text
-              )
-            )
+            if (selectedText) {
+              updateTextStyle(selectedText, {
+                letterSpacing: Number(texts[selectedText - 1].style.letterSpacing) - 0.001,
+              })
+            }
           }}
         />
       </div>
@@ -340,20 +258,9 @@ export default function FontSettings() {
           max={1}
           step={0.01}
           onValueChange={(value) => {
-            selectedText &&
-              setTexts(
-                texts.map((text, index) =>
-                  index === selectedText - 1
-                    ? {
-                        ...text,
-                        style: {
-                          ...text.style,
-                          shadowOpacity: value[0],
-                        },
-                      }
-                    : text
-                )
-              )
+            if (selectedText) {
+              updateTextStyle(selectedText, { shadowOpacity: value[0] })
+            }
           }}
           value={
             texts.length !== 0 && selectedText
@@ -367,19 +274,12 @@ export default function FontSettings() {
               texts.length === 0
             )
               return
-            setTexts(
-              texts.map((text, index) =>
-                index === selectedText - 1
-                  ? {
-                      ...text,
-                      style: {
-                        ...text.style,
-                        shadowOpacity: Number(text.style.shadowOpacity) + 0.01,
-                      },
-                    }
-                  : text
-              )
-            )
+            if (selectedText) {
+              updateTextStyle(selectedText, {
+                shadowOpacity:
+                  Number(texts[selectedText - 1].style.shadowOpacity) + 0.01,
+              })
+            }
           }}
           onDecrement={() => {
             if (!selectedText) return
@@ -388,19 +288,12 @@ export default function FontSettings() {
               texts.length === 0
             )
               return
-            setTexts(
-              texts.map((text, index) =>
-                index === selectedText - 1
-                  ? {
-                      ...text,
-                      style: {
-                        ...text.style,
-                        shadowOpacity: Number(text.style.shadowOpacity) - 0.01,
-                      },
-                    }
-                  : text
-              )
-            )
+            if (selectedText) {
+              updateTextStyle(selectedText, {
+                shadowOpacity:
+                  Number(texts[selectedText - 1].style.shadowOpacity) - 0.01,
+              })
+            }
           }}
         />
       </div>

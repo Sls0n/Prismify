@@ -6,7 +6,7 @@ import { useImageOptions, useSelectedLayers } from '@/store/use-image-options'
 import { useMoveable } from '@/store/use-moveable'
 
 export default function PerspectiveOptions() {
-  const { images, setImages } = useImageOptions()
+  const { images, updateImageStyle } = useImageOptions()
    const { selectedImage } = useSelectedLayers()
   const { setShowControls } = useMoveable()
 
@@ -30,21 +30,12 @@ export default function PerspectiveOptions() {
           const { type, x, y } = event
           if (type === 'move') {
             setShowControls(false)
-            selectedImage &&
-              setImages(
-                images.map((image, index) =>
-                  index === selectedImage - 1
-                    ? {
-                        ...image,
-                        style: {
-                          ...image.style,
-                          rotateX: y! * 20,
-                          rotateY: x! * 20,
-                        },
-                      }
-                    : image
-                )
-              )
+            if (selectedImage) {
+              updateImageStyle(selectedImage, {
+                rotateX: y! * 20,
+                rotateY: x! * 20,
+              })
+            }
           } else if (type === 'stop') {
             setShowControls(true)
           }
